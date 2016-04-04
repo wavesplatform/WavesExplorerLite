@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">General info</h3>
+            </div>
+            <div class="panel-body">
+                Version: {{ctrl.version}}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Last blocks <a class="pull-right" ui-sref="blocks">View all</a></h3>
+
+            </div>
+            <div class="panel-body">
+
+                <div class="list-group">
+                    <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
+                        <h4 class="list-group-item-heading">#{{item.height}}</h4>
+                        <p class="list-group-item-text">{{item.transactions[0].length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Unconfirmed Transactions</h3>
+
+            </div>
+            <div class="panel-body">
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>type</th>
+                        <th>fee</th>
+                        <th>timestamp</th>
+                        <th>signature</th>
+                        <th>sender</th>
+                        <th>recipient</th>
+                        <th>amount</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="item in ctrl.unconfirmedTxs">
+                        <td>{{item.type}}</td>
+                        <td>{{item.fee}}</td>
+                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.signature|limitTo:5}}...</td>
+                        <td><a ui-sref="address-details({address:item.sender})">{{item.sender|limitTo:6}}...</a></td>
+                        <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|limitTo:6}}...</a></td>
+                        <td>{{item.amount|currency:''}}</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

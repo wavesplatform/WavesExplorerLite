@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-lg-5">
+        <h1>Blocks</h1>
+    </div>
+    <div class="col-lg-7">
+        <uib-pagination total-items="ctrl.totalCount"
+                        items-per-page="ctrl.numPerPage"
+                        ng-model="ctrl.currentPage"
+                        ng-change="ctrl.pageChanged()"
+                        class="pull-right pagination"
+                        boundary-links="true"
+                        rotate="false" max-size="5"></uib-pagination>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Last block #{{ctrl.height}}</h3>
+            </div>
+
+            <div class="panel-body">
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Timestamp</th>
+                        <th>Signature</th>
+                        <th>Txs</th>
+                        <th>Fee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.blocks">
+                        <td><a ui-sref="block-details({height:item.height})">{{item.height}}</a></td>
+                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.signature|limitTo:10}}...</td>
+                        <td>{{item.transactions[0].length}}</td>
+                        <td>{{item.fee}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+
+    </div>
+</div>
