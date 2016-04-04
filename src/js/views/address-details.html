@@ -2,12 +2,35 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-info">
+            <div class="panel-body">
+                <table class="table blockDetails">
+                    <tbody>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{ctrl.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>Confirmations</td>
+                        <td>{{ctrl.balance.confirmations}}</td>
+                    </tr>
+                    <tr>
+                        <td>Balance</td>
+                        <td>{{ctrl.balance.balance|currency:''}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 Last 50 transactions for {{ctrl.address}}
             </div>
-
             <div class="panel-body">
-
                 <table class="table blockDetails">
                     <thead>
                     <tr>

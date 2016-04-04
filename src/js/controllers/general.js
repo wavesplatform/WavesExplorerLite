@@ -3,6 +3,7 @@
 
     function GeneralCtrl($http, apiMethods) {
         var ctrl = this;
+        ctrl.consensus = {}
 
         activate();
 
@@ -14,7 +15,7 @@
 
             $http.get(apiMethods.status)
                 .success(function(data) {
-                    ctrl.status = data.status;
+                    ctrl.status = data;
                 })
 
             $http.get(apiMethods.blocks.height)
@@ -35,7 +36,19 @@
             $http.get(apiMethods.transactions.unconfirmed)
                 .success(function(data){
                     ctrl.unconfirmedTxs = data[0];
-                })
+                });
+            $http.get(apiMethods.consensus.puz)
+                .success(function(data){
+                   ctrl.consensus.puz = data.puz;
+                });
+            $http.get(apiMethods.consensus.algo)
+                .success(function(data){
+                    ctrl.consensus.algo = data["consensus-algo"];
+                });
+            $http.get(apiMethods.consensus.target)
+                .success(function(data){
+                    ctrl.consensus.target = data.target;
+                });
 
         }
     }

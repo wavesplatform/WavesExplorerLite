@@ -13,7 +13,12 @@
                     data[0].reverse();
                     ctrl.txs = data[0];
 
-                })
+                });
+            $http.get(apiMethods.address.balance(ctrl.address))
+                .success(function(data){
+                   ctrl.balance = data;
+                });
+
         }
 
     }
