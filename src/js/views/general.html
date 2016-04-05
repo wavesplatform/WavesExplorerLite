@@ -38,7 +38,7 @@
             <div class="panel-body">
 
                 <div class="list-group">
-                    <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({id:item.height})" class="list-group-item">
+                    <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
                         <h4 class="list-group-item-heading">#{{item.height}}</h4>
                         <p>signature: {{item.signature|limitTo:10}}...</p>
                         <p class="list-group-item-text">{{item.transactions[0].length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>

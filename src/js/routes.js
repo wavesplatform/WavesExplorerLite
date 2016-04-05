@@ -32,7 +32,7 @@
                     }
             })
                 .state('block-details', {
-                    url: '/blocks/:id',
+                    url: '/blocks/:height',
                     views: {
                         "main": {
                             controller: 'BlocksDetailsCtrl as ctrl',

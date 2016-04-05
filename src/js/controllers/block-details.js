@@ -3,13 +3,13 @@
 
     function BlocksDetailsCtrl($http, apiMethods, $stateParams) {
         var ctrl = this;
-        ctrl.id = $stateParams.id;
+        ctrl.height = $stateParams.height;
 
         activate();
 
         function activate() {
 
-            $http.get(apiMethods.blocks.byHeight(ctrl.id))
+            $http.get(apiMethods.blocks.byHeight(ctrl.height))
                 .success(function(data) {
                     ctrl.details = data;
                 })
