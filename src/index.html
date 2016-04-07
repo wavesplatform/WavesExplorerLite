@@ -5,6 +5,7 @@
     <title>Scorex Explorer</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="/css/style.css" media="screen">
+    <link rel="stylesheet" href="/css/loading-bar.min.css" media="screen">
 </head>
 <body>
 
@@ -51,7 +52,7 @@
     <br/>
     <div class="row">
         <div class="col-lg-12">
-            <div ui-view="main"></div>
+            <div ui-view="main" ng-cloak></div>
         </div>
     </div>
 
@@ -81,6 +82,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
+<script src="/js/vendor/loading-bar.min.js"></script>
 
 
 <script src="/js/app.js?v=1"></script>

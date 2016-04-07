@@ -11,6 +11,10 @@
                 <table class="table blockDetails">
                     <tbody>
                     <tr>
+                        <td class="col-md-2">Height</td>
+                        <td><button class="btn btn-primary btn-xs" ng-click="ctrl.prev()">prev</button> {{ctrl.height}} <button class="btn btn-primary btn-xs" ng-click="ctrl.next()">next</button></td>
+                    </tr>
+                    <tr>
                         <td>Version</td>
                         <td>{{ctrl.details.version}}</td>
                     </tr>
@@ -77,7 +81,7 @@
                         <td>{{item.signature|limitTo:7}}...</td>
                         <td><a ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:7}}...</a></td>
                         <td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:7}}...</a></td>
-                        <td>{{item.amount|currency:''}}</td>
+                        <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
                     </tr>
                     </tbody>
                 </table>
