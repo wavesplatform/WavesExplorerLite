@@ -78,7 +78,7 @@
                         <td>{{item.signature|limitTo:5}}...</td>
                         <td><a ui-sref="address-details({address:item.sender})">{{item.sender|limitTo:6}}...</a></td>
                         <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|limitTo:6}}...</a></td>
-                        <td>{{item.amount|currency:''}}</td>
+                        <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
                     </tr>
                 </table>
 

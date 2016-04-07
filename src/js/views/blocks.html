@@ -37,7 +37,7 @@
                     <tr ng-repeat="item in ctrl.blocks">
                         <td><a ui-sref="block-details({height:item.height})">{{item.height}}</a></td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td>{{item.signature|limitTo:10}}...</td>
+                        <td>{{item.signature|limitTo:15}}...</td>
                         <td>{{item.transactions[0].length}}</td>
                         <td>{{item.fee}}</td>
                     </tr>
