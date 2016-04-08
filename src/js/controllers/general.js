@@ -1,9 +1,9 @@
 (function () {
-
+	'use strict';
 
 	function GeneralCtrl($http, apiMethods) {
 		var ctrl = this;
-		ctrl.consensus = {}
+		ctrl.consensus = {};
 
 		activate();
 

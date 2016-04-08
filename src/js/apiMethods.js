@@ -21,6 +21,9 @@
 		address: {
 			balance: function (address) {
 				return URL + '/addresses/balance/' + address;
+			},
+			validate: function (address) {
+				return URL + '/addresses/validate/' + address;
 			}
 		},
 		transactions: {

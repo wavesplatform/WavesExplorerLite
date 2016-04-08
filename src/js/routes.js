@@ -1,6 +1,6 @@
 (function () {
 	'use strict';
-
+				
 	angular.module('web')
 			.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function ($stateProvider, $locationProvider, $urlRouterProvider) {
 					$stateProvider
@@ -46,7 +46,6 @@
 						requireBase: false,
 						rewriteLinks: false
 					});
-
 				}
 			]);
 })();
