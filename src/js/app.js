@@ -1,5 +1,5 @@
-(function(){
-    'use strict';
+(function () {
+	'use strict';
 
-    angular.module('web',['ui.router', 'ui.bootstrap', 'angular-loading-bar'])
+	angular.module('web', ['ui.router', 'ui.bootstrap', 'angular-loading-bar']);
 })();

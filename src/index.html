@@ -1,97 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="web">
-<head>
+	<head>
     <meta charset="UTF-8">
     <title>Scorex Explorer</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="/css/style.css" media="screen">
     <link rel="stylesheet" href="/css/loading-bar.min.css" media="screen">
-</head>
-<body>
+	</head>
+	<body>
 
-<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
         <div class="navbar-header">
-            <a href="/" class="navbar-brand">Scorex Explorer</a>
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+					<a href="/" class="navbar-brand">Scorex Explorer</a>
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse" id="navbar-main">
+					<ul class="nav navbar-nav">
+						<li>
+							<a ui-sref="blocks">Blocks</a>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Item <span class="caret"></span></a>
+							<ul class="dropdown-menu" aria-labelledby="download">
+								<li><a href="">Item</a></li>
+								<li class="divider"></li>
+								<li><a href="">Item</a></li>
+								<li><a href="">Item</a></li>
+							</ul>
+						</li>
+					</ul>
+
+
+					<form class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input class="form-control" placeholder="Search" type="text">
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a ui-sref="blocks">Blocks</a>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Item <span class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="download">
-                        <li><a href="">Item</a></li>
-                        <li class="divider"></li>
-                        <li><a href="">Item</a></li>
-                        <li><a href="">Item</a></li>
-                    </ul>
-                </li>
-            </ul>
+			</div>
+		</div>
 
 
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <input class="form-control" placeholder="Search" type="text">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div>
-    </div>
-</div>
+		<div class="container">
 
-
-<div class="container">
-
-    <br/>
-    <div class="row">
+			<br/>
+			<div class="row">
         <div class="col-lg-12">
-            <div ui-view="main" ng-cloak></div>
+					<div ui-view="main" ng-cloak></div>
         </div>
-    </div>
+			</div>
 
 
-    <footer>
+			<footer>
         <div class="row">
-            <div class="col-lg-12">
+					<div class="col-lg-12">
 
-                <ul class="list-unstyled">
-                    <li class="pull-right"><a href="#top">Back to top</a></li>
-                    <li><a href="https://github.com/ScorexProject/Scorex">GitHub</a></li>
-                    <li><a href="https://github.com/ScorexProject/Scorex">Forum</a></li>
-                </ul>
-                <p>Brought to you by Scorex Team.</p>
+						<ul class="list-unstyled">
+							<li class="pull-right"><a href="#top">Back to top</a></li>
+							<li><a href="https://github.com/ScorexProject/Scorex">GitHub</a></li>
+							<li><a href="https://github.com/ScorexProject/Scorex">Forum</a></li>
+						</ul>
+						<p>Brought to you by Scorex Team.</p>
 
-            </div>
+					</div>
         </div>
 
-    </footer>
-</div>
+			</footer>
+		</div>
 
 
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="/js/vendor/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
-<script src="/js/vendor/loading-bar.min.js"></script>
+		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="/js/vendor/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
+		<script src="/js/vendor/loading-bar.min.js"></script>
 
 
-<script src="/js/app.js?v=1"></script>
-<script src="/js/routes.js?v=1"></script>
-<script src="/js/apiMethods.js?v=1"></script>
-<script src="/js/controllers/general.js?v=1"></script>
-<script src="/js/controllers/blocks.js?v=1"></script>
-<script src="/js/controllers/block-details.js?v=1"></script>
-<script src="/js/controllers/address-details.js?v=1"></script>
+		<script src="/js/app.js?v=1"></script>
+		<script src="/js/routes.js?v=1"></script>
+		<script src="/js/apiMethods.js?v=1"></script>
+		<script src="/js/controllers/general.js?v=1"></script>
+		<script src="/js/controllers/blocks.js?v=1"></script>
+		<script src="/js/controllers/block-details.js?v=1"></script>
+		<script src="/js/controllers/address-details.js?v=1"></script>
 
-</body>
+	</body>
 </html>

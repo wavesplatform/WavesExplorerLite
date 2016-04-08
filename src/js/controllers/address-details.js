@@ -1,27 +1,25 @@
-(function(){
-    'use strict';
+(function () {
+	'use strict';
 
-    function AddressDetailsCtrl($http, apiMethods, $stateParams) {
-        var ctrl = this;
-        ctrl.address = $stateParams.address;
+	function AddressDetailsCtrl($http, apiMethods, $stateParams) {
+		var ctrl = this;
+		ctrl.address = $stateParams.address;
 
-        activate();
+		activate();
 
-        function activate() {
-            $http.get(apiMethods.transactions.forAddress(ctrl.address))
-                .success(function(data) {
-                    data[0].reverse();
-                    ctrl.txs = data[0];
+		function activate() {
+			$http.get(apiMethods.transactions.forAddress(ctrl.address))
+							.success(function (data) {
+								data[0].reverse();
+								ctrl.txs = data[0];
+							});
+			$http.get(apiMethods.address.balance(ctrl.address))
+							.success(function (data) {
+								ctrl.balance = data;
+							});
+		}
 
-                });
-            $http.get(apiMethods.address.balance(ctrl.address))
-                .success(function(data){
-                   ctrl.balance = data;
-                });
+	}
 
-        }
-
-    }
-
-    angular.module('web').controller('AddressDetailsCtrl', AddressDetailsCtrl);
+	angular.module('web').controller('AddressDetailsCtrl', AddressDetailsCtrl);
 })();
