@@ -37,6 +37,10 @@
 			puz: URL + '/consensus/puz',
 			algo: URL + '/consensus/algo',
 			target: URL + '/consensus/target'
+		},
+		peers: {
+			all: URL + '/peers/all',
+			connected: URL + '/peers/connected'
 		}
 
 	});

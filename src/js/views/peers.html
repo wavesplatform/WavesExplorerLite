@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">All peers</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Node name</th>
+                        <th>Node nonce</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.peers">
+                        <td>{{item.address}}</td>
+                        <td>{{item.nodeName}}</td>
+                        <td>{{item.nodeNonce}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+	
+	    <div class="col-lg-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Connected</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Node name</th>
+                        <th>Node nonce</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.connectedPeers">
+                        <td>{{item.declaredAddress}}</td>
+                        <td>{{item.peerName}}</td>
+                        <td>{{item.peerNonce}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
