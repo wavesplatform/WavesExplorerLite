@@ -22,6 +22,9 @@
 			balance: function (address) {
 				return URL + '/addresses/balance/' + address;
 			},
+			generatingBalance: function (address) {
+				return URL + '/addresses/generatingbalance/' + address
+			},
 			validate: function (address) {
 				return URL + '/addresses/validate/' + address;
 			}
