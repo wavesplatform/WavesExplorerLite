@@ -6,8 +6,8 @@
             </div>
             <div class="panel-body">
                 <p>Version: {{ctrl.version}}</p>
-                <p>block generator status: {{ctrl.status["block generator status"]}}</p>
-                <p>history synchronization status: {{ctrl.status["history synchronization status"]}}</p>
+                <p>block generator status: {{ctrl.status.block_generator_status}}</p>
+                <p>history synchronization status: {{ctrl.status.history_synchronization_status}}</p>
 
             </div>
         </div>
@@ -41,7 +41,7 @@
                     <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
                         <h4 class="list-group-item-heading">#{{item.height}}</h4>
                         <p>signature: {{item.signature|limitTo:10}}...</p>
-                        <p class="list-group-item-text">{{item.transactions[0].length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                        <p class="list-group-item-text">{{item.transactions.length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
                     </a>
 
                 </div>
@@ -62,13 +62,13 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>type</th>
-                        <th>fee</th>
-                        <th>timestamp</th>
-                        <th>signature</th>
-                        <th>sender</th>
-                        <th>recipient</th>
-                        <th>amount</th>
+                        <th>Type</th>
+                        <th>Fee</th>
+                        <th>Timestamp</th>
+                        <th>Signature</th>
+                        <th>Sender</th>
+                        <th>Recipient</th>
+                        <th><span class="pull-right">Amount</span></th>
                     </tr>
                     </thead>
                     <tr ng-repeat="item in ctrl.unconfirmedTxs">

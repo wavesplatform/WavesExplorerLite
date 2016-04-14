@@ -25,7 +25,7 @@
                     <tr>
                         <td>Transactions</td>
                         <td>
-                            {{ctrl.details.transactions[0].length}} transactions
+                            {{ctrl.details.transactions.length}} transactions
                         </td>
                     </tr>
                     <tr>
@@ -64,17 +64,17 @@
                 <table class="table blockDetails">
                     <thead>
                     <tr>
-                        <th>type</th>
-                        <th>fee</th>
-                        <th>timestamp</th>
-                        <th>signature</th>
-                        <th>sender</th>
-                        <th>recipient</th>
-                        <th><span class="pull-right">amount</span></th>
+                        <th>Type</th>
+                        <th>Fee</th>
+                        <th>Timestamp</th>
+                        <th>Signature</th>
+                        <th>Sender</th>
+                        <th>Recipient</th>
+                        <th><span class="pull-right">Amount</span></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.details.transactions[0]">
+                    <tr ng-repeat="item in ctrl.details.transactions">
                         <td>{{item.type}}</td>
                         <td>{{item.fee}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
