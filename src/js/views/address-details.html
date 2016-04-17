@@ -52,7 +52,7 @@
 							<td>{{item.type}}</td>
 							<td>{{item.fee}}</td>
 							<td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{item.signature|limitTo:8}}...</td>
+							<td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:8}}...</a></td>
 							<td><a ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:8}}...</a></td>
 							<td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:8}}...</a></td>
 							<td><span class="pull-right">{{item.amount|currency:''}}</span></td>

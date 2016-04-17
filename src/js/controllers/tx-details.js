@@ -8,7 +8,10 @@
 		activate();
 		
 		function activate() {
-			
+			$http.get(apiMethods.transactions.info(ctrl.signature))
+					.success(function(data){
+						ctrl.details = data;
+			});
 		}
 	}
 	
