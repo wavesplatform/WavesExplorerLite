@@ -31,6 +31,15 @@
 													}
 												}
 											})
+											.state('block-details-sig', {
+												url: '/blocks/s/:signature',
+												views: {
+													"main": {
+														controller: 'BlocksDetailsSigCtrl as ctrl',
+														templateUrl: '/js/views/block-details-sig.html'
+													}
+												}
+											})
 											.state('block-details', {
 												url: '/blocks/:height',
 												views: {
@@ -40,6 +49,7 @@
 													}
 												}
 											})
+
 											.state('peers', {
 												url: '/peers',
 												views: {

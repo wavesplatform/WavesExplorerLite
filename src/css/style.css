@@ -16,6 +16,9 @@ footer p {
     margin-bottom: 0;
 }
 
+.search-input {
+	width: 350px;
+}
 
 .blockDetails th, .blockDetails td {
     border-top: none !important;

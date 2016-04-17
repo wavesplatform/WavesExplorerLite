@@ -1,9 +1,9 @@
 (function () {
 	'use strict';
 
-	function BlocksDetailsCtrl($http, apiMethods, $stateParams, $state) {
+	function BlocksDetailsSigCtrl($http, apiMethods, $stateParams, $state) {
 		var ctrl = this;
-		ctrl.height = parseInt($stateParams.height);
+		ctrl.signature = $stateParams.signature;
 		ctrl.next = nextBlock;
 		ctrl.prev = prevBlock;
 
@@ -11,7 +11,7 @@
 
 		function activate() {
 
-			$http.get(apiMethods.blocks.byHeight(ctrl.height))
+			$http.get(apiMethods.blocks.bySignature(ctrl.signature))
 							.success(function (data) {
 								ctrl.details = data;
 							});
@@ -28,5 +28,5 @@
 
 	}
 
-	angular.module('web').controller('BlocksDetailsCtrl', BlocksDetailsCtrl);
+	angular.module('web').controller('BlocksDetailsSigCtrl', BlocksDetailsSigCtrl);
 })();

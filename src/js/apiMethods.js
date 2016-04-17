@@ -23,7 +23,7 @@
 				return URL + '/addresses/balance/' + address;
 			},
 			generatingBalance: function (address) {
-				return URL + '/addresses/generatingbalance/' + address
+				return URL + '/addresses/generatingbalance/' + address;
 			},
 			validate: function (address) {
 				return URL + '/addresses/validate/' + address;
@@ -31,6 +31,9 @@
 		},
 		transactions: {
 			unconfirmed: URL + '/transactions/unconfirmed',
+			info: function (signature) {
+				return URL + '/transactions/info/' + signature;
+			},
 			forAddress: function (address) {
 				return URL + '/transactions/address/' + address + '/limit/50';
 			}
