@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var URL = 'http://23.94.190.226:9081';
+	var URL = 'http://52.58.115.4:6869';
 					
 	angular.module('web').constant('apiMethods', {
 		version: URL + '/scorex/version',
