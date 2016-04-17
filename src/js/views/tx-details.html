@@ -1,0 +1,58 @@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+            Tx {{ctrl.signature}}
+            </div>
+
+            <div class="panel-body">
+
+                <table class="table blockDetails">
+                    <tbody>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>{{ctrl.details.version}}</td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Transactions</td>
+                        <td>
+                            {{ctrl.details.transactions.length}} transactions
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Parent block</td>
+                        <td>
+                            {{ctrl.details.reference}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Generator</td>
+                        <td>
+                            <a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Signature</td>
+                        <td>{{ctrl.details.signature}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fee</td>
+                        <td>{{ctrl.details.fee|currency:''}}</td>
+                    </tr>
+                    <tr>
+                        <td>Size</td>
+                        <td>{{ctrl.details.blocksize}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
