@@ -1,10 +1,10 @@
-# Scorexplorer
+# Waves Explorer Lite
 
-Scorex Blockchain Explorer
+Waves Testnet Blockchain Explorer
 
 # Demo
 
-Demo is available on http://cryptorevolution.me
+Demo is available on http://testnet.wavesexplorer.com
 
 # Setup
 
