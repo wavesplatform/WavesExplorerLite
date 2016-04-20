@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var URL = 'http://52.58.115.4:6869';
+	var URL = 'http://52.36.177.184:6869';
 					
 	angular.module('web').constant('apiMethods', {
 		version: URL + '/scorex/version',
@@ -42,7 +42,7 @@
 		consensus: {
 			puz: URL + '/consensus/puz',
 			algo: URL + '/consensus/algo',
-			target: URL + '/consensus/target'
+			basetarget: URL + '/consensus/basetarget'
 		},
 		peers: {
 			all: URL + '/peers/all',

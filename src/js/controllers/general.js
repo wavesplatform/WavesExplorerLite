@@ -37,17 +37,18 @@
 							.success(function (data) {
 								ctrl.unconfirmedTxs = data[0];
 							});
+							/* actual for permacoin
 			$http.get(apiMethods.consensus.puz)
 							.success(function (data) {
 								ctrl.consensus.puz = data.puz;
-							});
+							}); */
 			$http.get(apiMethods.consensus.algo)
 							.success(function (data) {
 								ctrl.consensus.algo = data["consensus-algo"];
 							});
-			$http.get(apiMethods.consensus.target)
+			$http.get(apiMethods.consensus.basetarget)
 							.success(function (data) {
-								ctrl.consensus.target = data.target;
+								ctrl.consensus.baseTarget = data["base-target"];
 							});
 		}
 	}
