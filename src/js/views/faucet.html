@@ -1,0 +1,48 @@
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Faucet
+			</div>
+
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<fieldset>
+						<legend>Input your Address in Testnet</legend>
+						<div class="form-group" ng-class="{'has-error': ctrl.invalidAddress}">
+							<div class="col-lg-10">
+								<input class="form-control input-lg" id="address" ng-model="ctrl.recipient" placeholder="Address" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-12">
+								<button ng-click="ctrl.getMoney()" type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+
+				<p ng-show="ctrl.error != null" class="has-error">
+					{{ctrl.error}}
+				</p>
+				
+				<table class="table blockDetails" ng-show="ctrl.tx != null">
+					<tr>
+						<td>Tx signature</td>
+						<td><a ui-sref="tx-details({signature:ctrl.tx.signature})">{{ctrl.tx.signature|limitTo:15}}...</a></td>
+					</tr>
+					<tr>
+						<td>Recipient</td>
+						<td>{{ctrl.tx.recipient}}</td>
+					</tr>
+					<tr>
+						<td>Amount</td>
+						<td>{{ctrl.tx.amount}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

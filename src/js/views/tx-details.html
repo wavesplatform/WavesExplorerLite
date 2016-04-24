@@ -1,53 +1,53 @@
 
 <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-            Transaction {{ctrl.signature}}
-            </div>
+	<div class="col-lg-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Transaction {{ctrl.signature}}
+			</div>
 
-            <div class="panel-body">
+			<div class="panel-body">
 
-                <table class="table blockDetails">
-                    <tbody>
+				<table class="table blockDetails">
+					<tbody>
 
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.type}}</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Amount</td>
-                        <td>{{ctrl.details.amount|currency:''}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fee</td>
-                        <td>{{ctrl.details.fee|currency:''}}</td>
-                       
-                    </tr>
-                    <tr>
-                        <td>Sender</td>
-                        <td>
-                            <a ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
-                        </td>
-                    </tr>
-					<tr>
-                        <td>Recipient</td>
-                        <td>
-                            <a ui-sref="address-details({address:ctrl.details.recipient})">{{ctrl.details.recipient}}</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Signature</td>
-                        <td>{{ctrl.details.signature}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+						<tr>
+							<td>Type</td>
+							<td>{{ctrl.details.type}}</td>
+						</tr>
+						<tr>
+							<td>Timestamp</td>
+							<td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						</tr>
+						<tr>
+							<td>Amount</td>
+							<td>{{ctrl.details.amount|currency:''}}</td>
+						</tr>
+						<tr>
+							<td>Fee</td>
+							<td>{{ctrl.details.fee|currency:''}}</td>
 
-    </div>
+						</tr>
+						<tr>
+							<td>Sender</td>
+							<td>
+								<a ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
+							</td>
+						</tr>
+						<tr>
+							<td>Recipient</td>
+							<td>
+								<a ui-sref="address-details({address:ctrl.details.recipient})">{{ctrl.details.recipient}}</a>
+							</td>
+						</tr>
+						<tr>
+							<td>Signature</td>
+							<td>{{ctrl.details.signature}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
 </div>

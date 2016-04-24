@@ -66,6 +66,15 @@
 										templateUrl: '/js/views/peers.html'
 									}
 								}
+							})
+							.state('faucet', {
+								url: '/faucet',
+								views: {
+									"main": {
+										controller: 'FaucetCtrl as ctrl',
+										templateUrl: '/js/views/faucet.html'
+									}
+								}
 							});
 
 					$locationProvider.html5Mode({
