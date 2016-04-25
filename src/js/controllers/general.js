@@ -44,11 +44,11 @@
 							}); */
 			$http.get(apiMethods.consensus.algo)
 							.success(function (data) {
-								ctrl.consensus.algo = data["consensus-algo"];
+								ctrl.consensus.algo = data.consensusAlgo;
 							});
 			$http.get(apiMethods.consensus.basetarget)
 							.success(function (data) {
-								ctrl.consensus.baseTarget = data["base-target"];
+								ctrl.consensus.baseTarget = data.baseTarget;
 							});
 		}
 	}
