@@ -75,6 +75,15 @@
 										templateUrl: '/js/views/faucet.html'
 									}
 								}
+							})
+							.state('nodes', {
+								url: '/nodes',
+								views: {
+									"main": {
+										controller: 'NodesCtrl as ctrl',
+										templateUrl: '/js/views/nodes.html'
+									}
+								}
 							});
 
 					$locationProvider.html5Mode({
