@@ -2,7 +2,7 @@
 	'use strict';
 
 	function FaucetCtrl($http, apiMethods) {
-		var uri = "http://52.58.115.4:9000/payment";
+		var uri = "http://52.28.28.118:9000/payment";
 
 		var ctrl = this;
 		ctrl.getMoney = getMoney;
