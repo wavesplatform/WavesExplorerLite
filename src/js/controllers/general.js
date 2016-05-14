@@ -35,7 +35,7 @@
 							});
 			$http.get(apiMethods.transactions.unconfirmed)
 							.success(function (data) {
-								ctrl.unconfirmedTxs = data[0];
+								ctrl.unconfirmedTxs = data;
 							});
 							/* actual for permacoin
 			$http.get(apiMethods.consensus.puz)
