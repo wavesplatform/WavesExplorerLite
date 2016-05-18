@@ -8,7 +8,8 @@
 			{ url: 'http://52.36.177.184:6869' },
 			{ url: 'http://52.28.28.118:6869' },
 			{ url: 'http://82.165.138.42:6869' },
-			{ url: 'http://52.74.26.138:6869' }
+			{ url: 'http://52.74.26.138:6869' },
+			{ url: 'http://52.51.92.182:6869' }
 		];
 
 
@@ -31,7 +32,24 @@
 							node.height = "error";
 						});
 						
+														
+				$http.get(apiProvider(node.url).consensus.basetarget)
+						.success(function (data) {
+							node.baseTarget = data.baseTarget;
+						}).error(function () {
+							node.baseTarget = "error";
+						});
+				$http.get(apiProvider(node.url).debug.info)
+						.success(function (data) {
+							node.debugStateHeight = data.stateHeight;
+							node.debugStateHash = data.stateHash;
+						}).error(function () {
+							node.debugStateHeight = "error";
+							node.debugStateHash = "error";
+						});
 					});
+
+						
 		}
 	}
 

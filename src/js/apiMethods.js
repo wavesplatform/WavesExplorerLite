@@ -58,6 +58,9 @@
 			peers: {
 				all: url + '/peers/all',
 				connected: url + '/peers/connected'
+			},
+			debug: {
+				info: url + '/debug/info'
 			}
 		}
 	}

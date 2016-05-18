@@ -10,18 +10,22 @@
             </div>
             <div class="panel-body">
                 <table class="table">
-									<thead>
-										<tr>
-											<th>node</th>
-											<th>version</th>
-											<th>current height</th>
-										</tr>
-									</thead>
+					<thead>
+						<tr>
+							<th>node</th>
+							<th>version</th>
+							<th>current height</th>
+							<th>base target</th>
+							<th>state hash (debug)</th>
+						</tr>
+					</thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.nodes">
-											<td>{{item.url}}</td>
- 											<td>{{item.version}}</td>
-											<td>{{item.height}}</td>
+						<td>{{item.url}}</td>
+						<td>{{item.version}}</td>
+						<td>{{item.height}}</td>
+						<td>{{item.baseTarget}}</td>
+						<td>{{item.debugStateHash}}</td>
                     </tr>
                     </tbody>
                 </table>
