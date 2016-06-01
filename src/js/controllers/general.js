@@ -22,6 +22,8 @@
 							.success(function (data) {
 								var to = data.height;
 								var from = to - 20;
+								if (from < 0)
+									from = 1;
 								$http.get(apiMethods.blocks.seq(from, to))
 												.success(function (data) {
 													ctrl.lastBlocks = data;
