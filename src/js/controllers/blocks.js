@@ -4,7 +4,7 @@
 	function BlocksCtrl($http, apiMethods) {
 		var ctrl = this;
 
-		ctrl.numPerPage = 19;
+		ctrl.numPerPage = 20;
 		ctrl.currentPage = 1;
 		ctrl.pageChanged = changePage;
 
@@ -23,7 +23,7 @@
 			var from = ctrl.height - ctrl.currentPage * ctrl.numPerPage;
 			var correction = 0;
 			if (from < 0) {
-				correction = from;
+				correction = from - 1;
 				from = 1;
 			}
 			var to = from + ctrl.numPerPage + correction;
