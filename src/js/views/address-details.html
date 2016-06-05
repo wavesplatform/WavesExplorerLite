@@ -15,11 +15,11 @@
 						</tr>
 						<tr>
 							<td>Balance</td>
-							<td>{{ctrl.balance.balance|currency:''}}</td>
+							<td>{{ctrl.balance.balance|wavelets}}</td>
 						</tr>
 						<tr>
 							<td>Generating Balance</td>
-							<td>{{ctrl.generatingBalance|currency:''}}</td>
+							<td>{{ctrl.generatingBalance|wavelets}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -50,12 +50,12 @@
 					<tbody>
 						<tr ng-repeat="item in ctrl.txs">
 							<td>{{item.type}}</td>
-							<td>{{item.fee}}</td>
+							<td>{{item.fee|wavelets}}</td>
 							<td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 							<td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:8}}...</a></td>
 							<td><a ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:8}}...</a></td>
 							<td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:8}}...</a></td>
-							<td><span class="pull-right">{{item.amount|currency:''}}</span></td>
+							<td><span class="pull-right">{{item.amount|wavelets}}</span></td>
 						</tr>
 					</tbody>
 				</table>

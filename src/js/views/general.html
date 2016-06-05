@@ -76,7 +76,7 @@
                         <td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:5}}...</a></td>
                         <td><a ui-sref="address-details({address:item.sender})">{{item.sender|limitTo:6}}...</a></td>
                         <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|limitTo:6}}...</a></td>
-                        <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
+                        <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
                     </tr>
                 </table>
 

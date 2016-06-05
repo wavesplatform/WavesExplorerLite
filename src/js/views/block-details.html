@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                         <td>Fee</td>
-                        <td>{{ctrl.details.fee|currency:''}}</td>
+                        <td>{{ctrl.details.fee|wavelets}}</td>
                     </tr>
                     <tr>
                         <td>Size</td>
@@ -85,7 +85,7 @@
                         <td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:7}}...</a></td>
                         <td><a ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:7}}...</a></td>
                         <td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:7}}...</a></td>
-                        <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
+                        <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
                     </tr>
                     </tbody>
                 </table>
