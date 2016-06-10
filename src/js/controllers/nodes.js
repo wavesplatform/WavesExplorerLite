@@ -4,15 +4,21 @@
 	function NodesCtrl($http, apiProvider) {
 		var ctrl = this;
 
-		ctrl.nodes = [
-			{ url: 'http://52.36.177.184:6869' },
-			{ url: 'http://52.28.28.118:6869' },
-			{ url: 'http://82.165.138.42:6869' },
-			{ url: 'http://52.74.26.138:6869' },
-			{ url: 'http://52.51.92.182:6869' },
-			{ url: 'http://52.63.116.99:6869' }
-		];
+//		ctrl.nodes = [
+//			{ url: 'http://52.36.177.184:6869' },
+//			{ url: 'http://52.28.28.118:6869' },
+//			{ url: 'http://82.165.138.42:6869' },
+//			{ url: 'http://52.74.26.138:6869' },
+//			{ url: 'http://52.51.92.182:6869' },
+//			{ url: 'http://52.63.116.99:6869' }
+//		];
 
+		ctrl.nodes = [
+			{ url: 'http://52.30.47.67:6869', maintainer:'Waves' },
+			{ url: 'http://52.28.66.217:6869', maintainer:'Waves' },
+			{ url: 'http://52.77.111.219:6869', maintainer:'Waves' },
+			{ url: 'http://79.140.41.223:6869', maintainer:'Community'}
+		];
 
 		activate();
 

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var URL = 'http://52.51.92.182:6869';
+    var URL = 'http://52.30.47.67:6869';
 
     angular.module('web').constant('apiMethods', apiInterface(URL));
 
@@ -33,9 +33,7 @@
                 balance: function (address) {
                     return url + '/addresses/balance/' + address;
                 },
-                generatingBalance: function (address) {
-                    return url + '/addresses/generatingbalance/' + address;
-                },
+
                 validate: function (address) {
                     return url + '/addresses/validate/' + address;
                 }
@@ -53,7 +51,10 @@
             consensus: {
                 puz: url + '/consensus/puz',
                 algo: url + '/consensus/algo',
-                basetarget: url + '/consensus/basetarget'
+                basetarget: url + '/consensus/basetarget',
+								generatingBalance: function (address) {
+                    return url + '/consensus/generatingbalance/' + address;
+                },
             },
             peers: {
                 all: url + '/peers/all',

@@ -67,15 +67,15 @@
 									}
 								}
 							})
-							.state('faucet', {
-								url: '/faucet',
-								views: {
-									"main": {
-										controller: 'FaucetCtrl as ctrl',
-										templateUrl: '/js/views/faucet.html'
-									}
-								}
-							})
+//							.state('faucet', {
+//								url: '/faucet',
+//								views: {
+//									"main": {
+//										controller: 'FaucetCtrl as ctrl',
+//										templateUrl: '/js/views/faucet.html'
+//									}
+//								}
+//							})
 							.state('nodes', {
 								url: '/nodes',
 								views: {

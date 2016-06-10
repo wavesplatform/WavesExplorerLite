@@ -17,7 +17,7 @@
 							.success(function (data) {
 								ctrl.balance = data;
 							});
-			$http.get(apiMethods.address.generatingBalance(ctrl.address))
+			$http.get(apiMethods.consensus.generatingBalance(ctrl.address))
 							.success(function (data) {
 								ctrl.generatingBalance = data.balance;
 							});
