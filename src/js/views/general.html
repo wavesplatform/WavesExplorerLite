@@ -40,7 +40,7 @@
                 <div class="list-group">
                     <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
                         <h4 class="list-group-item-heading">#{{item.height}}</h4>
-                        <p>signature: {{item.signature|limitTo:10}}...</p>
+                        <p>signature: {{item.signature|limitTo:12}}...</p>
                         <p class="list-group-item-text">{{item.transactions.length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
                     </a>
 
@@ -74,8 +74,8 @@
                         <td>{{item.fee}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:5}}...</a></td>
-                        <td><a ui-sref="address-details({address:item.sender})">{{item.sender|limitTo:6}}...</a></td>
-                        <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|limitTo:6}}...</a></td>
+                        <td><a ui-sref="address-details({address:item.sender})">{{item.sender|waveaddr|limitTo:6}}...</a></td>
+                        <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|waveaddr|limitTo:6}}...</a></td>
                         <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
                     </tr>
                 </table>
