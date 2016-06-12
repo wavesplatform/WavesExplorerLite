@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var URL = 'http://52.30.47.67:6869';
+    var URL = 'https://nodes.wavesnodes.com';
 
     angular.module('web').constant('apiMethods', apiInterface(URL));
 
