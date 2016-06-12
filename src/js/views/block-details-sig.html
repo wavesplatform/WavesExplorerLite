@@ -38,7 +38,7 @@
                     <tr>
                         <td>Generator</td>
                         <td>
-                            <a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator}}</a>
+                            <a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator|waveaddr}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -85,8 +85,8 @@
                         <td>{{item.fee}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>{{item.signature|limitTo:7}}...</td>
-                        <td><a ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:7}}...</a></td>
-                        <td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:7}}...</a></td>
+                        <td><a ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                        <td><a ui-sref="address-details({address:item.recipient})" title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:12}}...</a></td>
                         <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
                     </tr>
                     </tbody>
