@@ -4,6 +4,7 @@
 	function GeneralCtrl($http, apiMethods) {
 		var ctrl = this;
 		ctrl.consensus = {};
+		ctrl.consensus.algo = 'waves';
 
 		activate();
 
@@ -44,10 +45,10 @@
 							.success(function (data) {
 								ctrl.consensus.puz = data.puz;
 							}); */
-			$http.get(apiMethods.consensus.algo)
+			/*$http.get(apiMethods.consensus.algo)
 							.success(function (data) {
 								ctrl.consensus.algo = data.consensusAlgo;
-							});
+							});*/
 			$http.get(apiMethods.consensus.basetarget)
 							.success(function (data) {
 								ctrl.consensus.baseTarget = data.baseTarget;
