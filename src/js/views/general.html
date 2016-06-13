@@ -22,6 +22,7 @@
                 <p>Algo: {{ctrl.consensus.algo}}</p>
                 <!--<p>Puz: {{ctrl.consensus.puz}}</p>-->
                 <p>Base Target: <span title="{{ctrl.consensus.baseTarget}}">{{ctrl.consensus.baseTarget}}</span></p>
+                <p ng-show="ctrl.avgBlockDelay">Avg Block delay: {{ctrl.avgBlockDelay|currency:''}} minutes</p>
             </div>
         </div>
     </div>
