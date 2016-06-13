@@ -27,7 +27,11 @@
                 },
                 bySignature: function (signature) {
                     return url + '/blocks/signature/' + signature;
-                }
+                },
+                delay: function(fromSig, count) {
+                    return url + '/blocks/delay/'+fromSig +'/'+count;
+                },
+                last: url + '/blocks/last'
             },
             address: {
                 balance: function (address) {
