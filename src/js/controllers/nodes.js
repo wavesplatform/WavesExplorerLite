@@ -52,7 +52,7 @@
 							node.debugStateHash = data.stateHash;
 						}).error(function () {
 							node.debugStateHeight = "error";
-							node.debugStateHash = "error";
+							node.debugStateHash = "-";
 						});
 					});
 
