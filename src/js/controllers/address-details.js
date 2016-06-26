@@ -13,7 +13,7 @@
                         data[0].reverse();
                         ctrl.txs = data[0];
                         ctrl.txs.forEach(function(item) {
-                            item.outgoing = item.sender === ctrl.address;
+                            item.outgoing = (item.sender === ctrl.address);
                         });
                     });
             $http.get(apiMethods.address.balance(ctrl.address))
