@@ -62,7 +62,7 @@
                 </table>
             </div>
         </div>
-        <div class="panel panel-info">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Transactions in #{{ctrl.height}}
             </div>
@@ -82,12 +82,12 @@
                     <tbody>
                         <tr ng-repeat="item in ctrl.details.transactions">
                             <td>{{item.type}}</td>
-                            <td>{{item.fee}}</td>
+                            <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td><a class="mono" ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:7}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:12}}...</a></td>
-                            <td><span class="pull-right">{{item.amount|currency:''}}</span></td>
+                            <td><span class="pull-right">{{item.amount||wavelets}}</span></td>
                         </tr>
                     </tbody>
                 </table>
