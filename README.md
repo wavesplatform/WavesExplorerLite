@@ -9,3 +9,11 @@ Demo is available on http://testnet.wavesexplorer.com
 # Setup
 
 Configure node url in apiMethods.js
+
+# Run localy
+
+npm install
+
+node server.js
+
+Open http://localhost:3000 in browser

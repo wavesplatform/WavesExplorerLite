@@ -32,6 +32,11 @@
                     .success(function (data) {
                         ctrl.blocks = data;
                         ctrl.blocks.reverse();
+                        ctrl.blocks.forEach(function (b){
+                            b.totalAmount = b.transactions.reduce(function (a, b) {
+                                return {amount: a.amount + b.amount};
+                            }, {amount:0})
+                        });
                     });
         }
     }
