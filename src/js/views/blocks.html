@@ -22,26 +22,29 @@
             <div class="panel-body">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Timestamp</th>
-                            <th>Base Target</th>
-                            <th>Signature</th>
-                            <th>Generator</th>
-                            <th>Txs</th>
-                            <th>Fee</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Timestamp</th>
+                        <th>Base Target</th>
+                        <th>Signature</th>
+                        <th>Generator</th>
+                        <th>Txs</th>
+                        <th>Amount</th>
+                        <th>Fee</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in ctrl.blocks">
-                            <td><a ui-sref="block-details({height:item.height})">{{item.height}}</a></td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td>{{item["nxt-consensus"]["base-target"]}}</td>
-                            <td><span class="mono">{{item.signature|limitTo:15}}...</span></td>
-                            <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|waveaddr|limitTo:17}}...</a></td>
-                            <td>{{item.transactions.length}}</td>
-                            <td>{{item.fee}}</td>
-                        </tr>
+                    <tr ng-repeat="item in ctrl.blocks">
+                        <td><a ui-sref="block-details({height:item.height})">{{item.height}}</a></td>
+                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item["nxt-consensus"]["base-target"]}}</td>
+                        <td><span class="mono">{{item.signature|limitTo:15}}...</span></td>
+                        <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|waveaddr|limitTo:17}}...</a>
+                        </td>
+                        <td>{{item.transactions.length}}</td>
+                        <td>{{item.totalAmount.amount|wavelets}}</td>
+                        <td>{{item.fee|wavelets}}</td>
+                    </tr>
                     </tbody>
                 </table>
 

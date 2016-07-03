@@ -1,3 +1,4 @@
 .idea
 *.iml
 /nbproject/private/
+node_modules/

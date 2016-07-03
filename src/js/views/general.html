@@ -72,7 +72,7 @@
                     </thead>
                     <tr ng-repeat="item in ctrl.unconfirmedTxs">
                         <td>{{item.type}}</td>
-                        <td>{{item.fee}}</td>
+                        <td>{{item.fee|wavelets}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:5}}...</a></td>
                         <td><a ui-sref="address-details({address:item.sender})">{{item.sender|waveaddr|limitTo:6}}...</a></td>
