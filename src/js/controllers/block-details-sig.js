@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function BlocksDetailsSigCtrl($http, apiMethods, $stateParams, $state) {
+	function BlocksDetailsSigCtrl($http, apiService, $stateParams, $state) {
 		var ctrl = this;
 		ctrl.signature = $stateParams.signature;
 		ctrl.next = nextBlock;
@@ -11,7 +11,7 @@
 
 		function activate() {
 
-			$http.get(apiMethods.blocks.bySignature(ctrl.signature))
+			$http.get(apiService.blocks.bySignature(ctrl.signature))
 							.success(function (data) {
 								ctrl.details = data;
 							});

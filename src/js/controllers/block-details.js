@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function BlocksDetailsCtrl($http, apiMethods, $stateParams, $state) {
+	function BlocksDetailsCtrl($http, apiService, $stateParams, $state) {
 		var ctrl = this;
 		ctrl.height = parseInt($stateParams.height);
 		ctrl.next = nextBlock;
@@ -11,7 +11,7 @@
 
 		function activate() {
 
-			$http.get(apiMethods.blocks.byHeight(ctrl.height))
+			$http.get(apiService.blocks.byHeight(ctrl.height))
 							.success(function (data) {
 								ctrl.details = data;
 							});

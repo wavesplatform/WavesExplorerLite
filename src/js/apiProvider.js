@@ -1,9 +1,6 @@
 (function () {
     'use strict';
 
-    var URL = 'https://nodes.wavesnodes.com';
-
-    angular.module('web').constant('apiMethods', apiInterface(URL));
 
     angular.module('web').factory('apiProvider', apiProvider);
 
@@ -28,8 +25,8 @@
                 bySignature: function (signature) {
                     return url + '/blocks/signature/' + signature;
                 },
-                delay: function(fromSig, count) {
-                    return url + '/blocks/delay/'+fromSig +'/'+count;
+                delay: function (fromSig, count) {
+                    return url + '/blocks/delay/' + fromSig + '/' + count;
                 },
                 last: url + '/blocks/last'
             },
@@ -56,7 +53,7 @@
                 puz: url + '/consensus/puz',
                 algo: url + '/consensus/algo',
                 basetarget: url + '/consensus/basetarget',
-								generatingBalance: function (address) {
+                generatingBalance: function (address) {
                     return url + '/consensus/generatingbalance/' + address;
                 },
             },

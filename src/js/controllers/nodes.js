@@ -1,21 +1,9 @@
 (function () {
     'use strict';
 
-    function NodesCtrl($http, apiProvider) {
+    function NodesCtrl($http, apiProvider, appConfig) {
         var ctrl = this;
-
-//		ctrl.nodes = [
-//			{ url: 'http://52.36.177.184:6869' },
-//			{ url: 'http://52.28.28.118:6869' },
-//			{ url: 'http://82.165.138.42:6869' },
-//			{ url: 'http://52.74.26.138:6869' },
-//			{ url: 'http://52.51.92.182:6869' },
-//			{ url: 'http://52.63.116.99:6869' }
-//		];
-
-        ctrl.nodes = [
-            {url: 'https://nodes.wavesnodes.com', maintainer: 'Waves'}
-        ];
+        ctrl.nodes = appConfig.nodes;
 
         activate();
 
