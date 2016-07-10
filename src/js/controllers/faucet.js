@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function FaucetCtrl($http, apiMethods) {
+	function FaucetCtrl($http, apiService) {
 		var uri = "http://52.28.28.118:9000/payment";
 
 		var ctrl = this;
@@ -46,7 +46,7 @@
 		}
 
 		function validateAddress(address) {
-			return $http.get(apiMethods.address.validate(address))
+			return $http.get(apiService.address.validate(address))
 		}
 	}
 

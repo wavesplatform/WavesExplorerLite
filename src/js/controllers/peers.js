@@ -1,17 +1,17 @@
 (function() {
 	'use strict';
 	
-	function PeersCtrl($http, apiMethods) {
+	function PeersCtrl($http, apiService) {
 		var ctrl = this;
 		
 		activate();
 		
 		function activate() {
-			$http.get(apiMethods.peers.all)
+			$http.get(apiService.peers.all)
 							.success(function(data){
 								ctrl.peers = data[0];
 			});
-			$http.get(apiMethods.peers.connected)
+			$http.get(apiService.peers.connected)
 							.success(function (data){
 								ctrl.connectedPeers = data.peers[0];
 			});

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function BlocksCtrl($http, apiMethods) {
+    function BlocksCtrl($http, apiService) {
         var ctrl = this;
 
         ctrl.numPerPage = 20;
@@ -11,7 +11,7 @@
         activate();
 
         function activate() {
-            $http.get(apiMethods.blocks.height)
+            $http.get(apiService.blocks.height)
                     .success(function (data) {
                         ctrl.height = data.height;
                         ctrl.totalCount = ctrl.height;
@@ -28,7 +28,7 @@
             }
             var to = from + ctrl.numPerPage + correction;
 
-            $http.get(apiMethods.blocks.seq(from, to))
+            $http.get(apiService.blocks.seq(from, to))
                     .success(function (data) {
                         ctrl.blocks = data;
                         ctrl.blocks.reverse();
