@@ -10,7 +10,8 @@
             {url: 'http://52.77.111.219:6869', maintainer: 'Waves'},
             {url: 'http://52.51.92.182:6869', maintainer: 'Waves'},
             {url: 'http://79.140.41.223:6869', maintainer: 'Community'}
-        ]
+        ],
+        faucetUrl: 'http://52.30.47.67:9000'
     });
 
 })();
