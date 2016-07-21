@@ -5,7 +5,7 @@
             filter('wavelets', function () {
                 return function (input) {
                     var waves = input / 100000000;
-                    return waves.toFixed(8);
+                    return Number(waves.toFixed(8));
                 };
             });
 })();

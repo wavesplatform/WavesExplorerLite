@@ -29,7 +29,7 @@
                         <th>Signature</th>
                         <th>Generator</th>
                         <th>Txs</th>
-                        <th><span class="pull-right">Amount</span></th>
+                        <th><span class="pull-left">Amount</span></th>
                         <th>Fee</th>
                     </tr>
                     </thead>
@@ -42,7 +42,7 @@
                         <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|waveaddr|limitTo:17}}...</a>
                         </td>
                         <td>{{item.transactions.length}}</td>
-                        <td><span class="pull-right">{{item.totalAmount.amount|wavelets}}</span></td>
+                        <td><span class="pull-left">{{item.totalAmount.amount|wavelets}}</span></td>
                         <td>{{item.fee|wavelets}}</td>
                     </tr>
                     </tbody>
