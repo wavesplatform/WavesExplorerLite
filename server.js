@@ -12,7 +12,6 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 // //app.set('views', path.join(__dirname, 'views'));
 // app.engine('html', require('ejs').renderFile);
-//
 
 // express/connect middleware
 app.use(favicon(__dirname + '/src/favicon.ico'));
@@ -20,10 +19,13 @@ app.use(morgan('dev'));
 
 // serve up static assets
 app.use(express.static(path.join(__dirname, 'src')));
+app.get('/*', function(req, res){
+  res.sendFile(__dirname + '/src/index.html');
+});
 
 // development only
 if ('development' === app.get('env')) {
-    app.use(errorhandler());
+  app.use(errorhandler());
 }
 
 http.createServer(app).listen(app.get('port'), function () {

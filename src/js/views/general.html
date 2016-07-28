@@ -54,7 +54,7 @@
     <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Unconfirmed Transactions</h3>
+                <h3 class="panel-title">Unconfirmed Transactions - {{ctrl.unconfirmedTxs.length}}</h3>
 
             </div>
             <div class="panel-body">
@@ -67,7 +67,7 @@
                         <th>Signature</th>
                         <th>Sender</th>
                         <th>Recipient</th>
-                        <th><span class="pull-right">Amount</span></th>
+                        <th><span class="pull-left">Amount</span></th>
                     </tr>
                     </thead>
                     <tr ng-repeat="item in ctrl.unconfirmedTxs">
@@ -77,7 +77,7 @@
                         <td><a ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:5}}...</a></td>
                         <td><a ui-sref="address-details({address:item.sender})">{{item.sender|waveaddr|limitTo:6}}...</a></td>
                         <td><a ui-sref="address-details({address:item.recipient})">{{item.recipient|waveaddr|limitTo:6}}...</a></td>
-                        <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
+                        <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
                     </tr>
                 </table>
 

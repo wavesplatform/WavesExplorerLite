@@ -43,7 +43,7 @@
                         <th>Sender</th>
                         <th></th>
                         <th>Recipient</th>
-                        <th><span class="pull-right">Amount (WAVES)</span></th>
+                        <th><span class="pull-left">Amount (WAVES)</span></th>
                         <th>Fee</th>
                     </tr>
                     </thead>
@@ -66,7 +66,7 @@
                                title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:15}}...</a></td>
                         <td ng-if="item.recipient==ctrl.address">
                             <span class="mono">{{item.recipient|waveaddr|limitTo:15}}...</span></td>
-                        <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
+                        <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
                         <td>{{item.fee|wavelets}}</td>
                     </tr>
                     </tbody>

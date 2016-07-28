@@ -1,33 +1,32 @@
 (function () {
 	'use strict';
 
-	function FaucetCtrl($http, apiService) {
-		var uri = "http://52.28.28.118:9000/payment";
-
+	function FaucetCtrl($http, apiService, appConfig) {
 		var ctrl = this;
+		ctrl.uri = appConfig.faucetUrl + "/payment";
 		ctrl.getMoney = getMoney;
-	
+
 		ctrl.recipient = "";
 		ctrl.invalidAddress = false;
 		ctrl.error = null;
-			
+
 		function getMoney() {
 			ctrl.invalidAddress = false;
 			ctrl.tx = null;
 			ctrl.error = null;
-			
+
 			if (!ctrl.recipient || ctrl.recipient.length == 0) {
 				ctrl.invalidAddress = true;
 				return;
 			}
-				
+
 			validateAddress(ctrl.recipient)
 					.success(function (result) {
 						if (result.valid) {
 							var newPayment = {
-								recipient: ctrl.recipient
+								recipient: cleanAddress(ctrl.recipient)
 							};
-							$http.post(uri, newPayment)
+							$http.post(ctrl.uri, newPayment)
 									.success(function (data) {
 										if (data.status == "OK") {
 											ctrl.tx = data.tx;
@@ -46,10 +45,11 @@
 		}
 
 		function validateAddress(address) {
-			return $http.get(apiService.address.validate(address))
+			return $http.get(apiService.address.validate(cleanAddress(address)))
 		}
+
+		function cleanAddress(address) { return address.replace(/^1W/,""); }
 	}
 
 	angular.module('web').controller('FaucetCtrl', FaucetCtrl)
 })();
-
