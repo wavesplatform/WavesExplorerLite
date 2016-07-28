@@ -1,116 +1,124 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="web" ng-controller='MainCtrl as ctrl'>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content=""/>
-        <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
-        <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
-        <title>Waves Explorer</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" href="/css/style.css" media="screen">
-        <link rel="stylesheet" href="/css/loading-bar.min.css" media="screen">
-    </head>
-    <body>
 
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a href="/" class="navbar-brand">{{ctrl.title}}</a>
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse" id="navbar-main">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a ui-sref="blocks">Blocks</a>
-                        </li>
-                        <li>
-                            <a ui-sref="peers">Peers</a>
-                        </li>
-                       <li>
-                            <a ui-sref="faucet">Faucet</a>
-                        </li>
-                        <li>
-                            <a ui-sref="nodes">Nodes</a>
-                        </li>
-                        <li>
-                            <a href="http://testnet.waveswallet.io" target="_blank">Wallet</a>
-                        </li>
-                    </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="" />
+    <link href="/favicon.ico" type="image/x-icon" rel="icon" />
+    <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <title>Waves Explorer</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="/css/style.css" media="screen">
+    <link rel="stylesheet" href="/css/loading-bar.min.css" media="screen">
+</head>
 
-                    <div class="navbar-right col-sm-5 col-md-5 col-lg-5" ng-controller="SearchCtrl">
-                        <form class="navbar-form" role="search">
-                            <div class="input-group col-sm-12 col-md-12 col-lg-12">
-                                <input type="text" class="form-control" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">{{ctrl.title}}</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a ui-sref="blocks">Blocks</a>
+                    </li>
+                    <li>
+                        <a ui-sref="peers">Peers</a>
+                    </li>
+                    <li>
+                        <a ui-sref="faucet">Faucet</a>
+                    </li>
+                    <li>
+                        <a ui-sref="nodes">Nodes</a>
+                    </li>
+                    <li>
+                        <a href="http://testnet.waveswallet.io" target="_blank">Wallet</a>
+                    </li>
+                    <li class="dropdown open">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Misc <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="http://wavesexplorer.com">MAINNET Explorer</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="navbar-right col-sm-5 col-md-5 col-lg-5" ng-controller="SearchCtrl">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group col-sm-12 col-md-12 col-lg-12">
+                            <input type="text" class="form-control" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
-                        </form>
-                    </div>
-
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container">
+    <div class="container">
 
-            <br/>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12">
+                <div ui-view="main" ng-cloak></div>
+            </div>
+        </div>
+
+
+        <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <div ui-view="main" ng-cloak></div>
+
+                    <ul class="list-unstyled">
+                        <li class="pull-right"><a href="#top">Back to top</a></li>
+                        <li><a href="https://github.com/wavesplatform/">GitHub</a></li>
+                        <li><a href="https://github.com/wavesplatform/">Forum</a></li>
+                    </ul>
+                    <p>Brought to you by Waves Team.</p>
+
                 </div>
             </div>
+        </footer>
+    </div>
 
 
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        <ul class="list-unstyled">
-                            <li class="pull-right"><a href="#top">Back to top</a></li>
-                            <li><a href="https://github.com/wavesplatform/">GitHub</a></li>
-                            <li><a href="https://github.com/wavesplatform/">Forum</a></li>
-                        </ul>
-                        <p>Brought to you by Waves Team.</p>
-
-                    </div>
-                </div>
-            </footer>
-        </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/js/vendor/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
+    <script src="/js/vendor/loading-bar.min.js"></script>
 
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="/js/vendor/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
-        <script src="/js/vendor/loading-bar.min.js"></script>
+    <script src="/js/app.js?v=2"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/routes.js?v=2"></script>
+    <script src="/js/apiProvider.js"></script>
+    <script src="/js/services/api.js"></script>
+    <script src="/js/controllers/main.js"></script>
+    <script src="/js/controllers/general.js?v=2"></script>
+    <script src="/js/controllers/blocks.js?v=2"></script>
+    <script src="/js/controllers/block-details.js?v=2"></script>
+    <script src="/js/controllers/address-details.js?v=2"></script>
+    <script src="/js/controllers/block-details-sig.js?v=2"></script>
+    <script src="/js/controllers/search.js?v=2"></script>
+    <script src="/js/controllers/peers.js?v=2"></script>
+    <script src="/js/controllers/tx-details.js?v=2"></script>
+    <script src="/js/controllers/faucet.js?v=2"></script>
+    <script src="/js/controllers/nodes.js?v=2"></script>
 
+    <script src="/js/filters/wavelets.js?v=2"></script>
+    <script src="/js/filters/waveaddr.js?v=2"></script>
 
-        <script src="/js/app.js?v=2"></script>
-        <script src="/js/config.js"></script>
-        <script src="/js/routes.js?v=2"></script>
-        <script src="/js/apiProvider.js"></script>
-        <script src="/js/services/api.js"></script>
-        <script src="/js/controllers/main.js"></script>
-        <script src="/js/controllers/general.js?v=2"></script>
-        <script src="/js/controllers/blocks.js?v=2"></script>
-        <script src="/js/controllers/block-details.js?v=2"></script>
-        <script src="/js/controllers/address-details.js?v=2"></script>
-        <script src="/js/controllers/block-details-sig.js?v=2"></script>
-        <script src="/js/controllers/search.js?v=2"></script>
-        <script src="/js/controllers/peers.js?v=2"></script>
-        <script src="/js/controllers/tx-details.js?v=2"></script>
-        <script src="/js/controllers/faucet.js?v=2"></script>
-        <script src="/js/controllers/nodes.js?v=2"></script>
+</body>
 
-        <script src="/js/filters/wavelets.js?v=2"></script>
-        <script src="/js/filters/waveaddr.js?v=2"></script>
-
-    </body>
 </html>
