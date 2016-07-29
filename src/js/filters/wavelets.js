@@ -15,7 +15,6 @@
         };
 
         function trimZeros(str) {
-            console.log(str);
             if (str.length == 0 || str[str.length - 1] != '0')
                 return str;
             return trimZeros(str.substring(0, str.length - 1))
