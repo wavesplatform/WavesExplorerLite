@@ -10,10 +10,12 @@ Demo is available on http://testnet.wavesexplorer.com
 
 Configure node url in config.js
 
-# Run localy
+# Run locally
 
-npm install
+Download [Nodejs and npm](https://docs.npmjs.com/getting-started/installing-node "Nodejs install") if you don't have them
 
-node server.js
+`npm install`
+
+`node server.js`
 
 Open http://localhost:3000 in browser
