@@ -1,10 +1,10 @@
 # Waves Explorer Lite
 
-Waves Testnet Blockchain Explorer
+Waves Blockchain Explorer
 
 # Demo
 
-Demo is available on http://testnet.wavesexplorer.com
+Waves Testnet Explorer is available on http://testnet.wavesexplorer.com
 
 # Setup
 
@@ -18,4 +18,4 @@ Download [Nodejs and npm](https://docs.npmjs.com/getting-started/installing-node
 
 `node server.js`
 
-Open http://localhost:3000 in browser
+Open `http://localhost:3000` in browser
