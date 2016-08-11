@@ -7,25 +7,27 @@
             <div class="panel-body">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>Address</th>
-                        <th>Node name</th>
-                        <th>Node nonce</th>
-                    </tr>
+                        <tr>
+                            <th>Address</th>
+                            <th>Node name</th>
+                            <th>Node nonce</th>
+                            <th>Last seen</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.peers">
-                        <td>{{item.address}}</td>
-                        <td>{{item.nodeName}}</td>
-                        <td>{{item.nodeNonce}}</td>
-                    </tr>
+                        <tr ng-repeat="item in ctrl.peers">
+                            <td>{{item.address}}</td>
+                            <td>{{item.nodeName}}</td>
+                            <td>{{item.nodeNonce}}</td>
+                            <td>{{item.lastSeen|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-	
-	    <div class="col-lg-6">
+
+    <div class="col-lg-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Connected</h3>
@@ -33,18 +35,20 @@
             <div class="panel-body">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>Address</th>
-                        <th>Node name</th>
-                        <th>Node nonce</th>
-                    </tr>
+                        <tr>
+                            <th>Address</th>
+                            <th>Declared address</th>
+                            <th>Node name</th>
+                            <th>Node nonce</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.connectedPeers">
-                        <td>{{item.declaredAddress}}</td>
-                        <td>{{item.peerName}}</td>
-                        <td>{{item.peerNonce}}</td>
-                    </tr>
+                        <tr ng-repeat="item in ctrl.connectedPeers">
+                            <td>{{item.address}}
+                                <td>{{item.declaredAddress}}</td>
+                                <td>{{item.peerName}}</td>
+                                <td>{{item.peerNonce}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
