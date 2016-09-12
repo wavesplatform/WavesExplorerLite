@@ -12,7 +12,8 @@
             {url: 'http://79.140.41.223:6869', maintainer: 'Community'}
         ],
         faucetUrl: 'http://52.30.47.67:9000',
-        title: 'Waves Testnet Explorer'
+        title: 'Waves Testnet Explorer',
+        captchaKey: '6Ld58SkTAAAAAHJZg2bR4LWFGRrMlwXZrx2IhO2O'
     });
 
 })();
