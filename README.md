@@ -16,6 +16,10 @@ Download [Nodejs and npm](https://docs.npmjs.com/getting-started/installing-node
 
 `npm install`
 
+`bower install`
+
+`grunt`
+
 `node server.js`
 
 Open `http://localhost:3000` in browser

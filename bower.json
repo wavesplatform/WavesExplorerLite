@@ -1,0 +1,26 @@
+{
+  "name": "waves-explorer-lite",
+  "description": "",
+  "main": "",
+  "authors": [
+    "gagarin55@protonmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wavesplatform/WavesExplorerLite",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "angular-ui-bootstrap": "^2.1.4",
+    "angular-bootstrap": "^2.1.4"
+  }
+}

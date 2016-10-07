@@ -14,13 +14,13 @@ app.set('port', process.env.PORT || 3000);
 // app.engine('html', require('ejs').renderFile);
 
 // express/connect middleware
-app.use(favicon(__dirname + '/src/favicon.ico'));
+app.use(favicon(__dirname + '/dist/favicon.ico'));
 app.use(morgan('dev'));
 
 // serve up static assets
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.get('/*', function(req, res){
-  res.sendFile(__dirname + '/src/index.html');
+  res.sendFile(__dirname + '/dist/index.html');
 });
 
 // development only
