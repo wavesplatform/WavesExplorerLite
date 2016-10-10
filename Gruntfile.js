@@ -5,12 +5,12 @@ module.exports = function(grunt) {
         concat: {
             dist: {
                 src: [
-                    'bower_components/jquery/dist/jquery.min.js',
-                    'bower_components/bootstrap/dist/js/boostrap.min.js',
-                    'bower_components/angular/angular.min.js',
-                    'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-                    'bower_components/angular-boostrap/ui-bootstrap.min.js',
-                    'bower_components/angular-boostrap/ui-bootstrap-tpls.min.js',
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/bootstrap/dist/js/boostrap.js',
+                    'bower_components/angular/angular.js',
+                    'bower_components/angular-ui-router/release/angular-ui-router.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
                 ],
                 dest: 'dist/js/vendor.js'
             }
