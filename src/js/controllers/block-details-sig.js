@@ -14,6 +14,7 @@
 							.success(function (data) {
 								ctrl.details = data;
 								ctrl.height = data.height
+								
 								ctrl.payments = txs(ctrl.details.transactions, 2);
 								ctrl.assetIssue = txs(ctrl.details.transactions, 3);
 								ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
