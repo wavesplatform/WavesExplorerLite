@@ -1,6 +1,7 @@
 (function () {
 	'use strict';
 
+//http://testnet.wavesexplorer.com/blocks/172206
 	function BlocksDetailsCtrl($http, apiService, $stateParams, $state) {
 		var ctrl = this;
 		ctrl.height = parseInt($stateParams.height);
@@ -14,7 +15,17 @@
 			$http.get(apiService.blocks.byHeight(ctrl.height))
 							.success(function (data) {
 								ctrl.details = data;
+								
+								ctrl.payments = txs(ctrl.details.transactions, 2);
+								ctrl.assetIssue = txs(ctrl.details.transactions, 3);
+								ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
 							});
+		}
+
+		function txs(trans, type) {
+			if (trans) {
+				return trans.filter(function(tx){return tx.type === type;});
+			}
 		}
 
 		function nextBlock() {
