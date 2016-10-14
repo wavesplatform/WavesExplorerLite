@@ -3,10 +3,12 @@
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a aria-expanded="true" href="#connected" data-toggle="tab">Connected <span class="badge">{{ctrl.connectedPeers.length}}</span></a></a>
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active">
+                        <a aria-expanded="true" href="#connected" data-toggle="tab" role="tab">Connected <span class="badge">{{ctrl.connectedPeers.length}}</span></a></a>
                     </li>
-                    <li class=""><a aria-expanded="false" href="#all" data-toggle="tab">All known <span class="badge">{{ctrl.peers.length}}</span></a></a>
+                    <li class="">
+                        <a aria-expanded="false" href="#all" data-toggle="tab" role="tab">All known <span class="badge">{{ctrl.peers.length}}</span></a></a>
                     </li>
                 </ul>
 

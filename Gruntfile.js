@@ -1,12 +1,12 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
             dist: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js',
-                    'bower_components/bootstrap/dist/js/boostrap.js',
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-ui-router/release/angular-ui-router.js',
                     'bower_components/angular-bootstrap/ui-bootstrap.js',
@@ -25,7 +25,6 @@ module.exports = function(grunt) {
                         src: ['**'],
                         dest: 'dist/'
                     }
-
                 ]
             }
         }

@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('web').constant('appConfig', {
-        apiDomain: 'http://52.30.47.67:6869',
+        apiDomain: 'http://52.28.66.217:6869',
         blockchainName: 'Testnet',
         nodes: [
             {url: 'http://52.30.47.67:6869', maintainer: 'Waves'},

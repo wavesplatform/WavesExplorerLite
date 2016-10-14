@@ -11,8 +11,8 @@
 
     function apiInterface(url) {
         return {
-            version: url + '/scorex/version',
-            status: url + '/scorex/status',
+            version: url + '/node/version',
+            status: url + '/node/status',
             blocks: {
                 height: url + '/blocks/height',
                 seq: function (from, to) {
