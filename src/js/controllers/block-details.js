@@ -15,7 +15,7 @@
 							.success(function (data) {
 								ctrl.details = data;
 
-								ctrl.payments = txs(ctrl.details.transactions, 2);
+								ctrl.payments = txs(ctrl.details.transactions, 2).concat(txs(ctrl.details.transactions, 1));
 								ctrl.assetIssue = txs(ctrl.details.transactions, 3);
 								ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
 							});
