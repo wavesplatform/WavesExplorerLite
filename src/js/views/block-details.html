@@ -112,6 +112,31 @@
                     </tbody>
                 </table>
 
+                <table class="table blockDetails" ng-show="ctrl.assetReissue.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Issuer</th>
+                            <th>Asset ID</th>
+                            <th><span class="pull-right">Quantity</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.assetReissue">
+                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                            <td>{{item.assetId}}</td>
+                            <td><span class="pull-right">{{item.quantity}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <table class="table blockDetails" ng-show="ctrl.assetTransfer.length > 0">
                     <thead>
                         <tr>
@@ -129,7 +154,7 @@
                         <tr ng-repeat="item in ctrl.assetTransfer">
                             <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
                             <td>{{item.type}}</td>
-                            <td>{{item.feeAmount|wavelets}}</td>
+                            <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:12}}...</a></td>

@@ -37,23 +37,22 @@
                 <table class="table blockDetails">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Type</th>
                         <th>Timestamp</th>
-                        <th>Signature</th>
                         <th>Sender</th>
                         <th></th>
                         <th>Recipient</th>
-                        <th><span class="pull-left">Amount (WAVES)</span></th>
+                        <th><span class="pull-left">Amount</span></th>
                         <th>Fee</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.txs">
+                        <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
                         <td>{{item.type}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td>
-                            <a class="mono" ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:8}}...</a>
-                        </td>
+
                         <td ng-if="item.sender!=ctrl.address">
                             <a class="mono" ui-sref="address-details({address:item.sender})"
                                title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:15}}...</a></td>

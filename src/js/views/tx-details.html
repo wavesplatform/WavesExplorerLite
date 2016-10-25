@@ -32,7 +32,6 @@
                         <tr>
                             <td>Fee</td>
                             <td>{{ctrl.details.fee|wavelets}}</td>
-
                         </tr>
                         <tr>
                             <td>Sender</td>
@@ -105,7 +104,6 @@
                         <tr>
                             <td>Fee</td>
                             <td>{{ctrl.details.fee|wavelets}} WAVES</td>
-
                         </tr>
                         <tr>
                             <td>Issuer</td>
@@ -113,7 +111,6 @@
                                 <a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
                             </td>
                         </tr>
-
                         <tr>
                             <td>Signature</td>
                             <td>{{ctrl.details.signature}}</td>
@@ -155,7 +152,7 @@
                         </tr>
                         <tr>
                             <td>Fee</td>
-                            <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                            <td>{{ctrl.details.fee|assetunits:ctrl.details.assetDecimals}} {{ctrl.details.feeAsset}}</td>
 
                         </tr>
                         <tr>
@@ -174,6 +171,55 @@
 
                     </tbody>
                 </table>
+
+                <table class="table blockDetails" ng-show="ctrl.details.type==5">
+                    <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>{{ctrl.details.id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>{{ctrl.details.type}} (Asset reissue)</td>
+                        </tr>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Block</td>
+                            <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Asset ID</td>
+                            <td><a class="mono" ui-sref="tx-details({signature:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Reissuable</td>
+                            <td>{{ctrl.details.reissuable}}</td>
+                        </tr>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>{{ctrl.details.quantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fee</td>
+                            <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                        </tr>
+                        <tr>
+                            <td>Issuer</td>
+                            <td>
+                                <a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Signature</td>
+                            <td>{{ctrl.details.signature}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
 
