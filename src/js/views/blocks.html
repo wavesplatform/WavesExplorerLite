@@ -3,13 +3,13 @@
         <h1>Blocks</h1>
     </div>
     <div class="col-lg-7">
-        <uib-pagination total-items="ctrl.totalCount"
+        <ul uib-pagination total-items="ctrl.totalCount"
                         items-per-page="ctrl.numPerPage"
                         ng-model="ctrl.currentPage"
                         ng-change="ctrl.pageChanged()"
                         class="pull-right pagination"
                         boundary-links="true"
-                        rotate="false" max-size="5"></uib-pagination>
+                        rotate="false" max-size="5"></ul>
 
     </div>
 </div>
@@ -39,7 +39,7 @@
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>{{item["nxt-consensus"]["base-target"]}}</td>
                         <td><span class="mono">{{item.signature|limitTo:15}}...</span></td>
-                        <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|limitTo:17}}...</a>
+                        <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|waveaddr|limitTo:17}}...</a>
                         </td>
                         <td>{{item.transactions.length}}</td>
                         <td><span class="pull-right">{{item.totalAmount.amount|wavelets}}</span></td>

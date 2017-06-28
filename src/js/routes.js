@@ -36,7 +36,7 @@
 								views: {
 									"main": {
 										controller: 'BlocksDetailsSigCtrl as ctrl',
-										templateUrl: '/js/views/block-details-sig.html'
+										templateUrl: '/js/views/block-details.html'
 									}
 								}
 							})

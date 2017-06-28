@@ -1,61 +1,55 @@
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-            Block #{{ctrl.height}}
+                Block #{{ctrl.height}}
             </div>
 
             <div class="panel-body">
-
                 <table class="table blockDetails">
                     <tbody>
-                    <tr>
-                        <td class="col-md-2">Height</td>
-                        <td><button class="btn btn-primary btn-xs" ng-click="ctrl.prev()">prev</button> {{ctrl.height}} <button class="btn btn-primary btn-xs" ng-click="ctrl.next()">next</button></td>
-                    </tr>
-                    <tr>
-                        <td>Version</td>
-                        <td>{{ctrl.details.version}}</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Transactions</td>
-                        <td>
-                            {{ctrl.details.transactions.length}} transactions
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Parent block</td>
-                        <td>
-                            {{ctrl.details.reference}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Generator</td>
-                        <td>
-                            <a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator}}</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Signature</td>
-                        <td>{{ctrl.details.signature}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fee</td>
-                        <td>{{ctrl.details.fee|wavelets}}</td>
-                    </tr>
-                    <tr>
-                        <td>Size</td>
-                        <td>{{ctrl.details.blocksize}}</td>
-                    </tr>
-										<tr>
-                        <td>Base Target</td>
-                        <td>{{ctrl.details["nxt-consensus"]["base-target"]}}</td>
-                    </tr>
+                        <tr>
+                            <td class="col-md-2">Height</td>
+                            <td><button class="btn btn-primary btn-xs" ng-click="ctrl.prev()">prev</button> {{ctrl.height}}
+                                <button class="btn btn-primary btn-xs" ng-click="ctrl.next()">next</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Version</td>
+                            <td>{{ctrl.details.version}}</td>
+                        </tr>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transactions</td>
+                            <td>{{ctrl.details.transactions.length}} transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Parent block</td>
+                            <td>{{ctrl.details.reference}}</td>
+                        </tr>
+                        <tr>
+                            <td>Generator</td>
+                            <td><a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator|waveaddr}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Signature</td>
+                            <td>{{ctrl.details.signature}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fee</td>
+                            <td>{{ctrl.details.fee|wavelets}}</td>
+                        </tr>
+                        <tr>
+                            <td>Size</td>
+                            <td>{{ctrl.details.blocksize}}</td>
+                        </tr>
+                        <tr>
+                            <td>Base Target</td>
+                            <td>{{ctrl.details["nxt-consensus"]["base-target"]}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -65,30 +59,111 @@
                 Transactions in #{{ctrl.height}}
             </div>
             <div class="panel-body">
-                <table class="table blockDetails">
+
+                <table class="table blockDetails" ng-show="ctrl.payments.length > 0">
                     <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Fee</th>
-                        <th>Timestamp</th>
-                        <th>Signature</th>
-                        <th>Sender</th>
-                        <th>Recipient</th>
-                        <th><span class="pull-right">Amount</span></th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Sender</th>
+                            <th>Recipient</th>
+                            <th><span class="pull-right">Amount</span></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.details.transactions">
-                        <td>{{item.type}}</td>
-                        <td>{{item.fee|wavelets}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td><a class="mono" ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:7}}...</a></td>
-                        <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
-                        <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:12}}...</a></td>
-                        <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
-                    </tr>
+                        <tr ng-repeat="item in ctrl.payments">
+                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                            <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:12}}...</a></td>
+                            <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
+                        </tr>
                     </tbody>
                 </table>
+
+                <table class="table blockDetails" ng-show="ctrl.assetIssue.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Issuer</th>
+                            <th>Asset ID</th>
+                            <th>Asset Name</th>
+                            <th><span class="pull-right">Quantity</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.assetIssue">
+                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                            <td>{{item.assetId}}</td>
+                            <td>{{item.name}}</td>
+                            <td><span class="pull-right">{{item.quantity}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table blockDetails" ng-show="ctrl.assetReissue.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Issuer</th>
+                            <th>Asset ID</th>
+                            <th><span class="pull-right">Quantity</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.assetReissue">
+                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                            <td>{{item.assetId}}</td>
+                            <td><span class="pull-right">{{item.quantity}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table blockDetails" ng-show="ctrl.assetTransfer.length > 0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Sender</th>
+                            <th>Recipient</th>
+                            <th>Asset ID</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.assetTransfer">
+                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:12}}...</a></td>
+                            <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:12}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({signature:item.assetId})">{{item.assetId}}</a></td>
+                            <td>{{item.amount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>

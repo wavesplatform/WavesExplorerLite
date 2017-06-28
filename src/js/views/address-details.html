@@ -6,7 +6,7 @@
                     <tbody>
                     <tr>
                         <td class="col-md-2">Address</td>
-                        <td>{{ctrl.address}}</td>
+                        <td>{{ctrl.address|waveaddr}}</td>
                     </tr>
                     <tr>
                         <td>Confirmations</td>
@@ -37,35 +37,34 @@
                 <table class="table blockDetails">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Type</th>
                         <th>Timestamp</th>
-                        <th>Signature</th>
                         <th>Sender</th>
                         <th></th>
                         <th>Recipient</th>
-                        <th><span class="pull-left">Amount (WAVES)</span></th>
+                        <th><span class="pull-left">Amount</span></th>
                         <th>Fee</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.txs">
+                        <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
                         <td>{{item.type}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td>
-                            <a class="mono" ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:8}}...</a>
-                        </td>
+
                         <td ng-if="item.sender!=ctrl.address">
                             <a class="mono" ui-sref="address-details({address:item.sender})"
-                               title="{{item.sender}}">{{item.sender|limitTo:15}}...</a></td>
+                               title="{{item.sender|waveaddr}}">{{item.sender|waveaddr|limitTo:15}}...</a></td>
                         <td ng-if="item.sender==ctrl.address">
-                            <span class="mono">{{item.sender|limitTo:15}}...</span></td>
+                            <span class="mono">{{item.sender|waveaddr|limitTo:15}}...</span></td>
                         <td><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"
                                   ng-class="{'text-danger':item.outgoing,'text-success':!item.outgoing}"></span></td>
                         <td ng-if="item.recipient!=ctrl.address">
                             <a class="mono" ui-sref="address-details({address:item.recipient})"
-                               title="{{item.recipient}}">{{item.recipient|limitTo:15}}...</a></td>
+                               title="{{item.recipient|waveaddr}}">{{item.recipient|waveaddr|limitTo:15}}...</a></td>
                         <td ng-if="item.recipient==ctrl.address">
-                            <span class="mono">{{item.recipient|limitTo:15}}...</span></td>
+                            <span class="mono">{{item.recipient|waveaddr|limitTo:15}}...</span></td>
                         <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
                         <td>{{item.fee|wavelets}}</td>
                     </tr>

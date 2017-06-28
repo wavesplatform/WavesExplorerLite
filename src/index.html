@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="web">
+<html lang="en" ng-app="web" ng-controller='MainCtrl as ctrl'>
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <link href="/favicon.ico" type="image/x-icon" rel="icon" />
     <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />
     <title>Waves Explorer</title>
+    <script src="/js/vendor.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="/css/style.css" media="screen">
     <link rel="stylesheet" href="/css/loading-bar.min.css" media="screen">
@@ -17,7 +18,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">Waves Explorer</a>
+                <a href="/" class="navbar-brand">{{ctrl.title}}</a>
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -29,24 +30,22 @@
                     <li>
                         <a ui-sref="blocks">Blocks</a>
                     </li>
-                    <!--                        <li>
-                            <a ui-sref="peers">Peers</a>
-                        </li>-->
-                    <!--                        <li>
-                        </li>
-                       <li>
-                            <a ui-sref="faucet">Faucet</a>
-                        </li> -->
+                    <li>
+                        <a ui-sref="peers">Peers</a>
+                    </li>
+                    <li>
+                        <a ui-sref="faucet">Faucet</a>
+                    </li>
                     <li>
                         <a ui-sref="nodes">Nodes</a>
                     </li>
                     <li>
-                        <a href="https://waveswallet.io" target="_blank">Wallet</a>
+                        <a href="http://testnet.waveswallet.io" target="_blank">Wallet</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Misc <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://testnet.wavesexplorer.com">TESTNET Explorer</a></li>
+                            <li><a href="http://wavesexplorer.com">MAINNET Explorer</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -63,7 +62,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <div class="container">
@@ -82,8 +80,8 @@
 
                     <ul class="list-unstyled">
                         <li class="pull-right"><a href="#top">Back to top</a></li>
-                        <li><a href="https://github.com/wavesplatform/">GitHub</a></li>
-                        <li><a href="https://wavestalk.org/">Forum</a></li>
+                        <li><a href="https://github.com/wavesplatform/WavesExplorerLite">GitHub</a></li>
+                        <li><a href="https://github.com/wavesplatform/">Forum</a></li>
                     </ul>
                     <p>Brought to you by Waves Team.</p>
 
@@ -93,13 +91,9 @@
     </div>
 
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
-    <script src="/js/vendor/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
     <script src="/js/vendor/loading-bar.min.js"></script>
+    <script src="//www.google.com/recaptcha/api.js?render=explicit&onload=vcRecaptchaApiLoaded" async defer></script>
+    <script src="/js/vendor/angular-recaptcha.min.js"></script>
 
 
     <script src="/js/app.js?v=2"></script>
@@ -120,7 +114,11 @@
     <script src="/js/controllers/nodes.js?v=2"></script>
 
     <script src="/js/filters/wavelets.js?v=3"></script>
+    <script src="/js/filters/assetunits.js?v=3"></script>
+    <script src="/js/filters/waveaddr.js?v=2"></script>
 
+    <!--  -->
+    <script src="/js/vendor/Base58.js"></script>
 </body>
 
 </html>

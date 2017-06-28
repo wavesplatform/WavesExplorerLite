@@ -6,15 +6,26 @@
 		ctrl.signature = $stateParams.signature;
 		ctrl.next = nextBlock;
 		ctrl.prev = prevBlock;
-
+		
 		activate();
 
 		function activate() {
-
 			$http.get(apiService.blocks.bySignature(ctrl.signature))
 							.success(function (data) {
 								ctrl.details = data;
+								ctrl.height = data.height
+								
+								ctrl.payments = txs(ctrl.details.transactions, 2).concat(txs(ctrl.details.transactions, 1));
+								ctrl.assetIssue = txs(ctrl.details.transactions, 3);
+								ctrl.assetReissue = txs(ctrl.details.transactions, 5);
+								ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
 							});
+		}
+
+		function txs(trans, type) {
+			if (trans) {
+				return trans.filter(function(tx){return tx.type === type;});
+			}
 		}
 
 		function nextBlock() {
