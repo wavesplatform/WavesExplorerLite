@@ -1,11 +1,21 @@
 {
   "name": "waves-explorer-lite",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Waves blockchain information tool",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wavesplatform/WavesExplorerLite.git"
+  },
+  "license": "Apache-2.0",
   "dependencies": {
+  },
+  "devDependencies": {
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
     "requirejs": "^2.2.0",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+
+    "grunt": "^1.0.1"
   }
 }

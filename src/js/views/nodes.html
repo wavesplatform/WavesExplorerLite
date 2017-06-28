@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.nodes">
-                            <td>{{item.url}}</td>
+                            <td><waves-node-link ref="item"></waves-node-link></td>
                             <td>{{item.version}}</td>
                             <td>{{item.height}}</td>
                             <td>{{item.baseTarget}}</td>

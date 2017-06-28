@@ -10,6 +10,8 @@
         function activate() {
             ctrl.nodes.forEach(function (node) {
 
+                console.log(node);
+
                 $http.get(apiProvider(node.url).version)
                         .success(function (data) {
                             node.version = data.version;
