@@ -25,14 +25,9 @@
                 url: 'nodes',
                 title: 'Nodes'
             });
-            menuItems.push({
-                url: config.walletUrl,
-                title: 'Wallet'
-            });
-
             nav.menuItems = menuItems;
-            nav.peerExplorer = config.peerExplorer;
 
-            console.log(nav);
+            nav.wallet = config.wallet;
+            nav.peerExplorer = config.peerExplorer;
         }]);
 })();

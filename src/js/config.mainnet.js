@@ -13,6 +13,9 @@
             url: 'https://testnet.wavesexplorer.com',
             title: 'TESTNET Explorer'
         },
-        walletUrl: 'https://waveswallet.io'
+        wallet: {
+            url: 'https://waveswallet.io',
+            title: 'Wallet'
+        }
     });
 })();

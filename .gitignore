@@ -2,3 +2,4 @@
 *.iml
 /nbproject/private/
 node_modules/
+distr/

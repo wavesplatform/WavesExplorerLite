@@ -8,19 +8,21 @@ var morgan = require('morgan'); // formerly express.logger
 var errorhandler = require('errorhandler');
 var app = express();
 
+var basedir = __dirname + '/src';
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 // //app.set('views', path.join(__dirname, 'views'));
 // app.engine('html', require('ejs').renderFile);
 
 // express/connect middleware
-app.use(favicon(__dirname + '/src/favicon.ico'));
+app.use(favicon(basedir + '/favicon.ico'));
 app.use(morgan('dev'));
 
 // serve up static assets
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(basedir));
 app.get('/*', function(req, res){
-  res.sendFile(__dirname + '/src/index.html');
+  res.sendFile(basedir + '/index.html');
 });
 
 // development only

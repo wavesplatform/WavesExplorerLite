@@ -19,7 +19,10 @@
             url: 'https://wavesexplorer.com',
             title: 'MAINNET Explorer'
         },
-        walletUrl: 'https://testnet.waveswallet.io'
+        wallet: {
+            url: 'https://testnet.waveswallet.io',
+            title: 'Wallet'
+        }
     });
 
 })();
