@@ -3,9 +3,11 @@
 
 	function FaucetCtrl($http, apiService, appConfig, vcRecaptchaService) {
 		var ctrl = this;
-		ctrl.pubKey = appConfig.captchaKey;
-		ctrl.uri = appConfig.faucetUrl + "/payment";
-		ctrl.getMoney = getMoney;
+
+		if (appConfig.faucet) {
+			ctrl.pubKey = appConfig.faucet.captchaKey;
+			ctrl.uri = appConfig.faucet.url + "/payment";
+		}
 
 		ctrl.recipient = "";
 		ctrl.invalidAddress = false;
@@ -14,6 +16,7 @@
 		ctrl.response = null;
 		ctrl.widgetId = null;
 
+		ctrl.getMoney = getMoney;
 		ctrl.setResponse = function (response) {
             ctrl.response = response;
         };
@@ -26,7 +29,6 @@
 			vcRecaptchaService.reload(ctrl.widgetId);
 			ctrl.response = null;
 		};
-
 
 		function getMoney() {
 			ctrl.invalidAddress = false;
@@ -42,32 +44,32 @@
 				return;
 			}
 			validateAddress(ctrl.recipient)
-					.success(function (result) {
-						if (result.valid) {
-							var newPayment = {
-								token: ctrl.response,
-								recipient: cleanAddress(ctrl.recipient)
-							};
+				.success(function (result) {
+					if (result.valid) {
+						var newPayment = {
+							token: ctrl.response,
+							recipient: cleanAddress(ctrl.recipient)
+						};
 
-							$http.post(ctrl.uri, newPayment)
-									.success(function (data) {
-										if (data.status == "OK") {
-											ctrl.tx = data.tx;
-										} else {
-											ctrl.error = data.message;
-											vcRecaptchaService.reload(ctrl.widgetId);
-										}
-									})
-									.error(function (data) {
-										if (data) {
-											ctrl.error = data.message;
-											vcRecaptchaService.reload(ctrl.widgetId);
-										}
-							});
-						} else {
-							ctrl.invalidAddress = true;
-						}
-					});
+						$http.post(ctrl.uri, newPayment)
+							.success(function (data) {
+								if (data.status == "OK") {
+									ctrl.tx = data.tx;
+								} else {
+									ctrl.error = data.message;
+									vcRecaptchaService.reload(ctrl.widgetId);
+								}
+							})
+							.error(function (data) {
+								if (data) {
+									ctrl.error = data.message;
+									vcRecaptchaService.reload(ctrl.widgetId);
+								}
+						});
+					} else {
+						ctrl.invalidAddress = true;
+					}
+				});
 		}
 
 		function validateAddress(address) {

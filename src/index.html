@@ -26,26 +26,14 @@
                 </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a ui-sref="blocks">Blocks</a>
-                    </li>
-                    <li>
-                        <a ui-sref="peers">Peers</a>
-                    </li>
-                    <li>
-                        <a ui-sref="faucet">Faucet</a>
-                    </li>
-                    <li>
-                        <a ui-sref="nodes">Nodes</a>
-                    </li>
-                    <li>
-                        <a href="http://testnet.waveswallet.io" target="_blank">Wallet</a>
+                <ul class="nav navbar-nav" ng-controller="NavigationCtrl as nav">
+                    <li ng-repeat="item in nav.menuItems track by $index">
+                        <a ui-sref="{{item.url}}">{{item.title}}</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Misc <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://wavesexplorer.com">MAINNET Explorer</a></li>
+                            <li><a ng-href="{{::nav.peerExplorer.url}}">{{::nav.peerExplorer.title}}</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,6 +91,7 @@
     <script src="/js/services/api.js"></script>
     <script src="/js/controllers/main.js"></script>
     <script src="/js/controllers/general.js?v=2"></script>
+    <script src="/js/controllers/navigation.js"></script>
     <script src="/js/controllers/blocks.js?v=2"></script>
     <script src="/js/controllers/block-details.js?v=2"></script>
     <script src="/js/controllers/address-details.js?v=2"></script>

@@ -4,12 +4,15 @@
     angular.module('web').constant('appConfig', {
         apiDomain: 'https://nodes.wavesnodes.com',
         blockchainName: 'Mainnet',
+        title: 'Waves Explorer',
         nodes: [{
             url: 'https://nodes.wavesnodes.com',
             maintainer: 'Waves'
         }],
-        faucetUrl: '',
-        title: 'Waves Explorer'
+        peerExplorer: {
+            url: 'https://testnet.wavesexplorer.com',
+            title: 'TESTNET Explorer'
+        },
+        walletUrl: 'https://waveswallet.io'
     });
-
 })();
