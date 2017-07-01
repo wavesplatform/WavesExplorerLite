@@ -7,15 +7,17 @@
     "url": "https://github.com/wavesplatform/WavesExplorerLite.git"
   },
   "license": "Apache-2.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
+    "grunt": "1.0.1",
+    "grunt-aws": "0.6.2",
+    "grunt-bump": "0.8.0",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-copy": "1.0.0",
     "morgan": "^1.7.0",
     "requirejs": "^2.2.0",
-    "serve-favicon": "^2.3.0",
-
-    "grunt": "^1.0.1"
+    "serve-favicon": "^2.3.0"
   }
 }
