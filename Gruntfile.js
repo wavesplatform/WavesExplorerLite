@@ -120,27 +120,6 @@ module.exports = function (grunt) {
                 cwd: 'distr/<%= meta.configurations.mainnet.name %>',
                 src: '**/*'
             }
-        },
-        cloudfront: {
-            options: {
-                accessKeyId: process.env['EXPLORER_AWS_ACCESS_KEY_ID'],
-                secretAccessKey: process.env['EXPLORER_AWS_ACCESS_SECRET'],
-                invalidations: [
-                    '/index.html',
-                    '/css/*',
-                    '/js/*'
-                ]
-            },
-            testnet: {
-                options: {
-                    distributionId: 'E174FYNYORL3QH'
-                }
-            },
-            mainnet: {
-                options: {
-                    distributionId: 'E2BNQKK79AMUA0'
-                }
-            }
         }
     });
 
