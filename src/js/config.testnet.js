@@ -13,7 +13,7 @@
         ],
         faucet: {
             url: 'http://52.30.47.67:9000',
-            captchaKey: '6Ld58SkTAAAAAHJZg2bR4LWFGRrMlwXZrx2IhO2O'
+            captchaKey: '6Le9hSgUAAAAAAtIe04SrgDy23PsBZOazfb-li66'
         },
         peerExplorer: {
             url: 'https://wavesexplorer.com',
