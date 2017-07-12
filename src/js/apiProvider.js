@@ -39,6 +39,7 @@
                 }
             },
             transactions: {
+                utxSize: url + '/transactions/unconfirmed/size',
                 unconfirmed: url + '/transactions/unconfirmed',
                 info: function (signature) {
                     return url + '/transactions/info/' + signature;
