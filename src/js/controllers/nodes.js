@@ -38,9 +38,9 @@
                     node.debugStateHeight = "error";
                     node.debugStateHash = "-";
                 });
-                $http.get(apiProvider(node.url).transactions.unconfirmed)
+                $http.get(apiProvider(node.url).transactions.utxSize)
                     .success(function (data) {
-                        node.utxs = data;
+                        node.utxSize = data.size;
                     });
             });
         }
