@@ -129,8 +129,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+    var target = grunt.option('target');
+    var deployTask = target ? 's3:' + target : 's3';
+
     grunt.registerTask('distr', ['clean', 'build', 'copy']);
     grunt.registerTask('publish', ['bump', 'distr', 's3']);
+    grunt.registerTask('deploy', ['distr', deployTask]);
 
     grunt.registerTask('build', [
     ]);
