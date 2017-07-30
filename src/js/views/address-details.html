@@ -49,7 +49,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.txs">
-                        <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                        <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}...</a></td>
                         <td>{{item.type}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 

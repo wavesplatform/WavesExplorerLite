@@ -50,7 +50,7 @@
 								}
 							})
 							.state('tx-details', {
-								url: '/tx/:signature',
+								url: '/tx/:id',
 								views: {
 									"main": {
 										controller: 'TxDetailsCtrl as ctrl',

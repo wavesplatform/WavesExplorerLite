@@ -74,7 +74,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.payments">
-                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}...</a></td>
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -100,7 +100,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetIssue">
-                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}...</a></td>
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -126,7 +126,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetReissue">
-                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}...</a></td>
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -152,13 +152,13 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetTransfer">
-                            <td><a class="mono" ui-sref="tx-details({signature:item.id})">{{item.id|limitTo:7}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}...</a></td>
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:12}}...</a></td>
-                            <td><a class="mono" ui-sref="tx-details({signature:item.assetId})">{{item.assetId}}</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.assetId})">{{item.assetId}}</a></td>
                             <td>{{item.amount}}</td>
                         </tr>
                     </tbody>

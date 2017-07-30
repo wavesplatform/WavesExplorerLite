@@ -84,7 +84,7 @@
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td><a class="mono" ui-sref="tx-details({signature:item.signature})">{{item.signature|limitTo:7}}...</a></td>
+                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.signature|limitTo:7}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
                             <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:12}}...</a></td>
                             <td><span class="pull-right">{{item.amount|wavelets}}</span></td>

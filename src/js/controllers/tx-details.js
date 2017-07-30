@@ -3,15 +3,17 @@
 
     function TxDetailsCtrl($http, $stateParams, apiService) {
         var ctrl = this;
-        ctrl.signature = $stateParams.signature;
+        ctrl.id = $stateParams.id;
 
         activate();
 
         function activate() {
-            $http.get(apiService.transactions.info(ctrl.signature))
+            $http.get(apiService.transactions.info(ctrl.id))
                 .success(function(tx) {
 
                     ctrl.details = tx;
+
+                    console.log(tx);
 
                     if (tx.feeAsset) {
                         $http.get(apiService.transactions.info(tx.feeAsset))
@@ -22,8 +24,6 @@
                         ctrl.details.assetDecimals = 8;
                         ctrl.details.feeAsset = "WAVES"
                     }
-
-                    
                 });
         }
     }

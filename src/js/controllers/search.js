@@ -10,7 +10,7 @@
                 .success(function (data) {
                     if (!data.error)
                         $state.go('tx-details', {
-                            signature: id
+                            id: id
                         });
                 })
         }
