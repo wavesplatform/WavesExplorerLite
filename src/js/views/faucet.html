@@ -38,8 +38,8 @@
 
 				<table class="table blockDetails" ng-show="ctrl.tx != null">
 					<tr>
-						<td>Tx signature</td>
-						<td><a ui-sref="tx-details({id:ctrl.tx.id})">{{ctrl.tx.signature|limitTo:15}}...</a></td>
+						<td>Tx ID</td>
+						<td><a ui-sref="tx-details({id:ctrl.tx.id})">{{ctrl.tx.id|limitTo:15}}...</a></td>
 					</tr>
 					<tr>
 						<td>Recipient</td>
