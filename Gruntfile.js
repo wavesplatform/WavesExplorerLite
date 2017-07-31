@@ -127,7 +127,8 @@ module.exports = function (grunt) {
             },
             devnet: {
                 options: {
-                    bucket: 'devnet.wavesexplorer.com'
+                    bucket: 'devnet.wavesexplorer.com',
+                    region: 'eu-west-1'
                 },
                 cwd: 'distr/<%= meta.configurations.devnet.name %>',
                 src: '**/*'
