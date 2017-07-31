@@ -54,7 +54,11 @@ module.exports = function (grunt) {
                 },
                 mainnet: {
                     name: 'mainnet',
-                    config: 'config.mainner.js'
+                    config: 'config.mainnet.js'
+                },
+                devnet: {
+                    name: 'devnet',
+                    config: 'config.devnet.js'
                 }
             },
             dependencies: [
@@ -85,7 +89,8 @@ module.exports = function (grunt) {
                 noProcess: ['**/*.{png,gif,jpg,ico,icns,psd,woff,woff2,svg,eot,ttf}']
             },
             testnet: generateCopyDirectives('testnet'),
-            mainnet: generateCopyDirectives('mainnet')
+            mainnet: generateCopyDirectives('mainnet'),
+            devnet: generateCopyDirectives('devnet')
         },
         bump: {
             options: {
@@ -118,6 +123,13 @@ module.exports = function (grunt) {
                     bucket: 'wavesexplorer.com'
                 },
                 cwd: 'distr/<%= meta.configurations.mainnet.name %>',
+                src: '**/*'
+            },
+            devnet: {
+                options: {
+                    bucket: 'devnet.wavesexplorer.com'
+                },
+                cwd: 'distr/<%= meta.configurations.devnet.name %>',
                 src: '**/*'
             }
         }
