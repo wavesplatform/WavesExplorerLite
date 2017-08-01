@@ -22,6 +22,15 @@
 									}
 								}
 							})
+                            .state('alias-details', {
+                                url: '/alias/:alias',
+                                views: {
+                                    "main": {
+                                        controller: 'AliasDetailsCtrl as ctrl',
+                                        templateUrl: '/js/views/alias-details.html'
+                                    }
+                                }
+                            })
 							.state('blocks', {
 								url: '/blocks',
 								views: {

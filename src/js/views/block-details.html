@@ -32,7 +32,7 @@
                         </tr>
                         <tr>
                             <td>Generator</td>
-                            <td><a ui-sref="address-details({address:ctrl.details.generator})">{{ctrl.details.generator}}</a></td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.generator"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Signature</td>
@@ -78,8 +78,8 @@
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
-                            <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:12}}...</a></td>
+                            <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
+                            <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
                             <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
                         </tr>
                     </tbody>
@@ -104,7 +104,7 @@
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
+                            <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td>{{item.assetId}}</td>
                             <td>{{item.name}}</td>
                             <td><span class="pull-right">{{item.quantity}}</span></td>
@@ -130,7 +130,7 @@
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
+                            <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td>{{item.assetId}}</td>
                             <td><span class="pull-right">{{item.quantity}}</span></td>
                         </tr>
@@ -156,8 +156,8 @@
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
                             <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td><a class="mono" ui-sref="address-details({address:item.sender})" title="{{item.sender}}">{{item.sender|limitTo:12}}...</a></td>
-                            <td><a class="mono" ui-sref="address-details({address:item.recipient})" title="{{item.recipient}}">{{item.recipient|limitTo:12}}...</a></td>
+                            <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
+                            <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
                             <td><a class="mono" ui-sref="tx-details({id:item.assetId})">{{item.assetId}}</a></td>
                             <td>{{item.amount}}</td>
                         </tr>

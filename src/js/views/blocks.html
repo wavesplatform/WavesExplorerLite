@@ -35,12 +35,11 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.blocks">
-                        <td><a ui-sref="block-details({height:item.height})">{{item.height}}</a></td>
+                        <td><waves-block-ref height="item.height"/></td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>{{item["nxt-consensus"]["base-target"]}}</td>
                         <td><span class="mono">{{item.signature|limitTo:15}}...</span></td>
-                        <td><a class="mono" ui-sref="address-details({address:item.generator})">{{item.generator|limitTo:17}}...</a>
-                        </td>
+                        <td><waves-endpoint-ref endpoint="item.generator" max-length="17"></waves-endpoint-ref></td>
                         <td>{{item.transactions.length}}</td>
                         <td><span class="pull-right">{{item.totalAmount.amount|wavelets}}</span></td>
                         <td><span class="pull-right">{{item.fee|wavelets}}</span></td>

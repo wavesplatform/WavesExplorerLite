@@ -54,15 +54,15 @@
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
                         <td ng-if="item.sender!=ctrl.address">
-                            <a class="mono" ui-sref="address-details({address:item.sender})"
-                               title="{{item.sender}}">{{item.sender|limitTo:15}}...</a></td>
+                            <waves-endpoint-ref endpoint="item.sender" max-length="15"></waves-endpoint-ref>
+                        </td>
                         <td ng-if="item.sender==ctrl.address">
                             <span class="mono">{{item.sender|limitTo:15}}...</span></td>
                         <td><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"
                                   ng-class="{'text-danger':item.outgoing,'text-success':!item.outgoing}"></span></td>
                         <td ng-if="item.recipient!=ctrl.address">
-                            <a class="mono" ui-sref="address-details({address:item.recipient})"
-                               title="{{item.recipient}}">{{item.recipient|limitTo:15}}...</a></td>
+                            <waves-endpoint-ref endpoint="item.recipient" max-length="15"></waves-endpoint-ref>
+                        </td>
                         <td ng-if="item.recipient==ctrl.address">
                             <span class="mono">{{item.recipient|limitTo:15}}...</span></td>
                         <td><span class="pull-left">{{item.amount|wavelets}}</span></td>

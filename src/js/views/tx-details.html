@@ -23,7 +23,7 @@
                         </tr>
                         <tr>
                             <td>Block</td>
-                            <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                            <td><waves-block-ref height="ctrl.details.height"/></td>
                         </tr>
                         <tr>
                             <td>Amount</td>
@@ -35,15 +35,11 @@
                         </tr>
                         <tr>
                             <td>Sender</td>
-                            <td>
-                                <a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
-                            </td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Recipient</td>
-                            <td>
-                                <a class="mono" ui-sref="address-details({address:ctrl.details.recipient})">{{ctrl.details.recipient}}</a>
-                            </td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Signature</td>
@@ -69,7 +65,7 @@
                         </tr>
                         <tr>
                             <td>Block</td>
-                            <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                            <td><waves-block-ref height="ctrl.details.height"/></td>
                         </tr>
                         <tr>
                             <td>Asset ID</td>
@@ -107,9 +103,7 @@
                         </tr>
                         <tr>
                             <td>Issuer</td>
-                            <td>
-                                <a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
-                            </td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Signature</td>
@@ -135,7 +129,7 @@
                         </tr>
                         <tr>
                             <td>Block</td>
-                            <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                            <td><waves-block-ref height="ctrl.details.height"/></td>
                         </tr>
                         <tr>
                             <td>Asset ID</td>
@@ -152,15 +146,14 @@
                         <tr>
                             <td>Fee</td>
                             <td>{{ctrl.details.fee|assetunits:ctrl.details.assetDecimals}} {{ctrl.details.feeAsset}}</td>
-
                         </tr>
                         <tr>
                             <td>Sender</td>
-                            <td><a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a></td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Recipient</td>
-                            <td><a class="mono" ui-sref="address-details({address:ctrl.details.recipient})">{{ctrl.details.recipient}}</a></td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
                         </tr>
 
                         <tr>
@@ -187,7 +180,7 @@
                         </tr>
                         <tr>
                             <td>Block</td>
-                            <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                            <td><waves-block-ref height="ctrl.details.height"/></td>
                         </tr>
                         <tr>
                             <td>Asset ID</td>
@@ -207,9 +200,7 @@
                         </tr>
                         <tr>
                             <td>Issuer</td>
-                            <td>
-                                <a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a>
-                            </td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                         </tr>
                         <tr>
                             <td>Signature</td>
@@ -235,7 +226,7 @@
                     </tr>
                     <tr>
                         <td>Block</td>
-                        <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                        <td><waves-block-ref height="ctrl.details.height"/></td>
                     </tr>
                     <tr>
                         <td>Amount</td>
@@ -247,11 +238,11 @@
                     </tr>
                     <tr>
                         <td>Sender</td>
-                        <td><a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a></td>
+                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                     </tr>
                     <tr>
                         <td>Recipient</td>
-                        <td><a class="mono" ui-sref="address-details({address:ctrl.details.recipient})">{{ctrl.details.recipient}}</a></td>
+                        <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
                     </tr>
                     <tr>
                         <td>Signature</td>
@@ -277,7 +268,7 @@
                     </tr>
                     <tr>
                         <td>Block</td>
-                        <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                        <td><waves-block-ref height="ctrl.details.height"/></td>
                     </tr>
                     <tr>
                         <td>Leasing TX</td>
@@ -289,7 +280,7 @@
                     </tr>
                     <tr>
                         <td>Sender</td>
-                        <td><a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a></td>
+                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                     </tr>
                     <tr>
                         <td>Signature</td>
@@ -315,7 +306,7 @@
                     </tr>
                     <tr>
                         <td>Block</td>
-                        <td><a ui-sref="block-details({height:ctrl.details.height})">{{ctrl.details.height}}</a></td>
+                        <td><waves-block-ref height="ctrl.details.height"/></td>
                     </tr>
                     <tr>
                         <td>Alias</td>
@@ -327,7 +318,7 @@
                     </tr>
                     <tr>
                         <td>Sender</td>
-                        <td><a class="mono" ui-sref="address-details({address:ctrl.details.sender})">{{ctrl.details.sender}}</a></td>
+                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
                     </tr>
                     <tr>
                         <td>Signature</td>
