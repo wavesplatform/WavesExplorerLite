@@ -38,6 +38,14 @@
                     return url + '/addresses/validate/' + address;
                 }
             },
+            aliases: {
+                getAddress: function (alias) {
+                    return url + '/alias/by-alias/' + encodeURIComponent(alias);
+                },
+                forAddress: function (address) {
+                    return url + '/alias/by-address/' + address;
+                }
+            },
             transactions: {
                 utxSize: url + '/transactions/unconfirmed/size',
                 unconfirmed: url + '/transactions/unconfirmed',
