@@ -5,6 +5,8 @@
         var ctrl = this;
         ctrl.address = $stateParams.address;
 
+        console.log(ctrl);
+
         activate();
 
         function activate() {

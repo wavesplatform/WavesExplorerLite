@@ -5,7 +5,6 @@
     var ALIAS_PREFIX = 'alias';
 
     function Alias(networkCode, base58EncodedText) {
-
         var encodedText = base58EncodedText.trim();
         this.networkCode = networkCode;
 
@@ -35,14 +34,15 @@
     function WavesEndpointRefController() {
         var ctrl = this;
 
-        ctrl.$onInit = function () {
-            console.log(ctrl);
+        function adjustBindings() {
+            if (!ctrl.endpoint)
+                return;
 
-            if (ctrl.endpoint.search(ADDRESS_PREFIX) == 0) {
+            if (ctrl.endpoint.indexOf(ADDRESS_PREFIX) === 0) {
                 ctrl.address = ctrl.endpoint.replace(ADDRESS_PREFIX, '');
             }
-            if (Alias.isAlias(ctrl.endpoint)) {
-                ctrl.alias = ctrl.endpoint;
+            else if (Alias.isAlias(ctrl.endpoint)) {
+                ctrl.alias = Alias.fromString(ctrl.alias).text;
             }
             else {
                 ctrl.address = ctrl.endpoint;
@@ -50,8 +50,20 @@
 
             ctrl.isAlias = ctrl.alias ? true : false;
             ctrl.isAddress = ctrl.address ? true : false;
+        }
 
-            ctrl.text = ctrl.isAlias ? Alias.fromString(ctrl.alias).text : ctrl.address;
+        ctrl.$onChanges = function (changesObj) {
+            if (changesObj.endpoint) {
+                if (changesObj.endpoint.currentValue) {
+                    ctrl.endpoint = changesObj.endpoint.currentValue;
+
+                    adjustBindings();
+                }
+            }
+        };
+
+        ctrl.$onInit = function () {
+            adjustBindings();
         };
     }
 
@@ -64,10 +76,10 @@
                 maxLength: '<?'
             },
             template: '<a ng-if="$ctrl.isAddress" class="mono" ui-sref="address-details({address:$ctrl.address})" title="{{$ctrl.address}}">' +
-                '{{$ctrl.text|limitTo:$ctrl.maxLength}}{{$ctrl.text.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
+                '{{$ctrl.address|limitTo:$ctrl.maxLength}}{{$ctrl.address.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
             '</a>' +
             '<a ng-if="$ctrl.isAlias" class="mono" ui-sref="alias-details({alias:$ctrl.alias})" title="{{$ctrl.alias}}">' +
-                '{{$ctrl.text|limitTo:$ctrl.maxLength}}{{$ctrl.text.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
+                '{{$ctrl.alias|limitTo:$ctrl.maxLength}}{{$ctrl.alias.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
             '</a>'
         });
 })();
