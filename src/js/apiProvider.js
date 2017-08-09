@@ -36,6 +36,9 @@
 
                 validate: function (address) {
                     return url + '/addresses/validate/' + address;
+                },
+                balanceDetails: function (address) {
+                    return url + '/addresses/balance/details/' + address;
                 }
             },
             aliases: {

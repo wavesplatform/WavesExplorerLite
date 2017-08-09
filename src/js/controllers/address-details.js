@@ -17,13 +17,9 @@
                         item.outgoing = (item.sender === ctrl.address);
                     });
                 });
-            $http.get(apiService.address.balance(ctrl.address))
+            $http.get(apiService.address.balanceDetails(ctrl.address))
                 .success(function (data) {
                     ctrl.balance = data;
-                });
-            $http.get(apiService.consensus.generatingBalance(ctrl.address))
-                .success(function (data) {
-                    ctrl.generatingBalance = data.balance;
                 });
             $http.get(apiService.aliases.forAddress(ctrl.address))
                 .success(function (data) {
