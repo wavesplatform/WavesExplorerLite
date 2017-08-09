@@ -9,14 +9,6 @@
         activate();
 
         function activate() {
-            $http.get(apiService.transactions.forAddress(ctrl.address))
-                .success(function (data) {
-                    data[0].reverse();
-                    ctrl.txs = data[0];
-                    ctrl.txs.forEach(function(item) {
-                        item.outgoing = (item.sender === ctrl.address);
-                    });
-                });
             $http.get(apiService.address.balanceDetails(ctrl.address))
                 .success(function (data) {
                     ctrl.balance = data;
@@ -25,6 +17,14 @@
                 .success(function (data) {
                     ctrl.aliases = data.map(function (alias) {
                         return aliasService.fromString(alias);
+                    });
+                });
+            $http.get(apiService.transactions.forAddress(ctrl.address))
+                .success(function (data) {
+                    data[0].reverse();
+                    ctrl.txs = data[0];
+                    ctrl.txs.forEach(function(item) {
+                        item.outgoing = (item.sender === ctrl.address);
                     });
                 });
         }
