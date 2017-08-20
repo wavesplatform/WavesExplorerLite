@@ -210,6 +210,123 @@
                     </tbody>
                 </table>
 
+                <table class="table blockDetails" ng-show="ctrl.details.type==7">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>{{ctrl.details.id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>{{ctrl.details.type}} (Exchange)</td>
+                        </tr>
+                        <tr>
+                            <td>Timestamp</td>
+                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Block</td>
+                            <td><waves-block-ref height="ctrl.details.height"/></td>
+                        </tr>
+                        <tr>
+                            <td>Matcher Address</td>
+                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td>{{ctrl.details.price}}</td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{ctrl.details.amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Buy Matcher Fee</td>
+                            <td>{{ctrl.details.buyMatcherFee|wavelets}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sell Matcher Fee</td>
+                            <td>{{ctrl.details.sellMatcherFee|wavelets}}</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr class="active">
+                            <th>Asset Pair</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amount Asset</td>
+                            <td>{{ctrl.details.order1.assetPair.amountAsset}}</td>
+                        </tr>
+                        <tr>
+                            <td>Price Asset</td>
+                            <td>{{ctrl.details.order1.assetPair.priceAsset}}</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr class="active">
+                        <th>Order 1</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>ID</td>
+                        <td>{{ctrl.details.order1.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>{{ctrl.details.order1.orderType}}</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>{{ctrl.details.order1.price}}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>{{ctrl.details.order1.amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ctrl.details.order1.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr class="active">
+                        <th>Order 2</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>ID</td>
+                        <td>{{ctrl.details.order2.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>{{ctrl.details.order2.orderType}}</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>{{ctrl.details.order2.price}}</td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>{{ctrl.details.order2.amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ctrl.details.order2.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
                 <table class="table blockDetails" ng-show="ctrl.details.type==8">
                     <tbody>
                     <tr>
