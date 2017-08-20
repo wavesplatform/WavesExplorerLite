@@ -284,12 +284,12 @@
                         <td>{{ctrl.details.order1.orderType}}</td>
                     </tr>
                     <tr>
-                        <td>Price</td>
-                        <td>{{ctrl.details.order1.price}}</td>
-                    </tr>
-                    <tr>
                         <td>Amount</td>
                         <td>{{ctrl.details.order1.amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>{{ctrl.details.order1.price}}</td>
                     </tr>
                     <tr>
                         <td>Timestamp</td>
@@ -313,12 +313,12 @@
                         <td>{{ctrl.details.order2.orderType}}</td>
                     </tr>
                     <tr>
-                        <td>Price</td>
-                        <td>{{ctrl.details.order2.price}}</td>
-                    </tr>
-                    <tr>
                         <td>Amount</td>
                         <td>{{ctrl.details.order2.amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>{{ctrl.details.order2.price}}</td>
                     </tr>
                     <tr>
                         <td>Timestamp</td>
@@ -389,7 +389,7 @@
                     </tr>
                     <tr>
                         <td>Leasing TX</td>
-                        <td><a class="mono" ui-sref="tx-details({id:ctrl.details.leaseId})">{{ctrl.details.leaseId}}</a></td>
+                        <td><waves-transaction-ref tx-id="ctrl.details.leaseId"></waves-transaction-ref></td>
                     </tr>
                     <tr>
                         <td>Fee</td>
