@@ -19,7 +19,8 @@
             var q = $scope.searchQuery;
             if (!q) return;
             // check address
-            var addr = q.substring(2);
+            q = q.trim();
+            var addr = q;
             $http.get(apiService.address.validate(addr))
                 .success(function (data) {
                     if (data.valid)
