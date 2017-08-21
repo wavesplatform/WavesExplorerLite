@@ -8,7 +8,7 @@
         nodes: [
             {url: 'http://34.251.200.245:6869', maintainer: 'Waves', showAsLink: true},
             {url: 'http://35.157.212.173:6869', maintainer: 'Waves', showAsLink: true},
-            {url: 'http://54.255.193.27:6869', maintainer: 'Waves', showAsLink: true}
+            {url: 'http://13.229.61.140:6869', maintainer: 'Waves', showAsLink: true}
         ],
         peerExplorer: {
             url: 'http://devnet.wavesexplorer.com',
