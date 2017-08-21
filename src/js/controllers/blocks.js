@@ -34,7 +34,7 @@
                     ctrl.blocks.reverse();
                     ctrl.blocks.forEach(function (b) {
                         b.totalAmount = b.transactions.filter(function (tx) {
-                            return tx.type == 2; // only WAVES transfers
+                            return tx.type == 4 || tx.type == 2; // only WAVES transfers
                         }).reduce(function (a, b) {
                             return { amount: a.amount + b.amount };
                         }, { amount: 0 })
