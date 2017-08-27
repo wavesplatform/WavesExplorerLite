@@ -29,4 +29,10 @@ footer p {
     height: 50px;
 }
 
+.tab-content {
+    border-bottom: 1px solid #dfd7ca;
+    border-left: 1px solid #dfd7ca;
+    border-right: 1px solid #dfd7ca;
+}
+
 .mono { font-family:monospace; }

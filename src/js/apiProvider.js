@@ -49,6 +49,11 @@
                     return url + '/alias/by-address/' + address;
                 }
             },
+            assets: {
+                balance: function (address) {
+                    return url + '/assets/balance/' + address;
+                }
+            },
             transactions: {
                 utxSize: url + '/transactions/unconfirmed/size',
                 unconfirmed: url + '/transactions/unconfirmed',
@@ -66,7 +71,7 @@
                 basetarget: url + '/consensus/basetarget',
                 generatingBalance: function (address) {
                     return url + '/consensus/generatingbalance/' + address;
-                },
+                }
             },
             peers: {
                 all: url + '/peers/all',

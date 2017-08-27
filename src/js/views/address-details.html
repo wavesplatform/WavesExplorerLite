@@ -38,18 +38,7 @@
                 Aliases for {{ctrl.address}}
             </div>
             <div class="panel-body">
-                <table class="table blockDetails">
-                    <thead>
-                    <tr class="active">
-                        <th>Alias</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in ctrl.aliases">
-                        <td>{{item.text|limitTo:40}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+
             </div>
         </div>
     </div>
@@ -58,12 +47,10 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Last 50 transactions for {{ctrl.address}}
-            </div>
-            <div class="panel-body">
-                <table class="table blockDetails">
+
+        <uib-tabset>
+            <uib-tab index="0" heading="Last 50 transactions" select="ctrl.loadTransactions()">
+                <table ng-show="ctrl.txs.length > 0" class="table blockDetails">
                     <thead>
                     <tr class="active">
                         <th>ID</th>
@@ -77,29 +64,65 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.txs">
-                        <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.id|limitTo:7}}&hellip;</a></td>
+                    <tr ng-repeat="item in ctrl.txs | orderBy:'timestamp':true">
+                        <td><waves-transaction-ref tx-id="item.id" max-length="7"></waves-transaction-ref></td>
                         <td>{{item.type}}</td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
                         <td ng-if="item.sender!==ctrl.address">
-                            <waves-endpoint-ref endpoint="item.sender" max-length="30"></waves-endpoint-ref>
+                            <waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref>
                         </td>
                         <td ng-if="item.sender===ctrl.address">
-                            <span class="mono">{{item.sender|limitTo:30}}&hellip;</span></td>
+                            <span class="mono">{{item.sender}}</span></td>
                         <td><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"
                                   ng-class="{'text-danger':item.outgoing,'text-success':!item.outgoing}"></span></td>
                         <td ng-if="item.recipient!==ctrl.address">
-                            <waves-endpoint-ref endpoint="item.recipient" max-length="30"></waves-endpoint-ref>
+                            <waves-endpoint-ref endpoint="item.recipient"></waves-endpoint-ref>
                         </td>
                         <td ng-if="item.recipient===ctrl.address">
-                            <span class="mono">{{item.recipient|limitTo:30}}&hellip;</span></td>
+                            <span class="mono">{{item.recipient}}</span></td>
                         <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
                         <td>{{item.fee|wavelets}}</td>
                     </tr>
                     </tbody>
+                    <div class="panel-body" ng-show="ctrl.txs.length == 0">{{ctrl.txsMessage}}</div>
                 </table>
-            </div>
-        </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Aliases" select="ctrl.loadAliases()">
+                <table ng-show="ctrl.aliases.length > 0" class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>Alias</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.aliases">
+                        <td>{{item.text|limitTo:40}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="panel-body" ng-show="ctrl.aliases.length == 0">{{ctrl.aliasesMessage}}</div>
+            </uib-tab>
+            <uib-tab index="2" heading="Assets" select="ctrl.loadAssets()">
+                <table ng-show="ctrl.assets.length > 0" class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.assets">
+                            <td><waves-transaction-ref tx-id="item.id"></waves-transaction-ref></td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.balance}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="panel-body" ng-show="ctrl.assets.length == 0">{{ctrl.assetsMessage}}</div>
+            </uib-tab>
+        </uib-tabset>
+
     </div>
 </div>

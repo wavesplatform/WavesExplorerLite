@@ -6,12 +6,16 @@
             if (input == null) return null;
             var waves = input / Math.pow(10, decimals);
             var str = addCommas(waves.toFixed(decimals));
-		
+
             // remove trailing zeros
-            var parts = str.split('.')
-            parts[1] = trimZeros(parts[1]);
-            parts[1] = parts[1].length == 0 ? "0" : parts[1]
-            return parts[0] + "." + parts[1]
+            var parts = str.split('.');
+            if (parts.length == 2) {
+                parts[1] = trimZeros(parts[1]);
+                parts[1] = parts[1].length == 0 ? "0" : parts[1]
+                return parts[0] + "." + parts[1]
+            }
+
+            return str;
         };
 
         function trimZeros(str) {
