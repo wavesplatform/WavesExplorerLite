@@ -116,7 +116,7 @@
                         <tr ng-repeat="item in ctrl.assets">
                             <td><waves-transaction-ref tx-id="item.id"></waves-transaction-ref></td>
                             <td>{{item.name}}</td>
-                            <td>{{item.balance}}</td>
+                            <td>{{item.balance|assetunits:item.decimals}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -42,13 +42,18 @@
         this.loadAssets = function () {
             $http.get(apiService.assets.balance(ctrl.address))
                 .success(function (data) {
-                    ctrl.assets = data.balances.map(function (assetBalance) {
-                        return {
-                            id: assetBalance.assetId,
-                            balance: assetBalance.balance,
-                            name: assetBalance.issueTransaction.name
-                        }
-                    });
+                    ctrl.assets = data.balances
+                        .filter(function (assetBalance) {
+                            return assetBalance.balance > 0
+                        })
+                        .map(function (assetBalance) {
+                            return {
+                                id: assetBalance.assetId,
+                                balance: assetBalance.balance,
+                                name: assetBalance.issueTransaction.name,
+                                decimals: assetBalance.issueTransaction.decimals
+                            }
+                        });
                 })
                 .error(function () {
                     ctrl.assetsMessage = 'Error loading assets balance';
