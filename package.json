@@ -12,9 +12,11 @@
     "angular": "^1.6.6",
     "angular-loading-bar": "^0.9.0",
     "angular-recaptcha": "^4.1.0",
-    "angular-ui-bootstrap": "^2.5.0"
+    "angular-ui-bootstrap": "^2.5.0",
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
+    "del": "^3.0.0",
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
     "grunt": "1.0.1",
@@ -23,6 +25,13 @@
     "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-copy": "1.0.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-inject": "^4.3.0",
+    "gulp-order": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "merge-stream": "^1.0.1",
+    "minimatch": "^3.0.4",
     "morgan": "^1.7.0",
     "requirejs": "^2.2.0",
     "serve-favicon": "^2.3.0"

@@ -8,7 +8,7 @@ var morgan = require('morgan'); // formerly express.logger
 var errorhandler = require('errorhandler');
 var app = express();
 
-var basedir = __dirname + '/src';
+var basedir = __dirname + '/build';
 
 // all environments
 app.set('port', process.env.PORT || 3000);
