@@ -6,13 +6,12 @@
         $scope.search = search;
 
         function tryGetTx(id) {
-            $http.get(apiService.transactions.info(id))
-                .success(function (data) {
-                    if (!data.error)
-                        $state.go('tx-details', {
-                            id: id
-                        });
-                })
+            $http.get(apiService.transactions.info(id)).then(function (response) {
+                if (!response.data.error)
+                    $state.go('tx-details', {
+                        id: id
+                    });
+            })
         }
 
         function search() {
@@ -21,31 +20,29 @@
             // check address
             q = q.trim();
             var addr = q;
-            $http.get(apiService.address.validate(addr))
-                .success(function (data) {
-                    if (data.valid)
-                        $state.go('address-details', {
-                            address: addr
-                        });
-                    else {
-                        // check block
-                        $http.get(apiService.blocks.bySignature(q))
-                            .success(function (data) {
-                                if (!data.error) {
-                                    $state.go('block-details-sig', {
-                                        signature: q
-                                    })
-                                } else {
-                                    // check tx
-                                    tryGetTx(q);
-                                }
+            $http.get(apiService.address.validate(addr)).then(function (response) {
+                if (response.data.valid)
+                    $state.go('address-details', {
+                        address: addr
+                    });
+                else {
+                    // check block
+                    $http.get(apiService.blocks.bySignature(q)).then(function (response) {
+                        if (!response.data.error) {
+                            $state.go('block-details-sig', {
+                                signature: q
                             })
-                            .error(function () {
-                                tryGetTx(q);
-                            });
-                    }
-                })
-                .error(function (data) { });
+                        } else {
+                            // check tx
+                            tryGetTx(q);
+                        }
+                    })
+                    .catch(function () {
+                        tryGetTx(q);
+                    });
+                }
+            })
+            .catch(function (response) { });
         }
     }
 

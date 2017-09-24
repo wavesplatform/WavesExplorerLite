@@ -1,23 +1,24 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
-const merge = require('merge-stream');
+const series = require('stream-series');
+const order = require('gulp-order');
 const inject = require('gulp-inject');
 const del = require('del');
-const order = require('gulp-order');
+const templateCache = require('gulp-angular-templatecache');
 
 const config = {
-    libraries: [
-        'node_modules/node_modules/angular/angular.js',
-        'node_modules/angular-loading-bar/build/loading-bar.js',
-        'node_modules/@uirouter/angularjs/release/angular-ui-router.js',
-        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
-        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-        'node_modules/angular-recaptcha/release/angular-recaptcha.min.js',
-    ],
-    sources: [
-        'src/js/**/*.js'
-    ],
+    libraries: {
+        sources: [
+            'node_modules/angular/angular.js',
+            'node_modules/angular-loading-bar/build/loading-bar.js',
+            'node_modules/@uirouter/angularjs/release/angular-ui-router.js',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+            'node_modules/angular-recaptcha/release/angular-recaptcha.min.js'
+        ],
+        version: '1.6.6' // change this version if libraries are updated or changed
+    },
     styles: [
         'node_modules/angular/angular-csp.css',
         'node_modules/bootstrap/dist/css/bootstrap.css',
@@ -27,6 +28,7 @@ const config = {
     ],
     fonts: 'src/fonts/*.*',
     icons: 'src/*.ico',
+    html: 'src/templates/*.html',
     baseDir: 'src',
     buildDirectory: 'build',
     resultDirectory: 'distr'
@@ -37,27 +39,30 @@ function copyFiles(source, destination) {
         .pipe(gulp.dest(destination))
 }
 
-function copyArray(array) {
-    return array.slice(0);
+function buildLibrariesScriptName() {
+    return 'vendor-' + config.libraries.version + '.js';
 }
 
 function combineScripts(network) {
-    var src = copyArray(config.libraries);
-    config.sources.forEach(function (item) {
-        src.push(item)
-    });
-    src.push('!' + config.baseDir + '/js/config.*');
+    gulp.src(config.libraries.sources)
+        .pipe(concat(buildLibrariesScriptName()))
+        .pipe(gulp.dest(config.buildDirectory + '/js'));
 
-    var sources = gulp.src(src);
-    var configs = gulp.src(config.baseDir + '/js/config.' + network + '.js');
+    gulp.src(config.html)
+        .pipe(templateCache(
+            'templates.js', {
+                module: 'web',
+                standAlone: false,
+                root: '/templates/'
+            }))
+        .pipe(gulp.dest(config.buildDirectory + '/js'));
 
-    var fileOrder = copyArray(config.libraries);
-    fileOrder.push('src/js/app.js');
-
-    return merge(sources, configs)
-        .pipe(order(fileOrder))
+    return series(
+            gulp.src('src/js/app.js'),
+            gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']),
+            gulp.src('src/js/config.' + network + '.js'))
         .pipe(concat('bundle.js'))
-        .pipe(gulp.dest(config.buildDirectory + '/js'))
+        .pipe(gulp.dest(config.buildDirectory + '/js'));
 }
 
 gulp.task('scripts-testnet', function() {
@@ -85,10 +90,11 @@ gulp.task('copy-html', function () {
 
 gulp.task('patch-html', ['resources', 'scripts-testnet'], function () {
     return gulp.src(config.buildDirectory + '/index.html')
-        .pipe(inject(gulp.src([
-            config.buildDirectory + '/css/*.css',
-            config.buildDirectory + '/js/*.js'
-        ], {read: false}), {relative:true}))
+        .pipe(inject(series(
+            gulp.src(config.buildDirectory + '/css/*.css', {read: false}),
+            gulp.src(config.buildDirectory + '/js/vendor*.js', {read: false}),
+            gulp.src(config.buildDirectory + '/js/bundle*.js', {read: false})
+        ), {relative:true}))
         .pipe(gulp.dest(config.buildDirectory))
 });
 

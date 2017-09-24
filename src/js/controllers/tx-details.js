@@ -8,23 +8,20 @@
         activate();
 
         function activate() {
-            $http.get(apiService.transactions.info(ctrl.id))
-                .success(function(tx) {
+            $http.get(apiService.transactions.info(ctrl.id)).then(function (response) {
+                ctrl.details = response.data;
 
-                    ctrl.details = tx;
+                console.log(response.data);
 
-                    console.log(tx);
-
-                    if (tx.feeAsset) {
-                        $http.get(apiService.transactions.info(tx.feeAsset))
-                            .success(function(data) {
-                                ctrl.details.assetDecimals = data.decimals;
-                            })
-                    } else {
-                        ctrl.details.assetDecimals = 8;
-                        ctrl.details.feeAsset = "WAVES"
-                    }
-                });
+                if (tx.feeAsset) {
+                    $http.get(apiService.transactions.info(tx.feeAsset)).then(function (response) {
+                        ctrl.details.assetDecimals = response.data.decimals;
+                    })
+                } else {
+                    ctrl.details.assetDecimals = 8;
+                    ctrl.details.feeAsset = "WAVES"
+                }
+            });
         }
     }
 

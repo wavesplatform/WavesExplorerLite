@@ -11,38 +11,39 @@
         function activate() {
             ctrl.nodes.forEach(function (node) {
 
-                $http.get(apiProvider(node.url).version)
-                        .success(function (data) {
-                            node.version = data.version;
-                        }).error(function () {
+                $http.get(apiProvider(node.url).version).then(function (response) {
+                            node.version = response.data.version;
+                })
+                .catch(function () {
                     node.version = "error";
                 });
 
-                $http.get(apiProvider(node.url).blocks.height)
-                        .success(function (data) {
-                            node.height = data.height;
-                        }).error(function () {
+                $http.get(apiProvider(node.url).blocks.height).then(function (response) {
+                    node.height = response.data.height;
+                })
+                .catch(function () {
                     node.height = "error";
                 });
 
-                $http.get(apiProvider(node.url).consensus.basetarget)
-                        .success(function (data) {
-                            node.baseTarget = data.baseTarget;
-                        }).error(function () {
+                $http.get(apiProvider(node.url).consensus.basetarget).then(function (data) {
+                    node.baseTarget = data.baseTarget;
+                })
+                .catch(function () {
                     node.baseTarget = "error";
                 });
-                $http.get(apiProvider(node.url).debug.info)
-                        .success(function (data) {
-                            node.debugStateHeight = data.stateHeight;
-                            node.debugStateHash = data.stateHash;
-                        }).error(function () {
+
+                $http.get(apiProvider(node.url).debug.info).then(function (data) {
+                    node.debugStateHeight = data.stateHeight;
+                    node.debugStateHash = data.stateHash;
+                })
+                .catch(function () {
                     node.debugStateHeight = "error";
                     node.debugStateHash = "-";
                 });
-                $http.get(apiProvider(node.url).transactions.utxSize)
-                    .success(function (data) {
-                        node.utxSize = data.size;
-                    });
+
+                $http.get(apiProvider(node.url).transactions.utxSize).then(function (data) {
+                    node.utxSize = data.size;
+                });
             });
         }
     }

@@ -11,14 +11,14 @@
 
         function activate() {
             $http.get(apiService.aliases.getAddress(ctrl.alias))
-                .success(function (data) {
-                    console.log(data);
+                .then(function (response) {
+                    console.log(response.data);
 
                     $state.go('address-details', {
-                        address: data.address
+                        address: response.data.address
                     });
                 })
-                .error(function (message, code) {
+                .catch(function (message, code) {
                     if (message.error && message.message)
                         ctrl.message = 'Failed to resolve alias. Code (' + message.error + '): ' + message.message;
                     else

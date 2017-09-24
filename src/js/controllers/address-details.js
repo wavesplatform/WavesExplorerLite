@@ -21,28 +21,28 @@
 
         function activate() {
             $http.get(apiService.address.balanceDetails(ctrl.address))
-                .success(function (data) {
-                    ctrl.balance = data;
+                .then(function (response) {
+                    ctrl.balance = response.data;
                 });
         }
 
         this.loadTransactions = function () {
             $http.get(apiService.transactions.forAddress(ctrl.address))
-                .success(function (data) {
-                    ctrl.txs = data[0];
+                .then(function (response) {
+                    ctrl.txs = response.data[0];
                     ctrl.txs.forEach(function(item) {
                         item.outgoing = (item.sender === ctrl.address);
                     });
                 })
-                .error(function () {
+                .catch(function () {
                     ctrl.txsMessage = 'Error loading transactions';
                 });
         };
 
         this.loadAssets = function () {
             $http.get(apiService.assets.balance(ctrl.address))
-                .success(function (data) {
-                    ctrl.assets = data.balances
+                .then(function (response) {
+                    ctrl.assets = response.data.balances
                         .filter(function (assetBalance) {
                             return assetBalance.balance > 0
                         })
@@ -55,19 +55,19 @@
                             }
                         });
                 })
-                .error(function () {
+                .catch(function () {
                     ctrl.assetsMessage = 'Error loading assets balance';
                 });
         };
 
         this.loadAliases = function () {
             $http.get(apiService.aliases.forAddress(ctrl.address))
-                .success(function (data) {
-                    ctrl.aliases = data.map(function (alias) {
+                .then(function (response) {
+                    ctrl.aliases = response.data.map(function (alias) {
                         return aliasService.fromString(alias);
                     });
                 })
-                .error(function () {
+                .catch(function () {
                     ctrl.aliasesMessage = 'Error loading aliases';
                 });
         };

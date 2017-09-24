@@ -6,20 +6,20 @@
 		ctrl.signature = $stateParams.signature;
 		ctrl.next = nextBlock;
 		ctrl.prev = prevBlock;
-		
+
 		activate();
 
 		function activate() {
 			$http.get(apiService.blocks.bySignature(ctrl.signature))
-							.success(function (data) {
-								ctrl.details = data;
-								ctrl.height = data.height
-								
-								ctrl.payments = txs(ctrl.details.transactions, 2).concat(txs(ctrl.details.transactions, 1));
-								ctrl.assetIssue = txs(ctrl.details.transactions, 3);
-								ctrl.assetReissue = txs(ctrl.details.transactions, 5);
-								ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
-							});
+				.then(function (response) {
+					ctrl.details = response.data;
+					ctrl.height = response.data.height;
+
+					ctrl.payments = txs(ctrl.details.transactions, 2).concat(txs(ctrl.details.transactions, 1));
+					ctrl.assetIssue = txs(ctrl.details.transactions, 3);
+					ctrl.assetReissue = txs(ctrl.details.transactions, 5);
+					ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
+				});
 		}
 
 		function txs(trans, type) {
@@ -36,7 +36,6 @@
 			if (ctrl.height > 1)
 				$state.go('block-details', {height: ctrl.height - 1});
 		}
-
 	}
 
 	angular.module('web').controller('BlocksDetailsSigCtrl', BlocksDetailsSigCtrl);

@@ -9,7 +9,7 @@
                     views: {
                         "main": {
                             controller: 'GeneralCtrl as ctrl',
-                            templateUrl: '/js/views/general.html'
+                            templateUrl: '/templates/general.html'
                         }
                     }
                 })
@@ -18,7 +18,7 @@
                     views: {
                         "main": {
                             controller: 'AddressDetailsCtrl as ctrl',
-                            templateUrl: '/js/views/address-details.html'
+                            templateUrl: '/templates/address-details.html'
                         }
                     }
                 })
@@ -27,7 +27,7 @@
                     views: {
                         "main": {
                             controller: 'AliasDetailsCtrl as ctrl',
-                            templateUrl: '/js/views/alias-details.html'
+                            templateUrl: '/templates/alias-details.html'
                         }
                     }
                 })
@@ -36,7 +36,7 @@
                     views: {
                         "main": {
                             controller: 'BlocksCtrl as ctrl',
-                            templateUrl: '/js/views/blocks.html'
+                            templateUrl: '/templates/blocks.html'
                         }
                     }
                 })
@@ -45,7 +45,7 @@
                     views: {
                         "main": {
                             controller: 'BlocksDetailsSigCtrl as ctrl',
-                            templateUrl: '/js/views/block-details.html'
+                            templateUrl: '/templates/block-details.html'
                         }
                     }
                 })
@@ -54,7 +54,7 @@
                     views: {
                         "main": {
                             controller: 'BlocksDetailsCtrl as ctrl',
-                            templateUrl: '/js/views/block-details.html'
+                            templateUrl: '/templates/block-details.html'
                         }
                     }
                 })
@@ -63,7 +63,7 @@
                     views: {
                         "main": {
                             controller: 'TxDetailsCtrl as ctrl',
-                            templateUrl: '/js/views/tx-details.html'
+                            templateUrl: '/templates/tx-details.html'
                         }
                     }
                 })
@@ -72,7 +72,7 @@
                     views: {
                         "main": {
                             controller: 'PeersCtrl as ctrl',
-                            templateUrl: '/js/views/peers.html'
+                            templateUrl: '/templates/peers.html'
                         }
                     }
                 })
@@ -81,7 +81,7 @@
                     views: {
                         "main": {
                             controller: 'FaucetCtrl as ctrl',
-                            templateUrl: '/js/views/faucet.html'
+                            templateUrl: '/templates/faucet.html'
                         }
                     }
                 })
@@ -90,7 +90,7 @@
                     views: {
                         "main": {
                             controller: 'NodesCtrl as ctrl',
-                            templateUrl: '/js/views/nodes.html'
+                            templateUrl: '/templates/nodes.html'
                         }
                     }
                 });

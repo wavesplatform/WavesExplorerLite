@@ -25,15 +25,16 @@
     "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-copy": "1.0.0",
     "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-inject": "^4.3.0",
     "gulp-order": "^1.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
-    "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "morgan": "^1.7.0",
     "requirejs": "^2.2.0",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "stream-series": "^0.1.1"
   }
 }

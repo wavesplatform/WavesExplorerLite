@@ -7,13 +7,11 @@
 		activate();
 
 		function activate() {
-			$http.get(apiService.peers.all)
-							.success(function(data){
-								ctrl.peers = data;
+			$http.get(apiService.peers.all).then(function (response) {
+				ctrl.peers = response.data;
 			});
-			$http.get(apiService.peers.connected)
-							.success(function (data){
-								ctrl.connectedPeers = data.peers;
+			$http.get(apiService.peers.connected).then(function (response) {
+				ctrl.connectedPeers = response.data.peers;
 			});
 		}
 	}

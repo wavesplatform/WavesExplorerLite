@@ -43,28 +43,26 @@
 				ctrl.error = "Please resolve the captcha";
 				return;
 			}
-			validateAddress(ctrl.recipient)
-				.success(function (result) {
-					if (result.valid) {
+			validateAddress(ctrl.recipient).then(function (response) {
+					if (response.data.valid) {
 						var newPayment = {
 							token: ctrl.response,
 							recipient: cleanAddress(ctrl.recipient)
 						};
 
-						$http.post(ctrl.uri, newPayment)
-							.success(function (data) {
-								if (data.status == "OK") {
-									ctrl.tx = data.tx;
-								} else {
-									ctrl.error = data.message;
-									vcRecaptchaService.reload(ctrl.widgetId);
-								}
-							})
-							.error(function (data) {
-								if (data) {
-									ctrl.error = data.message;
-									vcRecaptchaService.reload(ctrl.widgetId);
-								}
+						$http.post(ctrl.uri, newPayment).then(function (response) {
+							if (response.data.status == "OK") {
+								ctrl.tx = response.data.tx;
+							} else {
+								ctrl.error = response.data.message;
+								vcRecaptchaService.reload(ctrl.widgetId);
+							}
+						})
+						.catch(function (response) {
+							if (response.data) {
+								ctrl.error = response.data.message;
+								vcRecaptchaService.reload(ctrl.widgetId);
+							}
 						});
 					} else {
 						ctrl.invalidAddress = true;
