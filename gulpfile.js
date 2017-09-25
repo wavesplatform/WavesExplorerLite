@@ -33,50 +33,41 @@ const config = {
     fonts: 'src/fonts/*.*',
     icons: 'src/*.ico',
     html: 'src/templates/*.html',
-    package: './package.json',
+    package: {
+        source: './package.json'
+    },
     baseDir: 'src',
     buildDirectory: 'build',
     resultDirectory: 'distr'
 };
+
+config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
 function copyFiles(source, destination) {
     return gulp.src(source)
         .pipe(gulp.dest(destination))
 }
 
-function buildLibrariesScriptName() {
-    return 'vendor-' + config.libraries.version + '.js';
+function buildScriptName(name, version) {
+    return name + '-' + version + '.js';
 }
 
-function combineScripts(network) {
+function createConfig(baseDir, network) {
+    return gulp.src('src/js/config.' + network + '.js')
+        .pipe(rename(buildScriptName('config', config.package.data.version)))
+        .pipe(gulp.dest(baseDir + '/js'));
+}
+
+gulp.task('scripts', function() {
     gulp.src(config.libraries.sources)
-        .pipe(concat(buildLibrariesScriptName()))
+        .pipe(concat(buildScriptName('vendor', config.libraries.version)))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
-
-    var pack = JSON.parse(fs.readFileSync(config.package));
-    var version = pack.version;
-
-    var templateStream = gulp.src(config.html)
-        .pipe(templateCache(
-            'templates.js', {
-                module: 'web',
-                standAlone: false,
-                root: '/templates/'
-            }
-        ));
 
     return series(
-            series(
-                gulp.src('src/js/app.js'),
-                gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']),
-                gulp.src('src/js/config.' + network + '.js')),
-            templateStream)
-        .pipe(concat('bundle-' + version + '.js'))
+            gulp.src('src/js/app.js'),
+            gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']))
+        .pipe(concat(buildScriptName('bundle', config.package.data.version)))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
-}
-
-gulp.task('scripts-testnet', function() {
-    return combineScripts('testnet');
 });
 
 gulp.task('copy-css', function () {
@@ -98,22 +89,40 @@ gulp.task('copy-html', function () {
         .pipe(gulp.dest(config.buildDirectory));
 });
 
+gulp.task('templates', function () {
+    return gulp.src(config.html)
+        .pipe(templateCache(
+            buildScriptName('templates', config.package.data.version), {
+                module: 'web',
+                standAlone: false,
+                root: '/templates/'
+            }
+        ))
+        .pipe(gulp.dest(config.buildDirectory + '/js'));
+});
+
 gulp.task('bump', function () {
-    return gulp.src(config.package)
+    return gulp.src(config.package.source)
         .pipe(bump())
         .pipe(gulp.dest('./'))
         .pipe(git.commit('chore(version): bumping version'));
 });
 
-gulp.task('patch-html', ['resources', 'scripts-testnet'], function () {
+gulp.task('patch-html', ['resources', 'scripts'], function () {
     return gulp.src(config.buildDirectory + '/index.html')
         .pipe(inject(series(
             gulp.src(config.buildDirectory + '/css/*.css', {read: false}),
             gulp.src(config.buildDirectory + '/js/vendor*.js', {read: false}),
-            gulp.src(config.buildDirectory + '/js/bundle*.js', {read: false})
+            gulp.src(config.buildDirectory + '/js/bundle*.js', {read: false}),
+            gulp.src(config.buildDirectory + '/js/config*.js', {read: false}),
+            gulp.src(config.buildDirectory + '/js/templates*.js', {read: false})
         ), {relative:true}))
         .pipe(injectVersion())
         .pipe(gulp.dest(config.buildDirectory))
+});
+
+gulp.task('watch', function() {
+    gulp.watch('./src/**/*.*', ['clean', 'patch-html'])
 });
 
 gulp.task('clean', function () {
@@ -123,6 +132,12 @@ gulp.task('clean', function () {
     ]);
 });
 
-gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);
+gulp.task('config-build-testnet', function () {
+    return createConfig(config.buildDirectory, 'testnet');
+});
 
-gulp.task('default', ['clean', 'resources', 'scripts-testnet']);
+gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);
+gulp.task('default', ['clean', 'patch-html']);
+gulp.task('build', ['clean', 'resources', 'templates', 'scripts', 'config-build-testnet'], function () {
+    gulp.run('patch-html');
+});
