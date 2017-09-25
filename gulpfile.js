@@ -6,6 +6,9 @@ const order = require('gulp-order');
 const inject = require('gulp-inject');
 const del = require('del');
 const templateCache = require('gulp-angular-templatecache');
+const fs = require('fs');
+const git = require('gulp-git');
+const bump = require('gulp-bump');
 
 const config = {
     libraries: {
@@ -22,13 +25,14 @@ const config = {
     styles: [
         'node_modules/angular/angular-csp.css',
         'node_modules/bootstrap/dist/css/bootstrap.css',
+        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
         'src/css/style.css',
-        'node_modules/angular-loading-bar/build/loading-bar.css',
-        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css'
+        'node_modules/angular-loading-bar/build/loading-bar.css'
     ],
     fonts: 'src/fonts/*.*',
     icons: 'src/*.ico',
     html: 'src/templates/*.html',
+    package: './package.json',
     baseDir: 'src',
     buildDirectory: 'build',
     resultDirectory: 'distr'
@@ -48,6 +52,9 @@ function combineScripts(network) {
         .pipe(concat(buildLibrariesScriptName()))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
 
+    var pack = JSON.parse(fs.readFileSync(config.package));
+    var version = pack.version;
+
     gulp.src(config.html)
         .pipe(templateCache(
             'templates.js', {
@@ -61,7 +68,7 @@ function combineScripts(network) {
             gulp.src('src/js/app.js'),
             gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']),
             gulp.src('src/js/config.' + network + '.js'))
-        .pipe(concat('bundle.js'))
+        .pipe(concat('bundle-' + version + '.js'))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
 }
 
@@ -86,6 +93,13 @@ gulp.task('copy-icons', function () {
 gulp.task('copy-html', function () {
     return gulp.src(config.baseDir + '/index.html')
         .pipe(gulp.dest(config.buildDirectory));
+});
+
+gulp.task('bump', function () {
+    return gulp.src(config.package)
+        .pipe(bump())
+        .pipe(gulp.dest('./'))
+        .pipe(git.commit('chore(version): bumping version'));
 });
 
 gulp.task('patch-html', ['resources', 'scripts-testnet'], function () {
