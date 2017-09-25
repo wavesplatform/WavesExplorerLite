@@ -9,6 +9,7 @@ const templateCache = require('gulp-angular-templatecache');
 const fs = require('fs');
 const git = require('gulp-git');
 const bump = require('gulp-bump');
+const injectVersion = require('gulp-inject-version');
 
 const config = {
     libraries: {
@@ -111,6 +112,7 @@ gulp.task('patch-html', ['resources', 'scripts-testnet'], function () {
             gulp.src(config.buildDirectory + '/js/vendor*.js', {read: false}),
             gulp.src(config.buildDirectory + '/js/bundle*.js', {read: false})
         ), {relative:true}))
+        .pipe(injectVersion())
         .pipe(gulp.dest(config.buildDirectory))
 });
 

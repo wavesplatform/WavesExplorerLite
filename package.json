@@ -30,6 +30,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-git": "^2.4.2",
     "gulp-inject": "^4.3.0",
+    "gulp-inject-version": "^1.0.1",
     "gulp-order": "^1.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
