@@ -55,19 +55,21 @@ function combineScripts(network) {
     var pack = JSON.parse(fs.readFileSync(config.package));
     var version = pack.version;
 
-    gulp.src(config.html)
+    var templateStream = gulp.src(config.html)
         .pipe(templateCache(
             'templates.js', {
                 module: 'web',
                 standAlone: false,
                 root: '/templates/'
-            }))
-        .pipe(gulp.dest(config.buildDirectory + '/js'));
+            }
+        ));
 
     return series(
-            gulp.src('src/js/app.js'),
-            gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']),
-            gulp.src('src/js/config.' + network + '.js'))
+            series(
+                gulp.src('src/js/app.js'),
+                gulp.src(['src/js/**/*.js', '!src/js/app.js', '!src/js/config.*']),
+                gulp.src('src/js/config.' + network + '.js')),
+            templateStream)
         .pipe(concat('bundle-' + version + '.js'))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
 }
