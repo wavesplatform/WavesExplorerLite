@@ -10,6 +10,7 @@ const fs = require('fs');
 const git = require('gulp-git');
 const bump = require('gulp-bump');
 const injectVersion = require('gulp-inject-version');
+const s3 = require('gulp-s3');
 
 const config = {
     libraries: {
@@ -38,10 +39,17 @@ const config = {
     },
     baseDir: 'src',
     buildDirectory: 'build',
-    resultDirectory: 'distr'
+    releaseDirectory: 'distr'
 };
 
 config.package.data = JSON.parse(fs.readFileSync(config.package.source));
+
+function awsCredentials() {
+    return {
+        key: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
+        secret: process.env.EXPLORER_AWS_ACCESS_SECRET
+    }
+}
 
 function copyFiles(source, destination) {
     return gulp.src(source)
@@ -53,9 +61,23 @@ function buildScriptName(name, version) {
 }
 
 function createConfig(baseDir, network) {
+    console.log(baseDir + '/js');
+
     return gulp.src('src/js/config.' + network + '.js')
         .pipe(rename(buildScriptName('config', config.package.data.version)))
         .pipe(gulp.dest(baseDir + '/js'));
+}
+
+function copyAndConfigureRelease(network) {
+    var releaseDirectory = config.releaseDirectory + '/' + network;
+
+    return series(
+        gulp.src([
+            config.buildDirectory + '/**/*.*',
+            '!' + config.buildDirectory + '/js/config*'
+        ]).pipe(gulp.dest(releaseDirectory)),
+        createConfig(releaseDirectory, network)
+    );
 }
 
 gulp.task('scripts', function() {
@@ -108,7 +130,7 @@ gulp.task('bump', function () {
         .pipe(git.commit('chore(version): bumping version'));
 });
 
-gulp.task('patch-html', ['resources', 'scripts'], function () {
+gulp.task('patch-html', ['resources', 'scripts', 'templates', 'build-default-config'], function () {
     return gulp.src(config.buildDirectory + '/index.html')
         .pipe(inject(series(
             gulp.src(config.buildDirectory + '/css/*.css', {read: false}),
@@ -122,22 +144,59 @@ gulp.task('patch-html', ['resources', 'scripts'], function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./src/**/*.*', ['clean', 'patch-html'])
+    gulp.watch('./src/**/*.*', ['build']);
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', function (done) {
     return del([
         config.buildDirectory + '/*',
-        config.resultDirectory + '/*'
-    ]);
+        config.buildDirectory,
+        config.releaseDirectory + '/*',
+        config.releaseDirectory
+    ], done);
 });
 
-gulp.task('config-build-testnet', function () {
+gulp.task('build-default-config', function () {
     return createConfig(config.buildDirectory, 'testnet');
 });
 
 gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);
-gulp.task('default', ['clean', 'patch-html']);
-gulp.task('build', ['clean', 'resources', 'templates', 'scripts', 'config-build-testnet'], function () {
-    gulp.run('patch-html');
+gulp.task('default', ['build']);
+gulp.task('build', ['clean', 'patch-html']);
+gulp.task('distr', ['clean', 'patch-html'], function () {
+    return series(
+        copyAndConfigureRelease('testnet'),
+        copyAndConfigureRelease('mainnet'),
+        copyAndConfigureRelease('devnet')
+    );
 });
+
+gulp.task('publish-testnet', ['distr'], function () {
+    var config = awsCredentials();
+    config.region = 'eu-central-1';
+    config.bucket = 'testnet.wavesexplorer.com';
+
+    return gulp.src(config.releaseDirectory + '/testnet/**')
+        .pipe(s3(config));
+});
+
+gulp.task('publish-mainnet', ['distr'], function () {
+    var config = awsCredentials();
+    config.region = 'eu-central-1';
+    config.bucket = 'wavesexplorer.com';
+
+    return gulp.src(config.releaseDirectory + '/mainnet/**')
+        .pipe(s3(config));
+});
+
+gulp.task('publish-devnet', ['distr'], function () {
+    var config = awsCredentials();
+    config.region = 'eu-west-1';
+    config.bucket = 'devnet.wavesexplorer.com';
+
+    return gulp.src(config.releaseDirectory + '/devnet/**')
+        .pipe(s3(config));
+});
+
+gulp.task('publish', ['publish-testnet', 'publish-mainnet', 'publish-devnet']);
+

@@ -24,10 +24,6 @@ footer p {
     border-top: none !important;
 }
 
-.navbar {
-    min-height: 60px;
-}
-
 #loading-bar-spinner .spinner-icon {
     width: 50px;
     height: 50px;
