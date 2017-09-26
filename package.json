@@ -33,6 +33,7 @@
     "gulp-inject-version": "^1.0.1",
     "gulp-order": "^1.1.1",
     "gulp-rename": "^1.2.2",
+    "gulp-s3": "^0.11.0",
     "gulp-uglify": "^3.0.0",
     "minimatch": "^3.0.4",
     "morgan": "^1.7.0",
