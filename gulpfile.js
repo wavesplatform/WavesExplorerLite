@@ -176,30 +176,30 @@ gulp.task('distr', ['clean', 'patch-html'], function () {
 });
 
 gulp.task('publish-testnet', ['distr'], function () {
-    var config = awsCredentials();
-    config.region = 'eu-central-1';
-    config.bucket = 'testnet.wavesexplorer.com';
+    var credentials = awsCredentials();
+    credentials.region = 'eu-central-1';
+    credentials.bucket = 'testnet.wavesexplorer.com';
 
     return gulp.src(config.releaseDirectory + '/testnet/**')
-        .pipe(s3(config));
+        .pipe(s3(credentials));
 });
 
 gulp.task('publish-mainnet', ['distr'], function () {
-    var config = awsCredentials();
-    config.region = 'eu-central-1';
-    config.bucket = 'wavesexplorer.com';
+    var credentials = awsCredentials();
+    credentials.region = 'eu-central-1';
+    credentials.bucket = 'wavesexplorer.com';
 
     return gulp.src(config.releaseDirectory + '/mainnet/**')
-        .pipe(s3(config));
+        .pipe(s3(credentials));
 });
 
 gulp.task('publish-devnet', ['distr'], function () {
-    var config = awsCredentials();
-    config.region = 'eu-west-1';
-    config.bucket = 'devnet.wavesexplorer.com';
+    var credentials = awsCredentials();
+    credentials.region = 'eu-west-1';
+    credentials.bucket = 'devnet.wavesexplorer.com';
 
     return gulp.src(config.releaseDirectory + '/devnet/**')
-        .pipe(s3(config));
+        .pipe(s3(credentials));
 });
 
 gulp.task('publish', ['publish-testnet', 'publish-mainnet', 'publish-devnet']);
