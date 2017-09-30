@@ -10,12 +10,10 @@ Demo is available on http://testnet.wavesexplorer.com
 
 Install [NodeJS](https://nodejs.org/en/download/)
 
-Install grunt:
+Install gulp:
 ```
-npm install -g grunt-cli
+npm install -g gulp-cli
 ```
-
-Configure node url in config.js
 
 # Run localy
 
@@ -23,14 +21,14 @@ npm install
 
 node server.js
 
-Open http://localhost:3000 in browser
+Open http://localhost:3000 in browser. You'll see testnet version of explorer.
 
 # Build
 
-Build process creates ./distr directory for both testnet and mainnet explorer configurations. 
+Build process creates ./distr directory for testnet, mainnet and devnet explorer configurations. 
 To create distribution, run:
 ```
-grunt distr
+gulp distr
 ```
 
 # Deployment
@@ -43,14 +41,15 @@ To enable deployment you need to provide access keys from Amazon S3. This is don
 See Amazon S3 access for further details. These values **SHOULD NEVER** be stored in git repo.
 
 ## Commands
-Deployment is automated via deploy task, which is quite smart to upload only changed files since the last deployment. 
+Deployment is automated via publish task, which is quite smart to upload only changed files since the last deployment.
+By default publish will deploy each configuration to their corresponding location on Amazon S3.
+
 To deploy testnet version run:
 ```
-grunt deploy --target=testnet
+gulp publish-testnet
 ```
-To deploy mainnet version
-run:
+To deploy mainnet version run:
 ```
-grunt deploy --target=mainnet
+gulp publish-mainnet
 ```
 Deploy script will automatically build the project and deploy selected configuration.
