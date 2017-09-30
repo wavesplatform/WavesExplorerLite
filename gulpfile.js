@@ -11,6 +11,8 @@ const git = require('gulp-git');
 const bump = require('gulp-bump');
 const injectVersion = require('gulp-inject-version');
 const s3 = require('gulp-s3');
+const watch = require('gulp-watch');
+const batch = require('gulp-batch');
 
 const config = {
     libraries: {
@@ -138,13 +140,15 @@ gulp.task('patch-html', ['resources', 'scripts', 'templates', 'build-default-con
             gulp.src(config.buildDirectory + '/js/bundle*.js', {read: false}),
             gulp.src(config.buildDirectory + '/js/config*.js', {read: false}),
             gulp.src(config.buildDirectory + '/js/templates*.js', {read: false})
-        ), {relative:true}))
+        ), {relative:false, ignorePath: config.buildDirectory}))
         .pipe(injectVersion())
         .pipe(gulp.dest(config.buildDirectory))
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./src/**/*.*', ['build']);
+    watch('./src/**/*.*', {read:false, readDelay:100}, batch(function (events, done) {
+        gulp.start('build', done);
+    }));
 });
 
 gulp.task('clean', function (done) {

@@ -36,3 +36,7 @@ footer p {
 }
 
 .mono { font-family:monospace; }
+
+.bg-dark {
+    background-color: #343a40!important;
+}
