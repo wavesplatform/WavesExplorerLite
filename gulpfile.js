@@ -57,6 +57,14 @@ function awsCredentials(region, bucket) {
     }
 }
 
+function publishToS3(credentials, fileSpec) {
+    var publisher = awspublish.create(credentials);
+
+    return gulp.src(fileSpec)
+        .pipe(publisher.publish())
+        .pipe(awspublish.reporter());
+}
+
 function copyFiles(source, destination) {
     return gulp.src(source)
         .pipe(gulp.dest(destination))
@@ -179,25 +187,20 @@ gulp.task('distr', ['clean', 'patch-html'], function () {
 
 gulp.task('publish-testnet', ['distr'], function () {
     var credentials = awsCredentials('eu-central-1', 'testnet.wavesexplorer.com');
-    var publisher = awspublish.create(credentials);
 
-    return gulp.src(config.releaseDirectory + '/testnet/**')
-        .pipe(publisher.publish())
-        .pipe(awspublish.reporter());
+    return publishToS3(credentials, config.releaseDirectory + '/testnet/**');
 });
 
 gulp.task('publish-mainnet', ['distr'], function () {
     var credentials = awsCredentials('eu-central-1', 'wavesexplorer.com');
 
-    return gulp.src(config.releaseDirectory + '/mainnet/**')
-        .pipe(s3(credentials));
+    return publishToS3(credentials, config.releaseDirectory + '/mainnet/**');
 });
 
 gulp.task('publish-devnet', ['distr'], function () {
     var credentials = awsCredentials('eu-west-1', 'devnet.wavesexplorer.com');
 
-    return gulp.src(config.releaseDirectory + '/devnet/**')
-        .pipe(s3(credentials));
+    return publishToS3(credentials, config.releaseDirectory + '/devnet/**');
 });
 
 gulp.task('publish', ['publish-testnet', 'publish-mainnet', 'publish-devnet']);
