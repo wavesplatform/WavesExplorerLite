@@ -10,9 +10,9 @@ const fs = require('fs');
 const git = require('gulp-git');
 const bump = require('gulp-bump');
 const injectVersion = require('gulp-inject-version');
-const s3 = require('gulp-s3');
 const watch = require('gulp-watch');
 const batch = require('gulp-batch');
+const awspublish = require('gulp-awspublish');
 
 const config = {
     libraries: {
@@ -46,10 +46,14 @@ const config = {
 
 config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
-function awsCredentials() {
+function awsCredentials(region, bucket) {
     return {
-        key: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
-        secret: process.env.EXPLORER_AWS_ACCESS_SECRET
+        accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.EXPLORER_AWS_ACCESS_SECRET,
+        region: region,
+        params: {
+            Bucket: bucket
+        }
     }
 }
 
@@ -63,8 +67,6 @@ function buildScriptName(name, version) {
 }
 
 function createConfig(baseDir, network) {
-    console.log(baseDir + '/js');
-
     return gulp.src('src/js/config.' + network + '.js')
         .pipe(rename(buildScriptName('config', config.package.data.version)))
         .pipe(gulp.dest(baseDir + '/js'));
@@ -96,7 +98,7 @@ gulp.task('scripts', function() {
 
 gulp.task('copy-css', function () {
     return gulp.src(config.styles)
-        .pipe(concat('styles.css'))
+        .pipe(concat('styles-' + config.package.data.version + '.css'))
         .pipe(gulp.dest(config.buildDirectory + '/css'))
 });
 
@@ -176,27 +178,23 @@ gulp.task('distr', ['clean', 'patch-html'], function () {
 });
 
 gulp.task('publish-testnet', ['distr'], function () {
-    var credentials = awsCredentials();
-    credentials.region = 'eu-central-1';
-    credentials.bucket = 'testnet.wavesexplorer.com';
+    var credentials = awsCredentials('eu-central-1', 'testnet.wavesexplorer.com');
+    var publisher = awspublish.create(credentials);
 
     return gulp.src(config.releaseDirectory + '/testnet/**')
-        .pipe(s3(credentials));
+        .pipe(publisher.publish())
+        .pipe(awspublish.reporter());
 });
 
 gulp.task('publish-mainnet', ['distr'], function () {
-    var credentials = awsCredentials();
-    credentials.region = 'eu-central-1';
-    credentials.bucket = 'wavesexplorer.com';
+    var credentials = awsCredentials('eu-central-1', 'wavesexplorer.com');
 
     return gulp.src(config.releaseDirectory + '/mainnet/**')
         .pipe(s3(credentials));
 });
 
 gulp.task('publish-devnet', ['distr'], function () {
-    var credentials = awsCredentials();
-    credentials.region = 'eu-west-1';
-    credentials.bucket = 'devnet.wavesexplorer.com';
+    var credentials = awsCredentials('eu-west-1', 'devnet.wavesexplorer.com');
 
     return gulp.src(config.releaseDirectory + '/devnet/**')
         .pipe(s3(credentials));
