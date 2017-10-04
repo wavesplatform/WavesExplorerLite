@@ -22,7 +22,10 @@ const config = {
             'node_modules/@uirouter/angularjs/release/angular-ui-router.js',
             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-            'node_modules/angular-recaptcha/release/angular-recaptcha.min.js'
+            'node_modules/angular-recaptcha/release/angular-recaptcha.min.js',
+            'node_modules/underscore/underscore.js',
+            'node-modules/decimal.js/decimal.js',
+            'node_modules/wavesplatform-core-js/distr/wavesplatform.core.js'
         ],
         version: '1.6.6' // change this version if libraries are updated or changed
     },

@@ -26,11 +26,9 @@
                         <th>#</th>
                         <th>Timestamp</th>
                         <th>Base Target</th>
-                        <th>Signature</th>
                         <th>Generator</th>
+                        <th>Signature</th>
                         <th>Txs</th>
-                        <th><span class="pull-right">Amount</span></th>
-                        <th><span class="pull-right">Fee</span></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,11 +36,9 @@
                         <td><waves-block-ref height="item.height"/></td>
                         <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td>{{item["nxt-consensus"]["base-target"]}}</td>
-                        <td><span class="mono">{{item.signature|limitTo:15}}&hellip;</span></td>
-                        <td><waves-endpoint-ref endpoint="item.generator" max-length="17"></waves-endpoint-ref></td>
+                        <td><waves-endpoint-ref endpoint="item.generator"></waves-endpoint-ref></td>
+                        <td><span class="mono">{{item.signature|limitTo:20}}&hellip;</span></td>
                         <td>{{item.transactions.length}}</td>
-                        <td><span class="pull-right">{{item.totalAmount.amount|wavelets}}</span></td>
-                        <td><span class="pull-right">{{item.fee|wavelets}}</span></td>
                     </tr>
                     </tbody>
                 </table>
