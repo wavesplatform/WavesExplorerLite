@@ -13,6 +13,7 @@ const injectVersion = require('gulp-inject-version');
 const watch = require('gulp-watch');
 const batch = require('gulp-batch');
 const awspublish = require('gulp-awspublish');
+const debug = require('gulp-debug');
 
 const config = {
     libraries: {
@@ -24,8 +25,8 @@ const config = {
             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
             'node_modules/angular-recaptcha/release/angular-recaptcha.min.js',
             'node_modules/underscore/underscore.js',
-            'node-modules/decimal.js/decimal.js',
-            'node_modules/wavesplatform-core-js/distr/wavesplatform.core.js'
+            'node_modules/decimal.js/decimal.js',
+            'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
         version: '1.6.6' // change this version if libraries are updated or changed
     },
@@ -107,21 +108,21 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest(config.buildDirectory + '/js'));
 });
 
-gulp.task('copy-css', function () {
+gulp.task('copy-css', ['clean'], function () {
     return gulp.src(config.styles)
         .pipe(concat('styles-' + config.package.data.version + '.css'))
         .pipe(gulp.dest(config.buildDirectory + '/css'))
 });
 
-gulp.task('copy-fonts', function () {
+gulp.task('copy-fonts', ['clean'], function () {
     return copyFiles(config.fonts, config.buildDirectory + '/fonts');
 });
 
-gulp.task('copy-icons', function () {
+gulp.task('copy-icons', ['clean'], function () {
     return copyFiles(config.icons, config.buildDirectory);
 });
 
-gulp.task('copy-html', function () {
+gulp.task('copy-html', ['clean'], function () {
     return gulp.src(config.baseDir + '/index.html')
         .pipe(gulp.dest(config.buildDirectory));
 });
