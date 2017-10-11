@@ -68,16 +68,18 @@
                             <th>Sender</th>
                             <th>Recipient</th>
                             <th><span class="pull-right">Amount</span></th>
+                            <th><span class="pull-right">Asset</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.payments">
                             <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.extras.fee}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
-                            <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
+                            <td><span class="pull-right">{{item.extras.amount.amount}}</span></td>
+                            <td><span class="pull-right">{{item.extras.amount.currency}}</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -100,12 +102,12 @@
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetIssue">
                             <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.extras.fee}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-transaction-ref tx-id="item.assetId" max-length="12"></waves-transaction-ref></td>
                             <td>{{item.name}}</td>
-                            <td><span class="pull-right">{{item.quantity}}</span></td>
+                            <td><span class="pull-right">{{item.extras.amount.amount}}</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -127,11 +129,11 @@
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetReissue">
                             <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.extras.fee}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-transaction-ref tx-id="item.assetId" max-length="12"></waves-transaction-ref></td>
-                            <td><span class="pull-right">{{item.quantity}}</span></td>
+                            <td><span class="pull-right">{{item.extras.amount.amount}}</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -139,7 +141,7 @@
                 <table class="table blockDetails" ng-show="ctrl.assetTransfer.length > 0">
                     <thead>
                         <tr>
-                            <th colspan="7">Transfers (type = 4)</th>
+                            <th colspan="8">Transfers (type = 4)</th>
                         </tr>
                         <tr class="active">
                             <th>ID</th>
@@ -149,17 +151,19 @@
                             <th>Recipient</th>
                             <th>Asset ID</th>
                             <th>Amount</th>
+                            <th>Asset</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in ctrl.assetTransfer">
                             <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.extras.fee}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-transaction-ref tx-id="item.assetId" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.amount}}</td>
+                            <td>{{item.extras.amount.amount}}</td>
+                            <td>{{item.extras.amount.currency}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -182,7 +186,7 @@
                     <tr ng-repeat="item in ctrl.exchange">
                         <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
                         <td>{{item.fee|wavelets}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.timestamp|wavesdate}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.amount}}</td>
                         <td>{{item.order1.assetPair.amountAsset}} / {{item.order1.assetPair.priceAsset}}</td>
@@ -207,11 +211,11 @@
                     <tbody>
                         <tr ng-repeat="item in ctrl.leasing">
                             <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.extras.fee}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
-                            <td>{{item.amount|wavelets}}</td>
+                            <td>{{item.extras.amount.amount}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -232,8 +236,8 @@
                     <tbody>
                     <tr ng-repeat="item in ctrl.leasingCancel">
                         <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                        <td>{{item.fee|wavelets}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.extras.fee}}</td>
+                        <td>{{item.timestamp|wavesdate}}</td>
                         <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                         <td><waves-transaction-ref tx-id="item.leasingId"></waves-transaction-ref></td>
                     </tr>
@@ -256,8 +260,8 @@
                     <tbody>
                     <tr ng-repeat="item in ctrl.alias">
                         <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                        <td>{{item.fee|wavelets}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.extras.fee}}</td>
+                        <td>{{item.timestamp|wavesdate}}</td>
                         <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                         <td>{{item.alias}}</td>
                     </tr>
