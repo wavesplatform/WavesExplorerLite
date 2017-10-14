@@ -21,7 +21,7 @@
                         </tr>
                         <tr>
                             <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
                         </tr>
                         <tr>
                             <td>Transactions</td>
@@ -77,7 +77,7 @@
                         <tr ng-repeat="item in ctrl.details.transactions">
                             <td>{{item.type}}</td>
                             <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.timestamp|wavesdate}}</td>
                             <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.signature|limitTo:7}}...</a></td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>

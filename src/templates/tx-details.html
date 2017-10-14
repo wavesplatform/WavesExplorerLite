@@ -19,7 +19,7 @@
                         </tr>
                         <tr>
                             <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
                         </tr>
                         <tr>
                             <td>Block</td>
@@ -27,11 +27,11 @@
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>{{ctrl.details.amount|wavelets}}</td>
+                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
                         </tr>
                         <tr>
                             <td>Fee</td>
-                            <td>{{ctrl.details.fee|wavelets}}</td>
+                            <td>{{ctrl.details.extras.fee}}</td>
                         </tr>
                         <tr>
                             <td>Sender</td>
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
                         </tr>
                         <tr>
                             <td>Block</td>
@@ -89,7 +89,7 @@
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>{{ctrl.details.quantity|assetunits:ctrl.details.decimals}}</td>
+                            <td>{{ctrl.details.extras.amount.amount}}</td>
                         </tr>
                         <tr>
                             <td>Description</td>
@@ -99,7 +99,7 @@
                         </tr>
                         <tr>
                             <td>Fee</td>
-                            <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                            <td>{{ctrl.details.extras.fee}}</td>
                         </tr>
                         <tr>
                             <td>Issuer</td>
@@ -125,7 +125,7 @@
                         </tr>
                         <tr>
                             <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
                         </tr>
                         <tr>
                             <td>Block</td>
@@ -137,7 +137,7 @@
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>{{ctrl.details.amount}}</td>
+                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
                         </tr>
                         <tr>
                             <td>Attachment</td>
@@ -145,7 +145,7 @@
                         </tr>
                         <tr>
                             <td>Fee</td>
-                            <td>{{ctrl.details.fee|assetunits:ctrl.details.assetDecimals}} {{ctrl.details.feeAsset}}</td>
+                            <td>{{ctrl.details.extras.fee}}</td>
                         </tr>
                         <tr>
                             <td>Sender</td>
@@ -192,11 +192,11 @@
                         </tr>
                         <tr>
                             <td>Quantity</td>
-                            <td>{{ctrl.details.quantity}}</td>
+                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
                         </tr>
                         <tr>
                             <td>Fee</td>
-                            <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                            <td>{{ctrl.details.extras.fee}}</td>
                         </tr>
                         <tr>
                             <td>Issuer</td>
@@ -223,7 +223,7 @@
                         </tr>
                         <tr>
                             <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
                         </tr>
                         <tr>
                             <td>Block</td>
@@ -322,7 +322,7 @@
                     </tr>
                     <tr>
                         <td>Timestamp</td>
-                        <td>{{ctrl.details.order2.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ctrl.details.order2.timestamp|wavesdate}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -339,7 +339,7 @@
                     </tr>
                     <tr>
                         <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
                     </tr>
                     <tr>
                         <td>Block</td>
@@ -347,11 +347,11 @@
                     </tr>
                     <tr>
                         <td>Amount</td>
-                        <td>{{ctrl.details.amount}}</td>
+                        <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
                     </tr>
                     <tr>
                         <td>Fee</td>
-                        <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                        <td>{{ctrl.details.extras.fee}}</td>
                     </tr>
                     <tr>
                         <td>Sender</td>
@@ -381,7 +381,7 @@
                     </tr>
                     <tr>
                         <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
                     </tr>
                     <tr>
                         <td>Block</td>
@@ -393,7 +393,7 @@
                     </tr>
                     <tr>
                         <td>Fee</td>
-                        <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                        <td>{{ctrl.details.extras.fee}}</td>
                     </tr>
                     <tr>
                         <td>Sender</td>
@@ -419,7 +419,7 @@
                     </tr>
                     <tr>
                         <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
                     </tr>
                     <tr>
                         <td>Block</td>
@@ -431,7 +431,7 @@
                     </tr>
                     <tr>
                         <td>Fee</td>
-                        <td>{{ctrl.details.fee|wavelets}} WAVES</td>
+                        <td>{{ctrl.details.extras.fee}}</td>
                     </tr>
                     <tr>
                         <td>Sender</td>

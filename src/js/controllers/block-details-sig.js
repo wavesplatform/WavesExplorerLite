@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function BlocksDetailsSigCtrl($http, apiService, $stateParams, $state) {
+	function BlocksDetailsSigCtrl($http, apiService, transactionFormattingService, $stateParams, $state) {
 		var ctrl = this;
 		ctrl.signature = $stateParams.signature;
 		ctrl.next = nextBlock;
@@ -19,6 +19,15 @@
 					ctrl.assetIssue = txs(ctrl.details.transactions, 3);
 					ctrl.assetReissue = txs(ctrl.details.transactions, 5);
 					ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
+
+					ctrl.exchange = txs(ctrl.details.transactions, 7);
+
+					ctrl.leasing = txs(ctrl.details.transactions, 8);
+					ctrl.leasingCancel = txs(ctrl.details.transactions, 9);
+
+					ctrl.alias = txs(ctrl.details.transactions, 10);
+
+					return transactionFormattingService.processAmountAndFee(ctrl.details.transactions);
 				});
 		}
 

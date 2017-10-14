@@ -149,7 +149,6 @@
                             <th>Timestamp</th>
                             <th>Sender</th>
                             <th>Recipient</th>
-                            <th>Asset ID</th>
                             <th>Amount</th>
                             <th>Asset</th>
                         </tr>
@@ -161,9 +160,11 @@
                             <td>{{item.timestamp|wavesdate}}</td>
                             <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
                             <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
-                            <td><waves-transaction-ref tx-id="item.assetId" max-length="12"></waves-transaction-ref></td>
                             <td>{{item.extras.amount.amount}}</td>
-                            <td>{{item.extras.amount.currency}}</td>
+                            <td ng-if="item.assetId === null">{{item.extras.amount.currency}}</td>
+                            <td ng-if="item.assetId !== null">
+                                <waves-transaction-ref tx-id="item.assetId" text="item.extras.amount.currency"></waves-transaction-ref>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -238,8 +239,8 @@
                         <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
                         <td>{{item.extras.fee}}</td>
                         <td>{{item.timestamp|wavesdate}}</td>
-                        <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
-                        <td><waves-transaction-ref tx-id="item.leasingId"></waves-transaction-ref></td>
+                        <td><waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref></td>
+                        <td><waves-transaction-ref tx-id="item.leaseId"></waves-transaction-ref></td>
                     </tr>
                     </tbody>
                 </table>

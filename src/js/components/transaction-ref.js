@@ -6,6 +6,13 @@
 
         ctrl.$onInit = function () {
         };
+
+        ctrl.$onChanges = function (changesObj) {
+            if (changesObj.txId) {
+                if (!ctrl.text)
+                    ctrl.text = changesObj.txId.currentValue;
+            }
+        }
     }
 
     angular
@@ -14,10 +21,11 @@
             controller: WavesTransactionRefController,
             bindings: {
                 txId: '<',
-                maxLength: '<?'
+                maxLength: '<?',
+                text: '<?'
             },
             template: '<a class="mono" ui-sref="tx-details({id:$ctrl.txId})" >' +
-                '{{$ctrl.txId|limitTo:$ctrl.maxLength}}{{$ctrl.txId.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
+                '{{$ctrl.text|limitTo:$ctrl.maxLength}}{{$ctrl.text.length > $ctrl.maxLength ? "&hellip;" : ""}}' +
             '</a>'
         });
 })();
