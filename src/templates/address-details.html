@@ -53,7 +53,7 @@
                     <tr ng-repeat="item in ctrl.txs | orderBy:'timestamp':true">
                         <td><waves-transaction-ref tx-id="item.id" max-length="7"></waves-transaction-ref></td>
                         <td>{{item.type}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{item.timestamp|wavesdate}}</td>
 
                         <td ng-if="item.sender!==ctrl.address">
                             <waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref>
@@ -67,8 +67,8 @@
                         </td>
                         <td ng-if="item.recipient===ctrl.address">
                             <span class="mono">{{item.recipient}}</span></td>
-                        <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
-                        <td>{{item.fee|wavelets}}</td>
+                        <td>{{item.extras.amount.amount}}</td>
+                        <td>{{item.extras.fee}}</td>
                     </tr>
                     </tbody>
                     <div class="panel-body" ng-show="ctrl.txs.length == 0">{{ctrl.txsMessage}}</div>

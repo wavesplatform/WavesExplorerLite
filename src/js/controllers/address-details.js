@@ -6,7 +6,7 @@
     var NO_ASSETS_MESSAGE = 'No assets for this address';
     var LOADING_MESSAGE = 'Loading...';
 
-    function AddressDetailsCtrl($http, apiService, aliasService, $stateParams) {
+    function AddressDetailsCtrl($http, apiService, aliasService, transactionFormattingService, $stateParams) {
         var ctrl = this;
         ctrl.address = $stateParams.address;
         ctrl.aliases = [];
@@ -33,6 +33,8 @@
                     ctrl.txs.forEach(function(item) {
                         item.outgoing = (item.sender === ctrl.address);
                     });
+
+                    return transactionFormattingService.processAmountAndFee(ctrl.txs);
                 })
                 .catch(function () {
                     ctrl.txsMessage = 'Error loading transactions';
