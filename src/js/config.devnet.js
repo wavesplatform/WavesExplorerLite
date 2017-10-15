@@ -20,4 +20,11 @@
         }
     });
 
+
+    angular.module('web').constant('constants.network', {
+        NETWORK_NAME: 'devnet', // 'devnet', 'testnet', 'mainnet'
+        ADDRESS_VERSION: 1,
+        NETWORK_CODE: 'D',
+        INITIAL_NONCE: 0
+    });
 })();

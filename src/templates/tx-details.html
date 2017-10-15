@@ -235,11 +235,11 @@
                         </tr>
                         <tr>
                             <td>Price</td>
-                            <td>{{ctrl.details.price}}</td>
+                            <td>{{ctrl.details.extras.price}}</td>
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>{{ctrl.details.amount}}</td>
+                            <td>{{ctrl.details.extras.amount.amount}}</td>
                         </tr>
                         <tr>
                             <td>Buy Matcher Fee</td>
@@ -260,11 +260,11 @@
                     <tbody>
                         <tr>
                             <td>Amount Asset</td>
-                            <td>{{ctrl.details.order1.assetPair.amountAsset}}</td>
+                            <td><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></td>
                         </tr>
                         <tr>
                             <td>Price Asset</td>
-                            <td>{{ctrl.details.order1.assetPair.priceAsset}}</td>
+                            <td><waves-asset-ref asset-id="ctrl.details.order1.assetPair.priceAsset" text="ctrl.details.extras.priceCurrency"></waves-asset-ref></td>
                         </tr>
                     </tbody>
 
@@ -293,7 +293,7 @@
                     </tr>
                     <tr>
                         <td>Timestamp</td>
-                        <td>{{ctrl.details.order1.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ctrl.details.order1.timestamp|wavesdate}}</td>
                     </tr>
                     </tbody>
 

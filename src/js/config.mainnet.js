@@ -18,4 +18,11 @@
             title: 'Wallet'
         }
     });
+
+    angular.module('web').constant('constants.network', {
+        NETWORK_NAME: 'mainnet', // 'devnet', 'testnet', 'mainnet'
+        ADDRESS_VERSION: 1,
+        NETWORK_CODE: 'W',
+        INITIAL_NONCE: 0
+    });
 })();

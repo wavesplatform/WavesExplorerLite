@@ -5,7 +5,7 @@
     var FAILURE_TEXT = 'Failure';
     var GENESIS_TRANSACTION_TYPE = 1;
 
-    function TransactionFormattingService($http, $q, apiService, constants) {
+    function TransactionFormattingService($http, $q, apiService, cryptoService, constants) {
 
         var loadFees = [];
         var loadAmounts = [];
@@ -15,6 +15,7 @@
         processors[constants.PAYMENT_TRANSACTION_TYPE] = postProcessPaymentTransaction;
         processors[constants.ASSET_ISSUE_TRANSACTION_TYPE] = postProcessIssueTransaction;
         processors[constants.ASSET_TRANSFER_TRANSACTION_TYPE] = postProcessTransferTransaction;
+        processors[constants.EXCHANGE_TRANSACTION_TYPE] = postProcessExchangeTransaction;
         processors[constants.ASSET_REISSUE_TRANSACTION_TYPE] = postProcessReissueTransaction;
         processors[constants.START_LEASING_TRANSACTION_TYPE] = postProcessLeasingTransaction;
 
@@ -64,6 +65,39 @@
         function postProcessLeasingTransaction(transaction) {
             processFee(transaction);
             processAmount(transaction, transaction.amount, Currency.WAVES.id);
+
+            return transaction;
+        }
+
+        function postProcessExchangeTransaction(transaction) {
+            processFee(transaction);
+
+            var pair = _.extend({}, transaction.order1.assetPair);
+            if (pair.amountAsset === null)
+                pair.amountAsset = '';
+            if (pair.priceAsset === null)
+                pair.priceAsset = '';
+            processAmount(transaction, transaction.amount, pair.amountAsset);
+
+            var from = transaction.order1.orderType === 'buy' ? transaction.order2.senderPublicKey : transaction.order1.senderPublicKey;
+            var to = transaction.order1.orderType === 'sell' ? transaction.order2.senderPublicKey : transaction.order1.senderPublicKey;
+
+            var price;
+            if (Currency.isCached(pair.amountAsset) && Currency.isCached(pair.priceAsset)) {
+                var currencyPair = {
+                    amountAsset: Currency.create({id: pair.amountAsset}),
+                    priceAsset: Currency.create({id: pair.priceAsset})
+                };
+                price = OrderPrice.fromBackendPrice(transaction.price, currencyPair).toTokens().toFixed(8);
+                transaction.extras.priceCurrency = currencyPair.priceAsset.toString();
+                transaction.extras.amountCurrency = currencyPair.amountAsset.toString();
+            } else {
+                price = transaction.price.toString();
+            }
+
+            transaction.extras.from = cryptoService.buildRawAddress(from);
+            transaction.extras.to = cryptoService.buildRawAddress(to);
+            transaction.extras.price = price;
 
             return transaction;
         }
@@ -170,6 +204,6 @@
 
     angular
         .module('web')
-        .service('transactionFormattingService', ['$http', '$q', 'apiService', 'constants.transactions',
+        .service('transactionFormattingService', ['$http', '$q', 'apiService', 'cryptoService', 'constants.transactions',
             TransactionFormattingService]);
 })();

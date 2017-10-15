@@ -26,9 +26,12 @@ const config = {
             'node_modules/angular-recaptcha/release/angular-recaptcha.min.js',
             'node_modules/underscore/underscore.js',
             'node_modules/decimal.js/decimal.js',
+            'node_modules/base-58/Base58.js',
+            'node_modules/js-sha3/src/sha3.js',
+            'node_modules/restangular/dist/restangular.js',
             'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
-        version: '1.6.6' // change this version if libraries are updated or changed
+        version: '1.6.7' // change this version if libraries are updated or changed
     },
     styles: [
         'node_modules/angular/angular-csp.css',
@@ -175,7 +178,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build-default-config', function () {
-    return createConfig(config.buildDirectory, 'mainnet');
+    return createConfig(config.buildDirectory, 'testnet');
 });
 
 gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);

@@ -172,7 +172,7 @@
                 <table class="table blockDetails" ng-show="ctrl.exchange.length > 0">
                     <thead>
                     <tr>
-                        <th colspan="6">Exchanges (type = 7)</th>
+                        <th colspan="8">Exchanges (type = 7)</th>
                     </tr>
                     <tr class="active">
                         <th>ID</th>
@@ -181,6 +181,8 @@
                         <th>Price</th>
                         <th>Amount</th>
                         <th>Pair</th>
+                        <th>From</th>
+                        <th>To</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -188,9 +190,16 @@
                         <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
                         <td>{{item.fee|wavelets}}</td>
                         <td>{{item.timestamp|wavesdate}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.amount}}</td>
-                        <td>{{item.order1.assetPair.amountAsset}} / {{item.order1.assetPair.priceAsset}}</td>
+                        <td>{{item.extras.price}}</td>
+                        <td>{{item.extras.amount.amount}}</td>
+                        <td>
+                            <nobr>
+                                <waves-asset-ref asset-id="item.order1.assetPair.amountAsset" text="item.extras.amountCurrency"></waves-asset-ref> /
+                                <waves-asset-ref asset-id="item.order1.assetPair.priceAsset" text="item.extras.priceCurrency"></waves-asset-ref>
+                            </nobr>
+                        </td>
+                        <td><waves-endpoint-ref endpoint="item.extras.from" max-length="12"></waves-endpoint-ref></td>
+                        <td><waves-endpoint-ref endpoint="item.extras.to" max-length="12"></waves-endpoint-ref></td>
                     </tr>
                     </tbody>
                 </table>
