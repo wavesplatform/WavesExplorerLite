@@ -25,24 +25,24 @@
                     node.height = "error";
                 });
 
-                $http.get(apiProvider(node.url).consensus.basetarget).then(function (data) {
-                    node.baseTarget = data.baseTarget;
+                $http.get(apiProvider(node.url).consensus.basetarget).then(function (response) {
+                    node.baseTarget = response.data.baseTarget;
                 })
                 .catch(function () {
                     node.baseTarget = "error";
                 });
 
-                $http.get(apiProvider(node.url).debug.info).then(function (data) {
-                    node.debugStateHeight = data.stateHeight;
-                    node.debugStateHash = data.stateHash;
+                $http.get(apiProvider(node.url).debug.info).then(function (response) {
+                    node.debugStateHeight = response.data.stateHeight;
+                    node.debugStateHash = response.data.stateHash;
                 })
                 .catch(function () {
                     node.debugStateHeight = "error";
                     node.debugStateHash = "-";
                 });
 
-                $http.get(apiProvider(node.url).transactions.utxSize).then(function (data) {
-                    node.utxSize = data.size;
+                $http.get(apiProvider(node.url).transactions.utxSize).then(function (response) {
+                    node.utxSize = response.data.size;
                 });
             });
         }

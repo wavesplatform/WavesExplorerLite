@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function BlocksCtrl($http, apiService) {
+    function BlocksCtrl($http, apiService, cryptoService) {
         var ctrl = this;
 
         ctrl.numPerPage = 20;
@@ -31,6 +31,7 @@
                 ctrl.blocks = response.data;
                 ctrl.blocks.reverse();
                 ctrl.blocks.forEach(function (b) {
+                    b.generatorAddress = cryptoService.buildRawAddress(b.generator);
                     b.totalAmount = b.transactions.filter(function (tx) {
                         return tx.type == 4 || tx.type == 2; // only WAVES transfers
                     }).reduce(function (a, b) {
