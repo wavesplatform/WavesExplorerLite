@@ -6,10 +6,10 @@
         title: 'Waves Testnet Explorer',
         blockchainName: 'Testnet',
         nodes: [
-            {url: 'https://52.30.47.67:6869', maintainer: 'Waves', showAsLink: true},
-            {url: 'https://52.28.66.217:6869', maintainer: 'Waves', showAsLink: true},
-            {url: 'https://52.77.111.219:6869', maintainer: 'Waves', showAsLink: true},
-            {url: 'https://52.51.92.182:6869', maintainer: 'Waves', showAsLink: true}
+            {url: 'http://52.30.47.67:6869', maintainer: 'Waves', showAsLink: true},
+            {url: 'http://52.28.66.217:6869', maintainer: 'Waves', showAsLink: true},
+            {url: 'http://52.77.111.219:6869', maintainer: 'Waves', showAsLink: true},
+            {url: 'http://52.51.92.182:6869', maintainer: 'Waves', showAsLink: true}
         ],
         faucet: {
             url: 'http://52.30.47.67:9000',
