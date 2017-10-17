@@ -35,8 +35,10 @@
 
         function postProcessIssueTransaction(transaction) {
             processFee(transaction);
+
             var currency = createCurrencyFromIssueTransaction(transaction);
-            processAmount(transaction, transaction.quantity, currency);
+            transaction.extras.amount.amount = Money.fromCoins(transaction.quantity, currency).formatAmount();
+            transaction.extras.amount.currency = currency.toString();
 
             return transaction;
         }
