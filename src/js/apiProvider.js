@@ -61,7 +61,7 @@
                     return url + '/transactions/info/' + signature;
                 },
                 forAddress: function (address) {
-                    return url + '/transactions/address/' + address + '/limit/50';
+                    return url + '/transactions/address/' + address + '/limit/100';
                 }
 
             },
