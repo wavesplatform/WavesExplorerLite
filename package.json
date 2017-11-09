@@ -13,10 +13,12 @@
     "angular-loading-bar": "^0.9.0",
     "angular-recaptcha": "^4.1.0",
     "angular-ui-bootstrap": "^2.5.0",
-    "base-58": "git://github.com/45678/Base58.git",
+    "base-58": "git+https://github.com/45678/Base58.git",
     "bootstrap": "^3.3.7",
+    "decimal.js": "^5.0.8",
     "js-sha3": "^0.5.2",
     "restangular": "^1.6.1",
+    "underscore": "^1.8.3",
     "wavesplatform-core-js": "git://github.com/beregovoy68/wavesplatform.core.js.git#master"
   },
   "devDependencies": {
