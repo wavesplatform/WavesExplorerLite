@@ -27,7 +27,7 @@
             }
             var to = from + ctrl.numPerPage + correction;
 
-            $http.get(apiService.blocks.seq(from, to)).then(function (response) {
+            $http.get(apiService.headers.seq(from, to)).then(function (response) {
                 ctrl.blocks = response.data;
                 ctrl.blocks.reverse();
                 ctrl.blocks.forEach(function (b) {

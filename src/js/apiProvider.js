@@ -13,6 +13,15 @@
         return {
             version: url + '/node/version',
             status: url + '/node/status',
+            headers: {
+                seq: function (from, to) {
+                    return url + '/blocks/headers/seq/' + from + '/' + to;
+                },
+                byHeight: function (height) {
+                    return url + '/blocks/headers/at/' + height;
+                },
+                last: url + '/blocks/headers/last'
+            },
             blocks: {
                 height: url + '/blocks/height',
                 seq: function (from, to) {

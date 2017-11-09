@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('web').constant('appConfig', {
-        apiDomain: 'https://testnode1.wavesnodes.com',
+        apiDomain: 'https://testnode3.wavesnodes.com',
         title: 'Waves Testnet Explorer',
         blockchainName: 'Testnet',
         nodes: [
