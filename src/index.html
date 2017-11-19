@@ -14,7 +14,7 @@
 
 <body class="skin1">
     <div id="navbar" class="navbar navbar-default">
-        <div id="navbar-container" class="navbar-container">
+        <div id="navbar-container container" class="navbar-container">
             <div class="navbar-header pull-left">
                 <a href="/" class="navbar-brand">{{ctrl.title}}</a>
             </div>
@@ -53,11 +53,7 @@
         <div class="main-content">
             <div class="main-content-inner">
                 <div class="page-content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div ui-view="main" ng-cloak></div>
-                        </div>
-                    </div>
+                    <div ui-view="main" ng-cloak></div>
                 </div>
             </div>
         </div>
