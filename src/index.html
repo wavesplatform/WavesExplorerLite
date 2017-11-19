@@ -7,22 +7,19 @@
     <link href="/favicon.ico" type="image/x-icon" rel="icon" />
     <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />
     <title>Waves Explorer</title>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <!-- inject:css -->
     <!-- endinject -->
 </head>
 
-<body>
-    <div class="navbar navbar-inverse bg-dark navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand navbar-">{{ctrl.title}}</a>
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+<body class="skin1">
+    <div id="navbar" class="navbar navbar-default">
+        <div id="navbar-container" class="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="/" class="navbar-brand">{{ctrl.title}}</a>
             </div>
-            <div class="navbar-collapse collapse" id="navbar-main">
+
+            <nav role="navigation" class="navbar-menu navbar-collapse collapse pull-right" id="navbar-main">
                 <ul class="nav navbar-nav" ng-controller="NavigationCtrl as nav">
                     <li ng-repeat="item in nav.menuItems track by $index">
                         <a ui-sref="{{item.url}}">{{item.title}}</a>
@@ -32,42 +29,49 @@
                     </li>
                     <li uib-dropdown>
                         <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-expanded="true">Misc <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                        <ul class="dropdown-menu dropdown-light-blue dropdown-caret" role="menu" uib-dropdown-menu>
                             <li><a ng-href="{{::nav.peerExplorer.url}}">{{::nav.peerExplorer.title}}</a></li>
                         </ul>
                     </li>
                 </ul>
 
-                <div class="navbar-right col-sm-5 col-md-5 col-lg-5" ng-controller="SearchCtrl">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group col-sm-12 col-md-12 col-lg-12">
-                            <input type="text" class="form-control" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <form class="navbar-form navbar-left form-search" role="search" ng-controller="SearchCtrl">
+                    <div class="form-group">
+                        <input type="text" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
+                    </div>
+                    <button class="btn btn-mini btn-info2" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
+                </form>
+            </nav>
         </div>
     </div>
 
-    <div class="container">
-        <br/>
-        <div class="row">
-            <div class="col-lg-12">
-                <div ui-view="main" ng-cloak></div>
+    <div id="main-container" class="main-container container">
+        <div class="main-content">
+            <div class="main-content-inner">
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ui-view="main" ng-cloak></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <footer class="footer">
-            <div class="row">
-                <div class="col-md-1"><a href="https://github.com/wavesplatform/WavesExplorerLite">GitHub</a></div>
-                <div class="col-md-1"><a href="https://github.com/wavesplatform/">Forum</a></div>
-                <div class="col-md-8 text-center"><p>Brought to you by Waves Team. Product version: %%GULP_INJECT_VERSION%%</p></div>
-                <div class="col-md-2 text-right"><a href="#top">Back to top</a></div>
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <div class="row">
+                        <div class="col-md-1"><a href="https://github.com/wavesplatform/WavesExplorerLite">GitHub</a></div>
+                        <div class="col-md-1"><a href="https://github.com/wavesplatform/">Forum</a></div>
+                        <div class="col-md-8 text-center"><p>Brought to you by <span class="blue bolder">Waves</span> Team. Product version: %%GULP_INJECT_VERSION%%</p></div>
+                        <div class="col-md-2 text-right"><a href="#top">Back to top</a></div>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
+
+        <a class="btn-scroll-up" id="btn-scroll-up">...</a>
     </div>
 
     <script src="//www.google.com/recaptcha/api.js?render=explicit&onload=vcRecaptchaApiLoaded" async defer></script>

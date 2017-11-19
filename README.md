@@ -15,7 +15,7 @@ Install gulp:
 npm install -g gulp-cli
 ```
 
-# Run localy
+# Run locally
 
 npm install
 

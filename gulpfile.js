@@ -37,6 +37,10 @@ const config = {
         'node_modules/angular/angular-csp.css',
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
+        'src/css/ace-fonts.css',
+        'src/css/ace.css',
+        'src/css/ace-part2.css',
+        'src/css/ace-skins.css',
         'src/css/style.css',
         'node_modules/angular-loading-bar/build/loading-bar.css'
     ],
