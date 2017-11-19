@@ -22,13 +22,17 @@
             <nav role="navigation" class="navbar-menu navbar-collapse collapse pull-right" id="navbar-main">
                 <ul class="nav navbar-nav" ng-controller="NavigationCtrl as nav">
                     <li ng-repeat="item in nav.menuItems track by $index">
-                        <a ui-sref="{{item.url}}">{{item.title}}</a>
+                        <a ui-sref="{{item.url}}"><i class="{{item.icon}}"></i> {{item.title}}</a>
                     </li>
                     <li>
-                        <a ng-href="{{::nav.wallet.url}}" target="_blank">{{::nav.wallet.title}}</a>
+                        <a ng-href="{{::nav.wallet.url}}" target="_blank">
+                            <i class="glyphicon glyphicon-piggy-bank"></i> {{::nav.wallet.title}}
+                        </a>
                     </li>
                     <li uib-dropdown>
-                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-expanded="true">Misc <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-expanded="true">
+                            <i class="glyphicon glyphicon-certificate"></i> Misc <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu dropdown-light-blue dropdown-caret" role="menu" uib-dropdown-menu>
                             <li><a ng-href="{{::nav.peerExplorer.url}}">{{::nav.peerExplorer.title}}</a></li>
                         </ul>

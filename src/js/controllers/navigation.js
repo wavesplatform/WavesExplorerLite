@@ -9,21 +9,25 @@
             var menuItems = [];
             menuItems.push({
                 url: 'blocks',
-                title: 'Blocks'
+                title: 'Blocks',
+                icon: 'glyphicon glyphicon-th-list'
             });
             menuItems.push({
                 url: 'peers',
-                title: 'Peers'
+                title: 'Peers',
+                icon: 'glyphicon glyphicon-transfer'
             });
             if (config.faucet) {
                 menuItems.push({
                     url: 'faucet',
-                    title: 'Faucet'
+                    title: 'Faucet',
+                    icon: 'glyphicon glyphicon-filter'
                 });
             }
             menuItems.push({
                 url: 'nodes',
-                title: 'Nodes'
+                title: 'Nodes',
+                icon: 'glyphicon glyphicon-tasks'
             });
             nav.menuItems = menuItems;
 
