@@ -1,35 +1,31 @@
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <table class="table blockDetails">
-                    <tbody>
-                    <tr>
-                        <td class="col-md-2">Address</td>
-                        <td>{{ctrl.address}}</td>
-                    </tr>
-                    <tr>
-                        <td>Regular Balance</td>
-                        <td>{{ctrl.balance.regular|wavelets}}</td>
-                    </tr>
-                    <tr>
-                        <td>Generating Balance</td>
-                        <td>{{ctrl.balance.generating|wavelets}}</td>
-                    </tr>
-                    <tr>
-                        <td>Available Balance</td>
-                        <td>{{ctrl.balance.available|wavelets}}</td>
-                    </tr>
-                    <tr>
-                        <td>Effective Balance</td>
-                        <td>{{ctrl.balance.effective|wavelets}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Address</div>
+                <div class="profile-info-value">{{ctrl.address}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Regular Balance</div>
+                <div class="profile-info-value">{{ctrl.balance.regular|wavelets}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Generating Balance</div>
+                <div class="profile-info-value">{{ctrl.balance.generating|wavelets}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Available Balance</div>
+                <div class="profile-info-value">{{ctrl.balance.available|wavelets}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Effective Balance</div>
+                <div class="profile-info-value">{{ctrl.balance.effective|wavelets}}</div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="hr hr12 hr-dotted"></div>
 
 <div class="row">
     <div class="col-lg-12">
