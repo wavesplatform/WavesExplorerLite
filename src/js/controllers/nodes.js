@@ -4,7 +4,7 @@
     function NodesCtrl($http, apiProvider, appConfig) {
         var ctrl = this;
         ctrl.nodes = appConfig.nodes;
-        ctrl.blockchainName = appConfig.blockchainName;
+        ctrl.title = appConfig.blockchainName + ' Nodes';
 
         activate();
 
@@ -43,6 +43,9 @@
 
                 $http.get(apiProvider(node.url).transactions.utxSize).then(function (response) {
                     node.utxSize = response.data.size;
+                })
+                .catch(function () {
+                    node.utxSize = 'N/A'
                 });
             });
         }
