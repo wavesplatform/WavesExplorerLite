@@ -2,106 +2,110 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">General info</h3>
+        <div class="widget-box">
+            <div class="widget-header widget-header-small widget-header-flat">
+                <h5 class="widget-title">General info</h5>
             </div>
-            <div class="panel-body">
-                <div class="profile-user-info profile-user-info-striped">
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">Version:</div>
-                        <div class="profile-info-value">{{ctrl.version}}</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">Block generator status:</div>
-                        <div class="profile-info-value">{{ctrl.status.blockGeneratorStatus}}</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">History sync status:</div>
-                        <div class="profile-info-value">{{ctrl.status.historySynchronizationStatus}}</div>
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">Version:</div>
+                            <div class="profile-info-value">{{ctrl.version}}</div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">Block generator status:</div>
+                            <div class="profile-info-value">{{ctrl.status.blockGeneratorStatus}}</div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">History sync status:</div>
+                            <div class="profile-info-value">{{ctrl.status.historySynchronizationStatus}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Consensus</h3>
+        <div class="widget-box">
+            <div class="widget-header widget-header-small widget-header-flat">
+                <h5 class="widget-title">Consensus</h5>
             </div>
-            <div class="panel-body">
-                <div class="profile-user-info profile-user-info-striped">
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">Algo:</div>
-                        <div class="profile-info-value">{{ctrl.consensus.algo}}</div>
-                    </div>
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">Base Target:</div>
-                        <div class="profile-info-value"><span title="{{ctrl.consensus.baseTarget}}">{{ctrl.consensus.baseTarget}}</span></div>
-                    </div>
-                    <div class="profile-info-row" ng-show="ctrl.avgBlockDelay">
-                        <div class="profile-info-name">Avg Block delay:</div>
-                        <div class="profile-info-value">{{ctrl.avgBlockDelay|currency:''}} minutes</div>
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">Algo:</div>
+                            <div class="profile-info-value">{{ctrl.consensus.algo}}</div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">Base Target:</div>
+                            <div class="profile-info-value"><span title="{{ctrl.consensus.baseTarget}}">{{ctrl.consensus.baseTarget}}</span></div>
+                        </div>
+                        <div class="profile-info-row" ng-show="ctrl.avgBlockDelay">
+                            <div class="profile-info-name">Avg Block delay:</div>
+                            <div class="profile-info-value">{{ctrl.avgBlockDelay|currency:''}} minutes</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<div class="space-6"></div>
 <div class="row">
     <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Last blocks <a class="pull-right" ui-sref="blocks">View all</a></h3>
-
-            </div>
-            <div class="panel-body">
-
-                <div class="list-group">
-                    <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
-                        <h4 class="list-group-item-heading">#{{item.height}}</h4>
-                        <p>signature: {{item.signature|limitTo:12}}...</p>
-                        <p class="list-group-item-text">{{item.transactions.length}} transactions. {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
-                    </a>
-
+        <div class="widget-box">
+            <div class="widget-header widget-header-small widget-header-flat">
+                <h5 class="widget-title">Last blocks</h5>
+                <div class="widget-toolbar">
+                    <a title="View All" ui-sref="blocks"><i class="glyphicon glyphicon-new-window"></i></a>
                 </div>
-
+            </div>
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    <div class="list-group">
+                        <a ng-repeat="item in ctrl.lastBlocks" ui-sref="block-details({height:item.height})" class="list-group-item">
+                            <h4 class="list-group-item-heading"><i class="glyphicon glyphicon-tag green"></i> {{item.height}}</h4>
+                            <p>signature: {{item.signature|limitTo:36}}...</p>
+                            <p class="list-group-item-text"><span class="badge badge-info">{{item.transactions.length}}</span> transactions.
+                                <i class="glyphicon glyphicon-hourglass"></i> {{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
     <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Unconfirmed Transactions - {{ctrl.unconfirmedTxs.length}}</h3>
-
+        <div class="widget-box">
+            <div class="widget-header widget-header-small widget-header-flat">
+                <h5 class="widget-title">Unconfirmed Transactions <span class="badge badge-info">{{ctrl.unconfirmedTxs.length}}</span></h5>
             </div>
-            <div class="panel-body">
-                <table class="table">
-                    <thead>
-                    <tr class="active">
-                        <th>Id</th>
-                        <th>Type</th>
-                        <th>Fee</th>
-                        <th>Timestamp</th>
-                        <th>Sender</th>
-                        <th>Recipient</th>
-                        <th><span class="pull-left">Amount</span></th>
-                    </tr>
-                    </thead>
-                    <tr ng-repeat="item in ctrl.unconfirmedTxs">
-                        <td><a ui-sref="tx-details({id:item.id})">{{item.id|limitTo:5}}...</a></td>
-                        <td>{{item.type}}</td>
-                        <td>{{item.fee|wavelets}}</td>
-                        <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td><waves-endpoint-ref endpoint="item.sender" max-length="6"></waves-endpoint-ref></td>
-                        <td><waves-endpoint-ref endpoint="item.recipient" max-length="6"></waves-endpoint-ref></td>
-                        <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
-                    </tr>
-                </table>
-
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    <table class="table">
+                        <thead>
+                        <tr class="active">
+                            <th>Id</th>
+                            <th>Type</th>
+                            <th>Fee</th>
+                            <th>Timestamp</th>
+                            <th>Sender</th>
+                            <th>Recipient</th>
+                            <th><span class="pull-left">Amount</span></th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="item in ctrl.unconfirmedTxs">
+                            <td><a ui-sref="tx-details({id:item.id})">{{item.id|limitTo:5}}...</a></td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.fee|wavelets}}</td>
+                            <td>{{item.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><waves-endpoint-ref endpoint="item.sender" max-length="6"></waves-endpoint-ref></td>
+                            <td><waves-endpoint-ref endpoint="item.recipient" max-length="6"></waves-endpoint-ref></td>
+                            <td><span class="pull-left">{{item.amount|wavelets}}</span></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

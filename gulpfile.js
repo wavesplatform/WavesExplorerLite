@@ -45,7 +45,7 @@ const config = {
         'node_modules/angular-loading-bar/build/loading-bar.css'
     ],
     fonts: 'src/fonts/*.*',
-    icons: 'src/*.ico',
+    icons: ['src/*.ico', 'src/icons/*.*'],
     html: 'src/templates/*.html',
     package: {
         source: './package.json'
