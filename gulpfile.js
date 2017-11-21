@@ -45,7 +45,7 @@ const config = {
         'node_modules/angular-loading-bar/build/loading-bar.css'
     ],
     fonts: 'src/fonts/*.*',
-    icons: ['src/*.ico', 'src/icons/*.*'],
+    icons: 'src/icons/*.*',
     html: 'src/templates/*.html',
     package: {
         source: './package.json'
@@ -126,12 +126,14 @@ gulp.task('copy-fonts', ['clean'], function () {
 });
 
 gulp.task('copy-icons', ['clean'], function () {
-    return copyFiles(config.icons, config.buildDirectory);
+    return series(
+        copyFiles(config.baseDir + '/favicon.ico', config.buildDirectory),
+        copyFiles(config.icons, config.buildDirectory + '/icons')
+    );
 });
 
 gulp.task('copy-html', ['clean'], function () {
-    return gulp.src(config.baseDir + '/index.html')
-        .pipe(gulp.dest(config.buildDirectory));
+    return copyFiles(config.baseDir + '/index.html', config.buildDirectory);
 });
 
 gulp.task('templates', function () {
