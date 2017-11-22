@@ -2,91 +2,67 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Block {{ctrl.signature}}
+        <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Version</div>
+                <div class="profile-info-value">{{ctrl.details.version}}</div>
             </div>
-
-            <div class="panel-body">
-
-                <table class="table blockDetails">
-                    <tbody>
-                        <!--
-<tr>
-<td class="col-md-2">Height</td>
-<td><button class="btn btn-primary btn-xs" ng-click="ctrl.prev()">prev</button> {{ctrl.height}} <button class="btn btn-primary btn-xs" ng-click="ctrl.next()">next</button></td>
-</tr>-->
-                        <tr>
-                            <td>Version</td>
-                            <td>{{ctrl.details.version}}</td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Transactions</td>
-                            <td>
-                                {{ctrl.details.transactions.length}} transactions
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Parent block</td>
-                            <td>
-                                {{ctrl.details.reference}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Generator</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.generator"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Signature</td>
-                            <td>{{ctrl.details.signature}}</td>
-                        </tr>
-                        <tr>
-                            <td>Size</td>
-                            <td>{{ctrl.details.blocksize}}</td>
-                        </tr>
-                        <tr>
-                            <td>Base Target</td>
-                            <td>{{ctrl.details["nxt-consensus"]["base-target"]}}</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Transactions</div>
+                <div class="profile-info-value">{{ctrl.details.transactions.length}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Parent block</div>
+                <div class="profile-info-value">{{ctrl.details.reference}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Generator</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.generator"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Size</div>
+                <div class="profile-info-value">{{ctrl.details.blocksize}} bytes</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Base Target</div>
+                <div class="profile-info-value">{{ctrl.details["nxt-consensus"]["base-target"]}}</div>
             </div>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Transactions in #{{ctrl.height}}
-            </div>
-            <div class="panel-body">
-                <table class="table blockDetails">
-                    <thead>
-                        <tr class="active">
-                            <th>Type</th>
-                            <th>Fee</th>
-                            <th>Timestamp</th>
-                            <th>Signature</th>
-                            <th>Sender</th>
-                            <th>Recipient</th>
-                            <th><span class="pull-right">Amount</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in ctrl.details.transactions">
-                            <td>{{item.type}}</td>
-                            <td>{{item.fee|wavelets}}</td>
-                            <td>{{item.timestamp|wavesdate}}</td>
-                            <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.signature|limitTo:7}}...</a></td>
-                            <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
-                            <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
-                            <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <h2 class="header smaller blue">Transactions</h2>
+
+        <waves-transaction-table title="Transactions">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>Type</th>
+                    <th>Fee</th>
+                    <th>Timestamp</th>
+                    <th>Signature</th>
+                    <th>Sender</th>
+                    <th>Recipient</th>
+                    <th><span class="pull-right">Amount</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.details.transactions">
+                    <td>{{item.type}}</td>
+                    <td>{{item.fee|wavelets}}</td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><a class="mono" ui-sref="tx-details({id:item.id})">{{item.signature|limitTo:7}}...</a></td>
+                    <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
+                    <td><waves-endpoint-ref endpoint="item.recipient" max-length="12"></waves-endpoint-ref></td>
+                    <td><span class="pull-right">{{item.amount|wavelets}}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
     </div>
 </div>

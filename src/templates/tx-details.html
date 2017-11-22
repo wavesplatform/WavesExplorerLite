@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td>Type</td>
-                            <td>{{ctrl.details.type}} (Asset issue)</td>
+                            <td>{{ctrl.details.type}} <span class="label label-light arrowed">Asset issue</span></td>
                         </tr>
                         <tr>
                             <td>Timestamp</td>
@@ -73,7 +73,7 @@
                         </tr>
                         <tr>
                             <td>Reissuable</td>
-                            <td>{{ctrl.details.reissuable}}</td>
+                            <td><waves-boolean value="ctrl.details.reissuable"></waves-boolean></td>
                         </tr>
                         <tr>
                             <td>Amount</td>
@@ -86,7 +86,7 @@
                         <tr>
                             <td>Description</td>
                             <td>
-                                <pre>{{ctrl.details.description}}</pre>
+                                <div class="well well-sm mono">{{ctrl.details.description}}</div>
                             </td>
                         </tr>
                         <tr>
