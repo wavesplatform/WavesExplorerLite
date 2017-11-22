@@ -1,17 +1,9 @@
 (function () {
     'use strict';
 
-    function WavesBlockRefController() {
-        var ctrl = this;
-
-        ctrl.$onInit = function () {
-        };
-    }
-
     angular
         .module('web')
         .component('wavesBlockRef', {
-            controller: WavesBlockRefController,
             bindings: {
                 height: '<'
             },

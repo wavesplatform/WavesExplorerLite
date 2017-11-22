@@ -1,17 +1,9 @@
 (function () {
     'use strict';
 
-    function WavesNodeLinkController() {
-        var ctrl = this;
-
-        ctrl.$onInit = function () {
-        };
-    }
-
     angular
         .module('web')
         .component('wavesNodeLink', {
-            controller: WavesNodeLinkController,
             bindings: {
                 ref: '<'
             },

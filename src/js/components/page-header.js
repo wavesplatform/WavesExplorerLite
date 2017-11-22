@@ -1,17 +1,9 @@
 (function () {
     'use strict';
 
-    function WavesPageHeaderController() {
-        var ctrl = this;
-
-        ctrl.$onInit = function () {
-        };
-    }
-
     angular
         .module('web')
         .component('wavesPageHeader', {
-            controller: WavesPageHeaderController,
             bindings: {
                 title: '@',
                 subtitle: '<'
