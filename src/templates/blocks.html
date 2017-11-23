@@ -10,41 +10,31 @@
                         class="pull-right pagination"
                         boundary-links="true"
                         rotate="false" max-size="5"></ul>
-
     </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Last block #{{ctrl.height}}</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table">
-                    <thead>
-                    <tr class="active">
-                        <th>#</th>
-                        <th>Timestamp</th>
-                        <th>Base Target</th>
-                        <th>Generator</th>
-                        <th>Signature</th>
-                        <th>Txs</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in ctrl.blocks">
-                        <td><waves-block-ref height="item.height"/></td>
-                        <td>{{item.timestamp|wavesdate}}</td>
-                        <td>{{item["nxt-consensus"]["base-target"]}}</td>
-                        <td><waves-endpoint-ref endpoint="item.generator"></waves-endpoint-ref></td>
-                        <td><span class="mono">{{item.signature|limitTo:26}}&hellip;</span></td>
-                        <td>{{item.transactionCount}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
+        <table class="table">
+            <thead>
+            <tr class="active">
+                <th>#</th>
+                <th>Timestamp</th>
+                <th>Base Target</th>
+                <th>Generator</th>
+                <th>Signature</th>
+                <th>Txs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ctrl.blocks">
+                <td><waves-block-ref height="item.height"/></td>
+                <td>{{item.timestamp|wavesdate}}</td>
+                <td>{{item["nxt-consensus"]["base-target"]}}</td>
+                <td><waves-endpoint-ref endpoint="item.generator"></waves-endpoint-ref></td>
+                <td><span class="mono">{{item.signature|limitTo:26}}&hellip;</span></td>
+                <td>{{item.transactionCount}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

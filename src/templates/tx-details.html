@@ -1,440 +1,361 @@
 <waves-page-header title="Transaction" subtitle="ctrl.id"></waves-page-header>
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <table class="table blockDetails" ng-show="ctrl.details.type==2">
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ctrl.details.id}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type</td>
-                            <td>{{ctrl.details.type}}</td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Block</td>
-                            <td><waves-block-ref height="ctrl.details.height"/></td>
-                        </tr>
-                        <tr>
-                            <td>Amount</td>
-                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
-                        </tr>
-                        <tr>
-                            <td>Fee</td>
-                            <td>{{ctrl.details.extras.fee}}</td>
-                        </tr>
-                        <tr>
-                            <td>Sender</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Recipient</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Signature</td>
-                            <td>{{ctrl.details.signature}}</td>
-                        </tr>
 
-                    </tbody>
-                </table>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==2">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Payment</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Recipient</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==3">
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ctrl.details.id}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type</td>
-                            <td>{{ctrl.details.type}} <span class="label label-light arrowed">Asset issue</span></td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Block</td>
-                            <td><waves-block-ref height="ctrl.details.height"/></td>
-                        </tr>
-                        <tr>
-                            <td>Asset ID</td>
-                            <td>{{ctrl.details.assetId}}</td>
-                        </tr>
-                        <tr>
-                            <td>Asset Name</td>
-                            <td>{{ctrl.details.name}}</td>
-                        </tr>
-                        <tr>
-                            <td>Reissuable</td>
-                            <td><waves-boolean value="ctrl.details.reissuable"></waves-boolean></td>
-                        </tr>
-                        <tr>
-                            <td>Amount</td>
-                            <td>{{ctrl.details.extras.amount.amount}}</td>
-                        </tr>
-                        <tr>
-                            <td>Decimals</td>
-                            <td>{{ctrl.details.decimals}}</td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td>
-                                <div class="well well-sm mono">{{ctrl.details.description}}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Fee</td>
-                            <td>{{ctrl.details.extras.fee}}</td>
-                        </tr>
-                        <tr>
-                            <td>Issuer</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Signature</td>
-                            <td>{{ctrl.details.signature}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==3">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Asset issue</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Asset ID</div>
+                <div class="profile-info-value">{{ctrl.details.assetId}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Asset Name</div>
+                <div class="profile-info-value">{{ctrl.details.name}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Reissuable</div>
+                <div class="profile-info-value"><waves-boolean value="ctrl.details.reissuable"></waves-boolean></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Decimals</div>
+                <div class="profile-info-value">{{ctrl.details.decimals}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Description</div>
+                <div class="profile-info-value"><div class="well well-sm mono">{{ctrl.details.description}}</div></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Issuer</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==4">
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ctrl.details.id}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type</td>
-                            <td>{{ctrl.details.type}} (Asset Transfer)</td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Block</td>
-                            <td><waves-block-ref height="ctrl.details.height"/></td>
-                        </tr>
-                        <tr>
-                            <td>Asset ID</td>
-                            <td><a class="mono" ui-sref="tx-details({id:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Amount</td>
-                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
-                        </tr>
-                        <tr>
-                            <td>Attachment</td>
-                            <td><pre>{{ctrl.details.attachment}}</pre></td>
-                        </tr>
-                        <tr>
-                            <td>Fee</td>
-                            <td>{{ctrl.details.extras.fee}}</td>
-                        </tr>
-                        <tr>
-                            <td>Sender</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Recipient</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
-                        </tr>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==4">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Asset Transfer</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"></waves-block-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Asset ID</div>
+                <div class="profile-info-value"><a class="mono" ui-sref="tx-details({id:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Attachment</div>
+                <div class="profile-info-value"><pre>{{ctrl.details.attachment}}</pre></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Recipient</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                        <tr>
-                            <td>Signature</td>
-                            <td>{{ctrl.details.signature}}</td>
-                        </tr>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==5">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Asset reissue</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Asset ID</div>
+                <div class="profile-info-value"><a class="mono" ui-sref="tx-details({id:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Reissuable</div>
+                <div class="profile-info-value"><waves-boolean value="ctrl.details.reissuable"></waves-boolean></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Quantity</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Issuer</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                    </tbody>
-                </table>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==7">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Exchange</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Matcher Address</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Price</div>
+                <div class="profile-info-value">{{ctrl.details.extras.price}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Buy Matcher Fee</div>
+                <div class="profile-info-value">{{ctrl.details.buyMatcherFee|wavelets}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sell Matcher Fee</div>
+                <div class="profile-info-value">{{ctrl.details.sellMatcherFee|wavelets}}</div>
+            </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==5">
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ctrl.details.id}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type</td>
-                            <td>{{ctrl.details.type}} (Asset reissue)</td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        </tr>
-                        <tr>
-                            <td>Block</td>
-                            <td><waves-block-ref height="ctrl.details.height"/></td>
-                        </tr>
-                        <tr>
-                            <td>Asset ID</td>
-                            <td><a class="mono" ui-sref="tx-details({id:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Reissuable</td>
-                            <td>{{ctrl.details.reissuable}}</td>
-                        </tr>
-                        <tr>
-                            <td>Quantity</td>
-                            <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
-                        </tr>
-                        <tr>
-                            <td>Fee</td>
-                            <td>{{ctrl.details.extras.fee}}</td>
-                        </tr>
-                        <tr>
-                            <td>Issuer</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Signature</td>
-                            <td>{{ctrl.details.signature}}</td>
-                        </tr>
+            <div class="active">Asset Pair</div>
 
-                    </tbody>
-                </table>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount Asset</div>
+                <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Price Asset</div>
+                <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.priceAsset" text="ctrl.details.extras.priceCurrency"></waves-asset-ref></div>
+            </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==7">
-                    <thead></thead>
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ctrl.details.id}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type</td>
-                            <td>{{ctrl.details.type}} (Exchange)</td>
-                        </tr>
-                        <tr>
-                            <td>Timestamp</td>
-                            <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                        </tr>
-                        <tr>
-                            <td>Block</td>
-                            <td><waves-block-ref height="ctrl.details.height"/></td>
-                        </tr>
-                        <tr>
-                            <td>Matcher Address</td>
-                            <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Price</td>
-                            <td>{{ctrl.details.extras.price}}</td>
-                        </tr>
-                        <tr>
-                            <td>Amount</td>
-                            <td>{{ctrl.details.extras.amount.amount}}</td>
-                        </tr>
-                        <tr>
-                            <td>Buy Matcher Fee</td>
-                            <td>{{ctrl.details.buyMatcherFee|wavelets}}</td>
-                        </tr>
-                        <tr>
-                            <td>Sell Matcher Fee</td>
-                            <td>{{ctrl.details.sellMatcherFee|wavelets}}</td>
-                        </tr>
-                    </tbody>
+            <div class="active">Order 1</div>
 
-                    <thead>
-                        <tr class="active">
-                            <th>Asset Pair</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Amount Asset</td>
-                            <td><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></td>
-                        </tr>
-                        <tr>
-                            <td>Price Asset</td>
-                            <td><waves-asset-ref asset-id="ctrl.details.order1.assetPair.priceAsset" text="ctrl.details.extras.priceCurrency"></waves-asset-ref></td>
-                        </tr>
-                    </tbody>
+            <div class="profile-info-row">
+                <div class="profile-info-name">ID</div>
+                <div class="profile-info-value">{{ctrl.details.order1.id}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.order1.orderType}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.order1.amount}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Price</div>
+                <div class="profile-info-value">{{ctrl.details.order1.price}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.order1.timestamp|wavesdate}}</div>
+            </div>
 
-                    <thead>
-                    <tr class="active">
-                        <th>Order 1</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ctrl.details.order1.id}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.order1.orderType}}</td>
-                    </tr>
-                    <tr>
-                        <td>Amount</td>
-                        <td>{{ctrl.details.order1.amount}}</td>
-                    </tr>
-                    <tr>
-                        <td>Price</td>
-                        <td>{{ctrl.details.order1.price}}</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.order1.timestamp|wavesdate}}</td>
-                    </tr>
-                    </tbody>
+            <div class="active">Order 2</div>
 
-                    <thead>
-                    <tr class="active">
-                        <th>Order 2</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ctrl.details.order2.id}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.order2.orderType}}</td>
-                    </tr>
-                    <tr>
-                        <td>Amount</td>
-                        <td>{{ctrl.details.order2.amount}}</td>
-                    </tr>
-                    <tr>
-                        <td>Price</td>
-                        <td>{{ctrl.details.order2.price}}</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.order2.timestamp|wavesdate}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="profile-info-row">
+                <div class="profile-info-name">ID</div>
+                <div class="profile-info-value">{{ctrl.details.order2.id}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.order2.orderType}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.order2.amount}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Price</div>
+                <div class="profile-info-value">{{ctrl.details.order2.price}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.order2.timestamp|wavesdate}}</div>
+            </div>
+        </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==8">
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ctrl.details.id}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.type}} (Lease)</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                    </tr>
-                    <tr>
-                        <td>Block</td>
-                        <td><waves-block-ref height="ctrl.details.height"/></td>
-                    </tr>
-                    <tr>
-                        <td>Amount</td>
-                        <td>{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fee</td>
-                        <td>{{ctrl.details.extras.fee}}</td>
-                    </tr>
-                    <tr>
-                        <td>Sender</td>
-                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                    </tr>
-                    <tr>
-                        <td>Recipient</td>
-                        <td><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></td>
-                    </tr>
-                    <tr>
-                        <td>Signature</td>
-                        <td>{{ctrl.details.signature}}</td>
-                    </tr>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==8">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Lease</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Recipient</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.recipient"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                    </tbody>
-                </table>
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==9">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Lease Cancel</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Leasing TX</div>
+                <div class="profile-info-value"><waves-transaction-ref tx-id="ctrl.details.leaseId"></waves-transaction-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
 
-                <table class="table blockDetails" ng-show="ctrl.details.type==9">
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ctrl.details.id}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.type}} (Lease Cancel)</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                    </tr>
-                    <tr>
-                        <td>Block</td>
-                        <td><waves-block-ref height="ctrl.details.height"/></td>
-                    </tr>
-                    <tr>
-                        <td>Leasing TX</td>
-                        <td><waves-transaction-ref tx-id="ctrl.details.leaseId"></waves-transaction-ref></td>
-                    </tr>
-                    <tr>
-                        <td>Fee</td>
-                        <td>{{ctrl.details.extras.fee}}</td>
-                    </tr>
-                    <tr>
-                        <td>Sender</td>
-                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                    </tr>
-                    <tr>
-                        <td>Signature</td>
-                        <td>{{ctrl.details.signature}}</td>
-                    </tr>
-
-                    </tbody>
-                </table>
-
-                <table class="table blockDetails" ng-show="ctrl.details.type==10">
-                    <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ctrl.details.id}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td>{{ctrl.details.type}} (Create Alias)</td>
-                    </tr>
-                    <tr>
-                        <td>Timestamp</td>
-                        <td>{{ctrl.details.timestamp|wavesdate}}</td>
-                    </tr>
-                    <tr>
-                        <td>Block</td>
-                        <td><waves-block-ref height="ctrl.details.height"/></td>
-                    </tr>
-                    <tr>
-                        <td>Alias</td>
-                        <td>{{ctrl.details.alias}}</td>
-                    </tr>
-                    <tr>
-                        <td>Fee</td>
-                        <td>{{ctrl.details.extras.fee}}</td>
-                    </tr>
-                    <tr>
-                        <td>Sender</td>
-                        <td><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></td>
-                    </tr>
-                    <tr>
-                        <td>Signature</td>
-                        <td>{{ctrl.details.signature}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==10">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Create Alias</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Alias</div>
+                <div class="profile-info-value">{{ctrl.details.alias}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
             </div>
         </div>
 
