@@ -184,7 +184,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build-default-config', function () {
-    return createConfig(config.buildDirectory, 'mainnet');
+    return createConfig(config.buildDirectory, 'testnet');
 });
 
 gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);

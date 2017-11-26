@@ -1,56 +1,52 @@
 <waves-page-header title="Faucet"></waves-page-header>
 <div class="row" ng-if="ctrl.uri">
-	<div class="col-lg-12">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				Faucet
+	<div class="col-xs-12">
+		<form class="form-horizontal" name="faucetForm">
+			<fieldset>
+				<div class="form-group" ng-class="{'has-error': ctrl.invalidAddress}">
+					<label class=" col-sm-2 control-label no-padding-right" for="address">Your Testnet address</label>
+					<div class="col-sm-10">
+						<input class="form-control" id="address" ng-model="ctrl.recipient" placeholder="Address" type="text">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="captcha" class="col-sm-2 control-label no-padding-right">Confirm you're human</label>
+					<div class="col-sm-10">
+						<div id="captcha" vc-recaptcha key="ctrl.pubKey"
+							 on-create="ctrl.setWidgetId(widgetId)"
+							 on-success="ctrl.setResponse(response)"
+							 on-expire="ctrl.cbExpiration()"></div>
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="form-actions clearfix no-padding-left">
+				<div class="col-sm-10 col-sm-offset-2">
+					<button ng-disabled="faucetForm.$invalid" ng-click="ctrl.getMoney()" type="submit" class="btn btn-info">
+						<i class="ace-icon glyphicon glyphicon-ok bigger-110"></i> Submit
+					</button>
+				</div>
 			</div>
+		</form>
 
-			<div class="panel-body">
-				<form class="form-horizontal" name="faucetForm">
-					<fieldset>
-						<legend>Input your Address in Testnet</legend>
-						<div class="form-group" ng-class="{'has-error': ctrl.invalidAddress}">
-							<div class="col-lg-10">
-								<input class="form-control input-lg" id="address" ng-model="ctrl.recipient" placeholder="Address" type="text">
-							</div>
-						</div>
+		<p ng-show="ctrl.error != null" class="has-error">
+			{{ctrl.error}}
+		</p>
 
-						<div class="form-group">
-							<div class="col-lg-12">
-								<div vc-recaptcha key="ctrl.pubKey"
-								on-create="ctrl.setWidgetId(widgetId)"
-								on-success="ctrl.setResponse(response)"
-								on-expire="ctrl.cbExpiration()"></div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<button ng-disabled="faucetForm.$invalid" ng-click="ctrl.getMoney()" type="submit" class="btn btn-primary">Submit</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-
-				<p ng-show="ctrl.error != null" class="has-error">
-					{{ctrl.error}}
-				</p>
-
-				<table class="table blockDetails" ng-show="ctrl.tx != null">
-					<tr>
-						<td>Tx ID</td>
-						<td><a ui-sref="tx-details({id:ctrl.tx.id})">{{ctrl.tx.id|limitTo:15}}...</a></td>
-					</tr>
-					<tr>
-						<td>Recipient</td>
-						<td>{{ctrl.tx.recipient}}</td>
-					</tr>
-					<tr>
-						<td>Amount</td>
-						<td>{{ctrl.tx.amount|wavelets}}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
+		<table class="table blockDetails" ng-show="ctrl.tx != null">
+			<tr>
+				<td>Tx ID</td>
+				<td><a ui-sref="tx-details({id:ctrl.tx.id})">{{ctrl.tx.id|limitTo:15}}...</a></td>
+			</tr>
+			<tr>
+				<td>Recipient</td>
+				<td>{{ctrl.tx.recipient}}</td>
+			</tr>
+			<tr>
+				<td>Amount</td>
+				<td>{{ctrl.tx.amount|wavelets}}</td>
+			</tr>
+		</table>
 	</div>
 </div>
