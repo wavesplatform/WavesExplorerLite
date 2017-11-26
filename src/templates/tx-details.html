@@ -170,97 +170,102 @@
             </div>
         </div>
 
-        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==7">
-            <div class="profile-info-row">
-                <div class="profile-info-name">Type</div>
-                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Exchange</span></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Timestamp</div>
-                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Block</div>
-                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Matcher Address</div>
-                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Price</div>
-                <div class="profile-info-value">{{ctrl.details.extras.price}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Amount</div>
-                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Buy Matcher Fee</div>
-                <div class="profile-info-value">{{ctrl.details.buyMatcherFee|wavelets}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Sell Matcher Fee</div>
-                <div class="profile-info-value">{{ctrl.details.sellMatcherFee|wavelets}}</div>
-            </div>
-
-            <div class="active">Asset Pair</div>
-
-            <div class="profile-info-row">
-                <div class="profile-info-name">Amount Asset</div>
-                <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Price Asset</div>
-                <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.priceAsset" text="ctrl.details.extras.priceCurrency"></waves-asset-ref></div>
+        <ng-show ng-show="ctrl.details.type==7">
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Type</div>
+                    <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Exchange</span></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Timestamp</div>
+                    <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Block</div>
+                    <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Matcher Address</div>
+                    <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Price</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.price}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Amount</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.amount.amount}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Buy Matcher Fee</div>
+                    <div class="profile-info-value">{{ctrl.details.buyMatcherFee|wavelets}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Sell Matcher Fee</div>
+                    <div class="profile-info-value">{{ctrl.details.sellMatcherFee|wavelets}}</div>
+                </div>
             </div>
 
-            <div class="active">Order 1</div>
-
-            <div class="profile-info-row">
-                <div class="profile-info-name">ID</div>
-                <div class="profile-info-value">{{ctrl.details.order1.id}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Type</div>
-                <div class="profile-info-value">{{ctrl.details.order1.orderType}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Amount</div>
-                <div class="profile-info-value">{{ctrl.details.order1.amount}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Price</div>
-                <div class="profile-info-value">{{ctrl.details.order1.price}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Timestamp</div>
-                <div class="profile-info-value">{{ctrl.details.order1.timestamp|wavesdate}}</div>
+            <h3 class="header blue smaller">Asset Pair</h3>
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Amount Asset</div>
+                    <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Price Asset</div>
+                    <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.priceAsset" text="ctrl.details.extras.priceCurrency"></waves-asset-ref></div>
+                </div>
             </div>
 
-            <div class="active">Order 2</div>
+            <h3 class="header blue smaller">Order 1</h3>
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">ID</div>
+                    <div class="profile-info-value">{{ctrl.details.order1.id}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Type</div>
+                    <div class="profile-info-value"><span class="label label-white middle">{{ctrl.details.order1.orderType}}</span></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Amount</div>
+                    <div class="profile-info-value">{{ctrl.details.order1.amount}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Price</div>
+                    <div class="profile-info-value">{{ctrl.details.order1.price}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Timestamp</div>
+                    <div class="profile-info-value">{{ctrl.details.order1.timestamp|wavesdate}}</div>
+                </div>
+            </div>
 
-            <div class="profile-info-row">
-                <div class="profile-info-name">ID</div>
-                <div class="profile-info-value">{{ctrl.details.order2.id}}</div>
+            <h3 class="header blue smaller">Order 2</h3>
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">ID</div>
+                    <div class="profile-info-value">{{ctrl.details.order2.id}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Type</div>
+                    <div class="profile-info-value"><span class="label label-white middle">{{ctrl.details.order2.orderType}}</span></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Amount</div>
+                    <div class="profile-info-value">{{ctrl.details.order2.amount}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Price</div>
+                    <div class="profile-info-value">{{ctrl.details.order2.price}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Timestamp</div>
+                    <div class="profile-info-value">{{ctrl.details.order2.timestamp|wavesdate}}</div>
+                </div>
             </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Type</div>
-                <div class="profile-info-value">{{ctrl.details.order2.orderType}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Amount</div>
-                <div class="profile-info-value">{{ctrl.details.order2.amount}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Price</div>
-                <div class="profile-info-value">{{ctrl.details.order2.price}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Timestamp</div>
-                <div class="profile-info-value">{{ctrl.details.order2.timestamp|wavesdate}}</div>
-            </div>
-        </div>
+        </ng-show>
 
         <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==8">
             <div class="profile-info-row">

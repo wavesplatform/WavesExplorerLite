@@ -7,52 +7,18 @@
 }
 
 .profile-info-name {
-    width: 30%;
+    white-space: nowrap;
 }
 
 .navbar-brand > img {
     display: inline;
 }
 
-/*body {*/
-    /*padding-top: 50px;*/
-/*}*/
+.profile-activity .profile-data {
+    display: inline-block;
+    width: calc(100% - 50px);
+}
 
-/*footer {*/
-    /*margin: 5em 0;*/
-/*}*/
-
-/*footer li {*/
-    /*float: left;*/
-    /*margin-right: 1.5em;*/
-    /*margin-bottom: 1.5em;*/
-/*}*/
-/*footer p {*/
-    /*clear: left;*/
-    /*margin-bottom: 0;*/
-/*}*/
-
-/*.search-input {*/
-	/*width: 350px;*/
-/*}*/
-
-/*.blockDetails th, .blockDetails td {*/
-    /*border-top: none !important;*/
-/*}*/
-
-/*#loading-bar-spinner .spinner-icon {*/
-    /*width: 50px;*/
-    /*height: 50px;*/
-/*}*/
-
-/*.tab-content {*/
-    /*border-bottom: 1px solid #dfd7ca;*/
-    /*border-left: 1px solid #dfd7ca;*/
-    /*border-right: 1px solid #dfd7ca;*/
-/*}*/
-
-/*.mono { font-family:monospace; }*/
-
-/*.bg-dark {*/
-    /*background-color: #343a40!important;*/
-/*}*/
+.mono {
+    font-family: monospace;
+}
