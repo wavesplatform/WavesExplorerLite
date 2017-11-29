@@ -67,7 +67,7 @@
                     <div class="profile-feed">
                         <div class="profile-activity clearfix" ng-repeat="item in ctrl.lastBlocks">
                             <div>
-                                <img class="pull-left" src="/icons/chain.png"/>
+                                <a ui-sref="block-details({height:item.height})"><img class="pull-left" src="/icons/chain.png"/></a>
                                 <div class="profile-data">
                                     <div>Block <a class="text-primary bolder" ui-sref="block-details({height:item.height})">{{item.height}}</a> contains <span class="badge">{{item.transactions.length}}</span> transactions
                                     </div>
