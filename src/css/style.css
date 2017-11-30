@@ -22,3 +22,17 @@
 .mono {
     font-family: monospace;
 }
+
+#loading-bar .bar {
+    position: relative;
+    background-color: #95C6E5 !important;
+    height: 3px !important;
+}
+
+#loading-bar-spinner .spinner-icon {
+    width: 24px !important;
+    height: 24px !important;
+    border-width: 3px !important;
+    border-top-color:  #95C6E5 !important;
+    border-left-color: #95C6E5 !important;
+}
