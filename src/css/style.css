@@ -24,15 +24,14 @@
 }
 
 #loading-bar .bar {
-    position: relative;
-    background-color: #95C6E5 !important;
-    height: 3px !important;
+    background-color: #95C6E5;
+    height: 3px;
 }
 
 #loading-bar-spinner .spinner-icon {
-    width: 24px !important;
-    height: 24px !important;
-    border-width: 3px !important;
-    border-top-color:  #95C6E5 !important;
-    border-left-color: #95C6E5 !important;
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+    border-top-color:  #95C6E5;
+    border-left-color: #95C6E5;
 }

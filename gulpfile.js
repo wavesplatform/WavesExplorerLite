@@ -41,8 +41,8 @@ const config = {
         'src/css/ace.css',
         'src/css/ace-part2.css',
         'src/css/ace-skins.css',
-        'src/css/style.css',
-        'node_modules/angular-loading-bar/build/loading-bar.css'
+        'node_modules/angular-loading-bar/build/loading-bar.css',
+        'src/css/style.css'
     ],
     fonts: 'src/fonts/*.*',
     icons: 'src/icons/*.*',
