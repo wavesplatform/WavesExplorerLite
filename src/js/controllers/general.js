@@ -22,13 +22,13 @@
                 var from = to - 20;
                 if (from < 0)
                     from = 1;
-                $http.get(apiService.blocks.seq(from, to)).then(function (response) {
+                $http.get(apiService.blocks.headers.seq(from, to)).then(function (response) {
                     ctrl.lastBlocks = response.data;
                     ctrl.lastBlocks.reverse();
                 });
                 // get avg delay between blocks
-                var height = response.data.height;
-                $http.get(apiService.blocks.last).then(function (response) {
+                var height = ctrl.height;
+                $http.get(apiService.blocks.headers.last).then(function (response) {
                     $http.get(apiService.blocks.delay(response.data.signature, height - 2)).then(function (response) {
                         ctrl.avgBlockDelay = parseInt(response.data.delay) / 1000.0 / 60.0;
                     });

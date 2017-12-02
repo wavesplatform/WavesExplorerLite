@@ -69,7 +69,7 @@
                             <div>
                                 <a ui-sref="block-details({height:item.height})"><img class="pull-left" src="/icons/chain.png"/></a>
                                 <div class="profile-data">
-                                    <div>Block <a class="text-primary bolder" ui-sref="block-details({height:item.height})">{{item.height}}</a> contains <span class="badge">{{item.transactions.length}}</span> transactions
+                                    <div>Block <a class="text-primary bolder" ui-sref="block-details({height:item.height})">{{item.height}}</a> contains <span class="badge">{{item.transactionCount}}</span> transactions
                                     </div>
                                     <div class="time row">
                                         <div class="col-xs-7">Signature: <span class="mono">{{item.signature|limitTo:24}}&hellip;</span></div>

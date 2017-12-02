@@ -13,17 +13,7 @@
         return {
             version: url + '/node/version',
             status: url + '/node/status',
-            headers: {
-                seq: function (from, to) {
-                    return url + '/blocks/headers/seq/' + from + '/' + to;
-                },
-                byHeight: function (height) {
-                    return url + '/blocks/headers/at/' + height;
-                },
-                last: url + '/blocks/headers/last'
-            },
             blocks: {
-                height: url + '/blocks/height',
                 seq: function (from, to) {
                     return url + '/blocks/seq/' + from + '/' + to;
                 },
@@ -36,7 +26,17 @@
                 delay: function (fromSig, count) {
                     return url + '/blocks/delay/' + fromSig + '/' + count;
                 },
-                last: url + '/blocks/last'
+                height: url + '/blocks/height',
+                last: url + '/blocks/last',
+                headers: {
+                    seq: function (from, to) {
+                        return url + '/blocks/headers/seq/' + from + '/' + to;
+                    },
+                    byHeight: function (height) {
+                        return url + '/blocks/headers/at/' + height;
+                    },
+                    last: url + '/blocks/headers/last'
+                }
             },
             address: {
                 balance: function (address) {
