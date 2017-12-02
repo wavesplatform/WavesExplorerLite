@@ -18,7 +18,7 @@
             });
 
             $http.get(apiService.blocks.height).then(function (response) {
-                var to = response.data.height;
+                var to = ctrl.height = response.data.height;
                 var from = to - 20;
                 if (from < 0)
                     from = 1;
