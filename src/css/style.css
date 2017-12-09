@@ -1,5 +1,34 @@
+.navbar-form>.form-group {
+    display: inline-flex;
+    width: auto;
+}
+
 .navbar-form.form-search input[type=text] {
     width: 260px;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .container > .navbar-header,
+    .container > .navbar-collapse {
+        float: none !important;
+    }
+
+    .navbar .navbar-nav > li,
+    .navbar .navbar-nav > li:first-child {
+        border-width: 0;
+    }
+
+    .navbar-menu.navbar-collapse {
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-nav + .navbar-form {
+        margin-top: 9px;
+    }
+
+    .navbar-form.form-search input[type=text] {
+        width: 100%;
+    }
 }
 
 .profile-user-info {

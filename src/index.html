@@ -19,7 +19,7 @@
                 <a href="/" class="navbar-brand"><img src="/icons/logo.png" height="24px" width="24px"> {{ctrl.title}}</a>
             </div>
 
-            <nav role="navigation" class="navbar-menu navbar-collapse collapse pull-right no-padding-right" id="navbar-main">
+            <nav role="navigation" class="navbar-menu navbar-collapse collapse pull-right no-padding" id="navbar-main">
                 <ul class="nav navbar-nav" ng-controller="NavigationCtrl as nav">
                     <li ng-repeat="item in nav.menuItems track by $index">
                         <a ui-sref="{{item.url}}"><i class="{{item.icon}}"></i> {{item.title}}</a>
@@ -39,7 +39,7 @@
                     </li>
                 </ul>
 
-                <form class="navbar-form navbar-left no-padding-right form-search" role="search" ng-controller="SearchCtrl">
+                <form class="navbar-form navbar-right form-search" role="search" ng-controller="SearchCtrl">
                     <div class="form-group">
                         <input type="text" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
                     </div>
