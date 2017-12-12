@@ -6,11 +6,11 @@
             if (input == null) return null;
             var waves = input / 100000000;
             var str = addCommas(waves.toFixed(8));
-		
+
             // remove trailing zeros
-            var parts = str.split('.')
+            var parts = str.split('.');
             parts[1] = trimZeros(parts[1]);
-            parts[1] = parts[1].length == 0 ? "0" : parts[1]
+            parts[1] = parts[1].length == 0 ? "0" : parts[1];
             return parts[0] + "." + parts[1]
         };
 
