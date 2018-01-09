@@ -190,11 +190,15 @@
                 </div>
                 <div class="profile-info-row">
                     <div class="profile-info-name">Price</div>
-                    <div class="profile-info-value">{{ctrl.details.extras.price}}</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.price}} {{ctrl.details.extras.priceCurrency}}</div>
                 </div>
                 <div class="profile-info-row">
                     <div class="profile-info-name">Amount</div>
-                    <div class="profile-info-value">{{ctrl.details.extras.amount.amount}}</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Total</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.total.amount}} {{ctrl.details.extras.total.currency}}</div>
                 </div>
                 <div class="profile-info-row">
                     <div class="profile-info-name">Buy Matcher Fee</div>
@@ -210,7 +214,7 @@
             <div class="profile-user-info profile-user-info-striped">
                 <div class="profile-info-row">
                     <div class="profile-info-name">Amount Asset</div>
-                    <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amountCurrency"></waves-asset-ref></div>
+                    <div class="profile-info-value"><waves-asset-ref asset-id="ctrl.details.order1.assetPair.amountAsset" text="ctrl.details.extras.amount.currency"></waves-asset-ref></div>
                 </div>
                 <div class="profile-info-row">
                     <div class="profile-info-name">Price Asset</div>

@@ -156,25 +156,25 @@
                 <thead>
                 <tr class="active">
                     <th>ID</th>
-                    <th>Fee</th>
                     <th>Timestamp</th>
                     <th>Price</th>
                     <th>Amount</th>
+                    <th>Total</th>
                     <th>Pair</th>
-                    <th>From</th>
-                    <th>To</th>
+                    <th>Seller</th>
+                    <th>Buyer</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="item in ctrl.exchange">
                     <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
-                    <td>{{item.fee|wavelets}}</td>
                     <td>{{item.timestamp|wavesdate}}</td>
                     <td>{{item.extras.price}}</td>
                     <td>{{item.extras.amount.amount}}</td>
+                    <td>{{item.extras.total.amount}}</td>
                     <td>
                         <nobr>
-                            <waves-asset-ref asset-id="item.order1.assetPair.amountAsset" text="item.extras.amountCurrency"></waves-asset-ref> /
+                            <waves-asset-ref asset-id="item.order1.assetPair.amountAsset" text="item.extras.amount.currency"></waves-asset-ref> /
                             <waves-asset-ref asset-id="item.order1.assetPair.priceAsset" text="item.extras.priceCurrency"></waves-asset-ref>
                         </nobr>
                     </td>

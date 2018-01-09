@@ -37,9 +37,10 @@
                         <th>Timestamp</th>
                         <th>Sender</th>
                         <th></th>
-                        <th>Recipient</th>
-                        <th><span class="pull-left">Amount</span></th>
-                        <th>Fee</th>
+                        <th>Receiver</th>
+                        <th>Amount in</th>
+                        <th>Amount out</th>
+                        <th>Price</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,19 +50,24 @@
                         <td>{{item.timestamp|wavesdate}}</td>
 
                         <td ng-if="item.sender!==ctrl.address">
-                            <waves-endpoint-ref endpoint="item.sender" max-length="24"></waves-endpoint-ref>
+                            <waves-endpoint-ref endpoint="item.sender" max-length="16"></waves-endpoint-ref>
                         </td>
                         <td ng-if="item.sender===ctrl.address">
-                            <span class="mono">{{item.sender|limitTo:24}}&hellip;</span></td>
-                        <td><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"
-                                  ng-class="{'text-danger':item.outgoing,'text-success':!item.outgoing}"></span></td>
+                            <span class="mono">{{item.sender|limitTo:16}}&hellip;</span></td>
+                        <td ng-switch="item.type">
+                            <span ng-switch-when="7" class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"
+                                  class="text-success"></span>
+                            <span ng-switch-default class="glyphicon glyphicon-arrow-right" aria-hidden="true"
+                                  ng-class="{'text-danger':item.outgoing,'text-success':!item.outgoing}"></span>
+                        </td>
                         <td ng-if="item.recipient!==ctrl.address">
-                            <waves-endpoint-ref endpoint="item.recipient" max-length="24"></waves-endpoint-ref>
+                            <waves-endpoint-ref endpoint="item.recipient" max-length="16"></waves-endpoint-ref>
                         </td>
                         <td ng-if="item.recipient===ctrl.address">
-                            <span class="mono">{{item.recipient|limitTo:24}}&hellip;</span></td>
-                        <td>{{item.extras.amount.amount}}</td>
-                        <td>{{item.extras.fee}}</td>
+                            <span class="mono">{{item.recipient|limitTo:16}}&hellip;</span></td>
+                        <td>{{item.amountIn.amount}} {{item.amountIn.currency}}</td>
+                        <td>{{item.amountOut.amount}} {{item.amountOut.currency}}</td>
+                        <td>{{item.extras.price}}</td>
                     </tr>
                     </tbody>
                     <div class="panel-body" ng-show="ctrl.txs.length == 0">{{ctrl.txsMessage}}</div>

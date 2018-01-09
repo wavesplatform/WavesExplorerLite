@@ -5,8 +5,13 @@
     var FAILURE_TEXT = 'Failure';
     var GENESIS_TRANSACTION_TYPE = 1;
 
-    function TransactionFormattingService($http, $q, apiService, cryptoService, constants) {
+    var FAILED_TO_CONVERT_AMOUNT = {
+        amount: FAILURE_TEXT,
+        currency: FAILURE_TEXT
+    };
 
+    function TransactionFormattingService($http, $q, apiService, cryptoService, constants) {
+        var txToUpdate = [];
         var loadFees = [];
         var loadAmounts = [];
         var loadAssets = {};
@@ -55,11 +60,20 @@
             processFee(transaction);
             processAmount(transaction, transaction.quantity, transaction.assetId);
 
+            transaction.update = function () {
+                updateFee(transaction);
+                updateReissueAmount(transaction);
+            };
+
             return transaction;
         }
 
         function postProcessAmountlessTransaction(transaction) {
             processFee(transaction);
+
+            transaction.update = function () {
+                updateFee(transaction);
+            };
 
             return transaction;
         }
@@ -79,7 +93,15 @@
                 pair.amountAsset = '';
             if (pair.priceAsset === null)
                 pair.priceAsset = '';
+
             processAmount(transaction, transaction.amount, pair.amountAsset);
+
+            transaction.pair = pair;
+            transaction.update = function () {
+                updateFee(transaction);
+                updateExchangeAmount(transaction);
+                updateExchangeCurrencies(transaction);
+            };
 
             var from = transaction.order1.orderType === 'buy' ? transaction.order2.senderPublicKey : transaction.order1.senderPublicKey;
             var to = transaction.order1.orderType === 'sell' ? transaction.order2.senderPublicKey : transaction.order1.senderPublicKey;
@@ -90,10 +112,19 @@
                     amountAsset: Currency.create({id: pair.amountAsset}),
                     priceAsset: Currency.create({id: pair.priceAsset})
                 };
-                price = OrderPrice.fromBackendPrice(transaction.price, currencyPair).toTokens().toFixed(8);
+                var orderPrice = OrderPrice.fromBackendPrice(transaction.price, currencyPair).toTokens();
+                var amount = Money.fromCoins(transaction.amount, currencyPair.amountAsset);
+                price = orderPrice.toFixed(8);
                 transaction.extras.priceCurrency = currencyPair.priceAsset.toString();
                 transaction.extras.amountCurrency = currencyPair.amountAsset.toString();
+                transaction.extras.total.amount = (price * amount.toTokens()).toFixed(currencyPair.priceAsset.precision);
+                transaction.extras.total.currency = transaction.extras.priceCurrency;
             } else {
+                if (!Currency.isCached(pair.priceAsset))
+                    loadAssets[pair.priceAsset] = true;
+
+                txToUpdate.push(transaction);
+
                 price = transaction.price.toString();
             }
 
@@ -108,9 +139,7 @@
             var currency = Currency.WAVES;
             if (assetId) {
                 if (!Currency.isCached(assetId)) {
-                    transaction.extras.amount.assetId = assetId;
-                    transaction.extras.amount.raw = rawAmount;
-                    loadAmounts.push(transaction);
+                    txToUpdate.push(transaction);
                     loadAssets[assetId] = true;
 
                     console.log(assetId);
@@ -130,7 +159,7 @@
             var assetId = transaction.feeAsset;
             if (assetId) {
                 if (!Currency.isCached(assetId)) {
-                    loadFees.push(transaction);
+                    txToUpdate.push(transaction);
                     loadAssets[assetId] = true;
 
                     return
@@ -154,6 +183,75 @@
                 postProcessAmountlessTransaction(transaction);
         }
 
+        function updateFee(transaction) {
+            if (!transaction.feeAsset)
+                return;
+
+            if (!Currency.isCached(transaction.feeAsset)) {
+                transaction.extras.fee = FAILURE_TEXT;
+            }
+            else {
+                var currency = Currency.create({id: transaction.feeAsset});
+                transaction.extras.fee = formatFee(transaction.fee, currency);
+            }
+        }
+
+        function updateAmount(transaction) {
+            if (!transaction.assetId)
+                return;
+
+            if (!Currency.isCached(transaction.assetId)) {
+                transaction.extras.amount = FAILED_TO_CONVERT_AMOUNT;
+            }
+            else {
+                var currency = Currency.create({id: transaction.assetId});
+                transaction.extras.amount.amount = Money.fromCoins(transaction.amount, currency).formatAmount();
+                transaction.extras.amount.currency = currency.toString();
+            }
+        }
+
+        function updateReissueAmount(transaction) {
+            if (!Currency.isCached(transaction.assetId)) {
+                transaction.extras.amount = FAILED_TO_CONVERT_AMOUNT;
+            }
+            else {
+                var currency = Currency.create({id: transaction.assetId});
+                transaction.extras.amount.amount = Money.fromCoins(transaction.quantity, currency).formatAmount();
+                transaction.extras.amount.currency = currency.toString();
+            }
+        }
+
+        function updateExchangeAmount(transaction) {
+            var pair = transaction.pair;
+            if (!pair.amountAsset)
+                return;
+
+            if (!Currency.isCached(pair.amountAsset)) {
+                transaction.extras.amount = FAILED_TO_CONVERT_AMOUNT;
+            }
+            else {
+                var currency = Currency.create({id: pair.amountAsset});
+                transaction.extras.amount.amount = Money.fromCoins(transaction.amount, currency).formatAmount();
+                transaction.extras.amount.currency = currency.toString();
+            }
+        }
+
+        function updateExchangeCurrencies(transaction) {
+            var pair = transaction.pair;
+            if (Currency.isCached(pair.amountAsset) && Currency.isCached(pair.priceAsset)) {
+                var currencyPair = {
+                    amountAsset: Currency.create({id: pair.amountAsset}),
+                    priceAsset: Currency.create({id: pair.priceAsset})
+                };
+                var price = OrderPrice.fromBackendPrice(transaction.price, currencyPair).toTokens();
+                var amount = Money.fromCoins(transaction.amount, currencyPair.amountAsset);
+                transaction.extras.price = OrderPrice.fromBackendPrice(transaction.price, currencyPair).toTokens().toFixed(8);
+                transaction.extras.priceCurrency = currencyPair.priceAsset.toString();
+                transaction.extras.total.amount = (price * amount.toTokens()).toFixed(currencyPair.priceAsset.precision);
+                transaction.extras.total.currency = transaction.extras.priceCurrency;
+            }
+        }
+
         this.processAmountAndFee = function (transactions) {
             loadFees = [];
             loadAmounts = [];
@@ -165,7 +263,15 @@
                     amount: {
                         amount: LOADING_TEXT,
                         currency: LOADING_TEXT
+                    },
+                    total: {
+                        amount: LOADING_TEXT,
+                        currency: LOADING_TEXT
                     }
+                };
+                item.update = function () {
+                    updateFee(item);
+                    updateAmount(item);
                 };
 
                 processTransaction(item);
@@ -179,29 +285,11 @@
             });
 
             return $q.all(promises).then(function () {
-                loadFees.forEach(function (transaction) {
-                    if (Currency.isCached(transaction.feeAsset)) {
-                        var currency = Currency.create({id: transaction.feeAsset});
-                        transaction.extras.fee = formatFee(transaction.fee, currency);
-                    } else {
-                        transaction.extras.fee = FAILURE_TEXT;
-                    }
-                });
-
-                loadAmounts.forEach(function (transaction) {
-                    var amountObject = transaction.extras.amount;
-                    if (Currency.isCached(amountObject.assetId)) {
-                        var currency = Currency.create({id: amountObject.assetId});
-                        amountObject.amount = Money.fromCoins(amountObject.raw, currency).formatAmount();
-                        amountObject.currency = currency.toString();
-                    } else {
-                        amountObject.amount = FAILURE_TEXT;
-                        amountObject.currency = FAILURE_TEXT;
-                    }
+                txToUpdate.forEach(function (transaction) {
+                    transaction.update();
                 });
             });
         }
-
     }
 
     angular

@@ -26,15 +26,39 @@
                 });
         }
 
+        function postProcessTransaction(tx) {
+            switch (tx.type) {
+                case 7:
+                    tx.amountIn = tx.extras.amount;
+                    tx.amountOut = tx.extras.total;
+                    tx.sender = tx.extras.from;
+                    tx.recipient = tx.extras.to;
+                    break;
+
+                default:
+                    if (tx.outgoing)
+                        tx.amountOut = tx.extras.amount;
+                    else
+                        tx.amountIn = tx.extras.amount;
+            }
+        }
+
         this.loadTransactions = function () {
             $http.get(apiService.transactions.forAddress(ctrl.address))
                 .then(function (response) {
                     ctrl.txs = response.data[0];
                     ctrl.txs.forEach(function(item) {
                         item.outgoing = (item.sender === ctrl.address);
+                        item.amountIn = {};
+                        item.amountOut = {};
                     });
 
                     return transactionFormattingService.processAmountAndFee(ctrl.txs);
+                })
+                .then(function () {
+                    ctrl.txs.forEach(function (item) {
+                        postProcessTransaction(item);
+                    });
                 })
                 .catch(function () {
                     ctrl.txsMessage = 'Error loading transactions';
