@@ -29,6 +29,7 @@ const config = {
             'node_modules/base-58/Base58.js',
             'node_modules/js-sha3/src/sha3.js',
             'node_modules/restangular/dist/restangular.js',
+            'node_modules/angular-growl-v2/build/angular-growl.js',
             'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
         version: '1.6.7' // change this version if libraries are updated or changed
@@ -42,6 +43,7 @@ const config = {
         'src/css/ace-part2.css',
         'src/css/ace-skins.css',
         'node_modules/angular-loading-bar/build/loading-bar.css',
+        'node_modules/angular-growl-v2/build/angular-growl.css',
         'src/css/style.css'
     ],
     fonts: 'src/fonts/*.*',
@@ -184,7 +186,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build-default-config', function () {
-    return createConfig(config.buildDirectory, 'testnet');
+    return createConfig(config.buildDirectory, 'mainnet');
 });
 
 gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);

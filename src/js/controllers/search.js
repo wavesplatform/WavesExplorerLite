@@ -1,7 +1,12 @@
 (function () {
     'use strict';
 
-    function SearchCtrl($scope, $state, $http, apiService) {
+    var GROWL_CONFIG = {
+        ttl: 2000,
+        disableCountDown: true
+    };
+
+    function SearchCtrl($scope, $state, $http, apiService, growl) {
 
         $scope.search = search;
 
@@ -11,6 +16,8 @@
                     $state.go('tx-details', {
                         id: id
                     });
+            }).catch(function () {
+                growl.info('Nothing has been found for query \'' + id + '\'', GROWL_CONFIG);
             })
         }
 
@@ -42,7 +49,9 @@
                     });
                 }
             })
-            .catch(function (response) { });
+            .catch(function () {
+                growl.error('Failed to make request.<br/> Check your internet connection', GROWL_CONFIG);
+            });
         }
     }
 
