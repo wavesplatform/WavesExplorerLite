@@ -32,7 +32,7 @@ const config = {
             'node_modules/angular-growl-v2/build/angular-growl.js',
             'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
-        version: '1.6.7' // change this version if libraries are updated or changed
+        version: '1.6.8' // change this version if libraries are updated or changed
     },
     styles: [
         'node_modules/angular/angular-csp.css',
