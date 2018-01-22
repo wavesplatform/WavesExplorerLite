@@ -70,8 +70,8 @@
                         <td>{{item.extras.price}}</td>
                     </tr>
                     </tbody>
-                    <div class="panel-body" ng-show="ctrl.txs.length == 0">{{ctrl.txsMessage}}</div>
                 </table>
+                <div class="panel-body" ng-show="ctrl.txs.length == 0">{{ctrl.txsMessage}}</div>
             </uib-tab>
             <uib-tab index="1" heading="Aliases" select="ctrl.loadAliases()">
                 <table ng-show="ctrl.aliases.length > 0" class="table blockDetails">

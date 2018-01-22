@@ -59,6 +59,9 @@
                     ctrl.txs.forEach(function (item) {
                         postProcessTransaction(item);
                     });
+
+                    if (ctrl.txs.length === 0)
+                        ctrl.txsMessage = 'No transactions yet';
                 })
                 .catch(function () {
                     ctrl.txsMessage = 'Error loading transactions';
@@ -80,6 +83,9 @@
                                 decimals: assetBalance.issueTransaction.decimals
                             }
                         });
+
+                    if (ctrl.assets.length === 0)
+                        ctrl.assetsMessage = 'No assets yet';
                 })
                 .catch(function () {
                     ctrl.assetsMessage = 'Error loading assets balance';
@@ -92,6 +98,9 @@
                     ctrl.aliases = response.data.map(function (alias) {
                         return aliasService.fromString(alias);
                     });
+
+                    if (ctrl.aliases.length === 0)
+                        ctrl.aliasesMessage = 'No aliases yet';
                 })
                 .catch(function () {
                     ctrl.aliasesMessage = 'Error loading aliases';
