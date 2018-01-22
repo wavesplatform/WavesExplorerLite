@@ -15,7 +15,7 @@
                 ctrl.address = ctrl.endpoint.replace(ADDRESS_PREFIX, '');
             }
             else if (aliasService.isAlias(ctrl.endpoint)) {
-                ctrl.alias = aliasService.fromString(ctrl.alias).text;
+                ctrl.alias = aliasService.fromString(ctrl.endpoint).text;
             }
             else {
                 ctrl.address = ctrl.endpoint;
