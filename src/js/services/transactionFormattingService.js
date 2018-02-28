@@ -23,10 +23,18 @@
         processors[constants.EXCHANGE_TRANSACTION_TYPE] = postProcessExchangeTransaction;
         processors[constants.ASSET_REISSUE_TRANSACTION_TYPE] = postProcessReissueTransaction;
         processors[constants.START_LEASING_TRANSACTION_TYPE] = postProcessLeasingTransaction;
+        processors[constants.MASS_PAYMENT_TRANSACTION_TYPE] = postProcessMassPaymentTransaction;
 
         function postProcessTransferTransaction(transaction) {
             processFee(transaction);
             processAmount(transaction, transaction.amount, transaction.assetId);
+
+            return transaction;
+        }
+
+        function postProcessMassPaymentTransaction(transaction) {
+            processFee(transaction);
+            processAmount(transaction, transaction.totalAmount, transaction.assetId);
 
             return transaction;
         }

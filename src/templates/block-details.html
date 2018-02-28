@@ -255,5 +255,35 @@
                 </tbody>
             </table>
         </waves-transaction-table>
+
+        <waves-transaction-table title="Mass payments [type = 11]" ng-show="ctrl.massPayment.length > 0">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Fee</th>
+                    <th>Timestamp</th>
+                    <th>Sender</th>
+                    <th>Asset</th>
+                    <th>Total amount</th>
+                    <th>Transfer count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.massPayment">
+                    <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
+                    <td>{{item.extras.fee}}</td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref></td>
+                    <td ng-if="item.assetId === null">{{item.extras.amount.currency}}</td>
+                    <td ng-if="item.assetId !== null">
+                        <waves-transaction-ref tx-id="item.assetId" text="item.extras.amount.currency"></waves-transaction-ref>
+                    </td>
+                    <td>{{item.extras.amount.amount}}</td>
+                    <td>{{item.transferCount}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
     </div>
 </div>

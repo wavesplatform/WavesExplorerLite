@@ -20,7 +20,7 @@
     "js-sha3": "^0.5.2",
     "restangular": "^1.6.1",
     "underscore": "^1.8.3",
-    "wavesplatform-core-js": "git://github.com/beregovoy68/wavesplatform.core.js.git#master"
+    "wavesplatform-core-js": "git://github.com/wavesplatform/wavesplatform.core.js.git#master"
   },
   "devDependencies": {
     "del": "^3.0.0",

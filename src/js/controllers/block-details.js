@@ -26,6 +26,7 @@
 					ctrl.leasingCancel = txs(ctrl.details.transactions, 9);
 
 					ctrl.alias = txs(ctrl.details.transactions, 10);
+					ctrl.massPayment = txs(ctrl.details.transactions, 11);
 
 					return transactionFormattingService.processAmountAndFee(ctrl.details.transactions);
 				})

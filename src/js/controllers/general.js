@@ -37,6 +37,9 @@
 
             $http.get(apiService.transactions.unconfirmed).then(function (response) {
                 ctrl.unconfirmedTxs = response.data;
+                ctrl.unconfirmedTxs.forEach(function (item) {
+                    item.amount = item.amount || item.totalAmount;
+                })
             });
             $http.get(apiService.consensus.basetarget).then(function (response) {
                 ctrl.consensus.baseTarget = response.data.baseTarget;
