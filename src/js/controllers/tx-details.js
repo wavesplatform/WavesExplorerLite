@@ -33,6 +33,20 @@
                         ctrl.details.order2.amount = Money.fromCoins(ctrl.details.order2.amount, currencyPair.amountAsset).formatAmount();
                         ctrl.details.order2.address = cryptoService.buildRawAddress(ctrl.details.order2.senderPublicKey);
                     }
+                } else if (ctrl.details.type === 11) {
+                    var currency = Currency.WAVES;
+                    if (ctrl.details.assetId)
+                        currency = Currency.create({id: ctrl.details.assetId});
+
+                    ctrl.details.transfers.forEach(function (item) {
+                        var amount = Money.fromCoins(item.amount, currency);
+                        item.extras = {
+                            amount: {
+                                amount: amount.formatAmount(),
+                                currency: currency.toString()
+                            }
+                        }
+                    });
                 }
             });
         }
