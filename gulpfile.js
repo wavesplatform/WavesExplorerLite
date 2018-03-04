@@ -32,7 +32,7 @@ const config = {
             'node_modules/angular-growl-v2/build/angular-growl.js',
             'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
-        version: '1.6.8' // change this version if libraries are updated or changed
+        version: '1.6.9' // change this version if libraries are updated or changed
     },
     styles: [
         'node_modules/angular/angular-csp.css',
@@ -186,7 +186,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build-default-config', function () {
-    return createConfig(config.buildDirectory, 'mainnet');
+    return createConfig(config.buildDirectory, 'testnet');
 });
 
 gulp.task('resources', ['copy-css', 'copy-fonts', 'copy-icons', 'copy-html']);

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function TxDetailsCtrl($http, transactionFormattingService, $stateParams, apiService, cryptoService) {
+    function TxDetailsCtrl($http, transactionFormattingService, $stateParams, apiService, cryptoService, constants) {
         var ctrl = this;
         ctrl.id = $stateParams.id;
 
@@ -13,7 +13,7 @@
 
                 return transactionFormattingService.processAmountAndFee([ctrl.details]);
             }).then(function () {
-                if (ctrl.details.type === 7) {
+                if (ctrl.details.type === constants.EXCHANGE_TRANSACTION_TYPE) {
                     var pair = _.extend({}, ctrl.details.order1.assetPair);
                     if (pair.amountAsset === null)
                         pair.amountAsset = '';
@@ -33,7 +33,7 @@
                         ctrl.details.order2.amount = Money.fromCoins(ctrl.details.order2.amount, currencyPair.amountAsset).formatAmount();
                         ctrl.details.order2.address = cryptoService.buildRawAddress(ctrl.details.order2.senderPublicKey);
                     }
-                } else if (ctrl.details.type === 11) {
+                } else if (ctrl.details.type === constants.MASS_PAYMENT_TRANSACTION_TYPE) {
                     var currency = Currency.WAVES;
                     if (ctrl.details.assetId)
                         currency = Currency.create({id: ctrl.details.assetId});
@@ -52,5 +52,7 @@
         }
     }
 
-    angular.module('web').controller('TxDetailsCtrl', TxDetailsCtrl);
+    angular.module('web').controller('TxDetailsCtrl',
+        ['$http', 'transactionFormattingService', '$stateParams', 'apiService', 'cryptoService', 'constants.transactions',
+            TxDetailsCtrl]);
 })();

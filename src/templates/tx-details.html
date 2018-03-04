@@ -376,40 +376,58 @@
             </div>
         </div>
 
-        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==11">
-            <div class="profile-info-row">
-                <div class="profile-info-name">Type</div>
-                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Mass Payment</span></div>
+        <ng-show ng-show="ctrl.details.type==11">
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Type</div>
+                    <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Mass Payment</span></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Timestamp</div>
+                    <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Block</div>
+                    <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Total Amount</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Transfers count</div>
+                    <div class="profile-info-value">{{ctrl.details.transferCount}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Attachment</div>
+                    <div class="profile-info-value"><pre>{{ctrl.details.attachment}}</pre></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Fee</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Sender</div>
+                    <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+                </div>
             </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Timestamp</div>
-                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Block</div>
-                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Total Amount</div>
-                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Attachment</div>
-                <div class="profile-info-value"><pre>{{ctrl.details.attachment}}</pre></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Fee</div>
-                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Sender</div>
-                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
-            </div>
-            <div class="profile-info-row">
-                <div class="profile-info-name">Signature</div>
-                <div class="profile-info-value">{{ctrl.details.signature}}</div>
-            </div>
-        </div>
 
+            <waves-transaction-table title="Transfers">
+                <table class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>Recipient</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.details.transfers">
+                        <td><waves-endpoint-ref endpoint="item.recipient"></waves-endpoint-ref></td>
+                        <td>{{item.extras.amount.amount}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </waves-transaction-table>
+        </ng-show>
     </div>
 </div>
