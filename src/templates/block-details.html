@@ -151,6 +151,31 @@
             </table>
         </waves-transaction-table>
 
+        <waves-transaction-table title="Asset Burn [type = 6]" ng-show="ctrl.assetBurn.length > 0">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Fee</th>
+                    <th>Timestamp</th>
+                    <th>Issuer</th>
+                    <th>Asset ID</th>
+                    <th><span class="pull-right">Amount</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.assetBurn">
+                    <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
+                    <td>{{item.extras.fee}}</td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><waves-endpoint-ref endpoint="item.sender" max-length="12"></waves-endpoint-ref></td>
+                    <td><waves-asset-ref asset-id="item.assetId" text="item.extras.amount.currency"></waves-asset-ref></td>
+                    <td><span class="pull-right">{{item.extras.amount.amount}}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
+
         <waves-transaction-table title="Exchanges [type = 7]" ng-show="ctrl.exchange.length > 0">
             <table class="table blockDetails">
                 <thead>

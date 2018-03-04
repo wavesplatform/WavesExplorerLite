@@ -20,6 +20,7 @@
         processors[constants.PAYMENT_TRANSACTION_TYPE] = postProcessPaymentTransaction;
         processors[constants.ASSET_ISSUE_TRANSACTION_TYPE] = postProcessIssueTransaction;
         processors[constants.ASSET_TRANSFER_TRANSACTION_TYPE] = postProcessTransferTransaction;
+        processors[constants.ASSET_BURN_TRANSACTION_TYPE] = postProcessBurnTransaction;
         processors[constants.EXCHANGE_TRANSACTION_TYPE] = postProcessExchangeTransaction;
         processors[constants.ASSET_REISSUE_TRANSACTION_TYPE] = postProcessReissueTransaction;
         processors[constants.START_LEASING_TRANSACTION_TYPE] = postProcessLeasingTransaction;
@@ -30,6 +31,10 @@
             processAmount(transaction, transaction.amount, transaction.assetId);
 
             return transaction;
+        }
+
+        function postProcessBurnTransaction(transaction) {
+            return postProcessTransferTransaction(transaction);
         }
 
         function postProcessMassPaymentTransaction(transaction) {

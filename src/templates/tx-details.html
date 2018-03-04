@@ -170,6 +170,41 @@
             </div>
         </div>
 
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==6">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Asset burn</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Asset ID</div>
+                <div class="profile-info-value"><a class="mono" ui-sref="tx-details({id:ctrl.details.assetId})">{{ctrl.details.assetId}}</a></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Amount</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Issuer</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
+
         <ng-show ng-show="ctrl.details.type==7">
             <div class="profile-user-info profile-user-info-striped">
                 <div class="profile-info-row">

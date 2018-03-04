@@ -1,7 +1,9 @@
 (function () {
 	'use strict';
 
-	function BlocksDetailsCtrl($http, apiService, transactionFormattingService, $stateParams, $state) {
+	var GENESIS_TRANSACTION_TYPE = 1;
+
+	function BlocksDetailsCtrl($http, apiService, transactionFormattingService, $stateParams, $state, constants) {
 		var ctrl = this;
 		ctrl.height = parseInt($stateParams.height);
 		ctrl.next = nextBlock;
@@ -15,10 +17,12 @@
 				.then(function (response) {
 					ctrl.details = response.data;
 
-					ctrl.payments = txs(ctrl.details.transactions, 2).concat(txs(ctrl.details.transactions, 1));
+					ctrl.payments = txs(ctrl.details.transactions, constants.PAYMENT_TRANSACTION_TYPE)
+						.concat(txs(ctrl.details.transactions, GENESIS_TRANSACTION_TYPE));
 					ctrl.assetIssue = txs(ctrl.details.transactions, 3);
 					ctrl.assetReissue = txs(ctrl.details.transactions, 5);
 					ctrl.assetTransfer = txs(ctrl.details.transactions, 4);
+					ctrl.assetBurn = txs(ctrl.details.transactions, 6);
 
 					ctrl.exchange = txs(ctrl.details.transactions, 7);
 
@@ -48,5 +52,7 @@
 		}
 	}
 
-	angular.module('web').controller('BlocksDetailsCtrl', BlocksDetailsCtrl);
+	angular.module('web').controller('BlocksDetailsCtrl',
+		['$http', 'apiService', 'transactionFormattingService', '$stateParams', '$state', 'constants.transactions',
+			BlocksDetailsCtrl]);
 })();
