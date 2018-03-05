@@ -14,7 +14,7 @@
             title: 'TESTNET Explorer'
         },
         wallet: {
-            url: 'https://waveswallet.io',
+            url: 'https://beta.wavesplatform.com',
             title: 'Wallet'
         }
     });
