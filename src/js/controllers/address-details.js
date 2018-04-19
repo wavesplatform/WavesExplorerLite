@@ -87,8 +87,9 @@
                     if (ctrl.assets.length === 0)
                         ctrl.assetsMessage = 'No assets yet';
                 })
-                .catch(function () {
+                .catch(function (error) {
                     ctrl.assetsMessage = 'Error loading assets balance';
+                    console.log(error);
                 });
         };
 

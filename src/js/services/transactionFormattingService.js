@@ -41,6 +41,11 @@
             processFee(transaction);
             processAmount(transaction, transaction.totalAmount, transaction.assetId);
 
+            transaction.update = function () {
+                updateFee(transaction);
+                updateMassPaymentAmount(transaction);
+            };
+
             return transaction;
         }
 
@@ -230,6 +235,17 @@
             else {
                 var currency = Currency.create({id: transaction.assetId});
                 transaction.extras.amount.amount = Money.fromCoins(transaction.quantity, currency).formatAmount();
+                transaction.extras.amount.currency = currency.toString();
+            }
+        }
+
+        function updateMassPaymentAmount(transaction) {
+            if (!Currency.isCached(transaction.assetId)) {
+                transaction.extras.amount = FAILED_TO_CONVERT_AMOUNT;
+            }
+            else {
+                var currency = Currency.create({id: transaction.assetId});
+                transaction.extras.amount.amount = Money.fromCoins(transaction.totalAmount, currency).formatAmount();
                 transaction.extras.amount.currency = currency.toString();
             }
         }
