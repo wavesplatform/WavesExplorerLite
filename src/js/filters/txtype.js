@@ -53,8 +53,8 @@
                 short: 'Alias',
                 long: 'Create alias'
             };
-            result[constants.MAKE_ASSET_NAME_UNIQUE_TRANSACTION_TYPE] = {
-                long: 'Unique asset'
+            result[constants.MASS_PAYMENT_TRANSACTION_TYPE] = {
+                long: 'Mass payment'
             };
 
             return result;
