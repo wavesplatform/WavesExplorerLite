@@ -56,6 +56,9 @@
             result[constants.MASS_PAYMENT_TRANSACTION_TYPE] = {
                 long: 'Mass payment'
             };
+            result[constants.DATA_TRANSACTION_TYPE] = {
+                long: 'Data'
+            };
 
             return result;
         }

@@ -464,5 +464,49 @@
                 </table>
             </waves-transaction-table>
         </ng-show>
+
+        <ng-show ng-show="ctrl.details.type==12">
+            <div class="profile-user-info profile-user-info-striped">
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Type</div>
+                    <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Data</span></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Timestamp</div>
+                    <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Block</div>
+                    <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Fee</div>
+                    <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+                </div>
+                <div class="profile-info-row">
+                    <div class="profile-info-name">Sender</div>
+                    <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+                </div>
+            </div>
+
+            <waves-transaction-table title="Records">
+                <table class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>Key</th>
+                        <th>Data type</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.details.data">
+                        <td>{{item.key}}</td>
+                        <td>{{item.type}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </waves-transaction-table>
+        </ng-show>
     </div>
 </div>
