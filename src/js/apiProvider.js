@@ -48,6 +48,9 @@
                 },
                 balanceDetails: function (address) {
                     return url + '/addresses/balance/details/' + address;
+                },
+                data: function (address) {
+                    return url + '/addresses/data/' + address;
                 }
             },
             aliases: {

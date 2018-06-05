@@ -107,7 +107,24 @@
                 </table>
                 <div class="panel-body" ng-show="ctrl.assets.length == 0">{{ctrl.assetsMessage}}</div>
             </uib-tab>
+            <uib-tab index="3" heading="Data" select="ctrl.loadData()">
+                <table ng-show="ctrl.dataArray.length > 0" class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.dataArray">
+                        <td>{{item.key}}</td>
+                        <td>{{item.type}}</td>
+                        <td>{{item.value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
         </uib-tabset>
-
     </div>
 </div>

@@ -12,6 +12,7 @@
         ctrl.aliases = [];
         ctrl.txs = [];
         ctrl.assets = [];
+        ctrl.dataArray = [];
 
         ctrl.txsMessage = LOADING_MESSAGE;
         ctrl.aliasesMessage = LOADING_MESSAGE;
@@ -105,6 +106,19 @@
                 })
                 .catch(function () {
                     ctrl.aliasesMessage = 'Error loading aliases';
+                });
+        };
+
+        this.loadData = function () {
+            $http.get(apiService.address.data(ctrl.address))
+                .then(function (response) {
+                    ctrl.dataArray = response.data;
+
+                    if (ctrl.dataArray.length === 0)
+                        ctrl.aliasesMessage = 'No data transactions yet';
+                })
+                .catch(function () {
+                    ctrl.dataMessage = 'Error loading address data';
                 });
         };
     }
