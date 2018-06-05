@@ -118,12 +118,13 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.dataArray">
-                        <td>{{item.key}}</td>
+                        <td><waves-data-key text="item.key"></waves-data-key></td>
                         <td>{{item.type}}</td>
-                        <td>{{item.value}}</td>
+                        <td><waves-data-value text="item.value"></waves-data-value></td>
                     </tr>
                     </tbody>
                 </table>
+                <div class="panel-body" ng-show="ctrl.dataArray.length == 0">{{ctrl.dataMessage}}</div>
             </uib-tab>
         </uib-tabset>
     </div>

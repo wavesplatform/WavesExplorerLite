@@ -4,6 +4,7 @@
     var NO_TRANSACTIONS_MESSAGE = 'No transactions for this address';
     var NO_ALIASES_MESSAGE = 'No aliases for this address';
     var NO_ASSETS_MESSAGE = 'No assets for this address';
+    var NO_DATA_MESSAGE = 'No data transactions for this address';
     var LOADING_MESSAGE = 'Loading...';
 
     function AddressDetailsCtrl($http, apiService, aliasService, transactionFormattingService, $stateParams) {
@@ -17,6 +18,7 @@
         ctrl.txsMessage = LOADING_MESSAGE;
         ctrl.aliasesMessage = LOADING_MESSAGE;
         ctrl.assetsMessage = LOADING_MESSAGE;
+        ctrl.dataMessage = LOADING_MESSAGE;
 
         activate();
 
@@ -62,7 +64,7 @@
                     });
 
                     if (ctrl.txs.length === 0)
-                        ctrl.txsMessage = 'No transactions yet';
+                        ctrl.txsMessage = NO_TRANSACTIONS_MESSAGE;
                 })
                 .catch(function () {
                     ctrl.txsMessage = 'Error loading transactions';
@@ -86,7 +88,7 @@
                         });
 
                     if (ctrl.assets.length === 0)
-                        ctrl.assetsMessage = 'No assets yet';
+                        ctrl.assetsMessage = NO_ASSETS_MESSAGE;
                 })
                 .catch(function (error) {
                     ctrl.assetsMessage = 'Error loading assets balance';
@@ -102,7 +104,7 @@
                     });
 
                     if (ctrl.aliases.length === 0)
-                        ctrl.aliasesMessage = 'No aliases yet';
+                        ctrl.aliasesMessage = NO_ALIASES_MESSAGE;
                 })
                 .catch(function () {
                     ctrl.aliasesMessage = 'Error loading aliases';
@@ -115,7 +117,7 @@
                     ctrl.dataArray = response.data;
 
                     if (ctrl.dataArray.length === 0)
-                        ctrl.aliasesMessage = 'No data transactions yet';
+                        ctrl.aliasesMessage = NO_DATA_MESSAGE;
                 })
                 .catch(function () {
                     ctrl.dataMessage = 'Error loading address data';

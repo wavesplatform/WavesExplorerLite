@@ -500,9 +500,9 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.details.data">
-                        <td>{{item.key}}</td>
+                        <td><waves-data-key text="item.key"></waves-data-key></td>
                         <td>{{item.type}}</td>
-                        <td>{{item.value}}</td>
+                        <td><waves-data-value text="item.value"></waves-data-value></td>
                     </tr>
                     </tbody>
                 </table>
