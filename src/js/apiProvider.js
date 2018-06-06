@@ -51,6 +51,9 @@
                 },
                 data: function (address) {
                     return url + '/addresses/data/' + address;
+                },
+                script: function (address) {
+                    return url + '/addresses/scriptInfo/' + address;
                 }
             },
             aliases: {

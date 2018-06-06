@@ -5,6 +5,7 @@
     var NO_ALIASES_MESSAGE = 'No aliases for this address';
     var NO_ASSETS_MESSAGE = 'No assets for this address';
     var NO_DATA_MESSAGE = 'No data transactions for this address';
+    var NO_SCRIPT_MESSAGE = 'No script for this address';
     var LOADING_MESSAGE = 'Loading...';
 
     function AddressDetailsCtrl($http, apiService, aliasService, transactionFormattingService, $stateParams) {
@@ -14,11 +15,13 @@
         ctrl.txs = [];
         ctrl.assets = [];
         ctrl.dataArray = [];
+        ctrl.scripts = [];
 
         ctrl.txsMessage = LOADING_MESSAGE;
         ctrl.aliasesMessage = LOADING_MESSAGE;
         ctrl.assetsMessage = LOADING_MESSAGE;
         ctrl.dataMessage = LOADING_MESSAGE;
+        ctrl.scriptsMessage = LOADING_MESSAGE;
 
         activate();
 
@@ -117,11 +120,29 @@
                     ctrl.dataArray = response.data;
 
                     if (ctrl.dataArray.length === 0)
-                        ctrl.aliasesMessage = NO_DATA_MESSAGE;
+                        ctrl.dataMessage = NO_DATA_MESSAGE;
                 })
                 .catch(function () {
                     ctrl.dataMessage = 'Error loading address data';
                 });
+        };
+
+        this.loadScript = function () {
+            $http.get(apiService.address.script(ctrl.address))
+                .then(function (response) {
+                    if (response.data.script) {
+                        ctrl.scripts = [{
+                            script: response.data.script,
+                            scriptText: response.data.scriptText,
+                            extraFee: response.data.extraFee
+                        }]
+                    } else {
+                        ctrl.scriptsMessage = NO_SCRIPT_MESSAGE;
+                    }
+                })
+                .catch(function () {
+                    ctrl.scriptsMessage = 'Error loading script';
+                })
         };
     }
 

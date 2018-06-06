@@ -508,5 +508,9 @@
                 </table>
             </waves-transaction-table>
         </ng-show>
+
+        <div ng-show="ctrl.isUnknownTransaction">
+            <waves-transaction-raw tx="ctrl.details"></waves-transaction-raw>
+        </div>
     </div>
 </div>

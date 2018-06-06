@@ -4,12 +4,16 @@
     function TxDetailsCtrl($http, transactionFormattingService, $stateParams, apiService, cryptoService, constants) {
         var ctrl = this;
         ctrl.id = $stateParams.id;
+        ctrl.isUnknownTransaction = false;
 
         activate();
+
 
         function activate() {
             $http.get(apiService.transactions.info(ctrl.id)).then(function (response) {
                 ctrl.details = response.data;
+
+                ctrl.isUnknownTransaction = ctrl.details.type > constants.DATA_TRANSACTION_TYPE;
 
                 return transactionFormattingService.processAmountAndFee([ctrl.details]);
             }).then(function () {

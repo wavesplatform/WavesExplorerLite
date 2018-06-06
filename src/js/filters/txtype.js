@@ -40,6 +40,9 @@
             result[constants.ASSET_REISSUE_TRANSACTION_TYPE] = {
                 long: 'Asset re-issue'
             };
+            result[constants.ASSET_BURN_TRANSACTION_TYPE] = {
+                long: 'Asset burn'
+            };
             result[constants.EXCHANGE_TRANSACTION_TYPE] = {
                 long: 'Exchange'
             };

@@ -126,6 +126,29 @@
                 </table>
                 <div class="panel-body" ng-show="ctrl.dataArray.length == 0">{{ctrl.dataMessage}}</div>
             </uib-tab>
+            <uib-tab index="4" heading="Script" select="ctrl.loadScript()">
+                <table ng-show="ctrl.scripts.length > 0" class="table blockDetails">
+                    <thead>
+                    <tr class="active">
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <ng-repeat ng-repeat="item in ctrl.scripts">
+                        <tr>
+                            <td>Compiled Script</td>
+                            <td><waves-data-value text="item.script"></waves-data-value></td>
+                        </tr>
+                        <tr>
+                            <td>Script Text</td>
+                            <td><waves-script-text text="item.scriptText"></waves-script-text></td>
+                        </tr>
+                    </ng-repeat>
+                    </tbody>
+                </table>
+                <div class="panel-body" ng-show="ctrl.scripts.length == 0">{{ctrl.scriptsMessage}}</div>
+            </uib-tab>
         </uib-tabset>
     </div>
 </div>
