@@ -64,7 +64,8 @@
                             <waves-endpoint-ref endpoint="item.recipient" max-length="16"></waves-endpoint-ref>
                         </td>
                         <td ng-if="item.recipient===ctrl.address">
-                            <span class="mono">{{item.recipient|limitTo:16}}&hellip;</span></td>
+                            <span class="mono">{{item.recipient|limitTo:16}}&hellip;</span>
+                        </td>
                         <td>{{item.amountIn.amount}} {{item.amountIn.currency}}</td>
                         <td>{{item.amountOut.amount}} {{item.amountOut.currency}}</td>
                         <td>{{item.extras.price}}</td>
@@ -134,17 +135,15 @@
                         <th>Value</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <ng-repeat ng-repeat="item in ctrl.scripts">
+                    <tbody ng-repeat="item in ctrl.scripts">
                         <tr>
                             <td>Compiled Script</td>
                             <td><waves-data-value text="item.script"></waves-data-value></td>
                         </tr>
                         <tr>
                             <td>Script Text</td>
-                            <td><waves-script-text text="item.scriptText"></waves-script-text></td>
+                            <td><waves-script-value text="item.scriptText"></waves-script-value></td>
                         </tr>
-                    </ng-repeat>
                     </tbody>
                 </table>
                 <div class="panel-body" ng-show="ctrl.scripts.length == 0">{{ctrl.scriptsMessage}}</div>

@@ -62,6 +62,12 @@
             result[constants.DATA_TRANSACTION_TYPE] = {
                 long: 'Data'
             };
+            result[constants.SCRIPT_TRANSFER_TRANSACTION_TYPE] = {
+                long: 'Script'
+            };
+            result[constants.SPONSOR_FEE_TRANSACTION_TYPE] = {
+                long: 'Fee sponsorship'
+            };
 
             return result;
         }

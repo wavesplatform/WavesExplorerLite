@@ -25,6 +25,7 @@
         processors[constants.ASSET_REISSUE_TRANSACTION_TYPE] = postProcessReissueTransaction;
         processors[constants.START_LEASING_TRANSACTION_TYPE] = postProcessLeasingTransaction;
         processors[constants.MASS_PAYMENT_TRANSACTION_TYPE] = postProcessMassPaymentTransaction;
+        processors[constants.SCRIPT_TRANSFER_TRANSACTION_TYPE] = postProcessScriptTransaction;
 
         function postProcessTransferTransaction(transaction) {
             processFee(transaction);
@@ -99,6 +100,17 @@
         function postProcessLeasingTransaction(transaction) {
             processFee(transaction);
             processAmount(transaction, transaction.amount, Currency.WAVES.id);
+
+            return transaction;
+        }
+
+        function postProcessScriptTransaction(transaction) {
+            transaction.recipient = transaction.sender;
+
+            processFee(transaction);
+
+            transaction.update = function () {
+            };
 
             return transaction;
         }

@@ -8,7 +8,7 @@
     var NO_SCRIPT_MESSAGE = 'No script for this address';
     var LOADING_MESSAGE = 'Loading...';
 
-    function AddressDetailsCtrl($http, apiService, aliasService, transactionFormattingService, $stateParams) {
+    function AddressDetailsCtrl($http, constants, apiService, aliasService, transactionFormattingService, $stateParams) {
         var ctrl = this;
         ctrl.address = $stateParams.address;
         ctrl.aliases = [];
@@ -34,11 +34,14 @@
 
         function postProcessTransaction(tx) {
             switch (tx.type) {
-                case 7:
+                case constants.EXCHANGE_TRANSACTION_TYPE:
                     tx.amountIn = tx.extras.amount;
                     tx.amountOut = tx.extras.total;
                     tx.sender = tx.extras.from;
                     tx.recipient = tx.extras.to;
+                    break;
+
+                case constants.SCRIPT_TRANSFER_TRANSACTION_TYPE:
                     break;
 
                 default:
@@ -146,5 +149,7 @@
         };
     }
 
-    angular.module('web').controller('AddressDetailsCtrl', AddressDetailsCtrl);
+    angular.module('web').controller('AddressDetailsCtrl',
+        ['$http', 'constants.transactions', 'apiService', 'aliasService', 'transactionFormattingService',
+            '$stateParams', AddressDetailsCtrl]);
 })();
