@@ -26,6 +26,7 @@
         processors[constants.START_LEASING_TRANSACTION_TYPE] = postProcessLeasingTransaction;
         processors[constants.MASS_PAYMENT_TRANSACTION_TYPE] = postProcessMassPaymentTransaction;
         processors[constants.SCRIPT_TRANSFER_TRANSACTION_TYPE] = postProcessScriptTransaction;
+        processors[constants.SPONSOR_FEE_TRANSACTION_TYPE] = postProcessSponsorshipTransaction;
 
         function postProcessTransferTransaction(transaction) {
             processFee(transaction);
@@ -113,6 +114,17 @@
             };
 
             return transaction;
+        }
+
+        function postProcessSponsorshipTransaction(transaction) {
+            processFee(transaction);
+
+            if (transaction.minSponsoredAssetFee)
+                processAmount(transaction, transaction.minSponsoredAssetFee, transaction.assetId);
+
+            transaction.update = function () {
+                updateSponsorshipTransactionAmount(transaction);
+            }
         }
 
         function postProcessExchangeTransaction(transaction) {
@@ -258,6 +270,20 @@
             else {
                 var currency = Currency.create({id: transaction.assetId});
                 transaction.extras.amount.amount = Money.fromCoins(transaction.totalAmount, currency).formatAmount();
+                transaction.extras.amount.currency = currency.toString();
+            }
+        }
+
+        function updateSponsorshipTransactionAmount(transaction) {
+            if (!transaction.minSponsoredAssetFee)
+                return;
+
+            if (!Currency.isCached(transaction.assetId)) {
+                transaction.extras.amount = FAILED_TO_CONVERT_AMOUNT;
+            }
+            else {
+                var currency = Currency.create({id: transaction.assetId});
+                transaction.extras.amount.amount = Money.fromCoins(transaction.minSponsoredAssetFee, currency).formatAmount();
                 transaction.extras.amount.currency = currency.toString();
             }
         }

@@ -509,6 +509,68 @@
             </waves-transaction-table>
         </ng-show>
 
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==13">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Script</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Script</div>
+                <div class="profile-info-value"><waves-script-value text="ctrl.details.script"></waves-script-value></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
+
+        <div class="profile-user-info profile-user-info-striped" ng-show="ctrl.details.type==14">
+            <div class="profile-info-row">
+                <div class="profile-info-name">Type</div>
+                <div class="profile-info-value">{{ctrl.details.type}} <span class="label label-light arrowed">Sponsorship</span></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Timestamp</div>
+                <div class="profile-info-value">{{ctrl.details.timestamp|wavesdate}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Block</div>
+                <div class="profile-info-value"><waves-block-ref height="ctrl.details.height"/></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sponsored fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.amount.amount}} {{ctrl.details.extras.amount.currency}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Transaction fee</div>
+                <div class="profile-info-value">{{ctrl.details.extras.fee}}</div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Sender</div>
+                <div class="profile-info-value"><waves-endpoint-ref endpoint="ctrl.details.sender"></waves-endpoint-ref></div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name">Signature</div>
+                <div class="profile-info-value">{{ctrl.details.signature}}</div>
+            </div>
+        </div>
+
         <div ng-show="ctrl.isUnknownTransaction">
             <waves-transaction-raw tx="ctrl.details"></waves-transaction-raw>
         </div>

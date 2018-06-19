@@ -310,5 +310,74 @@
                 </tbody>
             </table>
         </waves-transaction-table>
+
+        <waves-transaction-table title="Data [type = 12]" ng-show="ctrl.dataTransactions.length > 0">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Sender</th>
+                    <th>Values count</th>
+                    <th>Fee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.dataTransactions">
+                    <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref></td>
+                    <td>{{item.data.length}}</td>
+                    <td>{{item.extras.fee}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
+
+        <waves-transaction-table title="Script [type = 13]" ng-show="ctrl.scripts.length > 0">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Sender</th>
+                    <th>Fee</th>
+                    <th>Script</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.scripts">
+                    <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref></td>
+                    <td>{{item.extras.fee}}</td>
+                    <td><waves-script-value text="item.script" max-length="12"></waves-script-value></td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
+
+        <waves-transaction-table title="Fee sponsorship [type = 14]" ng-show="ctrl.sponsorships.length > 0">
+            <table class="table blockDetails">
+                <thead>
+                <tr class="active">
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Sender</th>
+                    <th>Sponsored fee</th>
+                    <th>Fee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in ctrl.sponsorships">
+                    <td><waves-transaction-ref tx-id="item.id" max-length="12"></waves-transaction-ref></td>
+                    <td>{{item.timestamp|wavesdate}}</td>
+                    <td><waves-endpoint-ref endpoint="item.sender"></waves-endpoint-ref></td>
+                    <td>{{item.extras.amount.amount}} {{item.extras.amount.currency}}</td>
+                    <td>{{item.extras.fee}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </waves-transaction-table>
     </div>
 </div>

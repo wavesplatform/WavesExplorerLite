@@ -13,7 +13,7 @@
             $http.get(apiService.transactions.info(ctrl.id)).then(function (response) {
                 ctrl.details = response.data;
 
-                ctrl.isUnknownTransaction = ctrl.details.type > constants.DATA_TRANSACTION_TYPE;
+                ctrl.isUnknownTransaction = ctrl.details.type > _.max(_.values(constants));
 
                 return transactionFormattingService.processAmountAndFee([ctrl.details]);
             }).then(function () {

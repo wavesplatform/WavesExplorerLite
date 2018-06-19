@@ -29,8 +29,11 @@
 					ctrl.leasing = txs(ctrl.details.transactions, 8);
 					ctrl.leasingCancel = txs(ctrl.details.transactions, 9);
 
-					ctrl.alias = txs(ctrl.details.transactions, 10);
-					ctrl.massPayment = txs(ctrl.details.transactions, 11);
+					ctrl.alias = txs(ctrl.details.transactions, constants.CREATE_ALIAS_TRANSACTION_TYPE);
+					ctrl.massPayment = txs(ctrl.details.transactions, constants.MASS_PAYMENT_TRANSACTION_TYPE);
+					ctrl.dataTransactions = txs(ctrl.details.transactions, constants.DATA_TRANSACTION_TYPE);
+					ctrl.scripts = txs(ctrl.details.transactions, constants.SCRIPT_TRANSFER_TRANSACTION_TYPE);
+					ctrl.sponsorships = txs(ctrl.details.transactions, constants.SPONSOR_FEE_TRANSACTION_TYPE);
 
 					return transactionFormattingService.processAmountAndFee(ctrl.details.transactions);
 				})
