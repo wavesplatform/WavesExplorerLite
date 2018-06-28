@@ -18,6 +18,7 @@
     "bootstrap": "^3.3.7",
     "decimal.js": "^5.0.8",
     "js-sha3": "^0.5.2",
+    "ngclipboard": "^2.0.0",
     "restangular": "^1.6.1",
     "underscore": "^1.8.3",
     "wavesplatform-core-js": "git://github.com/wavesplatform/wavesplatform.core.js.git#master"

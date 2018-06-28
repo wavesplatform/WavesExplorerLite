@@ -30,9 +30,11 @@ const config = {
             'node_modules/js-sha3/src/sha3.js',
             'node_modules/restangular/dist/restangular.js',
             'node_modules/angular-growl-v2/build/angular-growl.js',
+            'node_modules/clipboard/dist/clipboard.js',
+            'node_modules/ngclipboard/dist/ngclipboard.js',
             'node_modules/wavesplatform-core-js/distr/wavesplatform-core.js'
         ],
-        version: '1.6.9' // change this version if libraries are updated or changed
+        version: '1.6.10' // change this version if libraries are updated or changed
     },
     styles: [
         'node_modules/angular/angular-csp.css',
