@@ -19,6 +19,7 @@
                 maxLength: '<?',
                 text: '<?'
             },
-            template: '{{$ctrl.text|limitTo:$ctrl.maxLength}}{{$ctrl.text.length > $ctrl.maxLength ? "&hellip;" : ""}}'
+            template: '<span style="line-height: 30px">{{$ctrl.text|limitTo:$ctrl.maxLength}}{{$ctrl.text.length > $ctrl.maxLength ? "&hellip;" : ""}}</span>' +
+                '<waves-copy-button text="$ctrl.text"></waves-copy-button>'
         });
 })();
