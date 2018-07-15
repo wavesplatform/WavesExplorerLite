@@ -3,10 +3,11 @@ const webpack = require('webpack');
 const path = require('path');
 
 const buildPath = path.join(__dirname, 'dist');
+const sourcesPath = path.join(__dirname, 'src');
 
 var config = {
     entry: {
-        main: './src/index.js'
+        main: path.join(sourcesPath, 'index.js')
     },
     output: {
         filename: '[name].[hash].js',
@@ -32,15 +33,12 @@ var config = {
                 loader: 'html-loader'
             }]
         }, {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: [
-                { loader: 'style-loader' },
-                {
-                    loader: 'css-loader',
-                    options: {
-                        modules: true
-                    }
-                }
+                'style-loader',
+                'css-loader',
+                //'postcss-loader',
+                'sass-loader'
             ]
         }, {
             test: /\.(png|jpg|gif|svg)$/,

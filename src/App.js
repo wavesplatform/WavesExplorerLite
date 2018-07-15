@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import logo from './assets/logo.svg';
-import './styles/App.css';
+import './styles/App.scss';
 
 class App extends Component {
   render() {
