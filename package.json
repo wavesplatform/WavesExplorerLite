@@ -9,8 +9,13 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "start": "webpack-dev-server --hot --open --mode development",
-    "build": "webpack --mode production"
+    "vendor:dev": "webpack --mode development --config=webpack.vendor.config.js",
+    "vendor:prod": "webpack --mode production --config=webpack.vendor.config.js",
+    "start": "yarn run vendor:dev && webpack-dev-server --hot --open --mode development",
+    "app:dev": "webpack --mode development --config=webpack.config.js",
+    "app:prod": "webpack --mode production --config=webpack.config.js",
+    "build": "yarn run vendor:prod && yarn run app:prod",
+    "build:dev": "yarn run vendor:dev && yarn run app:dev"
   },
   "dependencies": {
     "node-sass-chokidar": "1.3.0",

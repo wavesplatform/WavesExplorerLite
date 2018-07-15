@@ -1,5 +1,8 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
+
+const buildPath = path.join(__dirname, 'dist');
 
 var config = {
     entry: {
@@ -7,14 +10,14 @@ var config = {
     },
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(__dirname, 'dist')
+        path: buildPath
     },
     module: {
         rules: [{
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
-                loader: "babel-loader",
+                loader: 'babel-loader',
                 options: {
                     // This is a feature of `babel-loader` for webpack (not Babel itself).
                     // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -26,7 +29,7 @@ var config = {
         }, {
             test: /\.html$/,
             use: [{
-                loader: "html-loader"
+                loader: 'html-loader'
             }]
         }, {
             test: /\.css$/,
@@ -51,8 +54,12 @@ var config = {
     },
     plugins: [
         new HtmlWebPackPlugin({
-          template: "./src/index.html",
-          filename: "./index.html"
+            template: './src/index.html',
+            filename: './index.html'
+        }),
+        new webpack.DllReferencePlugin({
+            manifest: require(path.join(buildPath, 'vendor-manifest.json')),
+            context: buildPath
         })
     ]
 };
