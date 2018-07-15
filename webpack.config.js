@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -52,13 +53,17 @@ var config = {
     },
     plugins: [
         new HtmlWebPackPlugin({
-            template: './src/index.html',
+            template: path.join(sourcesPath, 'index.html'),
             filename: './index.html'
         }),
         new webpack.DllReferencePlugin({
             manifest: require(path.join(buildPath, 'vendor-manifest.json')),
             context: buildPath
-        })
+        }),
+        new CopyWebpackPlugin([{
+            from: path.join(sourcesPath, 'favicon.png'),
+            to: buildPath
+        }], {debug: true})
     ]
 };
 
