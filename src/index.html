@@ -1,87 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="web" ng-csp ng-controller='MainCtrl as ctrl'>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="" />
-    <link href="/favicon.ico" type="image/x-icon" rel="icon" />
-    <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-    <title>Waves Explorer</title>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-    <!-- inject:css -->
-    <!-- endinject -->
-</head>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-<body class="skin1" ng-cloak>
-    <div growl></div>
-    <div id="navbar" class="navbar navbar-default">
-        <div class="navbar-container container" id="navbar-container">
-            <div class="navbar-header pull-left">
-                <a href="/" class="navbar-brand"><img src="/icons/logo.png" height="24px" width="24px"> {{ctrl.title}}</a>
-            </div>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-            <nav role="navigation" class="navbar-menu navbar-collapse collapse pull-right no-padding" id="navbar-main">
-                <ul class="nav navbar-nav" ng-controller="NavigationCtrl as nav">
-                    <li ng-repeat="item in nav.menuItems track by $index">
-                        <a ui-sref="{{item.url}}"><i class="{{item.icon}}"></i> {{item.title}}</a>
-                    </li>
-                    <li>
-                        <a ng-href="{{::nav.wallet.url}}" target="_blank">
-                            <i class="glyphicon glyphicon-piggy-bank"></i> {{::nav.wallet.title}}
-                        </a>
-                    </li>
-                    <li uib-dropdown>
-                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-expanded="true">
-                            <i class="glyphicon glyphicon-certificate"></i> Misc <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-light-blue dropdown-caret" role="menu" uib-dropdown-menu>
-                            <li><a ng-href="{{::nav.peerExplorer.url}}">{{::nav.peerExplorer.title}}</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <form class="navbar-form navbar-right form-search" role="search" ng-controller="SearchCtrl">
-                    <div class="form-group">
-                        <input type="text" ng-model="searchQuery" placeholder="Address / Tx sig / Block sig" name="q">
-                    </div>
-                    <button class="btn btn-mini btn-info2" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button>
-                </form>
-            </nav>
-        </div>
-    </div>
-
-    <div id="main-container" class="main-container container">
-        <div class="main-content">
-            <div class="main-content-inner">
-                <div class="page-content">
-                    <div ui-view="main" ng-cloak></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="footer-inner">
-                <div class="footer-content">
-                    <span class="bigger-120">
-                        Version: %%GULP_INJECT_VERSION%% :: Brought to you by <span class="blue bolder">Waves</span> Team.
-                    </span>
-                    <span class="action-buttons bigger-150">
-                        <a href="https://github.com/wavesplatform/WavesExplorerLite" target="_blank" title="GitHub"><img src="/icons/github.png" height="24px" width="24px"></a>
-                        <a href="https://twitter.com/@wavesplatform" target="_blank" title="Twitter"><img src="/icons/twitter.png" height="24px" width="24px"></a>
-                        <a href="https://www.facebook.com/wavesplatform/" target="_blank" title="Facebook"><img src="/icons/fb.png" height="24px" width="24px"></a>
-                        <a href="https://wavesplatform.com/" target="_blank" title="Website"><img src="/icons/waves.png" height="24px" width="24px"></a>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <a class="btn-scroll-up btn btn-sm display" id="btn-scroll-up" href="#"><i class="glyphicon glyphicon-chevron-up icon-only"></i></a>
-    </div>
-
-    <script src="//www.google.com/recaptcha/api.js?render=explicit&onload=vcRecaptchaApiLoaded" async defer></script>
-
-    <!-- inject:js -->
-    <!-- endinject -->
-</body>
-
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>
