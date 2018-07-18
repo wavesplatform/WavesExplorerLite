@@ -1,0 +1,61 @@
+@import "brandbook.scss";
+
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function map-deep-has-key($map, $keys...) {
+  $root: $map;
+  $index: 1;
+  $result: true;
+
+  @while $index <= length($keys) and $result {
+    $key: nth($keys, $index);
+    $result: map-has-key($root, $key);
+    $root: map-get($root, $key);
+    $index: $index + 1;
+  }
+  @return $result;
+}
+
+@mixin breakpoint($name) {
+  @if not map-has-key($breakpoints, $name) {
+    @warn "Warning: `#{$name}` is not a valid breakpoint name.";
+  } @else {
+    @media (max-width: map-get($breakpoints, $name)) {
+      @content;
+    }
+  }
+}
+
+@mixin responsive_padding($map, $sides...) {
+  @if length($sides) == 0 {
+    $sides: (left, right, top, bottom);
+  }
+  @each $side in $sides {
+    padding-#{$side}: map-get($map, padding-#{$side});
+
+    @each $size in map-keys($breakpoints) {
+      @if map-deep-has-key($map, $size, padding-#{$side}) {
+        @include breakpoint($size) {
+          padding-#{$side}: map-deep-get($map, $size, padding-#{$side});
+        }
+      }
+    }
+  }
+}
+
+@mixin font($type, $color_name: black, $weight: normal) {
+  font-family: map-get($font, family);
+  font-size: map-get($font, #{$type}_size);
+  color: map-get($colors, $color_name);
+  font-weight: $weight;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+

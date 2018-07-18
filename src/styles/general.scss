@@ -1,0 +1,178 @@
+@import "brandbook.scss";
+@import "mixins.scss";
+
+@each $size in map-keys($breakpoints) {
+  .#{$size}-hide {
+    @include breakpoint($size) {
+      display: none;
+    }
+  }
+  .#{$size}-show {
+    @include breakpoint($size) {
+      display: block;
+    }
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: nowrap;
+
+  & .grid-wrap {
+    flex-wrap: wrap;
+  }
+
+  > .grid-item-fixed {
+    flex: 0 0 auto;
+  }
+
+  > * {
+    box-sizing: border-box;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @for $i from 1 through 12 {
+    .column-#{$i} {
+      width: 100% / 12 * $i;
+    }
+    @each $size in map-keys($breakpoints) {
+      .column-#{$size}-#{$i} {
+        @include breakpoint($size) {
+          width: 100% / 12 * $i;
+        }
+      }
+    }
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+}
+
+a {
+  @extend .bold;
+  color: map-get($colors, submit400);
+  text-decoration: underline;
+
+  &.no-accent {
+    color: map-get($colors, black);
+    font-weight: normal;
+  }
+
+  &.fade {
+    color: map-get($colors, basic500);
+    font-weight: normal;
+  }
+}
+
+.info-box {
+  justify-content: space-between;
+  background-color: map-get($colors, basic50);
+  margin-bottom: 36px;
+
+  > * {
+    @include responsive_padding($info_box);
+  }
+}
+
+.line {
+  @include font(body);
+  padding-bottom: 8px;
+
+  &.wide {
+    padding-top: 18px;
+  }
+
+  & + .wide, &:last-child {
+    padding-bottom: 0;
+  }
+
+  &.no-wrap {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.panel {
+  @include responsive_padding($panel);
+
+  &:not(:last-child) {
+    border-right: 1px solid map-get($colors, accent50);
+  }
+
+  @each $size in map-keys($breakpoints) {
+    &.column-#{$size}-12 {
+      @include breakpoint($size) {
+        border: none;
+      }
+    }
+  }
+
+  &.panel-empty {
+    >.panel-empty-icon {
+      width: 88px;
+      height:88px;
+      margin: 0 auto;
+      margin-top: 30%;
+
+      &.confirmed {
+        background: url('../images/confirmed-88.svg') no-repeat center center;
+      }
+    }
+
+    >.panel-empty-label {
+      @include font(body, basic500);
+      text-align: center;
+    }
+  }
+
+  .panel-row {
+    padding-bottom: 36px;
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    > div {
+      margin-right: 14px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    @for $i from 1 through 3 {
+      &:nth-child(3n+#{$i}) {
+        .block-img {
+          background: url('../images/waves-block-#{$i}.svg') no-repeat center center;
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+.headline {
+  margin-bottom: map-get($card, padding-bottom);
+
+  > .title {
+    @include font(headline1);
+  }
+}
+
+.divider {
+  width: 1px;
+
+  &.divider-dashed {
+    border-left: 1px dashed map-get($colors, accent50);
+  }
+
+  &.divider-utx {
+    border-left: 2px solid map-get($colors, submit200);
+  }
+}

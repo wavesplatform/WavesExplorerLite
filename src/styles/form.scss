@@ -1,0 +1,25 @@
+@import "brandbook.scss";
+@import "mixins.scss";
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid map-get($colors, basic500);
+  padding: 12px;
+  outline: none;
+
+  @include font(headline3);
+  line-height: 1.25;
+
+  & ::placeholder {
+    @include font(headline3, basic500);
+    line-height: 1.25;
+  }
+}
+
+label {
+  @include font(body, basic500);
+}
