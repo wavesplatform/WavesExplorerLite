@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import './styles/main.scss';
 
-import Search from './search';
-import NavBar from './nav-bar';
-import MainPage from './main-page';
+import Search from './Search';
+import NavBar from './NavBar';
+import MainPage from './main/MainPage';
 
 class App extends Component {
     render() {
