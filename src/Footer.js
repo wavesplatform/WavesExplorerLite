@@ -5,16 +5,16 @@ const socialLinks = [{
     url: 'https://github.com/wavesplatform/'
 }, {
     id: 'twitter',
-    url: ''
+    url: 'https://twitter.com/@wavesplatform'
 }, {
     id: 'facebook',
-    url: ''
+    url: 'https://www.facebook.com/wavesplatform/'
 }, {
     id: 'discord',
-    url: ''
+    url: '#'
 }, {
     id: 'telegram',
-    url: ''
+    url: '#'
 }];
 
 const Footer = ({version}) => {
@@ -23,7 +23,8 @@ const Footer = ({version}) => {
             <div>Version: {version}</div>
             <div>Brought to you by Waves Team</div>
             <div>
-                {socialLinks.map(item => (<div className={`social ${item.id}`}></div>))}
+                {socialLinks.map(item =>
+                    (<a key={item.id} className={`social ${item.id}`} href={item.url} target="_blank"></a>))}
             </div>
             <div>
                 <a className="fade" href="https://wavesplatform.com" target="_blank">wavesplatform.com</a>
