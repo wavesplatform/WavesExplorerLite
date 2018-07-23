@@ -5,19 +5,15 @@ import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
 
 export default class NavBar extends React.Component {
-    state = {
-        networkId: 'mainnet'
-    };
-
     handleNetworkChange = networkId => {
-        this.setState({networkId});
+        this.props.history.push(`/${networkId}`);
     }
 
     render() {
         return (
             <div className="menu grid-item-fixed lg-hide">
-                <NetworkSwitch value={this.state.networkId} onChange={this.handleNetworkChange} />
-                <NavMenu />
+                <NetworkSwitch value={this.props.match.params.networkId} onChange={this.handleNetworkChange} />
+                <NavMenu baseRoute={this.props.match.url} />
                 <Footer version="v1.1.7" />
             </div>
         );

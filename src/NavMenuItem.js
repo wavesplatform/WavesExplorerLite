@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 export default class NavMenuItem extends React.PureComponent {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        route: PropTypes.string,
-        current: PropTypes.bool
+        route: PropTypes.string.isRequired,
+        current: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -18,7 +19,7 @@ export default class NavMenuItem extends React.PureComponent {
             className += ' current';
 
         return (
-            <div className={className}>{this.props.title}</div>
+            <Link className={className} to={this.props.route}>{this.props.title}</Link>
         );
     }
 }
