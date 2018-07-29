@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {Redirect} from 'react-router';
 
 export default class NavMenuItem extends React.PureComponent {
     static propTypes = {
-        title: PropTypes.string.isRequired,
-        route: PropTypes.string.isRequired,
+        item: PropTypes.object.isRequired,
         current: PropTypes.bool,
     };
 
     static defaultProps = {
         current: false
+    };
+
+    handleClick = () => {
+        this.props.onNavigate(this.props.item);
     }
 
     render() {
@@ -20,7 +24,7 @@ export default class NavMenuItem extends React.PureComponent {
 
         return (
             <div className={className}>
-                <Link className="no-style" to={this.props.route}>{this.props.title}</Link>
+                <Link className="no-style" to={this.props.item.route} onClick={this.handleClick}>{this.props.item.title}</Link>
             </div>
         );
     }

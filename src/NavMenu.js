@@ -3,6 +3,20 @@ import PropTypes from 'prop-types';
 
 import NavMenuItem from './NavMenuItem';
 
+const items = [{
+    title: 'General info',
+    route: '/general',
+}, {
+    title: 'Blocks',
+    route: '/blocks'
+}, {
+    title: 'Peers',
+    route: '/peers'
+}, {
+    title: 'Nodes',
+    route: '/nodes'
+}];
+
 export default class NavMenu extends React.PureComponent {
     static propTypes = {
         baseRoute: PropTypes.string
@@ -12,27 +26,24 @@ export default class NavMenu extends React.PureComponent {
         baseRoute: ''
     }
 
-    render() {
-        const items = [{
-            title: 'General info',
-            route: '',
-            current: true
-        }, {
-            title: 'Blocks',
-            route: '/blocks'
-        }, {
-            title: 'Peers',
-            route: '/peers'
-        }, {
-            title: 'Nodes',
-            route: '/nodes'
-        }];
+    state = {
+        items: [...items],
+        current: items[0]
+    };
 
+    handleNavigate = item => {
+        this.setState({
+            current: item
+        });
+    }
+
+    render() {
         return (
             <div className="menu-list">
-                {items.map((item, index) => {
+                {this.state.items.map((item, index) => {
                     const route = this.props.baseRoute + item.route;
-                    return (<NavMenuItem key={index} {...item} route={route} />);
+                    const current = this.state.current === item;
+                    return (<NavMenuItem key={index} item={item} current={current} onNavigate={this.handleNavigate} />);
                 })}
             </div>
         );

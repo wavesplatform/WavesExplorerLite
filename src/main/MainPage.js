@@ -43,14 +43,18 @@ export default class MainPage extends React.Component {
             amount: '0.00000000',
             fee: '0.001',
             date: '13.06.2018',
-            time: '17:19:57'
+            time: '17:19:57',
+            sender: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
+            recipient: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }, {
             id: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
             type: 9,
             amount: '0.00000000',
             fee: '0.001',
             date: '13.06.2018',
-            time: '17:19:57'
+            time: '17:19:57',
+            sender: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
+            recipient: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }];
         return (
             <React.Fragment>

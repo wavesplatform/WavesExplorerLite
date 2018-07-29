@@ -37,7 +37,7 @@ export default class BlocksPage extends React.Component {
             generator: '3P7GQo48n1SM7EZXnmNBRMcD5oDwKXf8SSm',
             signature: '2JmNzyk5XpGLhGT3Z55Rh2j3a15XpGLhGT3Z55Rh2j3a1',
             transactions: 100
-       }];
+        }];
 
         return (
             <React.Fragment>
@@ -45,7 +45,7 @@ export default class BlocksPage extends React.Component {
                     <span className="title">Blocks</span>
                     <Pagination />
                 </div>
-                <BlockList blocks={blocks} />
+                <BlockList blocks={blocks} networkId={this.props.match.params.networkId} />
             </React.Fragment>
         );
     }

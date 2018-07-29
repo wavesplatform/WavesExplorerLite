@@ -10,6 +10,9 @@ import MainPage from './main/MainPage';
 import PeersPage from './peers/PeersPage';
 import NodesPage from './nodes/NodesPage';
 import BlocksPage from './blocks/BlocksPage';
+import SingleBlockPage from './blocks/SingleBlockPage';
+import SingleTransactionPage from './transactions/SingleTransactionPage';
+import SingleAddressPage from './addresses/SingleAddressPage';
 
 const withNetworkRouter = (RootComponent) => {
    return class extends React.Component {
@@ -42,10 +45,14 @@ class App extends Component {
                      <NavBar {...this.props} />
                      <div className="content card">
                         <Switch>
-                            <Route path={`${match.path}/blocks`} component={BlocksPage} />
+                            <Route exact path={`${match.path}/blocks`} component={BlocksPage} />
+                            <Route exact path={`${match.path}/blocks/:height`} component={SingleBlockPage} />
                             <Route path={`${match.path}/nodes`} component={NodesPage} />
                             <Route path={`${match.path}/peers`} component={PeersPage} />
-                            <Route component={MainPage} />
+                            <Route path={`${match.path}/general`} component={MainPage} />
+                            <Route exact path={`${match.path}/tx/:transactionId`} component={SingleTransactionPage} />
+                            <Route exact path={`${match.path}/address/:address`} component={SingleAddressPage} />
+                            <Route exact path={`${match.path}`} render={() => (<Redirect to={`${match.url}/general`} />)} />
                         </Switch>
                      </div>
                  </div>

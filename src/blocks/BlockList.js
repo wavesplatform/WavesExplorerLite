@@ -21,7 +21,7 @@ export default class BlockList extends React.Component {
                 </thead>
                 <tbody>
                 {this.props.blocks.map((block, index) => {
-                    return (<BlockListItem key={index} block={block} />);
+                    return (<BlockListItem key={index} block={block} networkId={this.props.networkId} />);
                 })}
                 </tbody>
             </table>

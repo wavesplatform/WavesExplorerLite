@@ -13,14 +13,14 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
             <div className="grid panel-row">
                 <div className="divider divider-utx grid-item-fixed"></div>
                 <div>
-                    <div className="line no-wrap"><a>{tx.id}</a></div>
+                    <div className="line no-wrap"><Link to={`${this.props.baseUrl}/tx/${tx.id}`}>{tx.id}</Link></div>
                     <div className="line">
                         <label>Amount</label> {tx.amount}
                         <label className="right">Fee {tx.fee}</label>
                     </div>
                     <div className="line wide">
-                        <Link to={`${this.props.baseUrl}#`} className="no-accent">Sender</Link>
-                        <Link to={`${this.props.baseUrl}#`} className="no-accent">Recipient</Link>
+                        <Link to={`${this.props.baseUrl}/address/${tx.sender}`} className="no-accent">Sender</Link>
+                        <Link to={`${this.props.baseUrl}/address/${tx.recipient}`} className="no-accent">Recipient</Link>
                     </div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>
