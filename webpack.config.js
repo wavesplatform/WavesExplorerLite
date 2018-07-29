@@ -12,7 +12,8 @@ var config = {
     },
     output: {
         filename: '[name].[hash].js',
-        path: buildPath
+        path: buildPath,
+        publicPath: '/'
     },
     module: {
         rules: [{

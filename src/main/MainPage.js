@@ -16,22 +16,26 @@ export default class MainPage extends React.Component {
             height: 1040038,
             transactionCount: 0,
             time: '17:19:57',
-            date: '13.06.2018'
+            date: '13.06.2018',
+            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }, {
             height: 1040038,
             transactionCount: 0,
             time: '17:19:57',
-            date: '13.06.2018'
+            date: '13.06.2018',
+            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }, {
             height: 1040038,
             transactionCount: 0,
             time: '17:19:57',
-            date: '13.06.2018'
+            date: '13.06.2018',
+            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }, {
            height: 1040038,
            transactionCount: 0,
            time: '17:19:57',
-           date: '13.06.2018'
+           date: '13.06.2018',
+           signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
         }];
         const unconfirmed = [{
             id: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
@@ -52,8 +56,8 @@ export default class MainPage extends React.Component {
             <React.Fragment>
                 <NetworkInfo info={info} />
                 <div className="grid grid-wrap">
-                    <LastBlockList blocks={blocks} />
-                    <UnconfirmedTxList transactions={unconfirmed} />
+                    <LastBlockList baseUrl={this.props.match.url} blocks={blocks} />
+                    <UnconfirmedTxList baseUrl={this.props.match.url} transactions={unconfirmed} />
                 </div>
             </React.Fragment>
         );

@@ -21,6 +21,21 @@
   @return $result;
 }
 
+@function map-deep-merge($parent-map, $child-map) {
+  $result: $parent-map;
+  @each $key, $value in $child-map {
+    @if (not map-has-key($result, $key)) or
+        (type-of(map-get($result, $key)) != type-of($value)) or
+        (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+      $result: map-merge($result, ($key: $value));
+    }
+    @else {
+      $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+    }
+  }
+  @return $result;
+}
+
 @mixin breakpoint($name) {
   @if not map-has-key($breakpoints, $name) {
     @warn "Warning: `#{$name}` is not a valid breakpoint name.";
@@ -31,19 +46,15 @@
   }
 }
 
-@mixin responsive_padding($map, $sides...) {
-  @if length($sides) == 0 {
-    $sides: (left, right, top, bottom);
-  }
-  @each $side in $sides {
-    padding-#{$side}: map-get($map, padding-#{$side});
-
-    @each $size in map-keys($breakpoints) {
-      @if map-deep-has-key($map, $size, padding-#{$side}) {
-        @include breakpoint($size) {
-          padding-#{$side}: map-deep-get($map, $size, padding-#{$side});
-        }
+@mixin responsive_styles($map, $keys...) {
+  @each $style_name in map-keys($map) {
+    @if map-has-key($breakpoints, $style_name) {
+      @include breakpoint($style_name) {
+        @include responsive_styles(map-get($map, $style_name), $keys...);
       }
+    }
+    @else if length($keys) == 0 or index($keys, $style_name) {
+      #{$style_name}: map-get($map, $style_name);
     }
   }
 }
@@ -58,4 +69,3 @@
   line-height: normal;
   letter-spacing: normal;
 }
-

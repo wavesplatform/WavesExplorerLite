@@ -19,7 +19,9 @@ export default class NavMenuItem extends React.PureComponent {
             className += ' current';
 
         return (
-            <Link className={className} to={this.props.route}>{this.props.title}</Link>
+            <div className={className}>
+                <Link className="no-style" to={this.props.route}>{this.props.title}</Link>
+            </div>
         );
     }
 }

@@ -5,7 +5,8 @@ import UnconfirmedTxListItem from './UnconfirmedTxListItem';
 
 export default class UnconfirmedTxList extends React.Component {
     static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired
+        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
+        baseUrl: PropTypes.string.isRequired
     };
 
     renderList() {
@@ -15,7 +16,7 @@ export default class UnconfirmedTxList extends React.Component {
                      <div className="title">Unconfirmed Transactions ({this.props.transactions.length})</div>
                 </div>
                 {this.props.transactions.map((item, index) => {
-                    return (<UnconfirmedTxListItem key={index} transaction={item} />);
+                    return (<UnconfirmedTxListItem key={index} baseUrl={this.props.baseUrl} transaction={item} />);
                 })}
             </React.Fragment>
         );

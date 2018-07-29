@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 export default class UnconfirmedTxListItem extends React.PureComponent {
     static propTypes = {
@@ -18,8 +19,8 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
                         <label className="right">Fee {tx.fee}</label>
                     </div>
                     <div className="line wide">
-                        <a className="no-accent">Sender</a>
-                        <a className="no-accent">Recipient</a>
+                        <Link to={`${this.props.baseUrl}#`} className="no-accent">Sender</Link>
+                        <Link to={`${this.props.baseUrl}#`} className="no-accent">Recipient</Link>
                     </div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>

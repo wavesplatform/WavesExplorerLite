@@ -1,82 +1,18 @@
 @import "brandbook.scss";
 @import "mixins.scss";
 
-@each $size in map-keys($breakpoints) {
-  .#{$size}-hide {
-    @include breakpoint($size) {
-      display: none;
-    }
-  }
-  .#{$size}-show {
-    @include breakpoint($size) {
-      display: block;
-    }
-  }
-}
-
-.grid {
-  display: flex;
-  flex-wrap: nowrap;
-
-  & .grid-wrap {
-    flex-wrap: wrap;
-  }
-
-  > .grid-item-fixed {
-    flex: 0 0 auto;
-  }
-
-  > * {
-    box-sizing: border-box;
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-
-  @for $i from 1 through 12 {
-    .column-#{$i} {
-      width: 100% / 12 * $i;
-    }
-    @each $size in map-keys($breakpoints) {
-      .column-#{$size}-#{$i} {
-        @include breakpoint($size) {
-          width: 100% / 12 * $i;
-        }
-      }
-    }
-  }
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.right {
-  float: right;
-}
-
-a {
-  @extend .bold;
-  color: map-get($colors, submit400);
-  text-decoration: underline;
-
-  &.no-accent {
-    color: map-get($colors, black);
-    font-weight: normal;
-  }
-
-  &.fade {
-    color: map-get($colors, basic500);
-    font-weight: normal;
-  }
-}
-
 .info-box {
   justify-content: space-between;
   background-color: map-get($colors, basic50);
-  margin-bottom: 36px;
+  margin-bottom: 12px;
 
   > * {
-    @include responsive_padding($info_box);
+    @include responsive_styles(
+        map-deep-merge($card_inner, (sm: (
+          padding-top: 14px,
+          padding-bottom: 14px
+        )))
+    );
   }
 }
 
@@ -88,6 +24,10 @@ a {
     padding-top: 18px;
   }
 
+  &.bold {
+    font-weight: bold;
+  }
+
   & + .wide, &:last-child {
     padding-bottom: 0;
   }
@@ -97,13 +37,28 @@ a {
     white-space: nowrap;
     overflow: hidden;
   }
+
+  &.no-break {
+    white-space: nowrap;
+    word-break: keep-all;
+  }
 }
 
 .panel {
-  @include responsive_padding($panel);
+  @include responsive_styles($card_inner);
+  padding-top: 0 !important;
+  margin-top: 24px;
 
   &:not(:last-child) {
     border-right: 1px solid map-get($colors, accent50);
+  }
+
+  .panel-title {
+    padding-bottom: 24px;
+
+    .title {
+      @include font(headline1);
+    }
   }
 
   @each $size in map-keys($breakpoints) {
@@ -117,7 +72,7 @@ a {
   &.panel-empty {
     >.panel-empty-icon {
       width: 88px;
-      height:88px;
+      height: 88px;
       margin: 0 auto;
       margin-top: 30%;
 
@@ -144,25 +99,63 @@ a {
         margin-right: 0;
       }
     }
+  }
+}
 
-    @for $i from 1 through 3 {
-      &:nth-child(3n+#{$i}) {
-        .block-img {
-          background: url('../images/waves-block-#{$i}.svg') no-repeat center center;
-          width: 40px;
-          height: 40px;
-        }
+.block-img-handler {
+  @for $i from 1 through 3 {
+    &:nth-child(3n+#{$i}) {
+      .block-img {
+        background: url('../images/waves-block-#{$i}.svg') no-repeat center center;
+        width: 40px;
+        height: 40px;
+        float: left;
+        margin-right: 14px;
       }
     }
   }
 }
 
 .headline {
-  margin-bottom: map-get($card, padding-bottom);
+  @include responsive_styles($card_inner);
 
   > .title {
     @include font(headline1);
   }
+
+  > .title-details {
+    @include font(headline2, disabled500);
+    padding: 0 14px 0 8px;
+    word-break: break-all;
+  }
+
+  > .btn {
+    vertical-align: bottom;
+  }
+}
+
+.headline2 {
+  @include responsive_styles($card_inner);
+  margin-top: 12px;
+  margin-bottom: -6px;
+
+  > .title {
+    @include font(headline2);
+  }
+
+  > .title-details {
+    @include font(headline2, disabled500);
+  }
+
+  > .action {
+    border-bottom: 1px dashed map-get($colors, black);
+    float: right;
+    cursor: pointer;
+  }
+}
+
+.back {
+  @include responsive_styles($card_inner, padding-right, padding-left);
 }
 
 .divider {
@@ -174,5 +167,67 @@ a {
 
   &.divider-utx {
     border-left: 2px solid map-get($colors, submit200);
+  }
+}
+
+.dictionary {
+  > .dictionary-pair {
+    display: flex;
+    min-height: 44px;
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    > * {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    > .dictionary-pair-key {
+      flex: 0 0 auto;
+      background-color: map-get($colors, basic50);
+
+      @include responsive_styles($card_inner, padding-right, padding-left);
+      @include responsive_styles($card_column);
+      @include font(body, basic500);
+    }
+
+    > .dictionary-pair-value {
+      flex: 0 1 auto;
+      padding: 0 14px;
+      word-break: break-word;
+      @include font(body);
+    }
+
+    > .dictionary-action {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+th.price, th.amount {
+  width: 160px - 24px - 24px;
+  box-sizing: content-box;
+}
+
+.arrow {
+  float: left;
+  width: 14px;
+  height: 40px;
+  padding-left: 8px;
+
+  &.arrow-transaction-receive {
+    background: url('../images/transaction-receive.svg') no-repeat;
+  }
+
+  &.arrow-transaction-exchange {
+    background: url('../images/transaction-exchange.svg') no-repeat;
+  }
+
+  &.arrow-transaction-masspay {
+    background: url('../images/transaction-masspay.svg') no-repeat;
   }
 }

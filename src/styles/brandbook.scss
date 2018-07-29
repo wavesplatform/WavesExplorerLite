@@ -27,6 +27,11 @@ $layout: (
   )
 );
 
+$header: (
+  hight: 44px,
+  title_width: 316px,
+);
+
 $card: (
   padding-right: 24px,
   padding-left: 24px,
@@ -38,35 +43,78 @@ $card: (
   )
 );
 
-$panel: (
-  padding-right: 24px,
-  padding-left: 24px,
-  padding-bottom: 36px,
-  padding-top: 0px,
-  margin-top: 36px,
-  sm: (
-    padding-right: 8px,
-    padding-left: 8px
-  )
-);
-
-$info_box: (
+$card_inner: (
   padding-right: 24px,
   padding-left: 24px,
   padding-top: 24px,
   padding-bottom: 24px,
   sm: (
     padding-right: 8px,
-    padding-left: 8px,
-    padding-top: 14px,
-    padding-bottom: 14px
+    padding-left: 8px
   )
 );
 
-$header: (
-  hight: 44px,
-  title_width: 316px,
+$card_column: (
+  width: 129px,
+  sm: (
+    width: 100px
+  )
 );
+
+$blocks_columns: (
+  timestamp: (
+    width: 25%,
+    md: (
+      width: 240px
+    )
+  ),
+  target: (
+    width: 10%,
+    md: (
+      width: 100px
+    )
+  ),
+  txs: (
+    width: 10%,
+    md: (
+      width: 80px
+    )
+  )
+);
+
+$nodes_columns: (
+  version: (
+    width: 17%,
+    md: (
+      width: 120px
+    )
+  ),
+  height: (
+    width: 17%,
+    md: (
+      width: 140px
+    )
+  ),
+  target: (
+    width: 15%,
+    md: (
+      width: 120px
+    )
+  ),
+  utxs: (
+    width: 10%,
+    md: (
+      width: 60px
+    )
+  ),
+  txs: (
+    width: 10%,
+    md: (
+      width: 110px
+    )
+  )
+);
+
 
 $breakpoints: (
   xxlg: 1920px,
@@ -91,5 +139,3 @@ $font: (
   headline3_size: 16px,
   body_size: 14px
 );
-
-

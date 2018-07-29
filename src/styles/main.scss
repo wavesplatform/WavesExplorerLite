@@ -1,12 +1,13 @@
-@import "reset.css";
 @import "brandbook.scss";
 @import "mixins.scss";
-@import "form.scss";
+@import "common.scss";
 @import "general.scss";
+@import "blocks.scss";
+@import "nodes.scss";
 
 body {
   background-color: map-get($colors, basic50);
-  @include responsive_padding($layout);
+  @include responsive_styles($layout);
 }
 
 .header {
@@ -47,7 +48,7 @@ body {
 }
 
 .container {
-  @include responsive_padding($layout, top);
+  @include responsive_styles($layout, padding-top);
 }
 
 .menu {
@@ -60,6 +61,7 @@ body {
     >.menu-item {
       position: relative;
       margin-bottom: 28px;
+      cursor: pointer;
       @include font(headline2, disabled500);
 
       &.current {
@@ -132,7 +134,7 @@ body {
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
 
   @include font(body);
-  @include responsive_padding($card);
+  @include responsive_styles($card);
 }
 
 .network-switcher {
