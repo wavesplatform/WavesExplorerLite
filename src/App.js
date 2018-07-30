@@ -49,10 +49,9 @@ class App extends Component {
                             <Route exact path={`${match.path}/blocks/:height`} component={SingleBlockPage} />
                             <Route path={`${match.path}/nodes`} component={NodesPage} />
                             <Route path={`${match.path}/peers`} component={PeersPage} />
-                            <Route path={`${match.path}/general`} component={MainPage} />
                             <Route exact path={`${match.path}/tx/:transactionId`} component={SingleTransactionPage} />
                             <Route exact path={`${match.path}/address/:address`} component={SingleAddressPage} />
-                            <Route exact path={`${match.path}`} render={() => (<Redirect to={`${match.url}/general`} />)} />
+                            <Route path={`${match.path}`} component={MainPage} />
                         </Switch>
                      </div>
                  </div>

@@ -1,0 +1,28 @@
+@import "brandbook.scss";
+@import "mixins.scss";
+
+table.nodes {
+  th {
+    box-sizing: border-box;
+  }
+
+  th.version {
+    @include responsive_styles(map_get($nodes_columns, 'version'))
+  }
+
+  th.height {
+    @include responsive_styles(map_get($nodes_columns, 'height'))
+  }
+
+  th.target {
+    @include responsive_styles(map_get($nodes_columns, 'target'))
+  }
+
+  th.utxs {
+    @include responsive_styles(map_get($nodes_columns, 'utxs'))
+  }
+
+  th.txs {
+    @include responsive_styles(map_get($nodes_columns, 'txs'))
+  }
+}

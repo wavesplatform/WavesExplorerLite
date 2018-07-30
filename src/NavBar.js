@@ -10,12 +10,10 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-        console.log(this.props);
-
         return (
             <div className="menu grid-item-fixed lg-hide">
                 <NetworkSwitch value={this.props.match.params.networkId} onChange={this.handleNetworkChange} />
-                <NavMenu baseRoute={this.props.match.url} />
+                <NavMenu networkId={this.props.match.params.networkId} />
                 <Footer version="v1.1.7" />
             </div>
         );

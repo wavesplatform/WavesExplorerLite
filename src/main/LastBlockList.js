@@ -18,7 +18,7 @@ export default class LastBlockList extends React.PureComponent {
     render() {
         return (
             <div className="column-6 column-sm-12 panel">
-                <div className="headline">
+                <div className="grid grid-baseline panel-title">
                     <span className="title">{this.props.title}</span>
                     <span className="grid-item-fixed">
                         <Link className="no-accent" to={`${this.props.baseUrl}/blocks`}>View all blocks</Link>

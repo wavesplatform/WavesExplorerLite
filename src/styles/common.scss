@@ -1,0 +1,106 @@
+@import "brandbook.scss";
+@import "reset.css";
+@import "grid.scss";
+@import "table.scss";
+@import "form.scss";
+
+.bold {
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+}
+
+.width-30 {
+  width: 30%;
+}
+
+// **** link ****
+a {
+  font-weight: bold;
+  color: map-get($colors, submit400);
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.no-accent {
+    color: map-get($colors, black);
+    font-weight: normal;
+  }
+
+  &.fade {
+    color: map-get($colors, basic500);
+    font-weight: normal;
+  }
+
+  &.no-style {
+    font-weight: inherit;
+    color: inherit;
+    text-decoration: inherit;
+  }
+}
+
+// **** button ****
+.btn {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: map-get($colors, submit400);
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+  @include font(body, white);
+
+  &:hover:not(.disabled) {
+    opacity: 0.7
+  }
+
+  &.disabled {
+    background-color: map-get($colors, accent50);
+  }
+
+  &.btn-copy {
+    width: 70px;
+    height: 28px;
+    background-image: url('../images/copy-14-white.svg');
+    background-position: 8px center;
+    padding-left: 30px;
+    padding-top: 6px;
+  }
+
+  &.btn-prev {
+    width: 18px;
+    height: 24px;
+    background-image: url('../images/back-14-white.svg');
+    margin-right: 14px;
+  }
+
+  &.btn-next {
+    width: 18px;
+    height: 24px;
+    background-image: url('../images/next-14-white.svg');
+    margin-left: 14px;
+  }
+
+  &.btn-back {
+    width: 14px;
+    height: 14px;
+    background-image: url('../images/back-14-black.svg');
+    background-color: transparent;
+  }
+}
+
+.badge {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: map-get($colors, info400);
+  vertical-align: middle;
+  padding: 4px 4px 4px 6px;
+  margin: 0 14px;
+  @include font(body, white);
+}

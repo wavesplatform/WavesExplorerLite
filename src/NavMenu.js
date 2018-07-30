@@ -5,7 +5,7 @@ import NavMenuItem from './NavMenuItem';
 
 const items = [{
     title: 'General info',
-    route: '/general',
+    route: '',
 }, {
     title: 'Blocks',
     route: '/blocks'
@@ -19,12 +19,8 @@ const items = [{
 
 export default class NavMenu extends React.PureComponent {
     static propTypes = {
-        baseRoute: PropTypes.string
+        networkId: PropTypes.string
     };
-
-    static defaultProps = {
-        baseRoute: ''
-    }
 
     state = {
         items: [...items],
@@ -41,9 +37,15 @@ export default class NavMenu extends React.PureComponent {
         return (
             <div className="menu-list">
                 {this.state.items.map((item, index) => {
-                    const route = this.props.baseRoute + item.route;
                     const current = this.state.current === item;
-                    return (<NavMenuItem key={index} item={item} current={current} onNavigate={this.handleNavigate} />);
+                    return (
+                        <NavMenuItem
+                            key={index}
+                            networkId={this.props.networkId}
+                            item={item} current={current}
+                            onNavigate={this.handleNavigate}
+                        />
+                    );
                 })}
             </div>
         );

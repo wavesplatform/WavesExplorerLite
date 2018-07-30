@@ -1,0 +1,51 @@
+@import "brandbook.scss";
+@import "mixins.scss";
+
+@each $size in map-keys($breakpoints) {
+  .#{$size}-hide {
+    @include breakpoint($size) {
+      display: none;
+    }
+  }
+  .#{$size}-show {
+    @include breakpoint($size) {
+      display: block;
+    }
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: nowrap;
+
+  & .grid-wrap {
+    flex-wrap: wrap;
+  }
+
+  & .grid-baseline {
+    align-items: baseline;
+  }
+
+  > .grid-item-fixed {
+    flex: 0 0 auto;
+  }
+
+  > * {
+    box-sizing: border-box;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @for $i from 1 through 12 {
+    .column-#{$i} {
+      width: 100% / 12 * $i;
+    }
+    @each $size in map-keys($breakpoints) {
+      .column-#{$size}-#{$i} {
+        @include breakpoint($size) {
+          width: 100% / 12 * $i;
+        }
+      }
+    }
+  }
+}
