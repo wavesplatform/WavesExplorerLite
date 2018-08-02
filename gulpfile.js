@@ -108,6 +108,10 @@ function copyAndConfigureRelease(network) {
 }
 
 gulp.task('scripts', function() {
+    const missingSources = config.libraries.sources.filter(x => !fs.existsSync(x))
+    if (missingSources.length > 0)
+      throw `Folowing library sources are not found:\n${missingSources.join('\n')}\nconsider running npm install command.`
+    
     gulp.src(config.libraries.sources)
         .pipe(concat(buildScriptName('vendor', config.libraries.version)))
         .pipe(gulp.dest(config.buildDirectory + '/js'));
