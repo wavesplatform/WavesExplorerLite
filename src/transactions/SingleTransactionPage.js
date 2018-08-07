@@ -1,13 +1,12 @@
 import React from 'react';
 
+import GoBack from '../shared/GoBack';
+
 export default class SingleTransactionPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="back">
-                  <span className="btn btn-back"></span>
-                  <a className="no-accent">Back</a>
-                </div>
+                <GoBack />
                 <div className="headline">
                   <span className="title">Transaction</span>
                   <span className="title-details"> / Gao1YppNQqyFXSSBB8gr9GaUvzZJ3EUknajWwvMHFm2c</span>

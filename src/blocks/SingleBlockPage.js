@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import GoBack from '../shared/GoBack';
+
 export default class SingleBlockPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="back">
-                  <span className="btn btn-back"></span>
-                  <a className="no-accent">Back</a>
-                </div>
+                <GoBack />
                 <div className="headline">
                   <span className="title">Block</span>
                   <span className="title-details"> / 1050558</span>
