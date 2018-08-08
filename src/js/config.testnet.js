@@ -12,7 +12,7 @@
             {url: 'https://testnode4.wavesnodes.com', maintainer: 'Waves', showAsLink: true}
         ],
         faucet: {
-            url: 'https://testnode1.wavesnodes.com/faucet',
+            url: 'https://testnode3.wavesnodes.com/faucet',
             captchaKey: '6Le9hSgUAAAAAAtIe04SrgDy23PsBZOazfb-li66'
         },
         peerExplorer: {
