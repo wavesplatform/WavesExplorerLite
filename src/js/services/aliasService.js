@@ -28,14 +28,25 @@
         return new Alias(parts[1], parts[2])
     };
 
+    Alias.fromDataServices = function (alias) {
+        if (alias.__type !== 'alias')
+            throw new Error('Unknown alias object: ' + JSON.stringify(alias));
+
+        return new Alias('', alias.data.alias);
+    };
+
     function AliasService() {
         this.isAlias = function (candidate) {
             return Alias.isAlias(candidate);
         };
 
-        this.fromString = function (candidate) {
-            return Alias.fromString(candidate)
+        this.fromString = function (alias) {
+            return Alias.fromString(alias)
         };
+
+        this.fromDataServices = function (alias) {
+            return Alias.fromDataServices(alias);
+        }
     }
 
     angular.module('web').service('aliasService', [AliasService]);

@@ -4,93 +4,93 @@
     angular.module('web').factory('apiProvider', apiProvider);
 
     function apiProvider() {
-        return function (nodeUrl) {
-            return apiInterface(nodeUrl);
+        return function (nodeUrl, dataServiceUrl) {
+            return apiInterface(nodeUrl, dataServiceUrl);
         }
     }
 
-    function apiInterface(url) {
+    function apiInterface(nodeUrl, dataServiceUrl) {
         return {
-            version: url + '/node/version',
-            status: url + '/node/status',
+            version: nodeUrl + '/node/version',
+            status: nodeUrl + '/node/status',
             blocks: {
                 seq: function (from, to) {
-                    return url + '/blocks/seq/' + from + '/' + to;
+                    return nodeUrl + '/blocks/seq/' + from + '/' + to;
                 },
                 byHeight: function (height) {
-                    return url + '/blocks/at/' + height;
+                    return nodeUrl + '/blocks/at/' + height;
                 },
                 bySignature: function (signature) {
-                    return url + '/blocks/signature/' + signature;
+                    return nodeUrl + '/blocks/signature/' + signature;
                 },
                 delay: function (fromSig, count) {
-                    return url + '/blocks/delay/' + fromSig + '/' + count;
+                    return nodeUrl + '/blocks/delay/' + fromSig + '/' + count;
                 },
-                height: url + '/blocks/height',
-                last: url + '/blocks/last',
+                height: nodeUrl + '/blocks/height',
+                last: nodeUrl + '/blocks/last',
                 headers: {
                     seq: function (from, to) {
-                        return url + '/blocks/headers/seq/' + from + '/' + to;
+                        return nodeUrl + '/blocks/headers/seq/' + from + '/' + to;
                     },
                     byHeight: function (height) {
-                        return url + '/blocks/headers/at/' + height;
+                        return nodeUrl + '/blocks/headers/at/' + height;
                     },
-                    last: url + '/blocks/headers/last'
+                    last: nodeUrl + '/blocks/headers/last'
                 }
             },
             address: {
                 balance: function (address) {
-                    return url + '/addresses/balance/' + address;
+                    return nodeUrl + '/addresses/balance/' + address;
                 },
 
                 validate: function (address) {
-                    return url + '/addresses/validate/' + address;
+                    return nodeUrl + '/addresses/validate/' + address;
                 },
                 balanceDetails: function (address) {
-                    return url + '/addresses/balance/details/' + address;
+                    return nodeUrl + '/addresses/balance/details/' + address;
                 },
                 data: function (address) {
-                    return url + '/addresses/data/' + address;
+                    return nodeUrl + '/addresses/data/' + address;
                 },
                 script: function (address) {
-                    return url + '/addresses/scriptInfo/' + address;
+                    return nodeUrl + '/addresses/scriptInfo/' + address;
                 }
             },
             aliases: {
                 getAddress: function (alias) {
-                    return url + '/alias/by-alias/' + encodeURIComponent(alias);
+                    return dataServiceUrl + '/aliases/' + encodeURIComponent(alias);
                 },
                 forAddress: function (address) {
-                    return url + '/alias/by-address/' + address;
+                    return dataServiceUrl + '/aliases?address=' + encodeURIComponent(address);
                 }
             },
             assets: {
                 balance: function (address) {
-                    return url + '/assets/balance/' + address;
+                    return nodeUrl + '/assets/balance/' + address;
                 }
             },
             transactions: {
-                utxSize: url + '/transactions/unconfirmed/size',
-                unconfirmed: url + '/transactions/unconfirmed',
+                utxSize: nodeUrl + '/transactions/unconfirmed/size',
+                unconfirmed: nodeUrl + '/transactions/unconfirmed',
                 info: function (signature) {
-                    return url + '/transactions/info/' + signature;
+                    return nodeUrl + '/transactions/info/' + signature;
                 },
                 forAddress: function (address) {
-                    return url + '/transactions/address/' + address + '/limit/100';
+                    return nodeUrl + '/transactions/address/' + address + '/limit/100';
                 }
 
             },
             consensus: {
-                puz: url + '/consensus/puz',
-                algo: url + '/consensus/algo',
-                basetarget: url + '/consensus/basetarget',
+                puz: nodeUrl + '/consensus/puz',
+                algo: nodeUrl + '/consensus/algo',
+                basetarget: nodeUrl + '/consensus/basetarget',
                 generatingBalance: function (address) {
-                    return url + '/consensus/generatingbalance/' + address;
+                    return nodeUrl + '/consensus/generatingbalance/' + address;
                 }
             },
             peers: {
-                all: url + '/peers/all',
-                connected: url + '/peers/connected'
+                all: nodeUrl + '/peers/all',
+                connected: nodeUrl + '/peers/connected'
             }
         }
     }

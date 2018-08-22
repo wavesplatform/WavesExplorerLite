@@ -3,6 +3,7 @@
 
     angular.module('web').constant('appConfig', {
         apiDomain: 'https://pool.testnet.wavesnodes.com',
+        dataServiceBaseUrl: 'https://api.testnet.wavesplatform.com/v0',
         title: 'Waves Testnet Explorer',
         blockchainName: 'Testnet',
         nodes: [

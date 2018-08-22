@@ -1,6 +1,7 @@
 .idea
 *.iml
+*.log
 /nbproject/private/
 node_modules/
-distr/
+dist/
 build/

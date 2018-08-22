@@ -105,15 +105,16 @@
         this.loadAliases = function () {
             $http.get(apiService.aliases.forAddress(ctrl.address))
                 .then(function (response) {
-                    ctrl.aliases = response.data.map(function (alias) {
-                        return aliasService.fromString(alias);
+                    ctrl.aliases = response.data.data.map(function (alias) {
+                        return aliasService.fromDataServices(alias);
                     });
 
                     if (ctrl.aliases.length === 0)
                         ctrl.aliasesMessage = NO_ALIASES_MESSAGE;
                 })
-                .catch(function () {
+                .catch(function (error) {
                     ctrl.aliasesMessage = 'Error loading aliases';
+                    console.log(error);
                 });
         };
 

@@ -3,6 +3,7 @@
 
     angular.module('web').constant('appConfig', {
         apiDomain: 'https://nodes.wavesnodes.com',
+        dataServiceBaseUrl: 'https://api.wavesplatform.com/v0',
         blockchainName: 'Mainnet',
         title: 'Waves Explorer',
         nodes: [{
