@@ -191,7 +191,7 @@ gulp.task('clean', function (done) {
     ], done);
 });
 
-gulp.task('build-default-config', function () {
+gulp.task('build-default-config', ['clean'], function () {
     return createConfig(config.buildDirectory, 'testnet');
 });
 

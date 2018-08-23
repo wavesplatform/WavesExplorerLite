@@ -334,7 +334,9 @@
                     total: {
                         amount: LOADING_TEXT,
                         currency: LOADING_TEXT
-                    }
+                    },
+                    version: item.version || 'N/A',
+                    proofs: item.proofs || [item.signature]
                 };
                 item.update = function () {
                     updateFee(item);
