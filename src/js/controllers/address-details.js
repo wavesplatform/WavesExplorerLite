@@ -44,6 +44,24 @@
                 case constants.SCRIPT_TRANSFER_TRANSACTION_TYPE:
                     break;
 
+                case constants.MASS_PAYMENT_TRANSACTION_TYPE:
+                    if (!tx.outgoing) {
+                        var amounts = tx.transfers
+                            .filter(function (transfer) {
+                                return transfer.recipient === ctrl.address;
+                            }).map(function (transfer) {
+                                return transfer.amount;
+                            });
+                        var total = _.reduce(amounts, function (memo, number) {
+                            return memo + number;
+                        }, 0);
+
+                        var currency = tx.assetId ? Currency.create({id: tx.assetId}) : Currency.WAVES;
+                        tx.amountIn = Money.fromCoins(total, currency);
+                    }
+
+                    break;
+
                 default:
                     if (tx.outgoing)
                         tx.amountOut = tx.extras.amount;
