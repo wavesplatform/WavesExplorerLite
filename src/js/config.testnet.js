@@ -21,7 +21,7 @@
             title: 'MAINNET Explorer'
         },
         wallet: {
-            url: 'https://testnet.waveswallet.io',
+            url: 'https://testnet.wavesplatform.com',
             title: 'Wallet'
         }
     });
