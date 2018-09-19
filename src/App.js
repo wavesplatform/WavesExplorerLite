@@ -4,6 +4,7 @@ import './styles/main.scss';
 import {Route, Redirect, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 
+import {routeParams, routeBuilder} from './shared/Routing';
 import Search from './Search';
 import NavBar from './NavBar';
 import MainPage from './main/MainPage';
@@ -14,6 +15,8 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 
+const routes = routeBuilder(routeParams.networkId);
+
 const withNetworkRouter = (RootComponent) => {
    return class extends React.Component {
        render() {
@@ -21,7 +24,7 @@ const withNetworkRouter = (RootComponent) => {
                <Router>
                    <Switch>
                        <Route exact path="/" render={() => (<Redirect to="/mainnet" />)} />
-                       <Route path="/:networkId" component={RootComponent} />
+                       <Route path={routes.root} component={RootComponent} />
                    </Switch>
                </Router>
            );
@@ -31,7 +34,6 @@ const withNetworkRouter = (RootComponent) => {
 
 class App extends Component {
     render() {
-        const {match} = this.props;
         return (
             <React.Fragment>
                 <div className="header grid">
@@ -45,13 +47,13 @@ class App extends Component {
                      <NavBar {...this.props} />
                      <div className="content card">
                         <Switch>
-                            <Route exact path={`${match.path}/blocks`} component={BlocksPage} />
-                            <Route exact path={`${match.path}/blocks/:height`} component={SingleBlockPage} />
-                            <Route path={`${match.path}/nodes`} component={NodesPage} />
-                            <Route path={`${match.path}/peers`} component={PeersPage} />
-                            <Route exact path={`${match.path}/tx/:transactionId`} component={SingleTransactionPage} />
-                            <Route exact path={`${match.path}/address/:address`} component={SingleAddressPage} />
-                            <Route path={`${match.path}`} component={MainPage} />
+                            <Route exact path={routes.blocks.list} component={BlocksPage} />
+                            <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
+                            <Route path={routes.nodes.list} component={NodesPage} />
+                            <Route path={routes.peers.list} component={PeersPage} />
+                            <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
+                            <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
+                            <Route path={routes.root} component={MainPage} />
                         </Switch>
                      </div>
                  </div>

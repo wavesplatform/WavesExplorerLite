@@ -1,31 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 
-const items = [{
-    title: 'General info',
-    route: '',
-}, {
-    title: 'Blocks',
-    route: '/blocks'
-}, {
-    title: 'Peers',
-    route: '/peers'
-}, {
-    title: 'Nodes',
-    route: '/nodes'
-}];
+const buildItems = (networkId) => {
+    const routes = routeBuilder(networkId);
+    return [{
+        title: 'General info',
+        route: routes.root,
+    }, {
+        title: 'Blocks',
+        route: routes.blocks.list
+    }, {
+        title: 'Peers',
+        route: routes.peers.list
+    }, {
+        title: 'Nodes',
+        route: routes.nodes.list
+    }];
+};
 
 export default class NavMenu extends React.PureComponent {
     static propTypes = {
         networkId: PropTypes.string
     };
 
-    state = {
-        items: [...items],
-        current: items[0]
-    };
+    constructor(props) {
+        super(props);
+
+        const items = buildItems(props.networkId);
+
+        this.state = {
+            items,
+            current: items[0]
+        };
+    }
 
     handleNavigate = item => {
         this.setState({

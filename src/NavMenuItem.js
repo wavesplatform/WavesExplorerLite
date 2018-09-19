@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router';
+import {Link} from 'react-router-dom';
 
 export default class NavMenuItem extends React.PureComponent {
     static propTypes = {
         item: PropTypes.object.isRequired,
-        networkId: PropTypes.object.isRequired,
         current: PropTypes.bool
     };
 
@@ -23,17 +22,11 @@ export default class NavMenuItem extends React.PureComponent {
         if (this.props.current)
             className += ' current';
 
-        // move this to url builder
-        let to = '/' + this.props.networkId;
-        if (this.props.item.route) {
-            to += this.props.item.route;
-        }
-
         return (
             <div className={className}>
                 <Link
                     className="no-style"
-                    to={to}
+                    to={this.props.item.route}
                     onClick={this.handleClick}>{this.props.item.title}</Link>
             </div>
         );

@@ -27,7 +27,7 @@ export default class Search extends React.PureComponent {
 
     handleChange = (e) => {
         this.setState({searchText: e.target.value});
-    }
+    };
 
     render() {
         return (

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import GoBack from '../shared/GoBack';
+import TransactionRef from '../shared/TransactionRef';
 
 export default class SingleBlockPage extends React.Component {
     render() {
@@ -69,7 +70,7 @@ export default class SingleBlockPage extends React.Component {
                   <tbody>
                     <tr>
                       <td data-label="ID / Timestamp">
-                        <div className="line no-wrap"><a>CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS</a></div>
+                        <div className="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
                         <div className="line"><label>00:00:00, 00.00.0000</label></div>
                       </td>
                       <td data-label="Sender / Recipient">
@@ -87,7 +88,7 @@ export default class SingleBlockPage extends React.Component {
                     </tr>
                     <tr>
                       <td data-label="ID / Timestamp">
-                        <div className="line no-wrap"><a>CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS</a></div>
+                        <div className="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
                         <div className="line"><label>00:00:00, 00.00.0000</label></div>
                       </td>
                       <td data-label="Sender / Recipient">
@@ -123,7 +124,7 @@ export default class SingleBlockPage extends React.Component {
                   <tbody>
                   <tr>
                     <td data-label="ID / Timestamp">
-                      <div className="line no-wrap"><a>CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS</a></div>
+                      <div className="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Seller / Buyer">
@@ -160,7 +161,7 @@ export default class SingleBlockPage extends React.Component {
                   <tbody>
                   <tr>
                     <td data-label="ID / Timestamp">
-                      <div className="line no-wrap"><a>CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS</a></div>
+                      <div className="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Sender / Recipient">
@@ -193,7 +194,7 @@ export default class SingleBlockPage extends React.Component {
                   <tbody>
                   <tr>
                     <td data-label="ID / Timestamp">
-                      <div className="line no-wrap"><a>CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS</a></div>
+                      <div className="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Seller / Buyer">
