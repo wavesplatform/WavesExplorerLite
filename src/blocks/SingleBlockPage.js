@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import GoBack from '../shared/GoBack';
 import TransactionRef from '../shared/TransactionRef';
+import AddressRef from '../shared/AddressRef';
 
 export default class SingleBlockPage extends React.Component {
     render() {
@@ -41,7 +42,7 @@ export default class SingleBlockPage extends React.Component {
                   </div>
                   <div className="dictionary-pair">
                     <div className="dictionary-pair-key">Generator</div>
-                    <div className="dictionary-pair-value"><a>3P7apYh75mQJxdsZYH9of7JwcfwzbZUtL8N</a></div>
+                    <div className="dictionary-pair-value"><AddressRef address="3P7apYh75mQJxdsZYH9of7JwcfwzbZUtL8N"/></div>
                   </div>
                   <div className="dictionary-pair">
                     <div className="dictionary-pair-key"><span>Signature</span></div>
@@ -75,8 +76,8 @@ export default class SingleBlockPage extends React.Component {
                       </td>
                       <td data-label="Sender / Recipient">
                         <div className="arrow arrow-transaction-receive"></div>
-                        <div className="line no-wrap"><a className="no-accent">3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he</a></div>
-                        <div className="line no-wrap"><a className="no-accent">3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</a>></div>
+                        <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
+                        <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                       </td>
                       <td data-label="Amount / Fee">
                         <div className="line">1000.0000000</div>
@@ -93,8 +94,8 @@ export default class SingleBlockPage extends React.Component {
                       </td>
                       <td data-label="Sender / Recipient">
                         <div className="arrow arrow-transaction-receive"></div>
-                        <div className="line no-wrap"><a className="no-accent">3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he</a></div>
-                        <div className="line no-wrap"><a className="no-accent">3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</a>></div>
+                        <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
+                        <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                       </td>
                       <td data-label="Amount / Fee">
                         <div className="line">1000.0000000</div>
@@ -129,8 +130,8 @@ export default class SingleBlockPage extends React.Component {
                     </td>
                     <td data-label="Seller / Buyer">
                       <div className="arrow arrow-transaction-exchange"></div>
-                      <div className="line no-wrap"><a className="no-accent">3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he</a></div>
-                      <div className="line no-wrap"><a className="no-accent">3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</a>></div>
+                      <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
+                      <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                     </td>
                     <td data-label="Amount / Total">
                       <div className="line">7.69536906</div>
@@ -166,8 +167,8 @@ export default class SingleBlockPage extends React.Component {
                     </td>
                     <td data-label="Sender / Recipient">
                       <div className="arrow arrow-transaction-masspay"></div>
-                      <div className="line no-wrap"><a className="no-accent">3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he</a></div>
-                      <div className="line no-wrap"><a className="no-accent">3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</a>></div>
+                      <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
+                      <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                     </td>
                     <td data-label="Amount / Fee">
                       <div className="line">1000.0000000</div>
@@ -198,8 +199,8 @@ export default class SingleBlockPage extends React.Component {
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Seller / Buyer">
-                      <div className="line no-wrap"><a className="no-accent">3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he</a></div>
-                      <div className="line no-wrap"><a className="no-accent">3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</a>></div>
+                      <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
+                      <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                     </td>
                     <td data-label="Amount / Total">
                       <div className="line">7.69536906</div>

@@ -5,17 +5,18 @@ import {Link} from 'react-router-dom';
 
 import {routeBuilder} from './Routing';
 
-class TransactionRef extends React.PureComponent {
+class BlockRef extends React.PureComponent {
     static propTypes = {
-        txId: PropTypes.string.isRequired
+        height: PropTypes.number.isRequired
     };
 
     render() {
         const {networkId} = this.props.match.params;
         const routes = routeBuilder(networkId);
+        const {height} = this.props;
 
-        return (<Link to={routes.transactions.one(this.props.txId)}>{this.props.txId}</Link>);
+        return (<Link to={routes.blocks.one(height)}>{height}</Link>);
     }
 }
 
-export default withRouter(TransactionRef);
+export default withRouter(BlockRef);

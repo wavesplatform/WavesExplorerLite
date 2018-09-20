@@ -1,6 +1,7 @@
 import React from 'react';
 
 import GoBack from '../shared/GoBack';
+import AddressRef from '../shared/AddressRef';
 
 export default class SingleTransactionPage extends React.Component {
     render() {
@@ -46,7 +47,7 @@ export default class SingleTransactionPage extends React.Component {
                   </div>
                   <div className="dictionary-pair">
                     <div className="dictionary-pair-key">Sender</div>
-                    <div className="dictionary-pair-value"><a>3PPiviBs3S2Q7yCB4LdvwViYFqr4dXr8RZt</a></div>
+                    <div className="dictionary-pair-value"><AddressRef address="3PPiviBs3S2Q7yCB4LdvwViYFqr4dXr8RZt"/></div>
                   </div>
                 </div>
                 <div className="headline2">
@@ -62,7 +63,7 @@ export default class SingleTransactionPage extends React.Component {
                   <tbody>
                   <tr>
                     <td data-label="Recipient">
-                      <div className="line no-wrap"><a>3P7LBF2XPmchND9PnmC8gjbb2SfovPHJB9K</a></div>
+                      <div className="line no-wrap"><AddressRef address="3P7LBF2XPmchND9PnmC8gjbb2SfovPHJB9K"/></div>
                     </td>
                     <td data-label="Amount">
                       <div className="line">2125.21251454 WAVES</div>
@@ -70,7 +71,7 @@ export default class SingleTransactionPage extends React.Component {
                   </tr>
                   <tr>
                     <td data-label="Recipient">
-                      <div className="line no-wrap"><a>3P7LBF2XPmchND9PnmC8gjbb2SfovPHJB9K</a></div>
+                      <div className="line no-wrap"><AddressRef address="3P7LBF2XPmchND9PnmC8gjbb2SfovPHJB9K"/></div>
                     </td>
                     <td data-label="Amount">
                       <div className="line">2125.21251454 WAVES</div>
