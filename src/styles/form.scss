@@ -1,4 +1,4 @@
-@import "brandbook.scss";
+@import "variables";
 @import "mixins.scss";
 
 input {
@@ -17,6 +17,14 @@ input {
   & ::placeholder {
     @include font(headline3, basic500);
     line-height: 1.25;
+  }
+
+  & :focus {
+    border-bottom-color: map-get($colors, submit400);
+  }
+
+  &.invalid {
+    border-bottom-color: map-get($colors, error500);
   }
 }
 

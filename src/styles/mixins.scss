@@ -1,4 +1,4 @@
-@import "brandbook.scss";
+@import "variables";
 
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {

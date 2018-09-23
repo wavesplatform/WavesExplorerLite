@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import GoBack from '../shared/GoBack';
 import TransactionRef from '../shared/TransactionRef';
 import AddressRef from '../shared/AddressRef';
+import Headline from '../shared/Headline';
 
 export default class SingleBlockPage extends React.Component {
     render() {
         return (
             <React.Fragment>
                 <GoBack />
-                <div className="headline">
-                  <span className="title">Block</span>
-                  <span className="title-details"> / 1050558</span>
-                </div>
+                <Headline title="Block" subtitle="1050558" copyVisible="false" />
                 <div className="dictionary">
                   <div className="dictionary-pair">
                     <div className="dictionary-pair-key"><span>Height</span></div>

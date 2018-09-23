@@ -1,13 +1,53 @@
-@import "brandbook.scss";
+@import "variables";
 @import "mixins.scss";
 @import "common.scss";
+@import "page_navigation.scss";
 @import "general.scss";
+@import "search.scss";
 @import "blocks.scss";
 @import "nodes.scss";
+@import "address.scss";
 
 body {
   background-color: map-get($colors, basic50);
   @include responsive_styles($layout);
+}
+
+.wrapper {
+  &.show::after {
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: map-get($colors, black);
+    opacity: 0.2;
+  }
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.wrapper.show + .mobile-menu {
+  @include responsive_styles($layout);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: map-get($colors, basic50);
+  box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.1);
+
+  >.header {
+    margin-bottom: map-get($layout, padding-top);
+
+    .menu-toggle {
+      background-image: url('../images/close-24.svg');
+    }
+  }
 }
 
 .header {
@@ -19,6 +59,7 @@ body {
     > .menu-toggle {
       width: 42px;
       height: 100%;
+      cursor: pointer;
       background: url('../images/menu-24.svg') no-repeat center left;
     }
 
@@ -36,24 +77,15 @@ body {
   }
 }
 
-.search-box {
-  background: url('../images/search.svg') no-repeat 0 10px;
-  border-bottom: 1px solid map-get($colors, basic500);
-
-  > input {
-    margin-left: 36px;
-    border-bottom: none;
-    width: calc(100% - 36px);
-  }
-}
-
 .container {
   @include responsive_styles($layout, padding-top);
 }
 
 .menu {
   width: map-get($header, title_width);
-  height: calc(100vh - #{map-get($header, hight) + map-get($layout, padding-top)});
+  height: calc(100vh - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
+  min-height: 500px;
+  position: relative;
 
   > .menu-list {
     padding-top: 46px;
@@ -68,12 +100,11 @@ body {
         color: map-get($colors, black);
 
         &::before {
+          @include responsive_styles($current_menu_item);
           content: "";
           background-color: map-get($colors, submit400);
-          width: 30px;
           height: 1px;
           position: absolute;
-          left: -#{map-get($layout, padding-left)};
           top: 10px;
         }
       }
@@ -151,12 +182,41 @@ body {
     @include font(body, disabled500);
     text-align: center;
     line-height: 28px;
+    cursor: pointer;
 
     &.current {
+      cursor: default;
       border-radius: 2px;
       background-color: map-get($colors, submit400);
       color: map-get($colors, white);
     }
+
+    &:hover:not(.current) {
+      color: map-get($colors, black);
+    }
   }
 }
 
+.scroll-button {
+  width: $scroll_button_size;
+  height: $scroll_button_size;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  z-index: 99;
+  @include responsive_styles($scroll_button);
+
+  background: url("../images/upscroll-14.svg") no-repeat center center;
+  background-color: map-get($colors, white);
+
+  &:hover {
+    width: $scroll_button_hover_size;
+    height: $scroll_button_hover_size;
+    margin-right: -($scroll_button_hover_size - $scroll_button_size) / 2;
+    border-radius: 5.4px;
+    background-color: map-get($colors, basic50);
+    box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.14);
+  }
+}

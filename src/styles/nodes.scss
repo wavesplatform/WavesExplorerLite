@@ -1,11 +1,7 @@
-@import "brandbook.scss";
+@import "variables";
 @import "mixins.scss";
 
 table.nodes {
-  th {
-    box-sizing: border-box;
-  }
-
   th.version {
     @include responsive_styles(map_get($nodes_columns, 'version'))
   }

@@ -2,17 +2,14 @@ import React from 'react';
 
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
+import Headline from '../shared/Headline';
 
 export default class SingleTransactionPage extends React.Component {
     render() {
         return (
             <React.Fragment>
                 <GoBack />
-                <div className="headline">
-                  <span className="title">Transaction</span>
-                  <span className="title-details"> / Gao1YppNQqyFXSSBB8gr9GaUvzZJ3EUknajWwvMHFm2c</span>
-                  <span className="btn btn-copy">Copy</span>
-                </div>
+                <Headline title="Transaction" subtitle="Gao1YppNQqyFXSSBB8gr9GaUvzZJ3EUknajWwvMHFm2c"/>
                 <div className="dictionary">
                   <div className="dictionary-pair">
                     <div className="dictionary-pair-key">Type</div>

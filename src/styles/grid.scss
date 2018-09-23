@@ -1,4 +1,4 @@
-@import "brandbook.scss";
+@import "variables";
 @import "mixins.scss";
 
 @each $size in map-keys($breakpoints) {
@@ -24,6 +24,10 @@
 
   & .grid-baseline {
     align-items: baseline;
+  }
+
+  & .grid-center {
+    align-items: center;
   }
 
   > .grid-item-fixed {

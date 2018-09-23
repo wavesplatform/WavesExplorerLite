@@ -1,4 +1,4 @@
-@import "brandbook.scss";
+@import "variables";
 @import "reset.css";
 @import "grid.scss";
 @import "table.scss";
@@ -10,6 +10,10 @@
 
 .right {
   float: right;
+}
+
+.width-25 {
+  width: 25%;
 }
 
 .width-30 {

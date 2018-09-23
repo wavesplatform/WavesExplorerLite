@@ -1,65 +1,16 @@
-@import "brandbook.scss";
+@import "variables";
 @import "mixins.scss";
 
 table.blocks {
   th.timestamp {
-    box-sizing: border-box;
     @include responsive_styles(map_get($blocks_columns, 'timestamp'))
   }
 
   th.target {
-    box-sizing: border-box;
     @include responsive_styles(map_get($blocks_columns, 'target'))
   }
 
   th.txs {
-    box-sizing: border-box;
     @include responsive_styles(map_get($blocks_columns, 'txs'))
-  }
-}
-
-.page-navigation {
-  .page-link {
-    cursor: pointer;
-    border-bottom: 1px dashed map-get($colors, black);
-
-    &.disabled {
-      cursor: default;
-      border: none;
-      color: map-get($colors, basic500);
-    }
-
-    &.first {
-      margin-right: 18px;
-    }
-    &.last {
-      margin-left: 18px;
-    }
-
-    &:hover {
-      border: none;
-    }
-  }
-
-  .page {
-    display: inline-block;
-    box-sizing: border-box;
-    width: 24px;
-    height: 28px;
-    border-radius: 4px;
-    text-align: center;
-    padding: 6px;
-    margin: 0 4px;
-    cursor: pointer;
-    @include font(body);
-
-    &:hover {
-      background-color: map-get($colors, basic50);
-    }
-
-    &.current {
-      background-color: map-get($colors, submit400);
-      color: map-get($colors, white);
-    }
   }
 }
