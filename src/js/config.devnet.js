@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('web').constant('appConfig', {
-        apiDomain: 'http://34.251.200.245:6869',
+        apiDomain: 'http://18.203.15.139:6869',
         dataServiceBaseUrl: 'https://api.wavesplatform.com/v0',
         title: 'Waves Devnet Explorer',
         blockchainName: 'Devnet',
