@@ -19,7 +19,7 @@
             title: 'Devnet Explorer'
         },
         wallet: {
-            url: 'http://testnet.waveswallet.io',
+            url: 'https://testnet.wavesplatform.com',
             title: 'Wallet'
         }
     });
