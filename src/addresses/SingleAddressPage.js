@@ -1,9 +1,47 @@
 import React from 'react';
 
 import GoBack from '../shared/GoBack';
-import AddressRef from '../shared/AddressRef';
-import TransactionRef from '../shared/TransactionRef';
 import Headline from '../shared/Headline';
+
+import TransactionList from './TransactionList';
+import AssetList from './AssetList';
+
+const transactions = [{
+    id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
+    type: 7,
+    date: '00.00.0000',
+    time: '00:00:00',
+    sender: '3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he',
+    recipient: '3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3',
+    in: {
+        amount: '182.56761789',
+        currency: 'WAVES'
+    },
+    out: {
+        amount: '0.09787450',
+        currency: 'BTC'
+    },
+    price: {
+        amount: '245.28404366',
+        currency: 'WAVES'
+    }
+}, {
+    id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
+    type: 11,
+    date: '00.00.0000',
+    time: '00:00:00',
+    recipient: '3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he',
+    in: {
+        amount: '100000.00000000',
+        currency: 'profitbot'
+    }
+}];
+
+const assets = [{
+    id: '96MaKscZERV8bHaPvXcBRaEab881Hj2Kywja4uzgE100',
+    name: 'MrBigMike',
+    amount: '284,949.48281863'
+}];
 
 export default class SingleAddressPage extends React.Component {
     render() {
@@ -11,84 +49,31 @@ export default class SingleAddressPage extends React.Component {
             <React.Fragment>
                 <GoBack />
                 <Headline title="Address" subtitle="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"/>
-                <div class="info-box grid grid-wrap">
+                <div className="info-box grid grid-wrap">
                     <div>
-                        <div class="line"><label>Regular Balance</label></div>
-                        <div class="line">2,267.06009303</div>
+                        <div className="line"><label>Regular Balance</label></div>
+                        <div className="line">2,267.06009303</div>
                     </div>
                     <div>
-                        <div class="line"><label>Generating Balance</label></div>
-                        <div class="line">2,256.40761552</div>
+                        <div className="line"><label>Generating Balance</label></div>
+                        <div className="line">2,256.40761552</div>
                     </div>
                     <div>
-                        <div class="line"><label>Available Balance</label></div>
-                        <div class="line">2,267.06009303</div>
+                        <div className="line"><label>Available Balance</label></div>
+                        <div className="line">2,267.06009303</div>
                     </div>
                     <div>
-                        <div class="line"><label>Effective Balance</label></div>
-                        <div class="line">2,268.56209303</div>
+                        <div className="line"><label>Effective Balance</label></div>
+                        <div className="line">2,268.56209303</div>
                     </div>
                 </div>
-                <div class="page-navigation">
-                    <span class="page-link bold disabled">Last 100 transactions</span>
-                    <span class="page-link bold"><a class="no-style" href="general_address_aliases.html">Aliases</a></span>
-                    <span class="page-link bold"><a class="no-style" href="general_address_assets.html">Assets</a></span>
+                <div className="page-navigation">
+                    <span className="page-link bold disabled">Last 100 transactions</span>
+                    <span className="page-link bold"><a className="no-style" href="general_address_aliases.html">Aliases</a></span>
+                    <span className="page-link bold"><a className="no-style" href="general_address_assets.html">Assets</a></span>
                 </div>
-                <table class="address-tr-list table-sm-transform">
-                    <thead>
-                    <tr>
-                        <th>ID / Type</th>
-                        <th class="timestamp">Timestamp</th>
-                        <th>Sender / Receiver</th>
-                        <th class="amount">Amount in / out</th>
-                        <th class="price">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="ID / Type">
-                            <div class="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div class="line"><label>Exchange</label></div>
-                        </td>
-                        <td data-label="Timestamp" class="timestamp">
-                            <div class="line"><label>00:00:00</label></div>
-                            <div class="line"><label>00.00.0000</label></div>
-                        </td>
-                        <td data-label="Sender / Receiver">
-                            <div class="arrow arrow-transaction-exchange"></div>
-                            <div class="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
-                            <div class="line no-wrap"><label>3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3</label></div>
-                        </td>
-                        <td data-label="Amount in / out">
-                            <div class="line">182.56761789 WAVES</div>
-                            <div class="line">0.09787450 BTC</div>
-                        </td>
-                        <td data-label="Price">
-                            <div class="line">245.28404366</div>
-                            <div class="line"><label>WAVES</label></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-label="ID / Type">
-                            <div class="line no-wrap"><TransactionRef txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div class="line"><label>Mass payment</label></div>
-                        </td>
-                        <td data-label="Timestamp" class="timestamp">
-                            <div class="line"><label>00:00:00</label></div>
-                            <div class="line"><label>00.00.0000</label></div>
-                        </td>
-                        <td data-label="Sender / Receiver">
-                            <div class="arrow arrow-transaction-masspay"></div>
-                            <div class="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount in / out">
-                            <div class="line">100000.00000000 profitbot</div>
-                        </td>
-                        <td data-label="Price">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <TransactionList transactions={transactions} />
+                {/*<AssetList assets={assets} />*/}
             </React.Fragment>
         );
     }
