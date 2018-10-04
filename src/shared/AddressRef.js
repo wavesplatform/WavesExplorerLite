@@ -11,6 +11,7 @@ const BRIGHT = 'bright';
 class AddressRef extends React.PureComponent {
     static propTypes = {
         address: PropTypes.string.isRequired,
+        title: PropTypes.string,
         appearance: PropTypes.string
     };
 
@@ -26,15 +27,16 @@ class AddressRef extends React.PureComponent {
             default:
                 return '';
         }
-    }
+    };
 
     render() {
         const {networkId} = this.props.match.params;
         const routes = routeBuilder(networkId);
         const {address, appearance} = this.props;
+        const title = this.props.title || address;
         const className = this.appearanceToClassName(appearance);
 
-        return (<Link to={routes.addresses.one(address)} className={className}>{address}</Link>);
+        return (<Link to={routes.addresses.one(address)} className={className}>{title}</Link>);
     }
 }
 

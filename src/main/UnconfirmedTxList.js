@@ -16,7 +16,7 @@ export default class UnconfirmedTxList extends React.Component {
                      <div className="title">Unconfirmed Transactions ({this.props.transactions.length})</div>
                 </div>
                 {this.props.transactions.map((item, index) => {
-                    return (<UnconfirmedTxListItem key={index} baseUrl={this.props.baseUrl} transaction={item} />);
+                    return (<UnconfirmedTxListItem key={index} transaction={item} />);
                 })}
             </React.Fragment>
         );

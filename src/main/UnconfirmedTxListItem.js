@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+
+import TransactionRef from '../shared/TransactionRef';
+import AddressRef from '../shared/AddressRef';
 
 export default class UnconfirmedTxListItem extends React.PureComponent {
     static propTypes = {
@@ -13,14 +15,14 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
             <div className="grid panel-row">
                 <div className="divider divider-utx grid-item-fixed"></div>
                 <div>
-                    <div className="line no-wrap"><Link to={`${this.props.baseUrl}/tx/${tx.id}`}>{tx.id}</Link></div>
+                    <div className="line no-wrap"><TransactionRef txId={tx.id} /></div>
                     <div className="line">
                         <label>Amount</label> {tx.amount}
                         <label className="right">Fee {tx.fee}</label>
                     </div>
                     <div className="line wide">
-                        <Link to={`${this.props.baseUrl}/address/${tx.sender}`} className="no-accent">Sender</Link>
-                        <Link to={`${this.props.baseUrl}/address/${tx.recipient}`} className="no-accent">Recipient</Link>
+                        <AddressRef address={tx.sender} appearance="regular" title="Sender" />
+                        <AddressRef address={tx.recipient} appearance="regular" title="Recipient" />
                     </div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>
