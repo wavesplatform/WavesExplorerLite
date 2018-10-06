@@ -2,15 +2,15 @@
 @import "mixins.scss";
 
 table.blocks {
-  th.timestamp {
-    @include responsive_styles(map_get($blocks_columns, 'timestamp'))
-  }
+    th.timestamp {
+        @include responsive_styles(map_get($blocks_columns, 'timestamp'))
+    }
 
-  th.target {
-    @include responsive_styles(map_get($blocks_columns, 'target'))
-  }
+    th.target {
+        @include responsive_styles(map_get($blocks_columns, 'target'))
+    }
 
-  th.txs {
-    @include responsive_styles(map_get($blocks_columns, 'txs'))
-  }
+    th.txs {
+        @include responsive_styles(map_get($blocks_columns, 'txs'))
+    }
 }

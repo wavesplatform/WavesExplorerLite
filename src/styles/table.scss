@@ -2,88 +2,88 @@
 @import "mixins.scss";
 
 table {
-  width: 100%;
-  table-layout: fixed;
+    width: 100%;
+    table-layout: fixed;
 
-  &.table-hide {
-    display: block;
-    border-bottom: 1px dashed map-get($colors, accent50);
-    >thead,tbody {
-      display: none;
+    &.table-hide {
+        display: block;
+        border-bottom: 1px dashed map-get($colors, accent50);
+        > thead, tbody {
+            display: none;
+        }
     }
-  }
-
-  tr {
-    border-bottom: 1px dashed map-get($colors, accent50);
-  }
-
-  td {
-    padding: 24px;
-  }
-
-  >thead {
-    background-color: map-get($colors, basic50);
-    @include font(body, basic500);
 
     tr {
-      border: none;
+        border-bottom: 1px dashed map-get($colors, accent50);
     }
 
-    th {
-      padding: 14px 24px;
-      text-align: left;
-      box-sizing: border-box;
+    td {
+        padding: 24px;
     }
-  }
 
-  @each $size in map-keys($breakpoints) {
-    &.table-#{$size}-transform {
-      @include breakpoint($size) {
-        > thead {
-          border: none;
-          clip: rect(0 0 0 0);
-          height: 1px;
-          margin: -1px;
-          overflow: hidden;
-          padding: 0;
-          position: absolute;
-          width: 1px;
-        }
+    > thead {
+        background-color: map-get($colors, basic50);
+        @include font(body, basic500);
 
         tr {
-          display: block;
-
-          &:not(:last-child) {
-            margin-bottom: 4px;
-          }
+            border: none;
         }
 
-        td {
-          display: block;
-          position: relative;
-          padding: 10px;
-          padding-left: 110px;
-          margin-bottom: 4px;
-
-          &::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 0;
-            top: 0;
-
-            //Todo: the same style as dictionary-pair-key
-            @include responsive_styles($card_inner, padding-right, padding-left);
-            @include responsive_styles($card_column);
-            display: flex;
-            flex: 0 0 auto;
-            align-items: center;
-            height: 100%;
+        th {
+            padding: 14px 24px;
+            text-align: left;
             box-sizing: border-box;
-            background-color: map-get($colors, basic50);
-            @include font(body, basic500);
-          }
         }
-      }
     }
-  }
+
+    @each $size in map-keys($breakpoints) {
+        &.table-#{$size}-transform {
+            @include breakpoint($size) {
+                > thead {
+                    border: none;
+                    clip: rect(0 0 0 0);
+                    height: 1px;
+                    margin: -1px;
+                    overflow: hidden;
+                    padding: 0;
+                    position: absolute;
+                    width: 1px;
+                }
+
+                tr {
+                    display: block;
+
+                    &:not(:last-child) {
+                        margin-bottom: 4px;
+                    }
+                }
+
+                td {
+                    display: block;
+                    position: relative;
+                    padding: 10px;
+                    padding-left: 110px;
+                    margin-bottom: 4px;
+
+                    &::before {
+                        content: attr(data-label);
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+
+                        //Todo: the same style as dictionary-pair-key
+                        @include responsive_styles($card_inner, padding-right, padding-left);
+                        @include responsive_styles($card_column);
+                        display: flex;
+                        flex: 0 0 auto;
+                        align-items: center;
+                        height: 100%;
+                        box-sizing: border-box;
+                        background-color: map-get($colors, basic50);
+                        @include font(body, basic500);
+                    }
+                }
+            }
+        }
+    }
 }

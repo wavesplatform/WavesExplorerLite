@@ -2,53 +2,53 @@
 @import "mixins.scss";
 
 .page-navigation {
-  @include responsive_styles($card_inner);
+    @include responsive_styles($card_inner);
 
-  .page-link {
-    cursor: pointer;
-    border-bottom: 1px dashed map-get($colors, black);
+    .page-link {
+        cursor: pointer;
+        border-bottom: 1px dashed map-get($colors, black);
 
-    &:not(:last-child) {
-      margin-right: 28px;
+        &:not(:last-child) {
+            margin-right: 28px;
+        }
+
+        &.disabled {
+            cursor: default;
+            border: none;
+            color: map-get($colors, basic500);
+        }
+
+        &.first {
+            margin-right: 18px;
+        }
+        &.last {
+            margin-left: 18px;
+        }
+
+        &:hover {
+            border: none;
+        }
     }
 
-    &.disabled {
-      cursor: default;
-      border: none;
-      color: map-get($colors, basic500);
-    }
+    .page {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 24px;
+        height: 28px;
+        border-radius: 4px;
+        text-align: center;
+        padding: 6px;
+        margin: 0 4px;
+        cursor: pointer;
+        @include font(body);
 
-    &.first {
-      margin-right: 18px;
-    }
-    &.last {
-      margin-left: 18px;
-    }
+        &:hover {
+            background-color: map-get($colors, basic50);
+        }
 
-    &:hover {
-      border: none;
+        &.current {
+            background-color: map-get($colors, submit400);
+            color: map-get($colors, white);
+        }
     }
-  }
-
-  .page {
-    display: inline-block;
-    box-sizing: border-box;
-    width: 24px;
-    height: 28px;
-    border-radius: 4px;
-    text-align: center;
-    padding: 6px;
-    margin: 0 4px;
-    cursor: pointer;
-    @include font(body);
-
-    &:hover {
-      background-color: map-get($colors, basic50);
-    }
-
-    &.current {
-      background-color: map-get($colors, submit400);
-      color: map-get($colors, white);
-    }
-  }
 }

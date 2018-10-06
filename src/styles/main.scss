@@ -9,214 +9,214 @@
 @import "address.scss";
 
 body {
-  background-color: map-get($colors, basic50);
-  @include responsive_styles($layout);
+    background-color: map-get($colors, basic50);
+    @include responsive_styles($layout);
 }
 
 .wrapper {
-  &.show::after {
-    content: "";
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: map-get($colors, black);
-    opacity: 0.2;
-  }
+    &.show::after {
+        content: "";
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: map-get($colors, black);
+        opacity: 0.2;
+    }
 }
 
 .mobile-menu {
-  display: none;
+    display: none;
 }
 
 .wrapper.show + .mobile-menu {
-  @include responsive_styles($layout);
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-height: 100vh;
-  box-sizing: border-box;
-  background-color: map-get($colors, basic50);
-  box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.1);
+    @include responsive_styles($layout);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: map-get($colors, basic50);
+    box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.1);
 
-  >.header {
-    margin-bottom: map-get($layout, padding-top);
+    > .header {
+        margin-bottom: map-get($layout, padding-top);
 
-    .menu-toggle {
-      background-image: url('../images/close-24.svg');
+        .menu-toggle {
+            background-image: url('../images/close-24.svg');
+        }
     }
-  }
 }
 
 .header {
-  height: map-get($header, hight);
+    height: map-get($header, hight);
 
-  > .header-title {
-    width: map-get($header, title_width);
+    > .header-title {
+        width: map-get($header, title_width);
 
-    > .menu-toggle {
-      width: 42px;
-      height: 100%;
-      cursor: pointer;
-      background: url('../images/menu-24.svg') no-repeat center left;
+        > .menu-toggle {
+            width: 42px;
+            height: 100%;
+            cursor: pointer;
+            background: url('../images/menu-24.svg') no-repeat center left;
+        }
+
+        > .logo {
+            background: url('../images/waves-124.svg') no-repeat 0 3px;
+
+            &::after {
+                content: "Explorer";
+                left: 132px;
+                bottom: -8px;
+                position: relative;
+                @include font(headline1);
+            }
+        }
     }
-
-    > .logo {
-      background: url('../images/waves-124.svg') no-repeat 0 3px;
-
-      &::after {
-        content: "Explorer";
-        left: 132px;
-        bottom: -8px;
-        position: relative;
-        @include font(headline1);
-      }
-    }
-  }
 }
 
 .container {
-  @include responsive_styles($layout, padding-top);
+    @include responsive_styles($layout, padding-top);
 }
 
 .menu {
-  width: map-get($header, title_width);
-  height: calc(100vh - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
-  min-height: 500px;
-  position: relative;
+    width: map-get($header, title_width);
+    height: calc(100vh - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
+    min-height: 500px;
+    position: relative;
 
-  > .menu-list {
-    padding-top: 46px;
+    > .menu-list {
+        padding-top: 46px;
 
-    >.menu-item {
-      position: relative;
-      margin-bottom: 28px;
-      cursor: pointer;
-      @include font(headline2, disabled500);
+        > .menu-item {
+            position: relative;
+            margin-bottom: 28px;
+            cursor: pointer;
+            @include font(headline2, disabled500);
 
-      &.current {
-        color: map-get($colors, black);
+            &.current {
+                color: map-get($colors, black);
 
-        &::before {
-          @include responsive_styles($current_menu_item);
-          content: "";
-          background-color: map-get($colors, submit400);
-          height: 1px;
-          position: absolute;
-          top: 10px;
+                &::before {
+                    @include responsive_styles($current_menu_item);
+                    content: "";
+                    background-color: map-get($colors, submit400);
+                    height: 1px;
+                    position: absolute;
+                    top: 10px;
+                }
+            }
         }
-      }
     }
-  }
 
-  >.menu-footer {
-    @include font(body, basic500);
-    position: absolute;
-    bottom: map-get($layout, padding-top);
+    > .menu-footer {
+        @include font(body, basic500);
+        position: absolute;
+        bottom: map-get($layout, padding-top);
 
-    > * {
-      padding-bottom: 14px;
+        > * {
+            padding-bottom: 14px;
 
-      &:last-child {
-        padding-bottom: 0;
-      }
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
     }
-  }
 }
 
 .social {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  margin: 10px 8px 10px 0;
-  opacity: 0.3;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  @each $social_name, $url in $social {
-    &.#{$social_name} {
-      background: url(#{$url}) no-repeat;
-    }
-  }
-}
-
-@each $social_name, $url in $social {
-  .#{$social_name} {
     display: inline-block;
     width: 28px;
     height: 28px;
     margin: 10px 8px 10px 0;
     opacity: 0.3;
-    background: url(#{$url}) no-repeat;
 
     &:hover {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+
+    @each $social_name, $url in $social {
+        &.#{$social_name} {
+            background: url(#{$url}) no-repeat;
+        }
+    }
+}
+
+@each $social_name, $url in $social {
+    .#{$social_name} {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        margin: 10px 8px 10px 0;
+        opacity: 0.3;
+        background: url(#{$url}) no-repeat;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 .card {
-  background-color: map-get($colors, white);
-  border-radius: 4px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+    background-color: map-get($colors, white);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
 
-  @include font(body);
-  @include responsive_styles($card);
+    @include font(body);
+    @include responsive_styles($card);
 }
 
 .network-switcher {
-  display: inline-block;
-  border: solid 1px map-get($colors, accent50);
-  border-radius: 2px;
-  padding: 2px;
-
-  > * {
     display: inline-block;
-    width: 68px;
-    height: 28px;
+    border: solid 1px map-get($colors, accent50);
+    border-radius: 2px;
+    padding: 2px;
 
-    @include font(body, disabled500);
-    text-align: center;
-    line-height: 28px;
-    cursor: pointer;
+    > * {
+        display: inline-block;
+        width: 68px;
+        height: 28px;
 
-    &.current {
-      cursor: default;
-      border-radius: 2px;
-      background-color: map-get($colors, submit400);
-      color: map-get($colors, white);
+        @include font(body, disabled500);
+        text-align: center;
+        line-height: 28px;
+        cursor: pointer;
+
+        &.current {
+            cursor: default;
+            border-radius: 2px;
+            background-color: map-get($colors, submit400);
+            color: map-get($colors, white);
+        }
+
+        &:hover:not(.current) {
+            color: map-get($colors, black);
+        }
     }
-
-    &:hover:not(.current) {
-      color: map-get($colors, black);
-    }
-  }
 }
 
 .scroll-button {
-  width: $scroll_button_size;
-  height: $scroll_button_size;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
-  display: none;
-  position: fixed;
-  bottom: 24px;
-  z-index: 99;
-  @include responsive_styles($scroll_button);
+    width: $scroll_button_size;
+    height: $scroll_button_size;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    z-index: 99;
+    @include responsive_styles($scroll_button);
 
-  background: url("../images/upscroll-14.svg") no-repeat center center;
-  background-color: map-get($colors, white);
+    background: url("../images/upscroll-14.svg") no-repeat center center;
+    background-color: map-get($colors, white);
 
-  &:hover {
-    width: $scroll_button_hover_size;
-    height: $scroll_button_hover_size;
-    margin-right: -($scroll_button_hover_size - $scroll_button_size) / 2;
-    border-radius: 5.4px;
-    background-color: map-get($colors, basic50);
-    box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.14);
-  }
+    &:hover {
+        width: $scroll_button_hover_size;
+        height: $scroll_button_hover_size;
+        margin-right: -($scroll_button_hover_size - $scroll_button_size) / 2;
+        border-radius: 5.4px;
+        background-color: map-get($colors, basic50);
+        box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.14);
+    }
 }

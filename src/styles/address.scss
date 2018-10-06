@@ -2,15 +2,15 @@
 @import "mixins.scss";
 
 table.address-tr-list {
-  th.timestamp, td.timestamp {
-    @include responsive_styles(map_get($address_tr_list_columns, 'timestamp'))
-  }
+    th.timestamp, td.timestamp {
+        @include responsive_styles(map_get($address_tr_list_columns, 'timestamp'))
+    }
 
-  th.amount {
-    @include responsive_styles(map_get($address_tr_list_columns, 'amount'))
-  }
+    th.amount {
+        @include responsive_styles(map_get($address_tr_list_columns, 'amount'))
+    }
 
-  th.price {
-    @include responsive_styles(map_get($address_tr_list_columns, 'price'))
-  }
+    th.price {
+        @include responsive_styles(map_get($address_tr_list_columns, 'price'))
+    }
 }
