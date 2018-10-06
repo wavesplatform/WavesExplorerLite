@@ -37,9 +37,10 @@ export default class TransactionListItem extends React.PureComponent {
     render() {
         const {tx} = this.props;
         const arrowClassName = 'arrow ' + this.typeToArrowClass(tx.type);
+        const rowClassName = tx.spam ? "spam" : "";
 
         return (
-            <tr>
+            <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap"><TransactionRef txId={tx.id}/></div>
                     <div className="line"><label>{this.typeToLabel(tx.type)}</label></div>

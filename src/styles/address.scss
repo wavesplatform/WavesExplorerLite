@@ -13,4 +13,12 @@ table.address-tr-list {
     th.price {
         @include responsive_styles(map_get($address_tr_list_columns, 'price'))
     }
+
+    tr.spam {
+        background-color: map-get($colors, basic50);
+
+        >td {
+            opacity: 0.3;
+        }
+    }
 }

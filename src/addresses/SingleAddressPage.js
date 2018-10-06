@@ -34,7 +34,8 @@ const transactions = [{
     in: {
         amount: '100000.00000000',
         currency: 'profitbot'
-    }
+    },
+    spam: true
 }];
 
 const assets = [{
