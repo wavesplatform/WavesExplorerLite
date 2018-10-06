@@ -1,0 +1,70 @@
+@import "variables";
+@import "mixins.scss";
+
+.search-box {
+    position: relative;
+    max-width: 554px;
+    border-bottom: 1px solid map-get($colors, basic500);
+
+    > .search {
+        background: url('../images/search.svg') no-repeat;
+        width: 24px;
+        height: 24px;
+        padding-right: 12px;
+    }
+
+    &.active > .search {
+        background-image: url('../images/search-14-black.svg');
+    }
+
+    &.focus {
+        border-bottom-color: map-get($colors, submit400);
+
+        > .search {
+            background-image: url('../images/search-14-blue.svg');
+        }
+    }
+
+    &.invalid {
+        border-bottom-color: map-get($colors, error500);
+
+        &::after {
+            content: "Nothing has been found for query";
+            display: block;
+            background-color: map-get($colors, error500);
+            @include font(body, white);
+            position: absolute;
+            bottom: -48px;
+            left: 36px;
+            padding: 14px 24px;
+            white-space: nowrap;
+        }
+    }
+
+    &.loading > .search {
+        background-image: url('../images/loading-24.svg');
+        animation: spin 1s linear infinite;
+    }
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+    > input {
+        border-bottom: none;
+    }
+
+    > .clear {
+        display: block;
+        height: 24px;
+        background: url('../images/clear-24.svg') no-repeat;
+        padding-left: 32px;
+        cursor: pointer;
+        @include font(body, basic500);
+        line-height: 24px;
+
+        &:hover {
+            color: black;
+            background: url('../images/clear-24-black.svg') no-repeat;
+        }
+    }
+}

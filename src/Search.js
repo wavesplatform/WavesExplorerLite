@@ -7,36 +7,86 @@ export default class Search extends React.PureComponent {
     };
 
     static defaultProps = {
-        onSearch: () => (Promise.resolve())
+        onSearch: () => (new Promise(resolve => setTimeout(resolve, 1000)))
     };
 
     state = {
         isLoading: false,
+        isFocused: false,
+        isFailed: false,
         searchText: ''
     };
 
-    handleKeyUp = (e) => {
+    handleKeyUp = async (e) => {
         if (e.key === 'Enter') {
-            this.props.onSearch(this.state.searchText);
             this.setState({
-                searchText: '',
-                isLoading: false
+                isFailed: false,
+                isLoading: true
             });
+            try {
+                await this.props.onSearch(this.state.searchText);
+                this.setState({
+                    searchText: '',
+                    isLoading: false
+                });
+            } catch (err) {
+                this.setState({
+                    isLoading: false,
+                    isFailed: true
+                });
+            }
         }
     };
 
     handleChange = (e) => {
-        this.setState({searchText: e.target.value});
+        this.setState({
+            searchText: e.target.value,
+            isFailed: false
+        });
+    };
+
+    handleFocus = (e) => {
+        this.setState({isFocused: true});
+    };
+
+    handleBlur = (e) => {
+        this.setState({isFocused: false});
+    };
+
+    handleClearClick = () => {
+        this.setState({searchText: ''});
+
+        //TODO: set focus to input
     };
 
     render() {
+        const textIsNotEmpty = !!this.state.searchText;
+
+        let className = 'search-box grid grid-center';
+        if (this.state.isFailed) {
+            className += ' invalid';
+        }
+
+        if (this.state.isFocused) {
+            className += ' focus';
+        } else if (textIsNotEmpty) {
+            className += ' active';
+        }
+
+        if (this.state.isLoading) {
+            className += ' loading';
+        }
+
         return (
-            <div className="search-box">
-                <input
-                    placeholder="Search address, TX sig, block sig"
-                    onKeyUp={this.handleKeyUp}
-                    onChange={this.handleChange}
-                    value={this.state.searchText}/>
+            <div className={className}>
+                <div className="search grid-item-fixed"></div>
+                <input placeholder="Search address, TX id, block sig"
+                       onKeyUp={this.handleKeyUp}
+                       onChange={this.handleChange}
+                       value={this.state.searchText}
+                       onFocus={this.handleFocus}
+                       onBlur={this.handleBlur}/>
+                {textIsNotEmpty && <div className="clear grid-item-fixed" onClick={this.handleClearClick}>Clear</div>}
             </div>
         );
     }
