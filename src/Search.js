@@ -10,12 +10,17 @@ export default class Search extends React.PureComponent {
         onSearch: () => (new Promise(resolve => setTimeout(resolve, 1000)))
     };
 
-    state = {
-        isLoading: false,
-        isFocused: false,
-        isFailed: false,
-        searchText: ''
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLoading: false,
+            isFocused: false,
+            isFailed: false,
+            searchText: ''
+        };
+        this.inputRef = React.createRef();
+    }
 
     handleKeyUp = async (e) => {
         if (e.key === 'Enter') {
@@ -56,7 +61,7 @@ export default class Search extends React.PureComponent {
     handleClearClick = () => {
         this.setState({searchText: ''});
 
-        //TODO: set focus to input
+        this.inputRef.current.focus();
     };
 
     render() {
@@ -80,12 +85,14 @@ export default class Search extends React.PureComponent {
         return (
             <div className={className}>
                 <div className="search grid-item-fixed"></div>
-                <input placeholder="Search address, TX id, block sig"
-                       onKeyUp={this.handleKeyUp}
-                       onChange={this.handleChange}
-                       value={this.state.searchText}
-                       onFocus={this.handleFocus}
-                       onBlur={this.handleBlur}/>
+                <input
+                    ref={this.inputRef}
+                    placeholder="Search address, TX id, block sig"
+                    onKeyUp={this.handleKeyUp}
+                    onChange={this.handleChange}
+                    value={this.state.searchText}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur} />
                 {textIsNotEmpty && <div className="clear grid-item-fixed" onClick={this.handleClearClick}>Clear</div>}
             </div>
         );
