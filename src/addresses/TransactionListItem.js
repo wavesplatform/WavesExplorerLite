@@ -5,9 +5,9 @@ import Address from './Address';
 import TransactionRef from '../shared/TransactionRef';
 
 const typeMapping = {
-    2: {title: 'Payment', className: 'arrow-transaction-payment'},
-    7: {title: 'Exchange', className: 'arrow-transaction-exchange'},
-    11: {title: 'Mass payment', className: 'arrow-transaction-masspay'}
+    2: {title: 'Payment', className: 'asset-transfer in'},
+    7: {title: 'Exchange', className: 'exchange'},
+    11: {title: 'Mass payment', className: 'mass-payment out'}
 };
 
 

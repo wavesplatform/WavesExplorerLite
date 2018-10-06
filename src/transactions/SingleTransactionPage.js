@@ -15,7 +15,7 @@ export default class SingleTransactionPage extends React.Component {
                     <div className="dictionary-pair-key">Type</div>
                     <div className="dictionary-pair-value">
                       <span>11</span>
-                      <span className="badge">Mass Payment</span>
+                      <span className="badge mass-payment">Mass Payment</span>
                     </div>
                   </div>
                   <div className="dictionary-pair">

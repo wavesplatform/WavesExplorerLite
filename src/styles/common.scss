@@ -58,6 +58,7 @@ a {
   background-position: center;
   vertical-align: middle;
   @include font(body, white);
+    cursor: pointer;
 
   &:hover:not(.disabled) {
     opacity: 0.7
@@ -107,4 +108,14 @@ a {
   padding: 4px 4px 4px 6px;
   margin: 0 14px;
   @include font(body, white);
+
+    &.asset-burn, &.lease-cancel, &.asset-transfer.out, &.mass-payment.out {
+        background-color: map-get($colors, error500);
+    }
+    &.lease, &.asset-transfer.in, &.mass-payment.in {
+        background-color: map-get($colors, success400);
+    }
+    &.exchange {
+        background-color: map-get($colors, mixUnicorn);
+    }
 }

@@ -73,7 +73,7 @@ export default class SingleBlockPage extends React.Component {
                         <div className="line"><label>00:00:00, 00.00.0000</label></div>
                       </td>
                       <td data-label="Sender / Recipient">
-                        <div className="arrow arrow-transaction-receive"></div>
+                        <div className="arrow asset-transfer in"></div>
                         <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
                         <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                       </td>
@@ -91,7 +91,7 @@ export default class SingleBlockPage extends React.Component {
                         <div className="line"><label>00:00:00, 00.00.0000</label></div>
                       </td>
                       <td data-label="Sender / Recipient">
-                        <div className="arrow arrow-transaction-receive"></div>
+                        <div className="arrow asset-transfer in"></div>
                         <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
                         <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                       </td>
@@ -127,7 +127,7 @@ export default class SingleBlockPage extends React.Component {
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Seller / Buyer">
-                      <div className="arrow arrow-transaction-exchange"></div>
+                      <div className="arrow exchange"></div>
                       <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
                       <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                     </td>
@@ -164,7 +164,7 @@ export default class SingleBlockPage extends React.Component {
                       <div className="line"><label>00:00:00, 00.00.0000</label></div>
                     </td>
                     <td data-label="Sender / Recipient">
-                      <div className="arrow arrow-transaction-masspay"></div>
+                      <div className="arrow mass-payment out"></div>
                       <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he" appearance="regular"/></div>
                       <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3" appearance="regular"/></div>
                     </td>

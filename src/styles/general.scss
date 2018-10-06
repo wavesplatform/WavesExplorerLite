@@ -238,20 +238,24 @@ th.price, th.amount {
 }
 
 .arrow {
-  float: left;
-  width: 14px;
-  height: 40px;
-  padding-left: 8px;
+    float: left;
+    width: 14px;
+    height: 40px;
+    padding-left: 8px;
 
-  &.arrow-transaction-receive {
-    background: url('../images/transaction-receive.svg') no-repeat;
-  }
-
-  &.arrow-transaction-exchange {
-    background: url('../images/transaction-exchange.svg') no-repeat;
-  }
-
-  &.arrow-transaction-masspay {
-    background: url('../images/transaction-masspay.svg') no-repeat;
-  }
+    &.asset-transfer.out {
+        background: url('../images/transaction-transfer-out.svg') no-repeat;
+    }
+    &.asset-transfer.in {
+        background: url('../images/transaction-transfer-in.svg') no-repeat;
+    }
+    &.mass-payment.out {
+        background: url('../images/transaction-masspay-out.svg') no-repeat;
+    }
+    &.mass-payment.in {
+        background: url('../images/transaction-masspay-in.svg') no-repeat;
+    }
+    &.exchange {
+        background: url('../images/transaction-exchange.svg') no-repeat;
+    }
 }
