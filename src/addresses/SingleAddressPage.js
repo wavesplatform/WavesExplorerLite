@@ -5,6 +5,7 @@ import Headline from '../shared/Headline';
 
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
+import GroupedAliasList from './GroupedAliasList';
 
 const transactions = [{
     id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
@@ -44,6 +45,14 @@ const assets = [{
     amount: '284,949.48281863'
 }];
 
+const aliases = [{
+    letter: 'M',
+    aliases: ['MrBigMike', 'Mfhdjs#&42_32f', 'Mike32341531']
+}, {
+    letter: 'N',
+    aliases: ['NfhdLdf44852572547', 'Nnnnnnnn', 'N___fds#@3', 'nnnnbnn3', 'Nn321', 'n_341f', 'NinaAd', 'Noki-Poki']
+}];
+
 export default class SingleAddressPage extends React.Component {
     render() {
         return (
@@ -73,8 +82,9 @@ export default class SingleAddressPage extends React.Component {
                     <span className="page-link bold"><a className="no-style" href="general_address_aliases.html">Aliases</a></span>
                     <span className="page-link bold"><a className="no-style" href="general_address_assets.html">Assets</a></span>
                 </div>
-                <TransactionList transactions={transactions} />
+                {/*<TransactionList transactions={transactions} />*/}
                 {/*<AssetList assets={assets} />*/}
+                <GroupedAliasList aliases={aliases} />
             </React.Fragment>
         );
     }

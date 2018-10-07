@@ -139,6 +139,18 @@ $address_tr_list_columns: (
     )
 );
 
+$address_alias_list_columns: (
+    letter: (
+        width: 120px,
+        lg: (
+            width: 100px
+        ),
+        sm: (
+            width: 50px
+        )
+    )
+);
+
 $nodes_columns: (
     version: (
         width: 17%,
