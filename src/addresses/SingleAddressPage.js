@@ -6,6 +6,8 @@ import Headline from '../shared/Headline';
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
 import GroupedAliasList from './GroupedAliasList';
+import Tabs from './Tabs';
+import Pane from './Pane';
 
 const transactions = [{
     id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
@@ -77,14 +79,17 @@ export default class SingleAddressPage extends React.Component {
                         <div className="line">2,268.56209303</div>
                     </div>
                 </div>
-                <div className="page-navigation">
-                    <span className="page-link bold disabled">Last 100 transactions</span>
-                    <span className="page-link bold"><a className="no-style" href="general_address_aliases.html">Aliases</a></span>
-                    <span className="page-link bold"><a className="no-style" href="general_address_assets.html">Assets</a></span>
-                </div>
-                {/*<TransactionList transactions={transactions} />*/}
-                {/*<AssetList assets={assets} />*/}
-                <GroupedAliasList aliases={aliases} />
+                <Tabs>
+                    <Pane title="Last 100 transactions">
+                        <TransactionList transactions={transactions} />
+                    </Pane>
+                    <Pane title="Aliases">
+                        <GroupedAliasList aliases={aliases} />
+                    </Pane>
+                    <Pane title="Assets">
+                        <AssetList assets={assets} />
+                    </Pane>
+                </Tabs>
             </React.Fragment>
         );
     }

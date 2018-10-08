@@ -15,7 +15,7 @@ export default class NavMenuItem extends React.PureComponent {
 
     handleClick = () => {
         this.props.onNavigate(this.props.item);
-    }
+    };
 
     render() {
         let className = 'menu-item';

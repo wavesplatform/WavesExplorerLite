@@ -11,7 +11,7 @@ const networks = [{
 
 const Network = ({id, title, current, onChange}) => {
     return current ? (<div className="current">{title}</div>) : (<div onClick={() => onChange(id)}>{title}</div>);
-}
+};
 
 export default class NetworkSwitch extends React.PureComponent {
     static propTypes = {
