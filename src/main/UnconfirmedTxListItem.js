@@ -22,6 +22,7 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
                     </div>
                     <div className="line wide">
                         <AddressRef address={tx.sender} appearance="regular" title="Sender" />
+                        <div className="link-spacer"></div>
                         <AddressRef address={tx.recipient} appearance="regular" title="Recipient" />
                     </div>
                 </div>

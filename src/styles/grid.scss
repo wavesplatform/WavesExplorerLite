@@ -4,12 +4,12 @@
 @each $size in map-keys($breakpoints) {
     .#{$size}-hide {
         @include breakpoint($size) {
-            display: none;
+            display: none !important;
         }
     }
     .#{$size}-show {
         @include breakpoint($size) {
-            display: block;
+            display: block !important;
         }
     }
 }

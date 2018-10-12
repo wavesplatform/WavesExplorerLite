@@ -28,6 +28,7 @@ body {
 
 .mobile-menu {
     display: none;
+    @include responsive_styles($mobile_menu);
 }
 
 .wrapper.show + .mobile-menu {
@@ -57,6 +58,7 @@ body {
         width: map-get($header, title_width);
 
         > .menu-toggle {
+            display: none;
             width: 42px;
             height: 100%;
             cursor: pointer;
@@ -95,6 +97,9 @@ body {
             margin-bottom: 28px;
             cursor: pointer;
             @include font(headline2, disabled500);
+            &:hover {
+                color: map-get($colors, black);
+            }
 
             &.current {
                 color: map-get($colors, black);

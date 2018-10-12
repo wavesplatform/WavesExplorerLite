@@ -195,6 +195,11 @@
     }
 }
 
+.link-spacer {
+    display: inline-block;
+    width: 28px;
+}
+
 .dictionary {
     > .dictionary-pair {
         display: flex;
