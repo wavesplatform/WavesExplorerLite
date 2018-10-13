@@ -44,7 +44,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in ctrl.txs | orderBy:'timestamp':true">
+                    <tr ng-repeat="item in ctrl.txs">
                         <td><waves-transaction-ref tx-id="item.id" max-length="7"></waves-transaction-ref></td>
                         <td>{{item.type|txtype}}</td>
                         <td>{{item.timestamp|wavesdate}}</td>
