@@ -21,7 +21,7 @@ const buildItems = (networkId) => {
     }];
 };
 
-export default class NavMenu extends React.PureComponent {
+export default class NavMenu extends React.Component {
     static propTypes = {
         networkId: PropTypes.string
     };
@@ -41,7 +41,7 @@ export default class NavMenu extends React.PureComponent {
         this.setState({
             current: item
         });
-    }
+    };
 
     render() {
         return (
