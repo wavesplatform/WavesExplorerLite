@@ -29,6 +29,7 @@ export default class NavMenu extends React.Component {
     constructor(props) {
         super(props);
 
+        //FIXME: this may be a problem
         const items = buildItems(props.networkId);
 
         this.state = {
