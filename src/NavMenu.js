@@ -4,20 +4,19 @@ import PropTypes from 'prop-types';
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 
-const buildItems = (networkId) => {
-    const routes = routeBuilder(networkId);
+const buildItems = () => {
     return [{
         title: 'General info',
-        route: routes.root,
+        route: networkId => routeBuilder(networkId).root,
     }, {
         title: 'Blocks',
-        route: routes.blocks.list
+        route: networkId => routeBuilder(networkId).blocks.list
     }, {
         title: 'Peers',
-        route: routes.peers.list
+        route: networkId => routeBuilder(networkId).peers.list
     }, {
         title: 'Nodes',
-        route: routes.nodes.list
+        route: networkId => routeBuilder(networkId).nodes.list
     }];
 };
 
@@ -29,9 +28,7 @@ export default class NavMenu extends React.Component {
     constructor(props) {
         super(props);
 
-        //FIXME: this may be a problem
-        const items = buildItems(props.networkId);
-
+        const items = buildItems();
         this.state = {
             items,
             current: items[0]
