@@ -10,6 +10,10 @@ export const nodeApi = (baseUrl) => {
         baseTarget: () => get('/consensus/basetarget'),
         blocks: {
             height: () => get('/blocks/height'),
+            delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
+            headers: {
+                last: () => get('/blocks/headers/last')
+            }
         },
         transactions: {
             utxSize: () => get('/transactions/unconfirmed/size'),
