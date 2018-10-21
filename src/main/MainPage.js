@@ -7,10 +7,14 @@ import NetworkInfo from './NetworkInfo';
 import LastBlockList from './LastBlockList';
 import UnconfirmedTxList from './UnconfirmedTxList';
 
+const LAST_BLOCKS_COUNT = 20;
+
 export default class MainPage extends React.Component {
 
     state = {
-        info: {}
+        info: {},
+        unconfirmed: [],
+        blocks: []
     };
 
     componentDidMount() {
@@ -29,6 +33,14 @@ export default class MainPage extends React.Component {
             };
             this.setState({info});
 
+            const to = height.data.height;
+            const from = Math.max(1, to - LAST_BLOCKS_COUNT);
+            api.blocks.headers.sequence(from, to)
+                .then(blocksResponse => {
+                    const blocks = blocksResponse.data.map(block => block).reverse();
+                    this.setState({blocks});
+                });
+
             return api.blocks.headers.last();
         })).then(headerResponse => {
             return api.blocks.delay(headerResponse.data.signature, headerResponse.data.height - 2)
@@ -38,59 +50,20 @@ export default class MainPage extends React.Component {
                     this.setState({info: newInfo});
                 });
         });
+
+        api.transactions.unconfirmed().then(response => {
+            const unconfirmed = response.data.map(tx => tx);
+            this.setState({unconfirmed});
+        });
     }
 
     render() {
-        const blocks = [{
-            height: 1040038,
-            transactionCount: 0,
-            time: '17:19:57',
-            date: '13.06.2018',
-            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }, {
-            height: 1040038,
-            transactionCount: 0,
-            time: '17:19:57',
-            date: '13.06.2018',
-            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }, {
-            height: 1040038,
-            transactionCount: 0,
-            time: '17:19:57',
-            date: '13.06.2018',
-            signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }, {
-           height: 1040038,
-           transactionCount: 0,
-           time: '17:19:57',
-           date: '13.06.2018',
-           signature: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }];
-        const unconfirmed = [{
-            id: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
-            type: 9,
-            amount: '0.00000000',
-            fee: '0.001',
-            date: '13.06.2018',
-            time: '17:19:57',
-            sender: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
-            recipient: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }, {
-            id: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
-            type: 9,
-            amount: '0.00000000',
-            fee: '0.001',
-            date: '13.06.2018',
-            time: '17:19:57',
-            sender: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564',
-            recipient: '3VrorJrm9g1zHeFoDERX6nFhpZnwmedTgncQUC5Gp4E564'
-        }];
         return (
             <React.Fragment>
                 <NetworkInfo info={this.state.info} />
                 <div className="grid grid-wrap">
-                    <LastBlockList baseUrl={this.props.match.url} blocks={blocks} />
-                    <UnconfirmedTxList baseUrl={this.props.match.url} transactions={unconfirmed} />
+                    <LastBlockList blocks={this.state.blocks} />
+                    <UnconfirmedTxList transactions={this.state.unconfirmed} />
                 </div>
             </React.Fragment>
         );

@@ -28,8 +28,8 @@ class LastBlockList extends React.PureComponent {
                         <Link className="no-accent" to={routes.blocks.list}>View all blocks</Link>
                     </span>
                 </div>
-                {this.props.blocks.map((block, index) => {
-                    return (<LastBlockListItem key={index} block={block} />);
+                {this.props.blocks.map((block) => {
+                    return (<LastBlockListItem key={block.height} block={block} />);
                 })}
             </div>
         );

@@ -23,13 +23,13 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
                     <div className="line wide">
                         <AddressRef address={tx.sender} appearance="regular" title="Sender" />
                         <div className="link-spacer"></div>
-                        <AddressRef address={tx.recipient} appearance="regular" title="Recipient" />
+                        {tx.recipient && <AddressRef address={tx.recipient} appearance="regular" title="Recipient" />}
                     </div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>
                 <div className="md-hide sm-show grid-item-fixed">
-                    <div className="line"><label>{tx.time}</label></div>
-                    <div className="line"><label>{tx.date}</label></div>
+                    <div className="line"><label>{tx.timestamp.time}</label></div>
+                    <div className="line"><label>{tx.timestamp.date}</label></div>
                     <div className="line wide"><label>Type {tx.type}</label></div>
                 </div>
             </div>

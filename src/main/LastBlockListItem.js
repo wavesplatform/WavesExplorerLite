@@ -19,8 +19,8 @@ export default class LastBlockListItem extends React.PureComponent {
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>
                 <div className="md-hide sm-show grid-item-fixed">
-                    <div className="line"><label>{block.time}</label></div>
-                    <div className="line"><label>{block.date}</label></div>
+                    <div className="line"><label>{block.timestamp.time}</label></div>
+                    <div className="line"><label>{block.timestamp.date}</label></div>
                 </div>
             </div>
         );

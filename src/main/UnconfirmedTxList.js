@@ -5,8 +5,7 @@ import UnconfirmedTxListItem from './UnconfirmedTxListItem';
 
 export default class UnconfirmedTxList extends React.Component {
     static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
-        baseUrl: PropTypes.string.isRequired
+        transactions: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
     renderList() {
@@ -15,8 +14,8 @@ export default class UnconfirmedTxList extends React.Component {
                 <div className="panel-title">
                     <span className="title">Unconfirmed Transactions ({this.props.transactions.length})</span>
                 </div>
-                {this.props.transactions.map((item, index) => {
-                    return (<UnconfirmedTxListItem key={index} transaction={item} />);
+                {this.props.transactions.map((item) => {
+                    return (<UnconfirmedTxListItem key={item.id} transaction={item} />);
                 })}
             </React.Fragment>
         );
@@ -25,7 +24,7 @@ export default class UnconfirmedTxList extends React.Component {
     renderEmpty() {
         return (
             <React.Fragment>
-                <div className="panel-empty-icon confirmed"></div>
+                <div className="panel-empty-icon"></div>
                 <div className="line wide panel-empty-label"><label>All transactions are confirmed</label></div>
             </React.Fragment>
         );
@@ -35,7 +34,7 @@ export default class UnconfirmedTxList extends React.Component {
         const isEmpty = this.props.transactions.length === 0;
         let wrapperClassName = 'panel column-6 column-sm-12';
         if (isEmpty)
-            wrapperClassName += ' panel-empty';
+            wrapperClassName += ' panel-empty confirmed';
 
         return (
             <div className={wrapperClassName}>
