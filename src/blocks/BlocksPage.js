@@ -1,51 +1,68 @@
 import React from 'react';
 
+import {apiBuilder} from '../shared/NodeApi';
 import Pagination from './Pagination';
 import BlockList from './BlockList';
 
-export default class BlocksPage extends React.Component {
-    render() {
-        const blocks = [{
-            height: 1000001,
-            date: '00.00.0000',
-            time: '00:00:00',
-            baseTarget: 1000,
-            generator: '3P7GQo48n1SM7EZXnmNBRMcD5oDwKXf8SSm',
-            signature: '2JmNzyk5XpGLhGT3Z55Rh2j3a15XpGLhGT3Z55Rh2j3a1',
-            transactions: 100
-        }, {
-            height: 1000002,
-            date: '00.00.0000',
-            time: '00:00:00',
-            baseTarget: 1000,
-            generator: '3P7GQo48n1SM7EZXnmNBRMcD5oDwKXf8SSm',
-            signature: '2JmNzyk5XpGLhGT3Z55Rh2j3a15XpGLhGT3Z55Rh2j3a1',
-            transactions: 100
-        }, {
-            height: 1000003,
-            date: '00.00.0000',
-            time: '00:00:00',
-            baseTarget: 1000,
-            generator: '3P7GQo48n1SM7EZXnmNBRMcD5oDwKXf8SSm',
-            signature: '2JmNzyk5XpGLhGT3Z55Rh2j3a15XpGLhGT3Z55Rh2j3a1',
-            transactions: 100
-        }, {
-            height: 1000004,
-            date: '00.00.0000',
-            time: '00:00:00',
-            baseTarget: 1000,
-            generator: '3P7GQo48n1SM7EZXnmNBRMcD5oDwKXf8SSm',
-            signature: '2JmNzyk5XpGLhGT3Z55Rh2j3a15XpGLhGT3Z55Rh2j3a1',
-            transactions: 100
-        }];
+const BLOCKS_PER_PAGE = 20;
 
+export default class BlocksPage extends React.Component {
+
+    state = {
+        height: 0,
+        currentPage: 1,
+        lastPage: 10,
+        blocks: []
+    };
+
+    componentDidMount() {
+        const {networkId} = this.props.match.params;
+        const api = apiBuilder(networkId);
+
+        api.blocks.height().then(heightResponse => {
+            const height = heightResponse.data.height;
+            const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
+
+            this.setState({height, lastPage}, () => this.loadCurrentPage(api, this.state.currentPage));
+        })
+    }
+
+    loadCurrentPage = (api, pageNumber) => {
+        const from = Math.max(1, this.state.height - pageNumber * BLOCKS_PER_PAGE + 1);
+        const to = Math.min(this.state.height, from + BLOCKS_PER_PAGE);
+
+        api.blocks.headers.sequence(from, to).then(blocksResponse => {
+            const blocks = blocksResponse.data.map(block => {
+                return {
+                    height: block.height,
+                    timestamp: block.timestamp,
+                    baseTarget: block['nxt-consensus']['base-target'],
+                    generator: block.generator,
+                    signature: block.signature,
+                    transactions: block.transactionCount
+                };
+            });
+
+            this.setState({blocks});
+        });
+    };
+
+    handlePageChange = pageNumber => {
+        const {networkId} = this.props.match.params;
+        const api = apiBuilder(networkId);
+
+        this.loadCurrentPage(api, pageNumber);
+    };
+
+    render() {
         return (
             <React.Fragment>
                 <div className="headline">
                     <span className="title">Blocks</span>
-                    <Pagination />
+                    <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
+                                onPageChange={this.handlePageChange} />
                 </div>
-                <BlockList blocks={blocks} networkId={this.props.match.params.networkId} />
+                <BlockList blocks={this.state.blocks} />
             </React.Fragment>
         );
     }

@@ -16,7 +16,7 @@ export default class BlockListItem extends React.Component {
                 <td data-label="№ / Timestamp">
                     <div className="block-img sm-hide"></div>
                     <div className="line no-wrap"><BlockRef height={block.height} /></div>
-                    <div className="line no-break"><label>{block.time}, {block.date}</label></div>
+                    <div className="line no-break"><label>{block.timestamp.time}, {block.timestamp.date}</label></div>
                 </td>
                 <td data-label="Base Target">
                     <div className="line bold">{block.baseTarget}</div>
