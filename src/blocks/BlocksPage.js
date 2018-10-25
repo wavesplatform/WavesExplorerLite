@@ -41,7 +41,7 @@ export default class BlocksPage extends React.Component {
                     signature: block.signature,
                     transactions: block.transactionCount
                 };
-            });
+            }).reverse();
 
             this.setState({blocks});
         });
