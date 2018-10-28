@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import groupBy from 'lodash/groupBy';
 
 import {apiBuilder} from '../shared/NodeApi';
 import {routeBuilder} from '../shared/Routing';
@@ -7,7 +8,38 @@ import GoBack from '../shared/GoBack';
 import TransactionRef from '../shared/TransactionRef';
 import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
+import CopyButton from '../shared/CopyButton';
+
 import BlockEnumerator from './BlockEnumerator';
+import Dictionary from './Dictionary';
+import TransactionList from './TransactionList';
+
+const typeToHeader = type => {
+    let result = {
+        id: 'ID / Timestamp',
+        subjects: 'Sender / Recipient',
+        amount: 'Amount / Fee',
+        price: 'Price'
+    };
+
+    switch (type) {
+        case 7:
+            result.subjects = 'Seller / Buyer';
+            result.amount = 'Amount / Total';
+            result.price = 'Pair / Price';
+            break;
+
+        case 8:
+            result.price = undefined;
+            break;
+
+        case 9:
+            result.price = undefined;
+            break;
+    }
+
+    return result;
+};
 
 export default class SingleBlockPage extends React.Component {
 
@@ -51,57 +83,22 @@ export default class SingleBlockPage extends React.Component {
     };
 
     render() {
+        const dictionaryItems = this.stateToDictionaryItems();
+        const groupedTransactions = this.state.block.transactions ? groupBy(this.state.block.transactions, 'type') : {};
+
         return (
             <React.Fragment>
                 <GoBack />
                 <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false} />
-                <div className="dictionary">
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key"><span>Height</span></div>
-                        <div className="dictionary-pair-value">
-                            <BlockEnumerator
-                                height={this.state.currentHeight}
-                                hasPrev={this.state.currentHeight > 1}
-                                hasNext={this.state.currentHeight < this.state.maxHeight}
-                                onNext={() => this.showBlock(this.state.currentHeight + 1)}
-                                onPrev={() => this.showBlock(this.state.currentHeight - 1)}/>
-                        </div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Version</div>
-                        <div className="dictionary-pair-value">{this.state.block.version}</div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Timestamp</div>
-                        <div className="dictionary-pair-value">{this.state.block.timestamp.time}, {this.state.block.timestamp.date}</div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Transactions</div>
-                        <div className="dictionary-pair-value">{this.state.block.transactionCount}</div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Parent block</div>
-                        <div className="dictionary-pair-value">{this.state.block.reference}</div>
-                        <div className="dictionary-action">
-                            <div className="btn btn-copy">Copy</div>
-                        </div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Generator</div>
-                        <div className="dictionary-pair-value"><AddressRef address={this.state.block.generator}/></div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key"><span>Signature</span></div>
-                        <div className="dictionary-pair-value">{this.state.block.signature}</div>
-                        <div className="dictionary-action">
-                            <div className="btn btn-copy">Copy</div>
-                        </div>
-                    </div>
-                    <div className="dictionary-pair">
-                        <div className="dictionary-pair-key">Size</div>
-                        <div className="dictionary-pair-value">{this.state.block.blocksize} bytes</div>
-                    </div>
-                </div>
+                <Dictionary items={dictionaryItems} />
+
+                {Object.keys(groupedTransactions).map(type => {
+                    const numericType = parseInt(type);
+                    const header = typeToHeader(numericType);
+                    return <TransactionList key={numericType} type={numericType} header={header}
+                                            transactions={groupedTransactions[type]}/>
+                })}
+
                 <div className="headline2">
                     <span className="title">Transactions</span>
                     <span className="title-details"> — Type 4</span>
@@ -278,5 +275,44 @@ export default class SingleBlockPage extends React.Component {
                 </table>
             </React.Fragment>
         );
+    }
+
+    stateToDictionaryItems() {
+        const items = [{
+            label: 'Height',
+            value: (
+                <BlockEnumerator
+                    height={this.state.currentHeight}
+                    hasPrev={this.state.currentHeight > 1}
+                    hasNext={this.state.currentHeight < this.state.maxHeight}
+                    onNext={() => this.showBlock(this.state.currentHeight + 1)}
+                    onPrev={() => this.showBlock(this.state.currentHeight - 1)}/>
+            )
+        }, {
+            label: 'Version',
+            value: this.state.block.version
+        }, {
+            label: 'Timestamp',
+            value: <React.Fragment>{this.state.block.timestamp.time}, {this.state.block.timestamp.date}</React.Fragment>
+        }, {
+            label: 'Transactions',
+            value: this.state.block.transactionCount
+        }, {
+            label: 'Parent block',
+            value: this.state.block.reference,
+            action: <CopyButton text={this.state.block.reference}/>
+        }, {
+            label: 'Generator',
+            value: <AddressRef address={this.state.block.generator}/>
+        }, {
+            label: 'Signature',
+            value: this.state.block.signature,
+            action: <CopyButton text={this.state.block.signature}/>
+        }, {
+            label: 'Size',
+            value: <React.Fragment>{this.state.block.blocksize} bytes</React.Fragment>
+        }];
+
+        return items;
     }
 }

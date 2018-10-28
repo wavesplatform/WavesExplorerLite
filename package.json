@@ -19,8 +19,10 @@
   },
   "dependencies": {
     "axios": "0.18.0",
+    "lodash": "^4.17.11",
     "prop-types": "15.6.2",
     "react": "16.4.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "16.4.1",
     "react-hot-loader": "4.3.3",
     "react-router": "4.3.1",

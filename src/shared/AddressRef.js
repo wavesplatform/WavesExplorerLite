@@ -12,7 +12,7 @@ class AddressRef extends React.PureComponent {
     static propTypes = {
         address: PropTypes.string.isRequired,
         title: PropTypes.string,
-        appearance: PropTypes.string
+        appearance: PropTypes.oneOf([REGULAR, BRIGHT])
     };
 
     static defaultProps = {
