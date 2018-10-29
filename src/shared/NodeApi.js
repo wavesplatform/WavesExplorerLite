@@ -3,10 +3,12 @@ import axios from 'axios';
 import {create} from '../configuration';
 import DateTime from './DateTime';
 
-const replaceTimestampWithDateTime = obj => {
+export const replaceTimestampWithDateTime = obj => {
     if (obj.timestamp) {
         obj.timestamp = new DateTime(obj.timestamp);
     }
+
+    return obj;
 };
 
 const transformTimestampToDateTime = (responseData) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import groupBy from 'lodash/groupBy';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {apiBuilder, replaceTimestampWithDateTime} from '../shared/NodeApi';
 import {routeBuilder} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import TransactionRef from '../shared/TransactionRef';
@@ -23,6 +23,12 @@ const typeToHeader = type => {
     };
 
     switch (type) {
+        case 3:
+            result.subjects = 'Issuer / Asset ID';
+            result.amount = 'Quantity / Fee';
+            result.price = 'Asset name';
+            break;
+
         case 7:
             result.subjects = 'Seller / Buyer';
             result.amount = 'Amount / Total';
@@ -84,7 +90,9 @@ export default class SingleBlockPage extends React.Component {
 
     render() {
         const dictionaryItems = this.stateToDictionaryItems();
-        const groupedTransactions = this.state.block.transactions ? groupBy(this.state.block.transactions, 'type') : {};
+        const transactions = this.state.block.transactions ?
+            this.state.block.transactions.map(replaceTimestampWithDateTime) : [];
+        const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
         return (
             <React.Fragment>
