@@ -5,13 +5,12 @@ import groupBy from 'lodash/groupBy';
 import {apiBuilder, replaceTimestampWithDateTime} from '../shared/NodeApi';
 import {routeBuilder} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
-import TransactionRef from '../shared/TransactionRef';
 import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
+import Dictionary from '../shared/Dictionary';
 
 import BlockEnumerator from './BlockEnumerator';
-import Dictionary from './Dictionary';
 import TransactionList from './TransactionList';
 
 const typeToHeader = type => {
@@ -106,181 +105,6 @@ export default class SingleBlockPage extends React.Component {
                     return <TransactionList key={numericType} type={numericType} header={header}
                                             transactions={groupedTransactions[type]}/>
                 })}
-
-                <div className="headline2">
-                    <span className="title">Transactions</span>
-                    <span className="title-details"> — Type 4</span>
-                    <span className="action">Hide list</span>
-                </div>
-                <table className="table-sm-transform">
-                    <thead>
-                    <tr>
-                        <th>ID / Timestamp</th>
-                        <th>Sender / Recipient</th>
-                        <th className="amount">Amount / Fee</th>
-                        <th className="price">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="ID / Timestamp">
-                            <div className="line no-wrap"><TransactionRef
-                                txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                        </td>
-                        <td data-label="Sender / Recipient">
-                            <div className="arrow asset-transfer in"></div>
-                            <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                                      appearance="regular"/></div>
-                            <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                                      appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount / Fee">
-                            <div className="line">1000.0000000</div>
-                            <div className="line"><label>0.001 WAVES</label></div>
-                        </td>
-                        <td data-label="Price">
-                            <div className="line"><a>XDTC</a></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-label="ID / Timestamp">
-                            <div className="line no-wrap"><TransactionRef
-                                txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                        </td>
-                        <td data-label="Sender / Recipient">
-                            <div className="arrow asset-transfer in"></div>
-                            <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                                      appearance="regular"/></div>
-                            <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                                      appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount / Fee">
-                            <div className="line">1000.0000000</div>
-                            <div className="line"><label>0.001 WAVES</label></div>
-                        </td>
-                        <td data-label="Price">
-                            <div className="line"><a>XDTC</a></div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div className="headline2">
-                    <span className="title">Exchanges</span>
-                    <span className="title-details"> — Type 7</span>
-                    <span className="action">Hide list</span>
-                </div>
-                <table className="table-sm-transform">
-                    <thead>
-                    <tr>
-                        <th>ID / Timestamp</th>
-                        <th>Seller / Buyer</th>
-                        <th className="amount">Amount / Total</th>
-                        <th className="price">Pair / Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="ID / Timestamp">
-                            <div className="line no-wrap"><TransactionRef
-                                txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                        </td>
-                        <td data-label="Seller / Buyer">
-                            <div className="arrow exchange"></div>
-                            <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                                      appearance="regular"/></div>
-                            <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                                      appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount / Total">
-                            <div className="line">7.69536906</div>
-                            <div className="line bold">406.70541687</div>
-                        </td>
-                        <td data-label="Pair / Price">
-                            <div className="line"><a>ZEC</a> / WAVES</div>
-                            <div className="line bold">53.24051565</div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div className="headline2">
-                    <span className="title">Leasing</span>
-                    <span className="title-details"> — Type 8</span>
-                    <span className="action">Hide list</span>
-                </div>
-                <table className="table-sm-transform">
-                    <thead>
-                    <tr>
-                        <th>ID / Timestamp</th>
-                        <th>Sender / Recipient</th>
-                        <th className="amount">Amount / Fee</th>
-                        <th className="price"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="ID / Timestamp">
-                            <div className="line no-wrap"><TransactionRef
-                                txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                        </td>
-                        <td data-label="Sender / Recipient">
-                            <div className="arrow mass-payment out"></div>
-                            <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                                      appearance="regular"/></div>
-                            <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                                      appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount / Fee">
-                            <div className="line">1000.0000000</div>
-                            <div className="line"><label>0.001 WAVES</label></div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div className="headline2">
-                    <span className="title">Cancel leasing </span>
-                    <span className="title-details"> — Type 9</span>
-                    <span className="action">Unhide list</span>
-                </div>
-                <table className="table-sm-transform table-hide">
-                    <thead>
-                    <tr>
-                        <th>ID / Timestamp</th>
-                        <th>Seller / Buyer</th>
-                        <th className="amount">Amount / Total</th>
-                        <th className="price">Pair / Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-label="ID / Timestamp">
-                            <div className="line no-wrap"><TransactionRef
-                                txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                            <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                        </td>
-                        <td data-label="Seller / Buyer">
-                            <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                                      appearance="regular"/></div>
-                            <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                                      appearance="regular"/></div>
-                        </td>
-                        <td data-label="Amount / Total">
-                            <div className="line">7.69536906</div>
-                            <div className="line bold">406.70541687</div>
-                        </td>
-                        <td data-label="Pair / Price">
-                            <div className="line"><a>ZEC</a> / WAVES</div>
-                            <div className="line bold">53.24051565</div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </React.Fragment>
         );
     }

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {typeToArrowClass} from '../shared/TransactionTypes';
+import {typeToCssClass} from '../shared/TransactionTypes';
 
 const INCOMING = 'incoming';
 const OUTGOING = 'outgoing';
 
 const TransactionArrow = ({type, direction}) => {
-    let className = 'arrow ' + typeToArrowClass(type);
+    let className = 'arrow ' + typeToCssClass(type);
     if (direction) {
         className += ' ' + directionToArrowClass(direction);
     }

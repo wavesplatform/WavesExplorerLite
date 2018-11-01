@@ -118,4 +118,7 @@ a {
     &.exchange {
         background-color: map-get($colors, mixUnicorn);
     }
+    &.create-alias, &.asset-reissue, &.asset-issue, &.data {
+        background-color: map-get($colors, info400);
+    }
 }

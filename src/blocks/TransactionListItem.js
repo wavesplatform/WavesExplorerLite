@@ -10,29 +10,29 @@ export const createListItem = (transaction) => {
     switch (transaction.type) {
         case 2:
         case 4:
-            return <TransferTransactionListItem tx={transaction} />;
+            return <TransferTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 3:
         case 5:
-            return <IssueTransactionListItem tx={transaction} />;
+            return <IssueTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 6:
-            return <BurnTransactionListItem tx={transaction} />;
+            return <BurnTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 7:
-            return <ExchangeTransactionListItem tx={transaction} />;
+            return <ExchangeTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 8:
-            return <LeasingTransactionListItem tx={transaction} />;
+            return <LeasingTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 9:
-            return <CancelLeasingTransactionListItem tx={transaction} />;
+            return <CancelLeasingTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 10:
-            return <AliasTransactionListItem tx={transaction} />;
+            return <AliasTransactionListItem key={transaction.id} tx={transaction} />;
 
         case 11:
-            return <MassPaymentTransactionListItem tx={transaction} />;
+            return <MassPaymentTransactionListItem key={transaction.id} tx={transaction} />;
 
         default:
             return null;
