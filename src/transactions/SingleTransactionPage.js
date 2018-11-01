@@ -1,52 +1,116 @@
 import React from 'react';
 
+import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
+import BlockRef from '../shared/BlockRef';
 import Headline from '../shared/Headline';
+import TransactionBadge from '../shared/TransactionBadge';
+import Dictionary from '../shared/Dictionary';
+
+const transactionToDictionaryItems = (tx) => {
+    switch (tx.type) {
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+            return massPaymentTransactionToItems(tx);
+
+        default:
+            return [];
+    }
+};
+
+const massPaymentTransactionToItems = tx => {
+    const items = [{
+        label: 'Total amount',
+        value: '187018.70127952 Secrect Sendicate'
+    }, {
+        label: 'Transfers count',
+        value: '88'
+    }, {
+        label: 'Description',
+        value: <span className="bold">Text</span>
+    }];
+
+    return [...transactionHeaderItems(tx), ...items, createFeeItem(tx), createSenderItem(tx)];
+};
+
+const transactionHeaderItems = tx => {
+    return [{
+        label: 'Type',
+        value: <React.Fragment><span>{tx.type}</span><TransactionBadge type={tx.type} /></React.Fragment>
+    }, {
+        label: 'Timestamp',
+        value: tx.timestamp.toLongString(),
+    }, {
+        label: 'Block',
+        value: <BlockRef height={tx.height} />
+    }];
+};
+
+const createSenderItem = tx => {
+    return {
+        label: 'Sender',
+        value: <AddressRef address={tx.sender} />
+    };
+};
+
+const createFeeItem = tx => {
+    return {
+        label: 'Fee',
+        value: tx.fee
+    };
+};
+
+const createAmountItem = tx => {
+    return {
+        label: 'Amount',
+        value: tx.amount
+    };
+};
 
 export default class SingleTransactionPage extends React.Component {
+    state = {
+        tx: {
+            id: this.props.match.params.transactionId
+        }
+    };
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
+    fetchData() {
+        const {networkId, transactionId} = this.props.match.params;
+        const api = apiBuilder(networkId);
+
+        api.transactions.info(transactionId).then(infoResponse => {
+            this.setState({tx: infoResponse.data});
+        });
+    }
+
     render() {
+        const transactionItems = transactionToDictionaryItems(this.state.tx);
+
         return (
             <React.Fragment>
                 <GoBack />
-                <Headline title="Transaction" subtitle="Gao1YppNQqyFXSSBB8gr9GaUvzZJ3EUknajWwvMHFm2c"/>
-                <div className="dictionary">
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Type</div>
-                    <div className="dictionary-pair-value">
-                      <span>11</span>
-                      <span className="badge mass-payment">Mass Payment</span>
-                    </div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Timestamp</div>
-                    <div className="dictionary-pair-value">00:00:00, 00.00.0000</div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Block</div>
-                    <div className="dictionary-pair-value"><a>1049538</a></div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Total amount</div>
-                    <div className="dictionary-pair-value">187018.70127952 Secrect Sendicate</div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Transfers count</div>
-                    <div className="dictionary-pair-value">88</div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Description</div>
-                    <div className="dictionary-pair-value"><span className="bold">Text</span></div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Fee</div>
-                    <div className="dictionary-pair-value">0.045 WAVES</div>
-                  </div>
-                  <div className="dictionary-pair">
-                    <div className="dictionary-pair-key">Sender</div>
-                    <div className="dictionary-pair-value"><AddressRef address="3PPiviBs3S2Q7yCB4LdvwViYFqr4dXr8RZt"/></div>
-                  </div>
-                </div>
+                <Headline title="Transaction" subtitle={this.state.tx.id} />
+                <Dictionary items={transactionItems}/>
                 <div className="headline2">
                   <span className="title">Transfers</span>
                 </div>

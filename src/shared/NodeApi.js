@@ -47,6 +47,9 @@ export const nodeApi = (baseUrl) => {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             }),
             utxSize: () => get('/transactions/unconfirmed/size'),
+            info: id => get(`/transactions/info/${id}`, {
+                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
+            })
         },
         peers: () => get('/peers/connected'),
     };

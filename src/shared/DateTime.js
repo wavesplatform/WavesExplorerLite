@@ -10,4 +10,8 @@ export default class DateTime {
         this.date = this.instant.toLocaleDateString(DEFAULT_LOCALE);
         this.time = this.instant.toLocaleTimeString(DEFAULT_LOCALE);
     }
+
+    toLongString() {
+        return this.time + ', ' + this.date;
+    }
 }

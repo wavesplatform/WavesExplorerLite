@@ -71,7 +71,7 @@ class IdAndTimestamp extends React.PureComponent {
         return (
             <td data-label="ID / Timestamp">
                 <Line wrap={false}><TransactionRef txId={this.props.id}/></Line>
-                <Line><label>{this.props.timestamp.time}, {this.props.timestamp.date}</label></Line>
+                <Line><label>{this.props.timestamp.toLongString()}</label></Line>
             </td>
         );
     }

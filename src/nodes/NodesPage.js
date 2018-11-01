@@ -6,16 +6,27 @@ import {nodeApi} from '../shared/NodeApi';
 import NodeList from './NodeList';
 
 export default class NodesPage extends React.Component {
-    constructor(props) {
-        super(props);
 
-        const configuration = create(this.props.match.params.networkId);
-        this.state = {
-            nodes: [...configuration.nodes]
-        };
-    }
+    state = {
+        nodes: []
+    };
 
     componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
+    fetchData() {
+        const configuration = create(this.props.match.params.networkId);
+        this.setState({nodes: [...configuration.nodes]}, this.fetchNodesDetails);
+    }
+
+    fetchNodesDetails() {
         this.state.nodes.map((node, index) => {
             //TODO: move this to a service
             const api = nodeApi(node.url);
