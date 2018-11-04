@@ -27,6 +27,9 @@ export const nodeApi = (baseUrl) => {
     return {
         version: () => get('/node/version'),
         baseTarget: () => get('/consensus/basetarget'),
+        addresses: {
+            details: (address) => get(`/addresses/balance/details/${address}`)
+        },
         blocks: {
             height: () => get('/blocks/height'),
             delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),

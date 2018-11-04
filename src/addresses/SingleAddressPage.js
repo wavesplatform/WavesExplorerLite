@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 
@@ -8,6 +9,7 @@ import AssetList from './AssetList';
 import GroupedAliasList from './GroupedAliasList';
 import Tabs from './Tabs';
 import Pane from './Pane';
+import BalanceDetails from './BalanceDetails';
 
 const transactions = [{
     id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
@@ -56,29 +58,37 @@ const aliases = [{
 }];
 
 export default class SingleAddressPage extends React.Component {
+
+    state = {
+        balance: {}
+    };
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId ||
+            this.props.match.params.address !== prevProps.match.params.address) {
+            this.fetchData();
+        }
+    }
+
+    fetchData() {
+        const {networkId, address} = this.props.match.params;
+        const api = apiBuilder(networkId);
+
+        api.addresses.details(address).then(balanceResponse => {
+            this.setState({balance: balanceResponse.data});
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
                 <GoBack />
-                <Headline title="Address" subtitle="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"/>
-                <div className="info-box grid grid-wrap">
-                    <div>
-                        <div className="line"><label>Regular Balance</label></div>
-                        <div className="line">2,267.06009303</div>
-                    </div>
-                    <div>
-                        <div className="line"><label>Generating Balance</label></div>
-                        <div className="line">2,256.40761552</div>
-                    </div>
-                    <div>
-                        <div className="line"><label>Available Balance</label></div>
-                        <div className="line">2,267.06009303</div>
-                    </div>
-                    <div>
-                        <div className="line"><label>Effective Balance</label></div>
-                        <div className="line">2,268.56209303</div>
-                    </div>
-                </div>
+                <Headline title="Address" subtitle={this.props.match.params.address} />
+                <BalanceDetails balance={this.state.balance} />
                 <Tabs>
                     <Pane title="Last 100 transactions">
                         <TransactionList transactions={transactions} />
