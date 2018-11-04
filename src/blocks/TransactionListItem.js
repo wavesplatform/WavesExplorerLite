@@ -135,13 +135,10 @@ class TransferTransactionListItem extends React.PureComponent {
 
 class ExchangeTransactionListItem extends React.PureComponent {
     render() {
+        const {tx} = this.props;
         return (
             <tr>
-                <td data-label="ID / Timestamp">
-                    <div className="line no-wrap"><TransactionRef
-                        txId="CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS"/></div>
-                    <div className="line"><label>00:00:00, 00.00.0000</label></div>
-                </td>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Seller / Buyer">
                     <div className="arrow exchange"></div>
                     <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"

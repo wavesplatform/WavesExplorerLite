@@ -90,7 +90,12 @@ export default class SingleBlockPage extends React.Component {
     render() {
         const dictionaryItems = this.stateToDictionaryItems();
         const transactions = this.state.block.transactions ?
-            this.state.block.transactions.map(replaceTimestampWithDateTime) : [];
+            this.state.block.transactions.map(item => {
+                const copy = Object.assign({}, item);
+                replaceTimestampWithDateTime(copy);
+
+                return copy;
+            }) : [];
         const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
         return (
