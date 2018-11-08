@@ -28,7 +28,9 @@ export const nodeApi = (baseUrl) => {
         version: () => get('/node/version'),
         baseTarget: () => get('/consensus/basetarget'),
         addresses: {
-            details: (address) => get(`/addresses/balance/details/${address}`)
+            details: (address) => get(`/addresses/balance/details/${address}`),
+            assetsBalance: (address) => get(`/assets/balance/${address}`),
+            aliases: (address) => get(`/alias/by-address/${address}`)
         },
         blocks: {
             height: () => get('/blocks/height'),

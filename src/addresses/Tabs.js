@@ -32,7 +32,8 @@ class TabHeader extends React.PureComponent {
 
 export default class Tabs extends React.Component {
     static propTypes = {
-        selectedIndex: PropTypes.number
+        selectedIndex: PropTypes.number,
+        onTabActivate: PropTypes.func.isRequired
     };
 
     static defaultProps = {
@@ -45,6 +46,7 @@ export default class Tabs extends React.Component {
 
     handleTabActivate = (selectedIndex) => {
         this.setState({selectedIndex});
+        this.props.onTabActivate(selectedIndex);
     };
 
     render() {

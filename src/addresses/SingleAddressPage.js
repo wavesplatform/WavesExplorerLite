@@ -60,7 +60,9 @@ const aliases = [{
 export default class SingleAddressPage extends React.Component {
 
     state = {
-        balance: {}
+        balance: {},
+        assets: [],
+        selectedTabIndex: 0
     };
 
     componentDidMount() {
@@ -81,7 +83,42 @@ export default class SingleAddressPage extends React.Component {
         api.addresses.details(address).then(balanceResponse => {
             this.setState({balance: balanceResponse.data});
         });
+
+        this.fetchTabData(this.state.selectedTabIndex);
     }
+
+    fetchTabData(selectedIndex) {
+        const {networkId, address} = this.props.match.params;
+        const api = apiBuilder(networkId);
+
+        switch (selectedIndex) {
+            case 0:
+            case 1:
+                api.addresses.assetsBalance(address).then(balanceResponse => {
+                    const assets = balanceResponse.data.balances.map(item => {
+                        return {
+                            id: item.assetId,
+                            name: item.issueTransaction.name,
+                            amount: item.balance
+                        };
+                    });
+
+                    this.setState({assets});
+                });
+
+                break;
+            case 2:
+                api.addresses.aliases(address).then(aliasesResponse => {
+                    //TODO: map response to state
+                });
+
+                break;
+        }
+    }
+
+    handleTabActivate = (selectedIndex) => {
+        this.fetchTabData(selectedIndex);
+    };
 
     render() {
         return (
@@ -89,7 +126,7 @@ export default class SingleAddressPage extends React.Component {
                 <GoBack />
                 <Headline title="Address" subtitle={this.props.match.params.address} />
                 <BalanceDetails balance={this.state.balance} />
-                <Tabs>
+                <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
                     <Pane title="Last 100 transactions">
                         <TransactionList transactions={transactions} />
                     </Pane>
@@ -97,7 +134,7 @@ export default class SingleAddressPage extends React.Component {
                         <GroupedAliasList aliases={aliases} />
                     </Pane>
                     <Pane title="Assets">
-                        <AssetList assets={assets} />
+                        <AssetList assets={this.state.assets} />
                     </Pane>
                 </Tabs>
             </React.Fragment>
