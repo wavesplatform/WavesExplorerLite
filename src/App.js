@@ -31,7 +31,7 @@ const withNetworkRouter = (RootComponent) => {
            );
        }
    };
-}
+};
 
 class App extends Component {
     state = {
@@ -55,7 +55,7 @@ class App extends Component {
                         <Search />
                     </Header>
                     <div className="container grid">
-                        <NavBar {...this.props} />
+                        <NavBar />
                         <div className="content card">
                         <Switch>
                             <Route exact path={routes.blocks.list} component={BlocksPage} />
@@ -71,7 +71,7 @@ class App extends Component {
                 </div>
                 <div className="mobile-menu">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
-                    <NavBar {...this.props} appearance="mobile" />
+                    <NavBar appearance="mobile" />
                 </div>
             </React.Fragment>
         );

@@ -18,6 +18,16 @@ export default class MainPage extends React.Component {
     };
 
     componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
+    fetchData() {
         const {networkId} = this.props.match.params;
         const api = apiBuilder(networkId);
 

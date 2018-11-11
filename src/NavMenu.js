@@ -35,6 +35,12 @@ export default class NavMenu extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.networkId !== prevProps.networkId) {
+            this.setState({current: this.state.items[0]});
+        }
+    }
+
     handleNavigate = item => {
         this.setState({
             current: item
