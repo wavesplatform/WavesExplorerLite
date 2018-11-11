@@ -12,6 +12,7 @@ import GroupedAliasList from './GroupedAliasList';
 import Tabs from './Tabs';
 import Pane from './Pane';
 import BalanceDetails from './BalanceDetails';
+import transactionMapper from './TransactionMapper';
 
 const transactions = [{
     id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
@@ -37,6 +38,7 @@ const transactions = [{
     type: 11,
     date: '00.00.0000',
     time: '00:00:00',
+    direction: 'outgoing',
     recipient: '3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he',
     in: {
         amount: '100000.00000000',
@@ -45,26 +47,13 @@ const transactions = [{
     spam: true
 }];
 
-const assets = [{
-    id: '96MaKscZERV8bHaPvXcBRaEab881Hj2Kywja4uzgE100',
-    name: 'MrBigMike',
-    amount: '284,949.48281863'
-}];
-
-const aliases = [{
-    letter: 'M',
-    aliases: ['MrBigMike', 'Mfhdjs#&42_32f', 'Mike32341531']
-}, {
-    letter: 'N',
-    aliases: ['NfhdLdf44852572547', 'Nnnnnnnn', 'N___fds#@3', 'nnnnbnn3', 'Nn321', 'n_341f', 'NinaAd', 'Noki-Poki']
-}];
-
 export default class SingleAddressPage extends React.Component {
 
     state = {
         balance: {},
         assets: [],
         aliases: [],
+        transactions: [],
         selectedTabIndex: 0
     };
 
@@ -97,7 +86,9 @@ export default class SingleAddressPage extends React.Component {
         switch (selectedIndex) {
             case 0:
                 api.transactions.address(address).then(transactionsResponse => {
+                    const transactions = transactionsResponse.data[0].map(item => transactionMapper(item, address));
 
+                    this.setState({transactions});
                 });
 
                 break;
@@ -143,7 +134,7 @@ export default class SingleAddressPage extends React.Component {
                 <BalanceDetails balance={this.state.balance} />
                 <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
                     <Pane title="Last 100 transactions">
-                        <TransactionList transactions={transactions} />
+                        <TransactionList transactions={this.state.transactions} />
                     </Pane>
                     <Pane title="Aliases">
                         <GroupedAliasList aliases={this.state.aliases} />

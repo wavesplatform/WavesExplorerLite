@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import AddressRef from '../shared/AddressRef';
+
 const TransferListItem = ({transfer}) => {
     return (
         <tr>
@@ -31,8 +33,8 @@ const TransferList = ({transfers}) => {
             </tr>
             </thead>
             <tbody>
-            {transfers.map(item => {
-                return <TransferListItem key={item.recepient} transfer={item}/>
+            {transfers.map((item, index) => {
+                return <TransferListItem key={index} transfer={item}/>
             })}
             </tbody>
         </table>

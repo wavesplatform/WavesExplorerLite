@@ -22,11 +22,11 @@ export default class TransactionListItem extends React.PureComponent {
                     <div className="line"><label>{typeToTitle(tx.type)}</label></div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
-                    <div className="line"><label>{tx.date}</label></div>
-                    <div className="line"><label>{tx.time}</label></div>
+                    <div className="line"><label>{tx.timestamp.date}</label></div>
+                    <div className="line"><label>{tx.timestamp.time}</label></div>
                 </td>
                 <td data-label="Sender / Receiver">
-                    <TransactionArrow type={tx.type} />
+                    <TransactionArrow type={tx.type} direction={tx.direction} />
                     <div className="line no-wrap"><Address address={tx.sender} /></div>
                     <div className="line no-wrap"><Address address={tx.recipient} /></div>
                 </td>

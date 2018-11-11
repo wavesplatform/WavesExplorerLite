@@ -139,16 +139,19 @@ const exchangeTransactionToItems = tx => {
 const massPaymentTransactionToItems = tx => {
     const items = [{
         label: 'Total amount',
-        value: '187018.70127952 Secrect Sendicate'
+        value: tx.totalAmount + ' Secrect Sendicate'
     }, {
         label: 'Transfers count',
-        value: '88'
-    }, {
-        label: 'Description',
-        value: <span className="bold">Text</span>
+        value: tx.transferCount,
     }];
 
-    return [...buildTransactionHeaderItems(tx), ...items, buildFeeItem(tx), buildSenderItem(tx)];
+    return [
+        ...buildTransactionHeaderItems(tx),
+        ...items,
+        buildAttachmentItem(tx),
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
 };
 
 const buildDescriptionItem = tx => ({
