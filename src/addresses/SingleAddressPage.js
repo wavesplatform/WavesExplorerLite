@@ -1,8 +1,10 @@
 import React from 'react';
+import groupBy from 'lodash/groupBy';
 
 import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
+import Alias from '../shared/Alias';
 
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
@@ -62,6 +64,7 @@ export default class SingleAddressPage extends React.Component {
     state = {
         balance: {},
         assets: [],
+        aliases: [],
         selectedTabIndex: 0
     };
 
@@ -93,7 +96,25 @@ export default class SingleAddressPage extends React.Component {
 
         switch (selectedIndex) {
             case 0:
+                api.transactions.address(address).then(transactionsResponse => {
+
+                });
+
+                break;
             case 1:
+                api.addresses.aliases(address).then(aliasesResponse => {
+                    const lines = aliasesResponse.data.map(item => Alias.fromString(item).alias);
+                    const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
+                    const aliases = Object.keys(grouped).sort().map(letter => ({
+                        letter,
+                        aliases: grouped[letter].sort()
+                    }));
+
+                    this.setState({aliases});
+                });
+
+                break;
+            case 2:
                 api.addresses.assetsBalance(address).then(balanceResponse => {
                     const assets = balanceResponse.data.balances.map(item => {
                         return {
@@ -104,12 +125,6 @@ export default class SingleAddressPage extends React.Component {
                     });
 
                     this.setState({assets});
-                });
-
-                break;
-            case 2:
-                api.addresses.aliases(address).then(aliasesResponse => {
-                    //TODO: map response to state
                 });
 
                 break;
@@ -131,7 +146,7 @@ export default class SingleAddressPage extends React.Component {
                         <TransactionList transactions={transactions} />
                     </Pane>
                     <Pane title="Aliases">
-                        <GroupedAliasList aliases={aliases} />
+                        <GroupedAliasList aliases={this.state.aliases} />
                     </Pane>
                     <Pane title="Assets">
                         <AssetList assets={this.state.assets} />

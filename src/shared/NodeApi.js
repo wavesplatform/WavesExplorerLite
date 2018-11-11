@@ -3,6 +3,8 @@ import axios from 'axios';
 import {create} from '../configuration';
 import DateTime from './DateTime';
 
+const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+
 export const replaceTimestampWithDateTime = obj => {
     if (obj.timestamp) {
         obj.timestamp = new DateTime(obj.timestamp);
@@ -53,6 +55,9 @@ export const nodeApi = (baseUrl) => {
             }),
             utxSize: () => get('/transactions/unconfirmed/size'),
             info: id => get(`/transactions/info/${id}`, {
+                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
+            }),
+            address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`, {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             })
         },
