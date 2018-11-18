@@ -53,10 +53,10 @@ export default class SingleAddressPage extends React.Component {
         switch (selectedIndex) {
             case 0:
                 api.transactions.address(address).then(transactionsResponse => {
-                    const transactions = transactionsResponse.data[0].map(item => transactionMapper(item, address));
+                    const rawTransactions = transactionsResponse.data[0];
 
-                    this.setState({transactions});
-                });
+                    return transactionMapper(networkId, rawTransactions, address);
+                }).then(transactions => this.setState({transactions}));
 
                 break;
             case 1:

@@ -1,5 +1,5 @@
 import Currency from '../shared/Currency';
-import apiBuilder from '../shared/NodeApi';
+import {apiBuilder} from '../shared/NodeApi';
 
 const FAILURE = new Currency({
     id: 'failure',
