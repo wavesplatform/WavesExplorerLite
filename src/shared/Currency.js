@@ -23,6 +23,14 @@ export default class Currency {
         precision: 8
     });
 
+    static fromIssueTransaction = issueTransaction => {
+        return new Currency({
+            id: issueTransaction.assetId,
+            displayName: issueTransaction.name,
+            precision: issueTransaction.decimals
+        });
+    };
+
     toString() {
         if (this.shortName)
             return this.shortName;
