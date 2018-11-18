@@ -5,6 +5,9 @@ import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 import Alias from '../shared/Alias';
+import Currency from '../shared/Currency';
+import Money from '../shared/Money';
+import MoneyServiceFactory from '../services/MoneyServiceFactory';
 
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
@@ -75,10 +78,16 @@ export default class SingleAddressPage extends React.Component {
             case 2:
                 api.addresses.assetsBalance(address).then(balanceResponse => {
                     const assets = balanceResponse.data.balances.map(item => {
+                        const currency = Currency.fromIssueTransaction(item.issueTransaction);
+                        const currencyService = MoneyServiceFactory.currencyService(networkId);
+                        currencyService.put(currency);
+
+                        const amount = Money.fromCoins(item.balance, currency);
+
                         return {
                             id: item.assetId,
-                            name: item.issueTransaction.name,
-                            amount: item.balance
+                            name: currency.toString(),
+                            amount: amount.formatAmount()
                         };
                     });
 
