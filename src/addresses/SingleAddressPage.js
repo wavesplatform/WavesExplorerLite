@@ -14,39 +14,6 @@ import Pane from './Pane';
 import BalanceDetails from './BalanceDetails';
 import transactionMapper from './TransactionMapper';
 
-const transactions = [{
-    id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
-    type: 7,
-    date: '00.00.0000',
-    time: '00:00:00',
-    sender: '3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he',
-    recipient: '3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3',
-    in: {
-        amount: '182.56761789',
-        currency: 'WAVES'
-    },
-    out: {
-        amount: '0.09787450',
-        currency: 'BTC'
-    },
-    price: {
-        amount: '245.28404366',
-        currency: 'WAVES'
-    }
-}, {
-    id: 'CTAdvY5n3VsYg9LQz432FDSTAdvY5n3VsYg9LQz432FDS',
-    type: 11,
-    date: '00.00.0000',
-    time: '00:00:00',
-    direction: 'outgoing',
-    recipient: '3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he',
-    in: {
-        amount: '100000.00000000',
-        currency: 'profitbot'
-    },
-    spam: true
-}];
-
 export default class SingleAddressPage extends React.Component {
 
     state = {
