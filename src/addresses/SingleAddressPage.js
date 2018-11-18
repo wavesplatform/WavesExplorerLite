@@ -43,7 +43,15 @@ export default class SingleAddressPage extends React.Component {
         const api = apiBuilder(networkId);
 
         api.addresses.details(address).then(balanceResponse => {
-            this.setState({balance: balanceResponse.data});
+            const data = balanceResponse.data;
+            const balance = {
+                regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
+                generating: Money.fromCoins(data.generating, Currency.WAVES).toString(),
+                available: Money.fromCoins(data.available, Currency.WAVES).toString(),
+                effective: Money.fromCoins(data.effective, Currency.WAVES).toString()
+            };
+
+            this.setState({balance});
         });
 
         this.fetchTabData(this.state.selectedTabIndex);
