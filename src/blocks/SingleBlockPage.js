@@ -10,6 +10,9 @@ import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
 import Dictionary from '../shared/Dictionary';
 
+import MoneyServiceFactory from '../services/MoneyServiceFactory';
+import TransactionTransformerService from '../services/TransactionTransformerService';
+
 import BlockEnumerator from './BlockEnumerator';
 import TransactionList from './TransactionList';
 
@@ -52,8 +55,10 @@ export default class SingleBlockPage extends React.Component {
         currentHeight: parseInt(this.props.match.params.height),
         maxHeight: parseInt(this.props.match.params.height) + 1,
         block: {
-            timestamp: {}
-        }
+            timestamp: {},
+            generator: ''
+        },
+        groupedTransactions: {}
     };
 
     componentDidMount() {
@@ -78,6 +83,14 @@ export default class SingleBlockPage extends React.Component {
 
         api.blocks.at(height).then(blockResponse => {
             this.setState({block: blockResponse.data});
+
+            const currencyService = MoneyServiceFactory.currencyService(networkId);
+            const transformer = new TransactionTransformerService(currencyService);
+
+            return transformer.transform(blockResponse.data.transactions);
+        }).then(transactions => {
+            const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
+            this.setState({groupedTransactions});
         });
     };
 
@@ -89,26 +102,17 @@ export default class SingleBlockPage extends React.Component {
 
     render() {
         const dictionaryItems = this.stateToDictionaryItems();
-        const transactions = this.state.block.transactions ?
-            this.state.block.transactions.map(item => {
-                const copy = Object.assign({}, item);
-                replaceTimestampWithDateTime(copy);
-
-                return copy;
-            }) : [];
-        const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
-
         return (
             <React.Fragment>
                 <GoBack />
                 <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false} />
                 <Dictionary items={dictionaryItems} />
 
-                {Object.keys(groupedTransactions).map(type => {
+                {Object.keys(this.state.groupedTransactions).map(type => {
                     const numericType = parseInt(type);
                     const header = typeToHeader(numericType);
                     return <TransactionList key={numericType} type={numericType} header={header}
-                                            transactions={groupedTransactions[type]}/>
+                                            transactions={this.state.groupedTransactions[type]}/>
                 })}
             </React.Fragment>
         );

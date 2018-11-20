@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import DateTime from '../shared/DateTime';
 import AddressRef from '../shared/AddressRef';
+import CurrencyRef from '../shared/CurrencyRef';
 import TransactionRef from '../shared/TransactionRef';
 import TransactionArrow from '../shared/TransactionArrow';
+import Currency from '../shared/Currency';
 
 export const createListItem = (transaction) => {
     switch (transaction.type) {
@@ -99,15 +101,15 @@ class Subjects extends React.PureComponent {
 
 class AmountAndFee extends React.PureComponent {
     static propTypes = {
-        amount: PropTypes.number,
-        fee: PropTypes.number
+        amount: PropTypes.object,
+        fee: PropTypes.object
     };
 
     render() {
         return (
             <td data-label="Amount / Fee">
-                <Line>{this.props.amount}</Line>
-                <Line><label>{this.props.fee} WAVES</label></Line>
+                <Line>{this.props.amount.toString()}</Line>
+                <Line><label>{this.props.fee.toString()}</label></Line>
             </td>
         );
     }
@@ -126,7 +128,7 @@ class TransferTransactionListItem extends React.PureComponent {
                 <Subjects type={tx.type} sender={tx.sender} recipient={tx.recipient} />
                 <AmountAndFee amount={tx.amount} fee={tx.fee} />
                 <td data-label="Price">
-                    <Line><a>XDTC</a></Line>
+                    <Line><CurrencyRef currency={tx.amount.currency} /></Line>
                 </td>
             </tr>
         );
@@ -141,18 +143,18 @@ class ExchangeTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Seller / Buyer">
                     <div className="arrow exchange"></div>
-                    <div className="line no-wrap"><AddressRef address="3PGaVDYAZ4FvDxTQuCi26BHam8dZJPQS9he"
-                                                              appearance="regular"/></div>
-                    <div className="line no-wrap"><AddressRef address="3PJaDyprvekvPXPuAtxrapacuDJopgJRaU3"
-                                                              appearance="regular"/></div>
+                    <div className="line no-wrap"><AddressRef address={tx.sender} appearance="regular"/></div>
+                    <div className="line no-wrap"><AddressRef address={tx.recipient} appearance="regular"/></div>
                 </td>
                 <td data-label="Amount / Total">
-                    <div className="line">7.69536906</div>
-                    <div className="line bold">406.70541687</div>
+                    <div className="line">{tx.amount.toString()}</div>
+                    <div className="line bold">{tx.total.toString()}</div>
                 </td>
                 <td data-label="Pair / Price">
-                    <div className="line"><a>ZEC</a> / WAVES</div>
-                    <div className="line bold">53.24051565</div>
+                    <div className="line">
+                        <CurrencyRef currency={tx.price.amountAsset}/> / <CurrencyRef currency={tx.price.priceAsset} />
+                    </div>
+                    <div className="line bold">{tx.price.toString()}</div>
                 </td>
             </tr>
         );
@@ -211,8 +213,8 @@ class IssueTransactionListItem extends React.PureComponent {
                     </Line>
                 </td>
                 <td data-label="Amount / Fee">
-                    <Line>{tx.quantity}</Line>
-                    <Line><label>{tx.fee} WAVES</label></Line>
+                    <Line>{tx.amount.toString()}</Line>
+                    <Line><label>{tx.fee.toString()}</label></Line>
                 </td>
                 <td>
                     <Line bold={true}>{tx.name}</Line>
@@ -235,7 +237,7 @@ class BurnTransactionListItem extends React.PureComponent {
                 <Subjects type={tx.type} sender={tx.sender} />
                 <AmountAndFee amount={tx.amount} fee={tx.fee} />
                 <td data-label="Price">
-                    <Line><a>XDTC</a></Line>
+                    <Line><CurrencyRef currency={tx.amount.currency} /></Line>
                 </td>
             </tr>
         );
@@ -255,7 +257,7 @@ class AliasTransactionListItem extends React.PureComponent {
                 <Subjects type={tx.type} sender={tx.sender} />
                 <td data-label="Amount / Fee">
                     <Line />
-                    <Line><label>{tx.fee} WAVES</label></Line>
+                    <Line><label>{tx.fee.toString()}</label></Line>
                 </td>
                 <td data-label="Price">
                     <Line bold={true}>{tx.alias}</Line>
@@ -282,7 +284,7 @@ class MassPaymentTransactionListItem extends React.PureComponent {
                 </td>
                 <AmountAndFee amount={tx.totalAmount} fee={tx.fee} />
                 <td data-label="Price">
-                    <Line><a>XDTC</a></Line>
+                    <Line><CurrencyRef currency={tx.totalAmount.currency} /></Line>
                 </td>
             </tr>
         );
