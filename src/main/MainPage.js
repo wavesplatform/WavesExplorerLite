@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {apiBuilder} from '../shared/NodeApi';
+import ServiceFactory from '../services/ServiceFactory';
 
 import NetworkInfo from './NetworkInfo';
 import LastBlockList from './LastBlockList';
@@ -62,7 +63,10 @@ export default class MainPage extends React.Component {
         });
 
         api.transactions.unconfirmed().then(response => {
-            const unconfirmed = response.data.map(tx => tx);
+            const transformer = ServiceFactory.transactionTransformerService(networkId);
+
+            return transformer.transform(response.data);
+        }).then(unconfirmed => {
             this.setState({unconfirmed});
         });
     }

@@ -50,14 +50,10 @@ export const nodeApi = (baseUrl) => {
             }
         },
         transactions: {
-            unconfirmed: () => get('/transactions/unconfirmed', {
-                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-            }),
+            unconfirmed: () => get('/transactions/unconfirmed'),
             utxSize: () => get('/transactions/unconfirmed/size'),
             info: id => get(`/transactions/info/${id}`),
-            address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`, {
-                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-            })
+            address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`)
         },
         peers: () => get('/peers/connected'),
     };
