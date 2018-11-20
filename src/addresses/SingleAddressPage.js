@@ -7,8 +7,7 @@ import Headline from '../shared/Headline';
 import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
-import MoneyServiceFactory from '../services/MoneyServiceFactory';
-import TransactionTransformerService from '../services/TransactionTransformerService';
+import ServiceFactory from '../services/ServiceFactory';
 
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
@@ -65,8 +64,7 @@ export default class SingleAddressPage extends React.Component {
         switch (selectedIndex) {
             case 0:
                 api.transactions.address(address).then(transactionsResponse => {
-                    const currencyService = MoneyServiceFactory.currencyService(networkId);
-                    const transformerService = new TransactionTransformerService(currencyService);
+                    const transformerService = ServiceFactory.transactionTransformerService(networkId);
 
                     return transformerService.transform(transactionsResponse.data[0]);
                 })
@@ -95,7 +93,7 @@ export default class SingleAddressPage extends React.Component {
                 api.addresses.assetsBalance(address).then(balanceResponse => {
                     const assets = balanceResponse.data.balances.map(item => {
                         const currency = Currency.fromIssueTransaction(item.issueTransaction);
-                        const currencyService = MoneyServiceFactory.currencyService(networkId);
+                        const currencyService = ServiceFactory.currencyService(networkId);
                         currencyService.put(currency);
 
                         const amount = Money.fromCoins(item.balance, currency);

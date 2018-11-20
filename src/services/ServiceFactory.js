@@ -1,7 +1,8 @@
 import {MoneyService} from './MoneyService';
 import {CurrencyService} from './CurrencyService';
+import {TransactionTransformerService} from './TransactionTransformerService';
 
-class MoneyServiceFactory {
+class ServiceFactory {
     constructor() {
         this.cache = {};
     }
@@ -19,8 +20,10 @@ class MoneyServiceFactory {
     };
 
     moneyService = (networkId) => new MoneyService(this.currencyService(networkId));
+
+    transactionTransformerService = (networkId) => new TransactionTransformerService(this.currencyService(networkId));
 }
 
-const factoryInstance = new MoneyServiceFactory();
+const factoryInstance = new ServiceFactory();
 
 export default factoryInstance;

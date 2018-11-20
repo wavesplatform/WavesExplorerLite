@@ -4,8 +4,7 @@ import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 import Dictionary from '../shared/Dictionary';
-import MoneyServiceFactory from '../services/MoneyServiceFactory';
-import TransactionTransformerService from '../services/TransactionTransformerService';
+import ServiceFactory from '../services/ServiceFactory';
 
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import MassPaymentDetails from "./MassPaymentDetails";
@@ -32,8 +31,7 @@ export default class SingleTransactionPage extends React.Component {
         const api = apiBuilder(networkId);
 
         api.transactions.info(transactionId).then(infoResponse => {
-            const currencyService = MoneyServiceFactory.currencyService(networkId);
-            const transformer = new TransactionTransformerService(currencyService);
+            const transformer = ServiceFactory.transactionTransformerService(networkId);
 
             return transformer.transform(infoResponse.data);
         }).then(tx => this.setState({tx}));

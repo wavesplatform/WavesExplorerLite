@@ -37,7 +37,9 @@ export const nodeApi = (baseUrl) => {
         blocks: {
             height: () => get('/blocks/height'),
             delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
-            at: (height) => get(`/blocks/at/${height}`),
+            at: (height) => get(`/blocks/at/${height}`, {
+                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
+            }),
             headers: {
                 last: () => get('/blocks/headers/last', {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)

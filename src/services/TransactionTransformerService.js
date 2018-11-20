@@ -206,7 +206,7 @@ const transformTransfer = (currencyService, tx) => {
 };
 
 
-export default class TransactionTransformerService {
+export class TransactionTransformerService {
     constructor(currencyService) {
         this.currencyService = currencyService;
     }

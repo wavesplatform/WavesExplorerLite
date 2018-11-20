@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import groupBy from 'lodash/groupBy';
 
-import {apiBuilder, replaceTimestampWithDateTime} from '../shared/NodeApi';
+import {apiBuilder} from '../shared/NodeApi';
 import {routeBuilder} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
@@ -10,8 +9,7 @@ import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
 import Dictionary from '../shared/Dictionary';
 
-import MoneyServiceFactory from '../services/MoneyServiceFactory';
-import TransactionTransformerService from '../services/TransactionTransformerService';
+import ServiceFactory from '../services/ServiceFactory';
 
 import BlockEnumerator from './BlockEnumerator';
 import TransactionList from './TransactionList';
@@ -84,8 +82,7 @@ export default class SingleBlockPage extends React.Component {
         api.blocks.at(height).then(blockResponse => {
             this.setState({block: blockResponse.data});
 
-            const currencyService = MoneyServiceFactory.currencyService(networkId);
-            const transformer = new TransactionTransformerService(currencyService);
+            const transformer = ServiceFactory.transactionTransformerService(networkId);
 
             return transformer.transform(blockResponse.data.transactions);
         }).then(transactions => {
