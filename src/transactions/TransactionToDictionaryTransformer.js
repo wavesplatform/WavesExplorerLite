@@ -128,18 +128,28 @@ const transferTransactionToItems = tx => {
 };
 
 const exchangeTransactionToItems = tx => {
+    const items = [{
+        label: 'Price',
+        value: tx.price.toString()
+    }, {
+        label: 'Total',
+        value: tx.total.toString()
+    }];
+
     return [
         ...buildTransactionHeaderItems(tx),
-        //TODO: fill buyer and seller data
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        buildAmountItem(tx),
+        ...items,
+        buildSenderItem(tx),
+        buildRecipientItem(tx)
     ];
 };
 
 const massPaymentTransactionToItems = tx => {
     const items = [{
         label: 'Total amount',
-        value: tx.totalAmount + ' Secrect Sendicate'
+        value: tx.totalAmount.toString()
     }, {
         label: 'Transfers count',
         value: tx.transferCount,
@@ -179,7 +189,7 @@ const buildTransactionHeaderItems = tx => {
 
 const buildQuantityItem = tx => ({
     label: 'Quantity',
-    value: tx.quantity
+    value: tx.amount.toString()
 });
 
 const buildReissuableItem = tx => ({
@@ -199,12 +209,12 @@ const buildSenderItem = tx => ({
 
 const buildFeeItem = tx => ({
     label: 'Fee',
-    value: tx.fee
+    value: tx.fee.toString()
 });
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: tx.amount
+    value: tx.amount.toString()
 });
 
 export default transactionToDictionary;

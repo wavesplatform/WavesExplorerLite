@@ -22,6 +22,10 @@ class OrderPrice {
     toTokens = () => this.price.toNumber();
     toCoins = () => this.toTokens() * Math.pow(10, this.priceAsset.precision - this.amountAsset.precision);
     toBackendPrice = () => Math.round(this.toCoins() * MATCHER_SCALE);
+
+    toString() {
+        return this.toTokens().toFixed(8);
+    }
 }
 
 export default {

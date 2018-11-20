@@ -54,9 +54,7 @@ export const nodeApi = (baseUrl) => {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             }),
             utxSize: () => get('/transactions/unconfirmed/size'),
-            info: id => get(`/transactions/info/${id}`, {
-                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-            }),
+            info: id => get(`/transactions/info/${id}`),
             address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`, {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             })

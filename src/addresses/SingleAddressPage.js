@@ -8,6 +8,7 @@ import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import MoneyServiceFactory from '../services/MoneyServiceFactory';
+import TransactionTransformerService from '../services/TransactionTransformerService';
 
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
@@ -64,10 +65,17 @@ export default class SingleAddressPage extends React.Component {
         switch (selectedIndex) {
             case 0:
                 api.transactions.address(address).then(transactionsResponse => {
-                    const rawTransactions = transactionsResponse.data[0];
+                    const currencyService = MoneyServiceFactory.currencyService(networkId);
+                    const transformerService = new TransactionTransformerService(currencyService);
 
-                    return transactionMapper(networkId, rawTransactions, address);
-                }).then(transactions => this.setState({transactions}));
+                    return transformerService.transform(transactionsResponse.data[0]);
+                })
+                .then(transactions => {
+                    return transactionMapper(transactions, address);
+                })
+                .then(transactions => {
+                    this.setState({transactions});
+                });
 
                 break;
             case 1:

@@ -1,61 +1,52 @@
-import sumBy from 'lodash/sumBy';
-import DateTime from '../shared/DateTime';
 import Money from '../shared/Money';
-import Currency from '../shared/Currency';
-import OrderPrice from '../shared/OrderPrice';
-import MoneyServiceFactory from '../services/MoneyServiceFactory';
 
 // consider extracting to a module
 const INCOMING = 'incoming';
 const OUTGOING = 'outgoing';
 
-const transactionMapper = (networkId, transactions, currentAddress) => {
-
-    const currencyService = MoneyServiceFactory.currencyService(networkId);
-    const promises = transactions.map(item => mapTransactionToPromise(currencyService, item, currentAddress));
-
-    return Promise.all(promises);
+const transactionMapper = (transactions, currentAddress) => {
+    return transactions.map(item => mapTransactionToPromise(item, currentAddress));
 };
 
-const mapTransactionToPromise = (currencyService, tx, currentAddress) => {
+const mapTransactionToPromise = (tx, currentAddress) => {
     switch (tx.type) {
         case 2:
         case 4:
-            return mapTransfer(currencyService, tx, currentAddress);
+            return mapTransfer(tx, currentAddress);
 
         case 3:
-            return mapIssue(currencyService, tx, currentAddress);
+            return mapIssue(tx, currentAddress);
 
         case 5:
-            return mapReissue(currencyService, tx, currentAddress);
+            return mapReissue(tx, currentAddress);
 
         case 6:
-            return mapBurn(currencyService, tx, currentAddress);
+            return mapBurn(tx, currentAddress);
 
         case 7:
-            return mapExchange(currencyService, tx, currentAddress);
+            return mapExchange(tx, currentAddress);
 
         case 8:
-            return mapLease(currencyService, tx, currentAddress);
+            return mapLease(tx, currentAddress);
 
         case 9:
-            return mapLeaseCancel(currencyService, tx, currentAddress);
+            return mapLeaseCancel(tx, currentAddress);
 
         case 10:
-            return mapAlias(currencyService, tx, currentAddress);
+            return mapAlias(tx, currentAddress);
 
         case 11:
-            return mapMassTransfer(currencyService, tx, currentAddress);
+            return mapMassTransfer(tx, currentAddress);
 
         default:
-            return Promise.resolve(tx);
+            return Object.assign({}, tx);
     }
 };
 
 const copyMandatoryAttributes = tx => ({
     id: tx.id,
     type: tx.type,
-    timestamp: new DateTime(tx.timestamp),
+    timestamp: tx.timestamp,
     sender: tx.sender
 });
 
@@ -68,129 +59,94 @@ const moneyToObject = money => ({
     currency: money.currency.toString()
 });
 
-const mapMassTransfer = (currencyService, tx, currentAddress) => {
-    return currencyService.get(tx.assetId).then(currency => {
-        const tail = {};
-        if (tx.sender === currentAddress) {
-            tail.direction = OUTGOING;
-            tail.out = moneyToObject(Money.fromCoins(tx.totalAmount, currency));
-        } else {
-            tail.direction = INCOMING;
-            tail.recipient = currentAddress;
+const mapMassTransfer = (tx, currentAddress) => {
+    const tail = {};
+    if (tx.sender === currentAddress) {
+        tail.direction = OUTGOING;
+        tail.out = moneyToObject(tx.totalAmount);
+    } else {
+        tail.direction = INCOMING;
+        tail.recipient = currentAddress;
 
-            const amount = sumBy(tx.transfers.filter(transfer => transfer.recipient === currentAddress), 'amount');
-            tail.in = moneyToObject(Money.fromCoins(amount, currency));
+        let total = new Money(0, tx.totalAmount.currency);
+        tx.transfers.filter(transfer => transfer.recipient === currentAddress).forEach(t => {
+            total = total.plus(t.amount);
+        });
+
+        tail.in = moneyToObject(total);
+    }
+
+    return Object.assign(copyMandatoryAttributes(tx), tail);
+};
+
+const mapAlias = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress)
+    });
+};
+
+const mapLease = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress),
+        recipient: tx.recipient,
+        out: moneyToObject(tx.amount)
+    });
+};
+
+const mapLeaseCancel = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress),
+        recipient: tx.recipient
+    });
+};
+
+const mapExchange = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        sender: tx.sender,
+        recipient: tx.recipient,
+        in: moneyToObject(tx.total),
+        out: moneyToObject(tx.amount),
+        price: {
+            amount: tx.price.toTokens().toFixed(8),
+            currency: tx.buyOrder.assetPair.priceAsset.toString()
         }
-
-        return Object.assign(copyMandatoryAttributes(tx), tail);
     });
 };
 
-const mapAlias = (currencyService, tx, currentAddress) => {
-    return Promise.resolve(
-        Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress)
-        })
-    );
-};
-
-const mapLease = (currencyService, tx, currentAddress) => {
-    return Promise.resolve(
-        Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress),
-            recipient: tx.recipient,
-            out: moneyToObject(Money.fromCoins(tx.amount, Currency.WAVES))
-        })
-    );
-};
-
-const mapLeaseCancel = (currencyService, tx, currentAddress) => {
-    return Promise.resolve(
-        Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress),
-            recipient: tx.lease.recipient
-        })
-    );
-};
-
-const mapExchange = (currencyService, tx, currentAddress) => {
-    const buyOrder = tx.order1.orderType === 'buy' ? tx.order1 : tx.order2;
-    const sellOrder = tx.order2.orderType === 'sell' ? tx.order2 : tx.order1;
-    const assetPair = buyOrder.assetPair;
-
-    return Promise.all([
-        currencyService.get(assetPair.amountAsset),
-        currencyService.get(assetPair.priceAsset)
-    ]).then(pair => {
-        const currencyPair = {
-            amountAsset: pair[0],
-            priceAsset: pair[1]
-        };
-
-        const price = OrderPrice.fromBackendPrice(tx.price, currencyPair).toTokens();
-        const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
-
-        return Object.assign(copyMandatoryAttributes(tx), {
-            sender: sellOrder.sender,
-            recipient: buyOrder.sender,
-            in: {
-                amount: (price * amount.toTokens()).toFixed(currencyPair.priceAsset.precision),
-                currency: currencyPair.priceAsset.toString()
-            },
-            out: moneyToObject(amount),
-            price: {
-                amount: price.toFixed(8),
-                currency: currencyPair.priceAsset.toString()
-            }
-        });
+const mapBurn = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress),
+        out: moneyToObject(tx.amount)
     });
 };
 
-const mapBurn = (currencyService, tx, currentAddress) => {
-    return currencyService.get(tx.assetId).then(currency => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress),
-            out: moneyToObject(Money.fromCoins(tx.amount, currency))
-        });
+const mapReissue = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress),
+        out: moneyToObject(tx.amount)
     });
 };
 
-const mapReissue = (currencyService, tx, currentAddress) => {
-    return currencyService.get(tx.assetId).then(currency => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress),
-            out: moneyToObject(Money.fromCoins(tx.quantity, currency))
-        });
+const mapIssue = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress),
+        out: moneyToObject(tx.amount)
     });
 };
 
-const mapIssue = (currencyService, tx, currentAddress) => {
-    const c = Currency.fromIssueTransaction(tx);
-    currencyService.put(c);
+const mapTransfer = (tx, currentAddress) => {
+    const tail = {recipient: tx.recipient};
+    const money = moneyToObject(tx.amount);
 
-    return currencyService.get(c.id).then(currency => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            direction: defaultDirection(tx, currentAddress),
-            out: moneyToObject(Money.fromCoins(tx.quantity, currency))
-        });
-    });
-};
+    if (tx.recipient === currentAddress) {
+        tail.direction = INCOMING;
+        tail.in = money;
+    } else {
+        tail.direction = OUTGOING;
+        tail.out = money;
+    }
 
-const mapTransfer = (currencyService, tx, currentAddress) => {
-    return currencyService.get(tx.assetId).then(currency => {
-        const tail = {recipient: tx.recipient};
-        const money = moneyToObject(Money.fromCoins(tx.amount, currency));
-
-        if (tx.recipient === currentAddress) {
-            tail.direction = INCOMING;
-            tail.in = money;
-        } else {
-            tail.direction = OUTGOING;
-            tail.out = money;
-        }
-
-        return Object.assign(copyMandatoryAttributes(tx), tail);
-    });
+    return Object.assign(copyMandatoryAttributes(tx), tail);
 };
 
 export default transactionMapper;

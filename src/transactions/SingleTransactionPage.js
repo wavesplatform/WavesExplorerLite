@@ -2,9 +2,10 @@ import React from 'react';
 
 import {apiBuilder} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
-import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
 import Dictionary from '../shared/Dictionary';
+import MoneyServiceFactory from '../services/MoneyServiceFactory';
+import TransactionTransformerService from '../services/TransactionTransformerService';
 
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import MassPaymentDetails from "./MassPaymentDetails";
@@ -31,8 +32,11 @@ export default class SingleTransactionPage extends React.Component {
         const api = apiBuilder(networkId);
 
         api.transactions.info(transactionId).then(infoResponse => {
-            this.setState({tx: infoResponse.data});
-        });
+            const currencyService = MoneyServiceFactory.currencyService(networkId);
+            const transformer = new TransactionTransformerService(currencyService);
+
+            return transformer.transform(infoResponse.data);
+        }).then(tx => this.setState({tx}));
     }
 
     render() {
@@ -43,7 +47,7 @@ export default class SingleTransactionPage extends React.Component {
                 <GoBack />
                 <Headline title="Transaction" subtitle={this.state.tx.id} />
                 <Dictionary items={transactionItems}/>
-                <MassPaymentDetails tx={this.state.tx}/>
+                <MassPaymentDetails tx={this.state.tx} />
             </React.Fragment>
         );
     }

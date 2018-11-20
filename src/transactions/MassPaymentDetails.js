@@ -10,7 +10,7 @@ const TransferListItem = ({transfer}) => {
                 <div className="line no-wrap"><AddressRef address={transfer.recipient}/></div>
             </td>
             <td data-label="Amount">
-                <div className="line">{transfer.amount} WAVES</div>
+                <div className="line">{transfer.amount.toString()}</div>
             </td>
         </tr>
     );
