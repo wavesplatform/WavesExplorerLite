@@ -49,11 +49,6 @@ gulp.task('build', ['clean'], function (done) {
     })
 });
 
-gulp.task('copy', function () {
-    return gulp.src('./manifest.json')
-        .pipe(gulp.dest(config.releaseDirectory));
-});
-
 gulp.task('invalidate', function() {
     const settings = {
         accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
@@ -66,10 +61,10 @@ gulp.task('invalidate', function() {
         .pipe(cloudfront(settings));
 });
 
-gulp.task('upload', ['build', 'copy'], function () {
+gulp.task('upload', ['build'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('publish', ['build', 'copy', 'upload', 'invalidate']);
+gulp.task('publish', ['build', 'upload', 'invalidate']);

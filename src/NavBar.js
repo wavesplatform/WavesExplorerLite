@@ -29,11 +29,13 @@ class NavBar extends React.Component {
         if (this.props.appearance === REGULAR_APPEARANCE)
             className += ' lg-hide';
 
+        const version = __VERSION__ || '0';
+
         return (
             <div className={className}>
                 <NetworkSwitch value={networkId} onChange={this.handleNetworkChange} />
                 <NavMenu networkId={networkId} />
-                <Footer version="v1.1.7" />
+                <Footer version={version} />
             </div>
         );
     }

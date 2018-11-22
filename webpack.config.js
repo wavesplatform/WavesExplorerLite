@@ -67,8 +67,14 @@ var config = {
             manifest: require(path.join(buildPath, 'vendor-manifest.json')),
             context: buildPath
         }),
+        new webpack.DefinePlugin({
+            __VERSION__: JSON.stringify(require('./package.json').version)
+        }),
         new CopyWebpackPlugin([{
             from: path.join(sourcesPath, 'favicon.png'),
+            to: buildPath
+        }, {
+            from: 'manifest.json',
             to: buildPath
         }], {debug: true})
     ]
@@ -84,4 +90,4 @@ module.exports = (env, argv) => {
     }
 
     return config;
-}
+};
