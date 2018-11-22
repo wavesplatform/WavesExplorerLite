@@ -32,10 +32,12 @@ export const nodeApi = (baseUrl) => {
         addresses: {
             details: (address) => get(`/addresses/balance/details/${address}`),
             assetsBalance: (address) => get(`/assets/balance/${address}`),
-            aliases: (address) => get(`/alias/by-address/${address}`)
+            aliases: (address) => get(`/alias/by-address/${address}`),
+            validate: (address) => get(`/addresses/validate/${address}`)
         },
         blocks: {
             height: () => get('/blocks/height'),
+            heightBySignature: (signature) => get(`/blocks/height/${signature}`),
             delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
             at: (height) => get(`/blocks/at/${height}`, {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)

@@ -1,6 +1,7 @@
 import {MoneyService} from './MoneyService';
 import {CurrencyService} from './CurrencyService';
 import {TransactionTransformerService} from './TransactionTransformerService';
+import {SearchService} from './SearchService';
 
 class ServiceFactory {
     constructor() {
@@ -22,6 +23,8 @@ class ServiceFactory {
     moneyService = (networkId) => new MoneyService(this.currencyService(networkId));
 
     transactionTransformerService = (networkId) => new TransactionTransformerService(this.currencyService(networkId));
+
+    searchService = (networkId) => new SearchService(networkId);
 }
 
 const factoryInstance = new ServiceFactory();

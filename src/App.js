@@ -16,6 +16,8 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 
+import ServiceFactory from './services/ServiceFactory';
+
 const routes = routeBuilder(routeParams.networkId);
 
 const withNetworkRouter = (RootComponent) => {
@@ -42,6 +44,17 @@ class App extends Component {
         this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
     };
 
+    go = (route) => {
+        this.props.history.push(route);
+    };
+
+    onSearch = (query) => {
+        const {networkId} = this.props.match.params;
+        const searchService = ServiceFactory.searchService(networkId);
+
+        return searchService.search(query).then(route => this.go(route));
+    };
+
     render() {
         let wrapperClassName = 'wrapper';
         if (this.state.mobileMenuVisible) {
@@ -52,7 +65,7 @@ class App extends Component {
             <React.Fragment>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
-                        <Search />
+                        <Search onSearch={this.onSearch} />
                     </Header>
                     <div className="container grid">
                         <NavBar />
