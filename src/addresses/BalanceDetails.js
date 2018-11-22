@@ -26,10 +26,10 @@ const BalanceDetails = ({balance}) => {
 
 BalanceDetails.propTypes = {
     balance: PropTypes.shape({
-        regular: PropTypes.number,
-        generating: PropTypes.number,
-        available: PropTypes.number,
-        effective: PropTypes.number
+        regular: PropTypes.string,
+        generating: PropTypes.string,
+        available: PropTypes.string,
+        effective: PropTypes.string
     })
 };
 
