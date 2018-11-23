@@ -17,7 +17,7 @@ table.address-tr-list {
     tr.spam {
         background-color: map-get($colors, basic50);
 
-        >td {
+        > td {
             opacity: 0.3;
         }
     }

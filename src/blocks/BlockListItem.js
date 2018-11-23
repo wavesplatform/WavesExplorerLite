@@ -13,7 +13,7 @@ export default class BlockListItem extends React.Component {
         const {block} = this.props;
         return (
             <tr>
-                <td data-label="№ / Timestamp">
+                <td data-label="№ / Timestamp" className="block-img-handler nowrap">
                     <div className="block-img sm-hide"></div>
                     <div className="line no-wrap"><BlockRef height={block.height} /></div>
                     <div className="line no-break"><label>{block.timestamp.time}, {block.timestamp.date}</label></div>

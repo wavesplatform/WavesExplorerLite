@@ -47,6 +47,8 @@ body {
 
         .menu-toggle {
             background-image: url('../images/close-24.svg');
+            background-repeat: no-repeat;
+            background-position: 0 7px;
         }
     }
 }
@@ -62,7 +64,7 @@ body {
             width: 42px;
             height: 100%;
             cursor: pointer;
-            background: url('../images/menu-24.svg') no-repeat center left;
+            background: url('../images/menu-24.svg') no-repeat 0 7px;
         }
 
         > .logo {
@@ -118,7 +120,7 @@ body {
 
     > .menu-footer {
         @include font(body, basic500);
-        position: absolute;
+        position: fixed;
         bottom: map-get($layout, padding-top);
 
         > * {

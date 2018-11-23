@@ -1,6 +1,12 @@
 @import "variables";
 @import "mixins.scss";
 
+@font-face {
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+    font-weight: 300;
+}
+
 .info-box {
     justify-content: space-between;
     background-color: map-get($colors, basic50);
@@ -198,6 +204,10 @@
 .link-spacer {
     display: inline-block;
     width: 28px;
+}
+
+.nowrap {
+    white-space: nowrap;
 }
 
 .dictionary {
