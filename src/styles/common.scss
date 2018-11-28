@@ -59,6 +59,7 @@ a {
     vertical-align: middle;
     @include font(body, white);
     cursor: pointer;
+    transition: .3s;
 
     &:hover:not(.disabled) {
         opacity: 0.7

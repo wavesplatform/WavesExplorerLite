@@ -5,8 +5,10 @@ const Header = (props) => {
     return (
         <div className="header grid">
             <div className="header-title grid-item-fixed grid">
-                <div className="menu-toggle grid-item-fixed lg-show" onClick={() => props.onMenuToggle()}></div>
-                <div className="logo"></div>
+                <div className="menu-toggle grid-item-fixed lg-show" onClick={() => props.onMenuToggle()}>
+                    <span className="middle-bar"></span>
+                </div>
+                <div className="logo"><a href="/"></a></div>
             </div>
             {props.children}
         </div>

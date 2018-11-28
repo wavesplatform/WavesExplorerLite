@@ -3,29 +3,34 @@
 
 .search-box {
     position: relative;
+    transition: .5s;
     border-bottom: 1px solid map-get($colors, basic500);
 
-    > .search {
-        background: url('../images/search.svg') no-repeat;
+    .search {
         width: 24px;
         height: 24px;
         padding-right: 12px;
+        svg {
+            transition: .3s;
+        }
     }
 
-    &.active > .search {
-        background-image: url('../images/search-14-black.svg');
+    &.active svg {
+        color: map-get($colors, black);
     }
 
     &.focus {
         border-bottom-color: map-get($colors, submit400);
-
-        > .search {
-            background-image: url('../images/search-14-blue.svg');
+        svg {
+        color: map-get($colors, submit400);
         }
     }
 
     &.invalid {
         border-bottom-color: map-get($colors, error500);
+        svg {
+            color: map-get($colors, error500);
+        }
 
         &::after {
             content: "Nothing has been found for query";
@@ -43,6 +48,7 @@
     &.loading > .search {
         background-image: url('../images/loading-24.svg');
         animation: spin 1s linear infinite;
+        svg {display: none;}
     }
     @-moz-keyframes spin {
         100% {
@@ -68,15 +74,26 @@
     > .clear {
         display: block;
         height: 24px;
-        background: url('../images/clear-24.svg') no-repeat;
-        padding-left: 32px;
+        padding-left: 10px;
         cursor: pointer;
         @include font(body, basic500);
         line-height: 24px;
+        transition: .3s;
+
+        svg {
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -2px;
+            margin-right: 7px;
+            fill: map-get($colors, basic500);
+            transition: .3s;
+        }
 
         &:hover {
             color: black;
-            background: url('../images/clear-24-black.svg') no-repeat;
+            svg {
+                fill: map-get($colors, black);
+            }
         }
     }
 }

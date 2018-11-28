@@ -48,15 +48,20 @@ var config = {
                 //'postcss-loader',
                 'sass-loader'
             ]
-        }, {
-            test: /\.(png|jpg|gif|svg)$/,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[hash].[ext]'
-                }
+        },
+            {
+                test: /\.(woff|woff2|ttf|otf)$/,
+                loader: 'file-loader?name=assets/fonts/[name].[ext]',
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[hash].[ext]'
+                    }
+                }]
             }]
-        }]
     },
     plugins: [
         new HtmlWebPackPlugin({
@@ -76,7 +81,7 @@ var config = {
         }, {
             from: 'manifest.json',
             to: buildPath
-        }], {debug: true})
+        }], { debug: true })
     ]
 };
 

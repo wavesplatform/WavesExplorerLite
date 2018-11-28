@@ -18,7 +18,8 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
                     <div className="line no-wrap"><TransactionRef txId={tx.id} /></div>
                     <div className="line">
                         <label>Amount</label> {tx.amount ? tx.amount.toString() : ''}
-                        <label className="right">Fee {tx.fee.toString()}</label>
+                        <div className="link-spacer"></div>
+                        <label className="nowrap">Fee {tx.fee.toString()}</label>
                     </div>
                     <div className="line wide">
                         <AddressRef address={tx.sender} appearance="regular" title="Sender" />

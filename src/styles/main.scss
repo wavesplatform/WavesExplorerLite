@@ -7,10 +7,20 @@
 @import "blocks.scss";
 @import "nodes.scss";
 @import "address.scss";
+@import "fonts.scss";
 
 body {
+    position: relative;
     background-color: map-get($colors, basic50);
     @include responsive_styles($layout);
+    min-width: 360px;
+    @media screen and(min-width: 800px) {
+        min-height: 560px;
+    }
+}
+
+#root {
+    overflow: hidden;
 }
 
 .wrapper {
@@ -27,16 +37,13 @@ body {
 }
 
 .mobile-menu {
-    display: none;
     @include responsive_styles($mobile_menu);
-}
-
-.wrapper.show + .mobile-menu {
-    @include responsive_styles($layout);
-    display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+
+    transform: translateX(-130%);
+    transition: .4s;
     min-height: 100vh;
     box-sizing: border-box;
     background-color: map-get($colors, basic50);
@@ -44,31 +51,93 @@ body {
 
     > .header {
         margin-bottom: map-get($layout, padding-top);
+        height: 44px;
+        margin-top: 38px;
 
-        .menu-toggle {
-            background-image: url('../images/close-24.svg');
-            background-repeat: no-repeat;
-            background-position: 0 7px;
+        .menu-toggle:hover {
+            &::before {
+                bottom: 50%;
+                transform-origin: center;
+                transform: translateY(50%) rotate(-45deg);
+            }
+            &::after {
+                top: 50%;
+                transform-origin: center;
+                transform: translateY(-50%) rotate(225deg);
+            }
+            .middle-bar {
+                opacity: 0;
+            }
         }
     }
+}
+
+.wrapper.show + .mobile-menu {
+    @include responsive_styles($layout);
+    transform: translateX(0);
+    padding-top: 0;
 }
 
 .header {
     height: map-get($header, hight);
 
+    @media screen and (max-width: 800px) {
+        display: flex;
+        flex-direction: column;
+        height: 88px;
+    }
+
     > .header-title {
+        align-items: center;
         width: map-get($header, title_width);
 
         > .menu-toggle {
             display: none;
-            width: 42px;
-            height: 100%;
+            width: 24px;
+            height: 20px;
+            margin-top: -5px;
             cursor: pointer;
-            background: url('../images/menu-24.svg') no-repeat 0 7px;
+            position: relative;
+            margin-right: 18px;
+
+            .middle-bar,
+            &::after,
+            &::before {
+                content: '';
+                width: 24px;
+                height: 2px;
+                display: block;
+                background: map-get($colors, black);
+                border-radius: 2px;
+                position: absolute;
+                transition: .3s;
+                transform: translate3d(0, 0, 0);
+            }
+            &::before {
+                bottom: 0;
+            }
+            &::after {
+                top: 0;
+            }
+            .middle-bar {
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0 auto;
+            }
         }
 
         > .logo {
             background: url('../images/waves-124.svg') no-repeat 0 3px;
+            min-height: 44px;
+            position: relative;
+
+            a {
+                display: block;
+                height: 44px;
+                position: absolute;
+                z-index: 1;
+                width: 220px;
+            }
 
             &::after {
                 content: "Explorer";
@@ -83,6 +152,7 @@ body {
 
 .container {
     @include responsive_styles($layout, padding-top);
+    padding-bottom: 36px;
 }
 
 .menu {
@@ -92,15 +162,21 @@ body {
     position: relative;
 
     > .menu-list {
-        padding-top: 46px;
+        padding-top: 39px;
 
         > .menu-item {
             position: relative;
-            margin-bottom: 28px;
-            cursor: pointer;
-            @include font(headline2, disabled500);
-            &:hover {
-                color: map-get($colors, black);
+            margin-bottom: 14px;
+
+            a {
+                padding: 7px 0;
+                display: inline-block;
+                transition: .3s;
+                @include font(headline2, disabled500);
+
+                &:hover {
+                    color: map-get($colors, black);
+                }
             }
 
             &.current {
@@ -112,7 +188,7 @@ body {
                     background-color: map-get($colors, submit400);
                     height: 1px;
                     position: absolute;
-                    top: 10px;
+                    top: 17px;
                 }
             }
         }
@@ -139,6 +215,7 @@ body {
     height: 28px;
     margin: 10px 8px 10px 0;
     opacity: 0.3;
+    transition: .3s;
 
     &:hover {
         opacity: 1;
@@ -181,6 +258,25 @@ body {
     border-radius: 2px;
     padding: 2px;
 
+    div {
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 68px;
+            height: 28px;
+            transition: .3s;
+            opacity: 0;
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        &.current:before {
+            background-color: map-get($colors, submit400);
+            opacity: 1;
+        }
+    }
+
     > * {
         display: inline-block;
         width: 68px;
@@ -194,7 +290,6 @@ body {
         &.current {
             cursor: default;
             border-radius: 2px;
-            background-color: map-get($colors, submit400);
             color: map-get($colors, white);
         }
 

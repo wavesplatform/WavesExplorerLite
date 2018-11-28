@@ -82,7 +82,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="mobile-menu">
+                <div className="mobile-menu test">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" />
                 </div>

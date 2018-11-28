@@ -17,7 +17,7 @@ $layout: (
     padding-right: 48px,
     padding-left: 48px,
     padding-top: 36px,
-    padding-bottom: 0,
+    padding-bottom: 0px,
     lg: (
         padding-right: 38px,
         padding-left: 38px
@@ -62,6 +62,7 @@ $mobile_menu: (
 
 $header: (
     hight: 44px,
+    min-height: 44px,
     title_width: 316px,
 );
 
@@ -208,7 +209,8 @@ $social: (
 );
 
 $font: (
-    family: myFirstFont,
+    family: Roboto,
+    weight: 400,
     headline1_size: 24px,
     headline2_size: 18px,
     headline3_size: 16px,

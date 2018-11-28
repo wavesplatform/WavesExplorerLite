@@ -57,11 +57,11 @@
     }
 }
 
-@mixin font($type, $color_name: black, $weight: normal) {
+@mixin font($type, $color_name: black) {
+    font-weight: map-get($font, weight);
     font-family: map-get($font, family);
     font-size: map-get($font, #{$type}_size);
     color: map-get($colors, $color_name);
-    font-weight: $weight;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
