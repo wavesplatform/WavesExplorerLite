@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const FADE_TIMEOUT = 2000;
+
 export default class Search extends React.PureComponent {
     static propTypes = {
         onSearch: PropTypes.func
@@ -39,6 +41,8 @@ export default class Search extends React.PureComponent {
                     isLoading: false,
                     isFailed: true
                 });
+
+                setTimeout(() => this.setState({isFailed: false}), FADE_TIMEOUT);
             }
         }
     };

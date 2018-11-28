@@ -49,7 +49,7 @@ gulp.task('build', ['clean'], function (done) {
     })
 });
 
-gulp.task('invalidate', function() {
+gulp.task('invalidate', ['upload'], function() {
     const settings = {
         accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.EXPLORER_AWS_ACCESS_SECRET,
