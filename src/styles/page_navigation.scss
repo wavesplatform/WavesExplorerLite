@@ -1,6 +1,12 @@
 @import "variables";
 @import "mixins.scss";
 
+.headline {
+    .page-navigation {
+        padding: 0;
+    }
+}
+
 .page-navigation {
     @include responsive_styles($card_inner);
 

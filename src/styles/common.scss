@@ -9,7 +9,8 @@
 }
 
 .right {
-    float: right;
+    flex-grow: 1;
+    text-align: right;
 }
 
 .width-25 {
@@ -70,6 +71,7 @@ a {
     }
 
     &.btn-copy {
+        min-width: 70px;
         width: 70px;
         height: 28px;
         background-image: url('../images/copy-14-white.svg');

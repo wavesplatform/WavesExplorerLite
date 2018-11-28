@@ -24,8 +24,13 @@ body {
 }
 
 .wrapper {
-    &.show::after {
-        content: "";
+    &.show {
+        .fading {
+            display: block;
+        }
+    }
+    .fading {
+        display: none;
         width: 100vw;
         height: 100vh;
         position: fixed;
@@ -41,7 +46,6 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-
     transform: translateX(-130%);
     transition: .4s;
     min-height: 100vh;
@@ -91,6 +95,14 @@ body {
         align-items: center;
         width: map-get($header, title_width);
 
+        @media screen and (min-width: 1367px) {
+           .logo {
+               position: fixed;
+               left: 53px;
+               width: 230px;
+           }
+        }
+
         > .menu-toggle {
             display: none;
             width: 24px;
@@ -129,7 +141,6 @@ body {
         > .logo {
             background: url('../images/waves-124.svg') no-repeat 0 3px;
             min-height: 44px;
-            position: relative;
 
             a {
                 display: block;
@@ -153,13 +164,23 @@ body {
 .container {
     @include responsive_styles($layout, padding-top);
     padding-bottom: 36px;
+
+    @media screen and (min-width: 1367px) {
+        .content {
+            margin-left: 316px;
+        }
+    }
 }
 
 .menu {
     width: map-get($header, title_width);
-    height: calc(100vh - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
+    height: calc(100% - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
     min-height: 500px;
     position: relative;
+
+    @media screen and (min-width: 1367px) {
+        position: fixed;
+    }
 
     > .menu-list {
         padding-top: 39px;

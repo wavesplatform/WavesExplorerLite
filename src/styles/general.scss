@@ -152,10 +152,13 @@
         @include font(headline2, disabled500);
         flex-wrap: nowrap;
         flex-grow: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .title-details + .btn{
-        margin: 0 14px 0 8px;
+        margin-left: 8px;
     }
 
     .btn {
@@ -238,10 +241,26 @@
             padding: 0 14px;
             word-break: break-word;
             @include font(body);
+
+            @media screen and (max-width: 1100px) {
+                max-width: calc(100% - 110px);
+            }
+
+            .ellipsis {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                @media screen and (max-width: 1100px) {
+                    max-width: calc(100% - 70px);
+                }
+            }
         }
 
         > .dictionary-action {
             flex: 0 0 auto;
+            @media screen and (max-width: 1100px) {
+                margin-left: -84px;
+            }
         }
     }
 }

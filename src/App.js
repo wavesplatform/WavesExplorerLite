@@ -81,6 +81,7 @@ class App extends Component {
                         </Switch>
                         </div>
                     </div>
+                    <div className="fading"></div>
                 </div>
                 <div className="mobile-menu test">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
