@@ -26,7 +26,7 @@ const withNetworkRouter = (RootComponent) => {
            return (
                <Router>
                    <Switch>
-                       <Route exact path="/" render={() => (<Redirect to="/mainnet" />)} />
+                       <Route exact path="/" render={() => <Redirect to="/mainnet" />} />
                        <Route path={routes.root} component={RootComponent} />
                    </Switch>
                </Router>
