@@ -51,14 +51,18 @@ var config = {
         },
             {
                 test: /\.(woff|woff2|ttf|otf)$/,
-                loader: 'file-loader?name=assets/fonts/[name].[ext]',
+                exclude: /node_modules/,
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[name].[ext]',
+                }
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
                 use: [{
                     loader: 'file-loader',
                     options: {
-                        name: '[name].[hash].[ext]'
+                        name: 'images/[name].[hash].[ext]'
                     }
                 }]
             }]
