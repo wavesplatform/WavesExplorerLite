@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import './styles/main.scss';
 import {Route, Redirect, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
+import ScrollToTop from 'react-scroll-up';
 
 import {routeParams, routeBuilder} from './shared/Routing';
 import Search from './Search';
@@ -83,6 +84,9 @@ class App extends Component {
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
+                <ScrollToTop showUnder={100}>
+                    <div className="scroll-button"></div>
+                </ScrollToTop>
                 <div className="mobile-menu test">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" />

@@ -325,9 +325,9 @@ body {
     height: $scroll_button_size;
     border-radius: 4px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
-    display: none;
     position: fixed;
     bottom: 24px;
+    cursor: pointer;
     z-index: 99;
     @include responsive_styles($scroll_button);
 
