@@ -41,6 +41,11 @@ const typeToHeader = type => {
 
         case 9:
             result.price = undefined;
+            result.amount = 'Fee';
+            break;
+
+        case 10:
+            result.amount = 'Fee';
             break;
     }
 

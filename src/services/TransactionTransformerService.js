@@ -3,17 +3,17 @@ import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 
-const transformMultiple = (currencyService, transactions) => {
-    const promises = transactions.map(item => transformSingle(currencyService, item));
+const transformMultiple = (currencyService, spamDetectionService, transactions) => {
+    const promises = transactions.map(item => transformSingle(currencyService, spamDetectionService, item));
 
     return Promise.all(promises);
 };
 
-const transformSingle = (currencyService, tx) => {
+const transformSingle = (currencyService, spamDetectionService, tx) => {
     switch (tx.type) {
         case 2:
         case 4:
-            return transformTransfer(currencyService, tx);
+            return transformTransfer(currencyService, spamDetectionService, tx);
 
         case 3:
             return transformIssue(currencyService, tx);
@@ -37,7 +37,7 @@ const transformSingle = (currencyService, tx) => {
             return transformAlias(currencyService, tx);
 
         case 11:
-            return transformMassTransfer(currencyService, tx);
+            return transformMassTransfer(currencyService, spamDetectionService, tx);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -59,7 +59,7 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
-const transformMassTransfer = (currencyService, tx) => {
+const transformMassTransfer = (currencyService, spamDetectionService, tx) => {
     return loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId).then(pair => {
         const amountCurrency = pair[0];
         const feeCurrency = pair[1];
@@ -74,12 +74,13 @@ const transformMassTransfer = (currencyService, tx) => {
             attachment: tx.attachment,
             totalAmount: Money.fromCoins(tx.totalAmount, amountCurrency),
             transferCount: tx.transferCount,
+            isSpam: spamDetectionService.isSpam(tx.assetId),
             transfers
         });
     });
 };
 
-const transformAlias = (currencyService, tx, currentAddress) => {
+const transformAlias = (currencyService, tx) => {
     return Promise.resolve(
         Object.assign(copyMandatoryAttributes(tx), {
             fee: Money.fromCoins(tx.fee, Currency.WAVES),
@@ -104,7 +105,7 @@ const transformLeaseCancel = (currencyService, tx) => {
         return Object.assign(copyMandatoryAttributes(tx), {
             fee: Money.fromCoins(tx.fee, feeCurrency),
             leaseId: tx.leaseId,
-            recipient: tx.lease.recipient
+            recipient: tx.lease ? tx.lease.recipient : null
         });
     });
 };
@@ -191,7 +192,7 @@ const transformIssue = (currencyService, tx) => {
     });
 };
 
-const transformTransfer = (currencyService, tx) => {
+const transformTransfer = (currencyService, spamDetectionService, tx) => {
     return loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId).then(pair => {
         const amountCurrency = pair[0];
         const feeCurrency = pair[1];
@@ -200,21 +201,23 @@ const transformTransfer = (currencyService, tx) => {
             amount: Money.fromCoins(tx.amount, amountCurrency),
             fee: Money.fromCoins(tx.fee, feeCurrency),
             attachment: tx.attachment,
-            recipient: tx.recipient
+            recipient: tx.recipient,
+            isSpam: spamDetectionService.isSpam(tx.assetId)
         });
     });
 };
 
 
 export class TransactionTransformerService {
-    constructor(currencyService) {
+    constructor(currencyService, spamDetectionService) {
         this.currencyService = currencyService;
+        this.spamDetectionService = spamDetectionService;
     }
 
     transform = (input) => {
         if (Array.isArray(input))
-            return transformMultiple(this.currencyService, input);
+            return transformMultiple(this.currencyService, this.spamDetectionService, input);
 
-        return transformSingle(this.currencyService, input);
+        return transformSingle(this.currencyService, this.spamDetectionService, input);
     };
 }

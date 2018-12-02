@@ -115,6 +115,21 @@ class AmountAndFee extends React.PureComponent {
     }
 }
 
+class JustFee extends React.PureComponent {
+    static propTypes = {
+        fee: PropTypes.object
+    };
+
+    render() {
+        return (
+            <td data-label="Fee">
+                <Line>{this.props.fee.toString()}</Line>
+                <Line />
+            </td>
+        );
+    }
+}
+
 class TransferTransactionListItem extends React.PureComponent {
     static propTypes = {
         tx: PropTypes.object.isRequired
@@ -189,7 +204,7 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
             <tr>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} />
-                <AmountAndFee amount={tx.amount} fee={tx.fee} />
+                <JustFee fee={tx.fee} />
             </tr>
         );
     }
@@ -212,10 +227,7 @@ class IssueTransactionListItem extends React.PureComponent {
                         <TransactionRef txId={tx.assetId}/>
                     </Line>
                 </td>
-                <td data-label="Amount / Fee">
-                    <Line>{tx.amount.toString()}</Line>
-                    <Line><label>{tx.fee.toString()}</label></Line>
-                </td>
+                <AmountAndFee amount={tx.amount} fee={tx.fee} />
                 <td>
                     <Line bold={true}>{tx.name}</Line>
                 </td>
@@ -255,10 +267,7 @@ class AliasTransactionListItem extends React.PureComponent {
             <tr>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} />
-                <td data-label="Amount / Fee">
-                    <Line />
-                    <Line><label>{tx.fee.toString()}</label></Line>
-                </td>
+                <JustFee fee={tx.fee} />
                 <td data-label="Price">
                     <Line bold={true}>{tx.alias}</Line>
                 </td>
