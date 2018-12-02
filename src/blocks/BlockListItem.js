@@ -11,8 +11,10 @@ export default class BlockListItem extends React.Component {
 
     render() {
         const {block} = this.props;
+        const rowClassName = tx.isSpam ? 'spam' : '';
+
         return (
-            <tr>
+            <tr className={rowClassName}>
                 <td data-label="№ / Timestamp" className="block-img-handler nowrap">
                     <div className="block-img sm-hide"></div>
                     <div className="line no-wrap"><BlockRef height={block.height} /></div>

@@ -15,6 +15,14 @@ table {
 
     tr {
         border-bottom: 1px dashed map-get($colors, accent50);
+
+        &.spam {
+            background-color: map-get($colors, basic50);
+
+            > td {
+                opacity: 0.3;
+            }
+        }
     }
 
     td {

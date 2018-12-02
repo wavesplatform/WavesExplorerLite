@@ -13,7 +13,7 @@ export default class TransactionListItem extends React.PureComponent {
 
     render() {
         const {tx} = this.props;
-        const rowClassName = tx.spam ? "spam" : "";
+        const rowClassName = tx.isSpam ? 'spam' : '';
 
         return (
             <tr className={rowClassName}>
