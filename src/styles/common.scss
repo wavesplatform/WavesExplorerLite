@@ -113,7 +113,6 @@ a {
     background-color: map-get($colors, info400);
     vertical-align: middle;
     padding: 4px 4px 4px 6px;
-    margin: 0 14px;
     @include font(body, white);
 
     &.asset-burn, &.lease-cancel, &.asset-transfer.out, &.mass-payment.out {

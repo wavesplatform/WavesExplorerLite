@@ -5,6 +5,7 @@ import Address from './Address';
 import TransactionRef from '../shared/TransactionRef';
 import {typeToTitle} from '../shared/TransactionTypes';
 import TransactionArrow from '../shared/TransactionArrow';
+import TransactionBadge from '../shared/TransactionBadge';
 
 export default class TransactionListItem extends React.PureComponent {
     static propTypes = {
@@ -19,7 +20,7 @@ export default class TransactionListItem extends React.PureComponent {
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap"><TransactionRef txId={tx.id}/></div>
-                    <div className="line"><label>{typeToTitle(tx.type)}</label></div>
+                    <div className="line no-wrap"><TransactionBadge type={tx.type}/></div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
                     <div className="line"><label>{tx.timestamp.date}</label></div>

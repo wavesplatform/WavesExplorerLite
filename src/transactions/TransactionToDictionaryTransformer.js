@@ -4,6 +4,7 @@ import AddressRef from '../shared/AddressRef';
 import TransactionBadge from '../shared/TransactionBadge';
 import TransactionRef from '../shared/TransactionRef';
 import BlockRef from '../shared/BlockRef';
+import Spacer from '../shared/Spacer';
 
 import Description from './Description';
 
@@ -177,7 +178,7 @@ const buildAttachmentItem = tx => ({
 const buildTransactionHeaderItems = tx => {
     return [{
         label: 'Type',
-        value: <React.Fragment><span>{tx.type}</span><TransactionBadge type={tx.type} /></React.Fragment>
+        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge type={tx.type} /></React.Fragment>
     }, {
         label: 'Timestamp',
         value: tx.timestamp.toLongString(),
