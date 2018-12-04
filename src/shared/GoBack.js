@@ -1,12 +1,34 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 
-export default class GoBack extends React.PureComponent {
+class GoBack extends React.PureComponent {
+    state = {
+        enabled: true
+    };
+
+    componentDidMount() {
+        if (this.props.history.length === 1)
+            this.setState({enabled: false});
+
+        console.log(this.props.history);
+    }
+
+    handleClick = () => {
+        if (this.state.enabled) {
+            this.props.history.goBack();
+        }
+    };
+
     render() {
+        const linkClassName = this.state.enabled ? 'no-accent' : 'fade';
+
         return (
-            <div className="back">
+            <div className="back" onClick={this.handleClick}>
                 <span className="btn btn-back"></span>
-                <a className="no-accent">Back</a>
+                <a className={linkClassName}>Back</a>
             </div>
         );
     }
 }
+
+export default withRouter(GoBack);

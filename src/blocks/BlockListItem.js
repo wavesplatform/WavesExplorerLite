@@ -11,7 +11,7 @@ export default class BlockListItem extends React.Component {
 
     render() {
         const {block} = this.props;
-        const rowClassName = tx.isSpam ? 'spam' : '';
+        const rowClassName = block.transactions > 0 ? '' : 'empty-block';
 
         return (
             <tr className={rowClassName}>

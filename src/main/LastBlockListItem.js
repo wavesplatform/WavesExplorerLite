@@ -10,8 +10,11 @@ export default class LastBlockListItem extends React.PureComponent {
 
     render() {
         const block = this.props.block;
+        const emptyClassName = block.transactionCount > 0 ? '' : ' empty-block';
+        const rowClassName = 'grid panel-row block-img-handler' + emptyClassName;
+
         return (
-            <div className="grid panel-row block-img-handler">
+            <div className={rowClassName}>
                 <div className="block-img grid-item-fixed"></div>
                 <div>
                     <div className="line">Block <BlockRef height={block.height}/> contains <span className="bold">{block.transactionCount}</span> transactions</div>

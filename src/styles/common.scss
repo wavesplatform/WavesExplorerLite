@@ -42,6 +42,10 @@ a {
         font-weight: normal;
     }
 
+    &.disabled {
+        pointer-events: none;
+    }
+
     &.no-style {
         font-weight: inherit;
         color: inherit;

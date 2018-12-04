@@ -137,8 +137,10 @@ class TransferTransactionListItem extends React.PureComponent {
 
     render() {
         const {tx} = this.props;
+        const rowClassName = tx.isSpam ? 'spam' : '';
+
         return (
-            <tr>
+            <tr className={rowClassName}>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} recipient={tx.recipient} />
                 <AmountAndFee amount={tx.amount} fee={tx.fee} />
@@ -283,8 +285,10 @@ class MassPaymentTransactionListItem extends React.PureComponent {
 
     render() {
         const {tx} = this.props;
+        const rowClassName = tx.isSpam ? 'spam' : '';
+
         return (
-            <tr>
+            <tr className={rowClassName}>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Sender / Recipient">
                     <TransactionArrow type={tx.type} />
