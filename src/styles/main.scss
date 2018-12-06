@@ -19,10 +19,6 @@ body {
     }
 }
 
-* {
-    transition: 0s;
-}
-
 #root {
     overflow: hidden;
 }
@@ -59,7 +55,7 @@ body {
     > .header {
         margin-bottom: map-get($layout, padding-top);
         height: 44px;
-        margin-top: 38px;
+        margin-top: 36px;
 
         .menu-toggle:hover {
             &::before {
@@ -79,6 +75,9 @@ body {
     }
 }
 
+.wrapper.animated + .mobile-menu {
+    transition: .4s;
+}
 .wrapper.show + .mobile-menu {
     @include responsive_styles($layout);
     transform: translateX(0);
@@ -125,7 +124,7 @@ body {
                 background: map-get($colors, black);
                 border-radius: 2px;
                 position: absolute;
-                transition: .3s;
+                transition: transform .3s;
                 transform: translate3d(0, 0, 0);
             }
             &::before {

@@ -3,8 +3,17 @@
 
 .search-box {
     position: relative;
-    transition: color .5s;
-    border-bottom: 1px solid map-get($colors, basic500);
+
+    &::before {
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        content: '';
+        bottom: 0;
+        display: block;
+        transition: background-color .5s;
+        background-color: map-get($colors, basic500);
+    }
 
     .search {
         width: 24px;
@@ -15,23 +24,31 @@
         }
     }
 
-    &.active svg {
-        color: map-get($colors, black);
+    &.active {
+        svg {
+            color: map-get($colors, black);
+        }
+        &::before {
+            background-color: map-get($colors, black);
+        }
     }
 
     &.focus {
-        border-bottom-color: map-get($colors, submit400);
         svg {
-        color: map-get($colors, submit400);
+            color: map-get($colors, submit400);
+        }
+        &::before {
+            background-color: map-get($colors, submit400);
         }
     }
 
     &.invalid {
-        border-bottom-color: map-get($colors, error500);
         svg {
             color: map-get($colors, error500);
         }
-
+        &::before {
+            background-color: map-get($colors, error500);
+        }
         &::after {
             content: "Nothing has been found for query";
             display: block;
