@@ -38,7 +38,7 @@ const withNetworkRouter = (RootComponent) => {
 
 class App extends Component {
     state = {
-        mobileMenuVisible: false
+        mobileMenuVisible: null
     };
 
     handleMobileMenuToggle = () => {
@@ -57,10 +57,9 @@ class App extends Component {
     };
 
     render() {
-        let wrapperClassName = 'wrapper';
-        if (this.state.mobileMenuVisible) {
-            wrapperClassName += ' show';
-        }
+        const isVisible = this.state.mobileMenuVisible;
+        const isAnimated = isVisible != null;
+        let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
         return (
             <React.Fragment>
@@ -85,7 +84,7 @@ class App extends Component {
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
 
-                <div className="mobile-menu test">
+                <div className="mobile-menu">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" />
                 </div>

@@ -19,6 +19,10 @@ body {
     }
 }
 
+* {
+    transition: 0s;
+}
+
 #root {
     overflow: hidden;
 }
@@ -47,7 +51,6 @@ body {
     top: 0;
     left: 0;
     transform: translateX(-130%);
-    transition: .4s;
     min-height: 100vh;
     box-sizing: border-box;
     background-color: map-get($colors, basic50);
@@ -192,7 +195,7 @@ body {
             a {
                 padding: 7px 0;
                 display: inline-block;
-                transition: .3s;
+                transition: color .3s;
                 @include font(headline2, disabled500);
 
                 &:hover {
@@ -236,7 +239,7 @@ body {
     height: 28px;
     margin: 10px 8px 10px 0;
     opacity: 0.3;
-    transition: .3s;
+    transition: opacity .3s;
 
     &:hover {
         opacity: 1;

@@ -3,7 +3,7 @@
 
 .search-box {
     position: relative;
-    transition: .5s;
+    transition: color .5s;
     border-bottom: 1px solid map-get($colors, basic500);
 
     .search {
