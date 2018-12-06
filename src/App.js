@@ -84,13 +84,14 @@ class App extends Component {
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
-                <ScrollToTop showUnder={100}>
-                    <div className="scroll-button"></div>
-                </ScrollToTop>
+
                 <div className="mobile-menu test">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" />
                 </div>
+                <ScrollToTop showUnder={100}>
+                    <div className="scroll-button"></div>
+                </ScrollToTop>
             </React.Fragment>
         );
     }
