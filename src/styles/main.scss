@@ -125,6 +125,7 @@ body {
                 border-radius: 2px;
                 position: absolute;
                 transition: transform .3s;
+                transition-delay: .01s;
                 transform: translate3d(0, 0, 0);
             }
             &::before {
