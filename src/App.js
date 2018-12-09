@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader';
 import './styles/main.scss';
-import {Route, Redirect, Switch} from 'react-router';
+import {Route, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
@@ -19,22 +19,7 @@ import SingleAddressPage from './addresses/SingleAddressPage';
 
 import ServiceFactory from './services/ServiceFactory';
 
-const withNetworkRouter = (RootComponent) => {
-   return class extends React.Component {
-       render() {
-           return (
-               <Router>
-                   <Switch>
-                       <Route exact path="/" render={() => <Redirect to="/mainnet" />} />
-                       <Route path={routes.root} component={RootComponent} />
-                   </Switch>
-               </Router>
-           );
-       }
-   };
-};
-
-class App extends Component {
+class App extends React.Component {
     state = {
         mobileMenuVisible: null
     };
@@ -48,8 +33,7 @@ class App extends Component {
     };
 
     onSearch = (query) => {
-        const {networkId} = this.props.match.params;
-        const searchService = ServiceFactory.searchService(networkId);
+        const searchService = ServiceFactory.searchService();
 
         return searchService.search(query).then(route => this.go(route));
     };
@@ -60,7 +44,8 @@ class App extends Component {
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
         return (
-            <React.Fragment>
+            <Router>
+                <React.Fragment>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
                         <Search onSearch={this.onSearch} />
@@ -81,7 +66,6 @@ class App extends Component {
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
-
                 <div className="mobile-menu">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" />
@@ -89,9 +73,10 @@ class App extends Component {
                 <ScrollToTop showUnder={100}>
                     <div className="scroll-button"></div>
                 </ScrollToTop>
-            </React.Fragment>
+                </React.Fragment>
+            </Router>
         );
     }
 }
 
-export default hot(module)(withNetworkRouter(App));
+export default hot(module)(App);

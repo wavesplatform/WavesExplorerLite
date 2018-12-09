@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 import Dictionary from '../shared/Dictionary';
@@ -20,18 +20,10 @@ export default class SingleTransactionPage extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.fetchData();
-        }
-    }
-
     fetchData() {
-        const {networkId, transactionId} = this.props.match.params;
-        const api = apiBuilder(networkId);
-
+        const {transactionId} = this.props.match.params;
         api.transactions.info(transactionId).then(infoResponse => {
-            const transformer = ServiceFactory.transactionTransformerService(networkId);
+            const transformer = ServiceFactory.transactionTransformerService();
 
             return transformer.transform(infoResponse.data);
         }).then(tx => this.setState({tx}));

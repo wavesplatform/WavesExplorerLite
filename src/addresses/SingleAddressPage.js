@@ -1,7 +1,7 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 import Alias from '../shared/Alias';
@@ -32,15 +32,13 @@ export default class SingleAddressPage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId ||
-            this.props.match.params.address !== prevProps.match.params.address) {
+        if (this.props.match.params.address !== prevProps.match.params.address) {
             this.fetchData();
         }
     }
 
     fetchData() {
-        const {networkId, address} = this.props.match.params;
-        const api = apiBuilder(networkId);
+        const {address} = this.props.match.params;
 
         api.addresses.details(address).then(balanceResponse => {
             const data = balanceResponse.data;
@@ -58,13 +56,12 @@ export default class SingleAddressPage extends React.Component {
     }
 
     fetchTabData(selectedIndex) {
-        const {networkId, address} = this.props.match.params;
-        const api = apiBuilder(networkId);
+        const {address} = this.props.match.params;
 
         switch (selectedIndex) {
             case 0:
                 api.transactions.address(address).then(transactionsResponse => {
-                    const transformerService = ServiceFactory.transactionTransformerService(networkId);
+                    const transformerService = ServiceFactory.transactionTransformerService();
 
                     return transformerService.transform(transactionsResponse.data[0]);
                 })
@@ -93,7 +90,7 @@ export default class SingleAddressPage extends React.Component {
                 api.addresses.assetsBalance(address).then(balanceResponse => {
                     const assets = balanceResponse.data.balances.map(item => {
                         const currency = Currency.fromIssueTransaction(item.issueTransaction);
-                        const currencyService = ServiceFactory.currencyService(networkId);
+                        const currencyService = ServiceFactory.currencyService();
                         currencyService.put(currency);
 
                         const amount = Money.fromCoins(item.balance, currency);

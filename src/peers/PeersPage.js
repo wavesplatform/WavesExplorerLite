@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import PeerList from './PeerList';
 
 export default class PeersPage extends React.Component {
@@ -13,14 +13,7 @@ export default class PeersPage extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.fetchData();
-        }
-    }
-
     fetchData() {
-        const api = apiBuilder(this.props.match.params.networkId);
         api.peers().then(response => {
             const peers = response.data.peers.map(item => ({
                 address: item.address,

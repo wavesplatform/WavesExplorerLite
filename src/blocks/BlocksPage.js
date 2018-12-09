@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import Pagination from './Pagination';
 import BlockList from './BlockList';
 
@@ -16,18 +16,15 @@ export default class BlocksPage extends React.Component {
     };
 
     componentDidMount() {
-        const {networkId} = this.props.match.params;
-        const api = apiBuilder(networkId);
-
         api.blocks.height().then(heightResponse => {
             const height = heightResponse.data.height;
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
-            this.setState({height, lastPage}, () => this.loadCurrentPage(api, this.state.currentPage));
+            this.setState({height, lastPage}, () => this.loadCurrentPage(this.state.currentPage));
         })
     }
 
-    loadCurrentPage = (api, pageNumber) => {
+    loadCurrentPage = (pageNumber) => {
         const from = Math.max(1, this.state.height - pageNumber * BLOCKS_PER_PAGE + 1);
         const to = Math.min(this.state.height, from + BLOCKS_PER_PAGE);
 
@@ -48,10 +45,7 @@ export default class BlocksPage extends React.Component {
     };
 
     handlePageChange = pageNumber => {
-        const {networkId} = this.props.match.params;
-        const api = apiBuilder(networkId);
-
-        this.loadCurrentPage(api, pageNumber);
+        this.loadCurrentPage(pageNumber);
     };
 
     render() {

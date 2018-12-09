@@ -1,5 +1,5 @@
 import Currency from '../shared/Currency';
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 
 const FAILURE = new Currency({
     id: 'failure',
@@ -8,9 +8,8 @@ const FAILURE = new Currency({
 });
 
 export class CurrencyService {
-    constructor(networkId) {
+    constructor() {
         this.currencyCache = {};
-        this.api = apiBuilder(networkId);
     }
 
     put = currency => {
@@ -31,7 +30,7 @@ export class CurrencyService {
         if (currency) {
             return Promise.resolve(currency);
         } else {
-            return this.api.transactions.info(assetId)
+            return api.transactions.info(assetId)
                 .then(infoResponse => {
                     const c = Currency.fromIssueTransaction(infoResponse.data);
                     return this.put(c);

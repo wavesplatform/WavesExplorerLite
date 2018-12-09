@@ -22,7 +22,6 @@ export default class NodesPage extends React.Component {
     }
 
     fetchData() {
-        const configuration = create(this.props.match.params.networkId);
         this.setState({nodes: [...configuration.nodes]}, this.fetchNodesDetails);
     }
 

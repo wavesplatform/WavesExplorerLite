@@ -1,7 +1,7 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import {routes} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
@@ -77,9 +77,6 @@ export default class SingleBlockPage extends React.Component {
     }
 
     fetchData = height => {
-        const {networkId} = this.props.match.params;
-        const api = apiBuilder(networkId);
-
         api.blocks.height().then(heightResponse => {
             this.setState({maxHeight: heightResponse.data.height});
         });
@@ -87,7 +84,7 @@ export default class SingleBlockPage extends React.Component {
         api.blocks.at(height).then(blockResponse => {
             this.setState({block: blockResponse.data});
 
-            const transformer = ServiceFactory.transactionTransformerService(networkId);
+            const transformer = ServiceFactory.transactionTransformerService();
 
             return transformer.transform(blockResponse.data.transactions);
         }).then(transactions => {

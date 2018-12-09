@@ -61,6 +61,4 @@ export const nodeApi = (baseUrl) => {
     };
 };
 
-export const apiBuilder = (networkId) => {
-    return nodeApi(configuration.apiBaseUrl);
-};
+export const api = nodeApi(configuration.apiBaseUrl);

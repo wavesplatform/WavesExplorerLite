@@ -7,29 +7,19 @@ import {SpamDetectionService} from './SpamDetectionService';
 
 class ServiceFactory {
     constructor() {
-        this.cache = {};
+        this._currencyService = new CurrencyService();
         this._storageService = new StorageService();
         this._spamDetectionService = new SpamDetectionService(this._storageService);
     }
 
-    currencyService = (networkId) => {
-        const instance = this.cache[networkId];
-        if (instance) {
-            return instance;
-        }
+    currencyService = () => this._currencyService;
 
-        const newOne = new CurrencyService(networkId);
-        this.cache[networkId] = newOne;
+    moneyService = () => new MoneyService(this._currencyService);
 
-        return newOne;
-    };
-
-    moneyService = (networkId) => new MoneyService(this.currencyService(networkId));
-
-    transactionTransformerService = (networkId) => new TransactionTransformerService(this.currencyService(networkId),
+    transactionTransformerService = () => new TransactionTransformerService(this._currencyService,
         this._spamDetectionService);
 
-    searchService = (networkId) => new SearchService(networkId);
+    searchService = () => new SearchService();
 }
 
 const factoryInstance = new ServiceFactory();

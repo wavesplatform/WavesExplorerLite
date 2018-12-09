@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 import configuration from 'configuration';
 
-import {routes} from './shared/Routing';
 import NavMenu from './NavMenu';
 import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
@@ -41,4 +39,4 @@ class NavBar extends React.Component {
     }
 }
 
-export default withRouter(NavBar);
+export default NavBar;

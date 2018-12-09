@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import {apiBuilder} from '../shared/NodeApi';
+import {api} from '../shared/NodeApi';
 import ServiceFactory from '../services/ServiceFactory';
 
 import NetworkInfo from './NetworkInfo';
@@ -22,16 +22,7 @@ export default class MainPage extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.fetchData();
-        }
-    }
-
     fetchData() {
-        const {networkId} = this.props.match.params;
-        const api = apiBuilder(networkId);
-
         axios.all([
             api.version(),
             api.blocks.height(),
@@ -63,7 +54,7 @@ export default class MainPage extends React.Component {
         });
 
         api.transactions.unconfirmed().then(response => {
-            const transformer = ServiceFactory.transactionTransformerService(networkId);
+            const transformer = ServiceFactory.transactionTransformerService();
 
             return transformer.transform(response.data);
         }).then(unconfirmed => {
