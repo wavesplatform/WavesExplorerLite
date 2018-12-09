@@ -3,6 +3,7 @@ import groupBy from 'lodash/groupBy';
 
 import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
+import Error from '../shared/Error';
 import Headline from '../shared/Headline';
 import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
@@ -24,7 +25,8 @@ export default class SingleAddressPage extends React.Component {
         assets: [],
         aliases: [],
         transactions: [],
-        selectedTabIndex: 0
+        selectedTabIndex: 0,
+        hasError: false
     };
 
     componentDidMount() {
@@ -50,9 +52,17 @@ export default class SingleAddressPage extends React.Component {
             };
 
             this.setState({balance});
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
         });
 
-        this.fetchTabData(this.state.selectedTabIndex);
+        this.fetchTabData(this.state.selectedTabIndex).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
+        });
     }
 
     fetchTabData(selectedIndex) {
@@ -60,7 +70,7 @@ export default class SingleAddressPage extends React.Component {
 
         switch (selectedIndex) {
             case 0:
-                api.transactions.address(address).then(transactionsResponse => {
+                return api.transactions.address(address).then(transactionsResponse => {
                     const transformerService = ServiceFactory.transactionTransformerService();
 
                     return transformerService.transform(transactionsResponse.data[0]);
@@ -72,9 +82,8 @@ export default class SingleAddressPage extends React.Component {
                     this.setState({transactions});
                 });
 
-                break;
             case 1:
-                api.addresses.aliases(address).then(aliasesResponse => {
+                return api.addresses.aliases(address).then(aliasesResponse => {
                     const lines = aliasesResponse.data.map(item => Alias.fromString(item).alias);
                     const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
                     const aliases = Object.keys(grouped).sort().map(letter => ({
@@ -85,9 +94,8 @@ export default class SingleAddressPage extends React.Component {
                     this.setState({aliases});
                 });
 
-                break;
             case 2:
-                api.addresses.assetsBalance(address).then(balanceResponse => {
+                return api.addresses.assetsBalance(address).then(balanceResponse => {
                     const assets = balanceResponse.data.balances.map(item => {
                         const currency = Currency.fromIssueTransaction(item.issueTransaction);
                         const currencyService = ServiceFactory.currencyService();
@@ -104,9 +112,9 @@ export default class SingleAddressPage extends React.Component {
 
                     this.setState({assets});
                 });
-
-                break;
         }
+
+        return Promise.resolve();
     }
 
     handleTabActivate = (selectedIndex) => {

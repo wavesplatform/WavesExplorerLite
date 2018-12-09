@@ -4,6 +4,7 @@ import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Headline from '../shared/Headline';
 import Dictionary from '../shared/Dictionary';
+import Error from '../shared/Error';
 import ServiceFactory from '../services/ServiceFactory';
 
 import transactionToDictionary from './TransactionToDictionaryTransformer';
@@ -13,7 +14,8 @@ export default class SingleTransactionPage extends React.Component {
     state = {
         tx: {
             id: this.props.match.params.transactionId
-        }
+        },
+        hasError: false
     };
 
     componentDidMount() {
@@ -26,10 +28,18 @@ export default class SingleTransactionPage extends React.Component {
             const transformer = ServiceFactory.transactionTransformerService();
 
             return transformer.transform(infoResponse.data);
-        }).then(tx => this.setState({tx}));
+        }).then(tx => this.setState({tx})).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
+        });
     }
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Failed to load transaction" />;
+        }
+
         const transactionItems = transactionToDictionary(this.state.tx);
 
         return (

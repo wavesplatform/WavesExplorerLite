@@ -8,6 +8,7 @@ import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
 import Dictionary from '../shared/Dictionary';
+import Error from '../shared/Error';
 
 import ServiceFactory from '../services/ServiceFactory';
 
@@ -90,6 +91,10 @@ export default class SingleBlockPage extends React.Component {
         }).then(transactions => {
             const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
             this.setState({groupedTransactions});
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
         });
     };
 
@@ -98,6 +103,10 @@ export default class SingleBlockPage extends React.Component {
     };
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Failed to load block" />;
+        }
+
         const dictionaryItems = this.stateToDictionaryItems();
         return (
             <React.Fragment>

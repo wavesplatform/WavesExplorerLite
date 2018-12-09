@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {api} from '../shared/NodeApi';
+import Error from '../shared/Error';
 import Pagination from './Pagination';
 import BlockList from './BlockList';
 
@@ -12,7 +13,8 @@ export default class BlocksPage extends React.Component {
         height: 0,
         currentPage: 1,
         lastPage: 10,
-        blocks: []
+        blocks: [],
+        hasError: false
     };
 
     componentDidMount() {
@@ -21,7 +23,11 @@ export default class BlocksPage extends React.Component {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
             this.setState({height, lastPage}, () => this.loadCurrentPage(this.state.currentPage));
-        })
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true})
+        });
     }
 
     loadCurrentPage = (pageNumber) => {
@@ -41,6 +47,10 @@ export default class BlocksPage extends React.Component {
             }).reverse();
 
             this.setState({blocks});
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true})
         });
     };
 
@@ -49,6 +59,10 @@ export default class BlocksPage extends React.Component {
     };
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Failed to load blocks" />;
+        }
+
         return (
             <React.Fragment>
                 <div className="headline">

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {api} from '../shared/NodeApi';
+import Error from '../shared/Error';
 import ServiceFactory from '../services/ServiceFactory';
 
 import NetworkInfo from './NetworkInfo';
@@ -15,7 +16,8 @@ export default class MainPage extends React.Component {
     state = {
         info: {},
         unconfirmed: [],
-        blocks: []
+        blocks: [],
+        hasError: false
     };
 
     componentDidMount() {
@@ -51,6 +53,10 @@ export default class MainPage extends React.Component {
                     const newInfo = Object.assign({}, this.state.info, {'Avg Block delay': `${delay} minutes`}) ;
                     this.setState({info: newInfo});
                 });
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
         });
 
         api.transactions.unconfirmed().then(response => {
@@ -59,10 +65,18 @@ export default class MainPage extends React.Component {
             return transformer.transform(response.data);
         }).then(unconfirmed => {
             this.setState({unconfirmed});
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
         });
     }
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Unable to load last blocks and transactions"/>;
+        }
+
         return (
             <React.Fragment>
                 <NetworkInfo info={this.state.info} />

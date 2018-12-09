@@ -3,12 +3,14 @@ import axios from 'axios';
 import configuration from 'configuration';
 
 import {nodeApi} from '../shared/NodeApi';
+import Error from '../shared/Error';
 import NodeList from './NodeList';
 
 export default class NodesPage extends React.Component {
 
     state = {
-        nodes: []
+        nodes: [],
+        hasError: false
     };
 
     componentDidMount() {
@@ -47,11 +49,19 @@ export default class NodesPage extends React.Component {
                 this.setState({
                     nodes: array
                 });
-            }));
+            })).catch(error => {
+                console.error(error);
+
+                this.setState({hasError: true});
+            });
         });
     }
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Failed to load node details" />;
+        }
+
         return (
             <React.Fragment>
                 <div className="headline">

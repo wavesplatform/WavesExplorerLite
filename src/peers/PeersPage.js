@@ -1,12 +1,14 @@
 import React from 'react';
 
 import {api} from '../shared/NodeApi';
+import Error from '../shared/Error';
 import PeerList from './PeerList';
 
 export default class PeersPage extends React.Component {
 
     state = {
-        peers: []
+        peers: [],
+        hasError: false
     };
 
     componentDidMount() {
@@ -23,10 +25,18 @@ export default class PeersPage extends React.Component {
             }));
 
             this.setState({peers});
+        }).catch(error => {
+            console.error(error);
+
+            this.setState({hasError: true});
         });
     }
 
     render() {
+        if (this.state.hasError) {
+            return <Error title="Failed to load peer details" />;
+        }
+
         return (
             <React.Fragment>
                 <div className="headline">

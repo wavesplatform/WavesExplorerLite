@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import GroupedAliasListItem from './GroupedAliasListItem';
-import NoData from './NoData';
+import NoData from '../shared/NoData';
 
 export default class GroupedAliasList extends React.Component {
     static propTypes = {
