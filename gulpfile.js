@@ -34,6 +34,14 @@ function publishToS3(credentials, fileSpec) {
         .pipe(awspublish.reporter());
 }
 
+function buildApp(network, done) {
+    exec('yarn run app:prod --env.network=' + network, function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    })
+}
+
 gulp.task('clean', function (done) {
     return del([
         config.releaseDirectory + '/*',
@@ -41,12 +49,16 @@ gulp.task('clean', function (done) {
     ], done);
 });
 
-gulp.task('build', ['clean'], function (done) {
-    exec('yarn run build', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        done(err);
-    })
+gulp.task('build-mainnet', ['clean'], function (done) {
+    buildApp('mainnet', done);
+});
+
+gulp.task('build-testnet', ['clean'], function (done) {
+    buildApp('testnet', done);
+});
+
+gulp.task('build-devnet', ['clean'], function (done) {
+    buildApp('devnet', done);
 });
 
 gulp.task('invalidate', ['upload'], function() {
@@ -67,4 +79,8 @@ gulp.task('upload', ['build'], function () {
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('publish', ['build', 'upload', 'invalidate']);
+gulp.task('publish-mainnet', ['build-mainnet', 'upload', 'invalidate']);
+gulp.task('publish-testnet', ['build-testnet', 'upload', 'invalidate']);
+gulp.task('publish-devnet', ['build-devnet', 'upload', 'invalidate']);
+
+gulp.task('publish', ['build-mainnet', 'upload', 'invalidate']);
