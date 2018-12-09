@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import configuration from 'configuration';
 
-import {create} from '../configuration';
 import {nodeApi} from '../shared/NodeApi';
 import NodeList from './NodeList';
 
@@ -53,8 +53,6 @@ export default class NodesPage extends React.Component {
     }
 
     render() {
-        const configuration = create(this.props.match.params.networkId);
-
         return (
             <React.Fragment>
                 <div className="headline">

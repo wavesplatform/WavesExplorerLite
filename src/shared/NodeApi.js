@@ -1,6 +1,6 @@
 import axios from 'axios';
+import configuration from 'configuration';
 
-import {create} from '../configuration';
 import DateTime from './DateTime';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
@@ -62,7 +62,5 @@ export const nodeApi = (baseUrl) => {
 };
 
 export const apiBuilder = (networkId) => {
-    const configuration = create(networkId);
-
     return nodeApi(configuration.apiBaseUrl);
 };

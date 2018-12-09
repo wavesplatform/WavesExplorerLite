@@ -5,7 +5,7 @@ import {Route, Redirect, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
-import {routeParams, routeBuilder} from './shared/Routing';
+import {routeParams, routes} from './shared/Routing';
 import Search from './Search';
 import Header from './Header';
 import NavBar from './NavBar';
@@ -18,8 +18,6 @@ import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 
 import ServiceFactory from './services/ServiceFactory';
-
-const routes = routeBuilder(routeParams.networkId);
 
 const withNetworkRouter = (RootComponent) => {
    return class extends React.Component {

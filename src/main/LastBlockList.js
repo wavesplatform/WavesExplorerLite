@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import {routeBuilder} from '../shared/Routing';
+import {routes} from '../shared/Routing';
 import LastBlockListItem from './LastBlockListItem';
 
 class LastBlockList extends React.PureComponent {
@@ -17,9 +17,6 @@ class LastBlockList extends React.PureComponent {
     };
 
     render() {
-        const {networkId} = this.props.match.params;
-        const routes = routeBuilder(networkId);
-
         return (
             <div className="column-6 column-sm-12 panel">
                 <div className="grid grid-baseline panel-title">

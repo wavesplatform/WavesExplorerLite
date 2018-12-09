@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
+import configuration from 'configuration';
 
-import {routeBuilder} from './shared/Routing';
+import {routes} from './shared/Routing';
 import NavMenu from './NavMenu';
 import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
@@ -18,13 +19,12 @@ class NavBar extends React.Component {
         appearance: REGULAR_APPEARANCE
     };
 
-    handleNetworkChange = networkId => {
-        const route = routeBuilder(networkId);
-        this.props.history.push(route.root);
-    };
-
     render() {
-        const networkId = this.props.match.params.networkId;
+        const current = {
+            title: configuration.displayName,
+            url: window.location.href
+        };
+
         let className = 'menu grid-item-fixed';
         if (this.props.appearance === REGULAR_APPEARANCE)
             className += ' lg-hide';
@@ -33,8 +33,8 @@ class NavBar extends React.Component {
 
         return (
             <div className={className}>
-                <NetworkSwitch value={networkId} onChange={this.handleNetworkChange} />
-                <NavMenu networkId={networkId} />
+                <NetworkSwitch current={current} peer={configuration.peerExplorer} />
+                <NavMenu />
                 <Footer version={version} />
             </div>
         );

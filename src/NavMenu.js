@@ -1,44 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import {routeBuilder} from './shared/Routing';
+import {routes} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 
-const buildItems = () => {
-    return [{
-        title: 'General info',
-        route: networkId => routeBuilder(networkId).root,
-    }, {
-        title: 'Blocks',
-        route: networkId => routeBuilder(networkId).blocks.list
-    }, {
-        title: 'Peers',
-        route: networkId => routeBuilder(networkId).peers.list
-    }, {
-        title: 'Nodes',
-        route: networkId => routeBuilder(networkId).nodes.list
-    }];
-};
+const items = [{
+    title: 'General info',
+    route: routes.root,
+}, {
+    title: 'Blocks',
+    route: routes.blocks.list
+}, {
+    title: 'Peers',
+    route: routes.peers.list
+}, {
+    title: 'Nodes',
+    route: routes.nodes.list
+}];
 
 export default class NavMenu extends React.Component {
-    static propTypes = {
-        networkId: PropTypes.string
-    };
-
     constructor(props) {
         super(props);
 
-        const items = buildItems();
         this.state = {
             items,
             current: items[0]
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.networkId !== prevProps.networkId) {
-            this.setState({current: this.state.items[0]});
-        }
     }
 
     handleNavigate = item => {
@@ -55,7 +41,6 @@ export default class NavMenu extends React.Component {
                     return (
                         <NavMenuItem
                             key={index}
-                            networkId={this.props.networkId}
                             item={item} current={current}
                             onNavigate={this.handleNavigate}
                         />

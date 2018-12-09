@@ -2,7 +2,7 @@ import React from 'react';
 import groupBy from 'lodash/groupBy';
 
 import {apiBuilder} from '../shared/NodeApi';
-import {routeBuilder} from '../shared/Routing';
+import {routes} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
@@ -97,9 +97,7 @@ export default class SingleBlockPage extends React.Component {
     };
 
     showBlock = height => {
-        const {networkId} = this.props.match.params;
-        const route = routeBuilder(networkId);
-        this.props.history.push(route.blocks.one(height));
+        this.props.history.push(routes.blocks.one(height));
     };
 
     render() {

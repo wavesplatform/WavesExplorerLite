@@ -1,35 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as Configuration from './configuration';
-
-const Network = ({id, title, current, onChange}) => {
-    return current ? (<div className="current">{title}</div>) : (<div onClick={() => onChange(id)}>{title}</div>);
+const Network = ({title, url, current}) => {
+    return current ? (<div className="current">{title}</div>) : (<div><a href={url} target="_blank">{title}</a></div>);
 };
+
+const ExplorerShape = PropTypes.shape({
+    title: PropTypes.string,
+    url: PropTypes.string
+});
 
 export default class NetworkSwitch extends React.PureComponent {
     static propTypes = {
-        value: PropTypes.string,
-        onChange: PropTypes.func
-    };
-
-    static defaultProps = {
-        value: 'mainnet'
+        current: ExplorerShape.isRequired,
+        peer: ExplorerShape.isRequired
     };
 
     render() {
+        const {current, peer} = this.props;
+
         return (
             <div>
                 <div className="network-switcher">
-                    {Configuration.networks.map(id => {
-                        const configuration = Configuration.create(id);
-                        return <Network
-                            key={id}
-                            id={id}
-                            title={configuration.displayName}
-                            current={id === this.props.value}
-                            onChange={this.props.onChange}/>;
-                    })}
+                    <Network current={true} {...current} />
+                    <Network {...peer} />
                 </div>
             </div>
         );

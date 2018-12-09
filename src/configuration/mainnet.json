@@ -1,0 +1,10 @@
+{
+    "networkId": "mainnet",
+    "displayName": "Mainnet",
+    "apiBaseUrl": "https://nodes.wavesnodes.com",
+    "nodes": [{"url": "https://nodes.wavesnodes.com", "maintainer": "Waves"}],
+    "peerExplorer": {
+        "url": "https://testnet.wavesexplorer.com",
+        "title": "Testnet"
+    }
+}

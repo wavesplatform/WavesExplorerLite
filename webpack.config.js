@@ -98,5 +98,11 @@ module.exports = (env, argv) => {
         //...
     }
 
+    const network = env.network || 'mainnet';
+
+    config.externals = [{
+        configuration: JSON.stringify(require('./src/configuration/' + network + '.json'))
+    }];
+
     return config;
 };

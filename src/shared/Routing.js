@@ -1,3 +1,5 @@
+import configuration from 'configuration';
+
 export const routeParams = {
     networkId: ':networkId',
     blockHeight: ':height',
@@ -5,7 +7,7 @@ export const routeParams = {
     address: ':address'
 };
 
-export const routeBuilder = (networkId) => {
+const routeBuilder = (networkId) => {
     const root = `/${networkId}`;
     const blocks = `${root}/blocks`;
 
@@ -29,3 +31,5 @@ export const routeBuilder = (networkId) => {
         }
     };
 };
+
+export const routes = routeBuilder(configuration.networkId);
