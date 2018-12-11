@@ -67,3 +67,29 @@
     line-height: normal;
     letter-spacing: normal;
 }
+
+@mixin loading() {
+    width: 24px;
+    height: 24px;
+    background: url('../images/loading-24.svg') no-repeat center center;
+    animation: spin 1s linear infinite;
+    svg {display: none;}
+
+    @-moz-keyframes spin {
+        100% {
+            -moz-transform: rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    @keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+}
+

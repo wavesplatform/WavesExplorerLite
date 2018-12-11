@@ -70,20 +70,21 @@
     }
 
     &.panel-empty {
-        .panel-empty-icon {
+        >.panel-empty-icon {
             width: 88px;
             height: 88px;
             margin: 0 auto;
         }
 
-        .panel-empty-label {
+        >.panel-empty-label {
             @include font(body, basic500);
             text-align: center;
         }
 
         &.confirmed {
             margin-top: 20vh;
-            .panel-empty-icon {
+
+            >.panel-empty-icon {
                 background: url('../images/confirmed-88.svg') no-repeat center center;
             }
         }
@@ -95,15 +96,15 @@
             height: calc(100vh - 140px);
             box-sizing: border-box;
 
-            .panel-empty-icon {
+            >.panel-empty-icon {
                 background: url('../images/erroring-88.svg') no-repeat center center;
             }
         }
 
-        &.empty {
+        &.no-data {
             @include responsive_styles($panel_empty);
 
-            .panel-empty-icon {
+            >.panel-empty-icon {
                 background: url('../images/empty-88.svg') no-repeat center center;
             }
         }

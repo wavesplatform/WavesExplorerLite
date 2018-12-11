@@ -73,17 +73,17 @@ export default class Search extends React.PureComponent {
 
         let className = 'search-box grid grid-center';
         if (this.state.isFailed) {
-            className += ' invalid';
+            className += ' search-box-invalid';
         }
 
         if (this.state.isFocused) {
-            className += ' focus';
+            className += ' search-box-focus';
         } else if (textIsNotEmpty) {
-            className += ' active';
+            className += ' search-box-active';
         }
 
         if (this.state.isLoading) {
-            className += ' loading';
+            className += ' search-box-loading';
         }
 
         return (

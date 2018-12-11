@@ -32,7 +32,7 @@ export default class UnconfirmedTxList extends React.Component {
 
     render() {
         const isEmpty = this.props.transactions.length === 0;
-        let wrapperClassName = 'panel column-6 column-sm-12';
+        let wrapperClassName = 'panel';
         if (isEmpty)
             wrapperClassName += ' panel-empty confirmed';
 

@@ -24,7 +24,7 @@
         }
     }
 
-    &.active {
+    &.search-box-active {
         svg {
             color: map-get($colors, black);
         }
@@ -33,7 +33,7 @@
         }
     }
 
-    &.focus {
+    &.search-box-focus {
         svg {
             color: map-get($colors, submit400);
         }
@@ -42,7 +42,7 @@
         }
     }
 
-    &.invalid {
+    &.search-box-invalid {
         svg {
             color: map-get($colors, error500);
         }
@@ -62,26 +62,8 @@
         }
     }
 
-    &.loading > .search {
-        background-image: url('../images/loading-24.svg');
-        animation: spin 1s linear infinite;
-        svg {display: none;}
-    }
-    @-moz-keyframes spin {
-        100% {
-            -moz-transform: rotate(360deg);
-        }
-    }
-    @-webkit-keyframes spin {
-        100% {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-    @keyframes spin {
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
+    &.search-box-loading > .search {
+        @include loading();
     }
 
     > input {

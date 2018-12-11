@@ -18,7 +18,7 @@ class LastBlockList extends React.PureComponent {
 
     render() {
         return (
-            <div className="column-6 column-sm-12 panel">
+            <div className="panel">
                 <div className="grid grid-baseline panel-title">
                     <span className="title">{this.props.title}</span>
                     <span className="grid-item-fixed">

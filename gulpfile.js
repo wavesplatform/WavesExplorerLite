@@ -73,7 +73,7 @@ gulp.task('invalidate', ['upload'], function() {
         .pipe(cloudfront(settings));
 });
 
-gulp.task('upload', ['build'], function () {
+gulp.task('upload', ['build-mainnet'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');

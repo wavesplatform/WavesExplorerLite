@@ -14,7 +14,7 @@ export default class NoData extends React.PureComponent {
         const {title} = this.props;
 
         return (
-            <div className="panel panel-empty empty">
+            <div className="panel panel-empty no-data">
                 <div className="panel-empty-icon"></div>
                 <div className="line wide panel-empty-label"><label>{title}</label></div>
             </div>

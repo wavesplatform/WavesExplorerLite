@@ -79,10 +79,16 @@ export default class MainPage extends React.Component {
 
         return (
             <React.Fragment>
-                <NetworkInfo info={this.state.info} />
+                <div className="info-box">
+                    <NetworkInfo info={this.state.info} />
+                </div>
                 <div className="grid grid-wrap">
-                    <LastBlockList blocks={this.state.blocks} />
-                    <UnconfirmedTxList transactions={this.state.unconfirmed} />
+                    <div className="column-6 column-sm-12">
+                        <LastBlockList blocks={this.state.blocks} />
+                    </div>
+                    <div className="column-6 column-sm-12">
+                        <UnconfirmedTxList transactions={this.state.unconfirmed} />
+                    </div>
                 </div>
             </React.Fragment>
         );

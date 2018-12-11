@@ -9,8 +9,6 @@ class GoBack extends React.PureComponent {
     componentDidMount() {
         if (this.props.history.length === 1)
             this.setState({enabled: false});
-
-        console.log(this.props.history);
     }
 
     handleClick = () => {
