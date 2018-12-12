@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 import './styles/main.scss';
 
@@ -21,6 +22,7 @@ const Main = () => {
     );
 };
 
+Modal.setAppElement('#root');
 ReactDOM.render(<Main />, document.getElementById('root'));
 
 if (module.hot) {
