@@ -5,6 +5,7 @@ import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
 import Error from '../shared/Error';
 import Headline from '../shared/Headline';
+import Loader from '../shared/Loader';
 import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
@@ -25,13 +26,8 @@ export default class SingleAddressPage extends React.Component {
         assets: [],
         aliases: [],
         transactions: [],
-        selectedTabIndex: 0,
-        hasError: false
+        selectedTabIndex: 0
     };
-
-    componentDidMount() {
-        this.fetchData();
-    }
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.address !== prevProps.match.params.address) {
@@ -39,43 +35,22 @@ export default class SingleAddressPage extends React.Component {
         }
     }
 
-    fetchData() {
+    fetchData = () => {
         const {address} = this.props.match.params;
+        const addressService = ServiceFactory.addressService();
 
-        api.addresses.details(address).then(balanceResponse => {
-            const data = balanceResponse.data;
-            const balance = {
-                regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
-                generating: Money.fromCoins(data.generating, Currency.WAVES).toString(),
-                available: Money.fromCoins(data.available, Currency.WAVES).toString(),
-                effective: Money.fromCoins(data.effective, Currency.WAVES).toString()
-            };
+        return addressService.loadBalance(address)
+            .then(balance => this.setState({balance}))
+            .then(_ => this.fetchTabData(this.state.selectedTabIndex));
+    };
 
-            this.setState({balance});
-        }).catch(error => {
-            console.error(error);
-
-            this.setState({hasError: true});
-        });
-
-        this.fetchTabData(this.state.selectedTabIndex).catch(error => {
-            console.error(error);
-
-            this.setState({hasError: true});
-        });
-    }
-
-    fetchTabData(selectedIndex) {
+    fetchTabData = (selectedIndex) => {
         const {address} = this.props.match.params;
+        const addressService = ServiceFactory.addressService();
 
         switch (selectedIndex) {
             case 0:
-                return api.transactions.address(address).then(transactionsResponse => {
-                    const transformerService = ServiceFactory.transactionTransformerService();
-
-                    return transformerService.transform(transactionsResponse.data[0]);
-                })
-                .then(transactions => {
+                return addressService.loadTransactions(address).then(transactions => {
                     return transactionMapper(transactions, address);
                 })
                 .then(transactions => {
@@ -83,39 +58,14 @@ export default class SingleAddressPage extends React.Component {
                 });
 
             case 1:
-                return api.addresses.aliases(address).then(aliasesResponse => {
-                    const lines = aliasesResponse.data.map(item => Alias.fromString(item).alias);
-                    const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
-                    const aliases = Object.keys(grouped).sort().map(letter => ({
-                        letter,
-                        aliases: grouped[letter].sort()
-                    }));
-
-                    this.setState({aliases});
-                });
+                return addressService.loadAliases(address).then(aliases => this.setState({aliases}));
 
             case 2:
-                return api.addresses.assetsBalance(address).then(balanceResponse => {
-                    const assets = balanceResponse.data.balances.map(item => {
-                        const currency = Currency.fromIssueTransaction(item.issueTransaction);
-                        const currencyService = ServiceFactory.currencyService();
-                        currencyService.put(currency);
-
-                        const amount = Money.fromCoins(item.balance, currency);
-
-                        return {
-                            id: item.assetId,
-                            name: currency.toString(),
-                            amount: amount.formatAmount()
-                        };
-                    });
-
-                    this.setState({assets});
-                });
+                return addressService.loadAssets(address).then(assets => this.setState({assets}));
         }
 
         return Promise.resolve();
-    }
+    };
 
     handleTabActivate = (selectedIndex) => {
         this.fetchTabData(selectedIndex);
@@ -123,22 +73,24 @@ export default class SingleAddressPage extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
-                <GoBack />
-                <Headline title="Address" subtitle={this.props.match.params.address} />
-                <BalanceDetails balance={this.state.balance} />
-                <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
-                    <Pane title="Last 100 transactions">
-                        <TransactionList transactions={this.state.transactions} />
-                    </Pane>
-                    <Pane title="Aliases">
-                        <GroupedAliasList aliases={this.state.aliases} />
-                    </Pane>
-                    <Pane title="Assets">
-                        <AssetList assets={this.state.assets} />
-                    </Pane>
-                </Tabs>
-            </React.Fragment>
+            <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
+                <React.Fragment>
+                    <GoBack />
+                    <Headline title="Address" subtitle={this.props.match.params.address} />
+                    <BalanceDetails balance={this.state.balance} />
+                    <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
+                        <Pane title="Last 100 transactions">
+                            <TransactionList transactions={this.state.transactions} />
+                        </Pane>
+                        <Pane title="Aliases">
+                            <GroupedAliasList aliases={this.state.aliases} />
+                        </Pane>
+                        <Pane title="Assets">
+                            <AssetList assets={this.state.assets} />
+                        </Pane>
+                    </Tabs>
+                </React.Fragment>
+            </Loader>
         );
     }
 }

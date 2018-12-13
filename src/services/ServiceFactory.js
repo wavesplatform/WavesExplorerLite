@@ -8,6 +8,7 @@ import {PeersService} from './PeersService';
 import {NodesService} from './NodesService';
 import {TransactionService} from './TransactionService';
 import {BlockService} from './BlockService';
+import {AddressService} from './AddressService';
 
 class ServiceFactory {
     constructor() {
@@ -33,6 +34,8 @@ class ServiceFactory {
     transactionService = () => new TransactionService(this._transactionTransformerService);
 
     blockService = () => new BlockService(this._transactionTransformerService);
+
+    addressService = () => new AddressService(this._transactionTransformerService, this._currencyService);
 }
 
 const factoryInstance = new ServiceFactory();
