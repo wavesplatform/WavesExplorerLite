@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
+
+import ServiceFactory from './services/ServiceFactory';
 
 const FADE_TIMEOUT = 2000;
 
-export default class Search extends React.PureComponent {
-    static propTypes = {
-        onSearch: PropTypes.func
-    };
-
-    static defaultProps = {
-        onSearch: () => (new Promise(resolve => setTimeout(resolve, 1000)))
-    };
-
+class Search extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -24,26 +19,36 @@ export default class Search extends React.PureComponent {
         this.inputRef = React.createRef();
     }
 
-    handleKeyUp = async (e) => {
+    go = (route) => {
+        this.props.history.push(route);
+    };
+
+    handleKeyUp = (e) => {
         if (e.key === 'Enter') {
             this.setState({
                 isFailed: false,
                 isLoading: true
             });
-            try {
-                await this.props.onSearch(this.state.searchText);
+
+            const searchService = ServiceFactory.searchService();
+
+            return searchService.search(this.state.searchText).then(route => {
                 this.setState({
                     searchText: '',
                     isLoading: false
                 });
-            } catch (err) {
+
+                this.go(route);
+            }).catch(err => {
+                console.error(err);
+
                 this.setState({
                     isLoading: false,
                     isFailed: true
                 });
 
                 setTimeout(() => this.setState({isFailed: false}), FADE_TIMEOUT);
-            }
+            });
         }
     };
 
@@ -111,3 +116,5 @@ export default class Search extends React.PureComponent {
         );
     }
 }
+
+export default withRouter(Search);

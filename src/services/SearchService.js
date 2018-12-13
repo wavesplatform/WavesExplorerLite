@@ -14,11 +14,11 @@ export class SearchService {
 
             return api.blocks.heightBySignature(query).then(heightResponse => {
                 return routes.blocks.one(heightResponse.data.height);
-            }, () => {
-                return api.transactions.info(query).then(infoResponse => {
-                    return routes.transactions.one(infoResponse.data.id);
-                })
             });
+        }).catch(() => {
+            return api.transactions.info(query).then(infoResponse => {
+                return routes.transactions.one(infoResponse.data.id);
+            })
         });
     };
 }

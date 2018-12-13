@@ -1,14 +1,8 @@
 import React from 'react';
-import groupBy from 'lodash/groupBy';
 
-import {api} from '../shared/NodeApi';
 import GoBack from '../shared/GoBack';
-import Error from '../shared/Error';
 import Headline from '../shared/Headline';
 import Loader from '../shared/Loader';
-import Alias from '../shared/Alias';
-import Currency from '../shared/Currency';
-import Money from '../shared/Money';
 import ServiceFactory from '../services/ServiceFactory';
 
 import TransactionList from './TransactionList';
@@ -20,7 +14,6 @@ import BalanceDetails from './BalanceDetails';
 import transactionMapper from './TransactionMapper';
 
 export default class SingleAddressPage extends React.Component {
-
     state = {
         balance: {},
         assets: [],

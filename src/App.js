@@ -17,8 +17,6 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 
-import ServiceFactory from './services/ServiceFactory';
-
 class App extends React.Component {
     state = {
         mobileMenuVisible: null
@@ -26,16 +24,6 @@ class App extends React.Component {
 
     handleMobileMenuToggle = () => {
         this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
-    };
-
-    go = (route) => {
-        this.props.history.push(route);
-    };
-
-    onSearch = (query) => {
-        const searchService = ServiceFactory.searchService();
-
-        return searchService.search(query).then(route => this.go(route));
     };
 
     render() {
@@ -48,7 +36,7 @@ class App extends React.Component {
                 <React.Fragment>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
-                        <Search onSearch={this.onSearch} />
+                        <Search />
                     </Header>
                     <div className="container grid">
                         <NavBar />
