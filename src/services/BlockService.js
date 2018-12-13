@@ -7,13 +7,34 @@ export class BlockService {
         this.transformer = transactionTransformerService;
     }
 
+    loadHeight = () => {
+        return api.blocks.height().then(heightResponse => {
+            return heightResponse.data.height;
+        });
+    };
+
+    loadSequence = (from, to) => {
+        return api.blocks.headers.sequence(from, to).then(blocksResponse => {
+            const blocks = blocksResponse.data.map(block => {
+                return {
+                    height: block.height,
+                    timestamp: block.timestamp,
+                    baseTarget: block['nxt-consensus']['base-target'],
+                    generator: block.generator,
+                    signature: block.signature,
+                    transactions: block.transactionCount
+                };
+            }).reverse();
+
+            return blocks;
+        });
+    };
+
     loadBlock = (height) => {
         let block;
 
-        return Promise.all([
-            api.blocks.height().then(heightResponse => {
-            return heightResponse.data.height;
-        }), api.blocks.at(height).then(blockResponse => {
+        return Promise.all([this.loadHeight(),
+            api.blocks.at(height).then(blockResponse => {
             block = blockResponse.data;
             return this.transformer.transform(block.transactions);
         })]).then(results => {

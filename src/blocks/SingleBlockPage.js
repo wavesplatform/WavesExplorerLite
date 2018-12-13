@@ -52,7 +52,6 @@ const typeToHeader = type => {
 };
 
 export default class SingleBlockPage extends React.Component {
-
     state = {
         currentHeight: parseInt(this.props.match.params.height),
         maxHeight: parseInt(this.props.match.params.height) + 1,
@@ -62,10 +61,6 @@ export default class SingleBlockPage extends React.Component {
         },
         groupedTransactions: {}
     };
-
-    componentDidMount() {
-        this.initialFetch();
-    }
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.height !== prevProps.match.params.height) {
