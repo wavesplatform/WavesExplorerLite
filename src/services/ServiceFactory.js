@@ -6,26 +6,33 @@ import {StorageService} from './StorageService';
 import {SpamDetectionService} from './SpamDetectionService';
 import {PeersService} from './PeersService';
 import {NodesService} from './NodesService';
+import {TransactionService} from './TransactionService';
+import {BlockService} from './BlockService';
 
 class ServiceFactory {
     constructor() {
         this._currencyService = new CurrencyService();
         this._storageService = new StorageService();
         this._spamDetectionService = new SpamDetectionService(this._storageService);
+        this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
+            this._spamDetectionService);
     }
 
     currencyService = () => this._currencyService;
 
     moneyService = () => new MoneyService(this._currencyService);
 
-    transactionTransformerService = () => new TransactionTransformerService(this._currencyService,
-        this._spamDetectionService);
+    transactionTransformerService = () => this._transactionTransformerService;
 
     searchService = () => new SearchService();
 
     peersService = () => new PeersService();
 
     nodesService = () => new NodesService();
+
+    transactionService = () => new TransactionService(this._transactionTransformerService);
+
+    blockService = () => new BlockService(this._transactionTransformerService);
 }
 
 const factoryInstance = new ServiceFactory();

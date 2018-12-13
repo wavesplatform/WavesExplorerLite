@@ -1,14 +1,12 @@
 import React from 'react';
-import groupBy from 'lodash/groupBy';
 
-import {api} from '../shared/NodeApi';
 import {routes} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import AddressRef from '../shared/AddressRef';
 import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
 import Dictionary from '../shared/Dictionary';
-import Error from '../shared/Error';
+import Loader from '../shared/Loader';
 
 import ServiceFactory from '../services/ServiceFactory';
 
@@ -66,7 +64,7 @@ export default class SingleBlockPage extends React.Component {
     };
 
     componentDidMount() {
-        this.fetchData(this.state.currentHeight);
+        this.initialFetch();
     }
 
     componentDidUpdate(prevProps) {
@@ -77,25 +75,13 @@ export default class SingleBlockPage extends React.Component {
         }
     }
 
+    initialFetch = () => {
+        return this.fetchData(this.state.currentHeight);
+    };
+
     fetchData = height => {
-        api.blocks.height().then(heightResponse => {
-            this.setState({maxHeight: heightResponse.data.height});
-        });
-
-        api.blocks.at(height).then(blockResponse => {
-            this.setState({block: blockResponse.data});
-
-            const transformer = ServiceFactory.transactionTransformerService();
-
-            return transformer.transform(blockResponse.data.transactions);
-        }).then(transactions => {
-            const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
-            this.setState({groupedTransactions});
-        }).catch(error => {
-            console.error(error);
-
-            this.setState({hasError: true});
-        });
+        return ServiceFactory.blockService().loadBlock(height)
+            .then(result => this.setState(result));
     };
 
     showBlock = height => {
@@ -103,24 +89,22 @@ export default class SingleBlockPage extends React.Component {
     };
 
     render() {
-        if (this.state.hasError) {
-            return <Error title="Failed to load block" />;
-        }
-
         const dictionaryItems = this.stateToDictionaryItems();
         return (
-            <React.Fragment>
-                <GoBack />
-                <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false} />
-                <Dictionary items={dictionaryItems} />
+            <Loader fetchData={this.initialFetch} errorTitle="Failed to load block">
+                <React.Fragment>
+                    <GoBack />
+                    <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false} />
+                    <Dictionary items={dictionaryItems} />
 
-                {Object.keys(this.state.groupedTransactions).map(type => {
-                    const numericType = parseInt(type);
-                    const header = typeToHeader(numericType);
-                    return <TransactionList key={numericType} type={numericType} header={header}
-                                            transactions={this.state.groupedTransactions[type]}/>
-                })}
-            </React.Fragment>
+                    {Object.keys(this.state.groupedTransactions).map(type => {
+                        const numericType = parseInt(type);
+                        const header = typeToHeader(numericType);
+                        return <TransactionList key={numericType} type={numericType} header={header}
+                                                transactions={this.state.groupedTransactions[type]}/>
+                    })}
+                </React.Fragment>
+            </Loader>
         );
     }
 
