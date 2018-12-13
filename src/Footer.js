@@ -11,10 +11,10 @@ const socialLinks = [{
     url: 'https://www.facebook.com/wavesplatform/'
 }, {
     id: 'discord',
-    url: '#'
+    url: 'https://discord.gg/cnFmDyA'
 }, {
     id: 'telegram',
-    url: '#'
+    url: 'https://telegram.me/wavesnews'
 }];
 
 const Footer = ({version}) => {
