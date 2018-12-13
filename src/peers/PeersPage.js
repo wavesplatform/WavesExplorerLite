@@ -1,42 +1,24 @@
 import React from 'react';
 
-import {api} from '../shared/NodeApi';
-import Error from '../shared/Error';
+import ServiceFactory from '../services/ServiceFactory';
+import Loader from '../shared/Loader';
 import PeerList from './PeerList';
 
 export default class PeersPage extends React.Component {
-
     state = {
-        peers: [],
-        hasError: false
+        peers: []
     };
 
     componentDidMount() {
         this.fetchData();
     }
 
-    fetchData() {
-        api.peers().then(response => {
-            const peers = response.data.peers.map(item => ({
-                address: item.address,
-                declaredAddress: item.declaredAddress,
-                name: item.peerName,
-                nonce: item.peerNonce
-            }));
-
-            this.setState({peers});
-        }).catch(error => {
-            console.error(error);
-
-            this.setState({hasError: true});
-        });
-    }
+    fetchData = () => {
+        return ServiceFactory.peersService().loadPeers()
+            .then(peers => this.setState({peers}));
+    };
 
     render() {
-        if (this.state.hasError) {
-            return <Error title="Failed to load peer details" />;
-        }
-
         return (
             <React.Fragment>
                 <div className="headline">
@@ -46,7 +28,9 @@ export default class PeersPage extends React.Component {
                         <span className="bold">{this.state.peers.length}</span>
                     </label>
                 </div>
-                <PeerList peers={this.state.peers} />
+                <Loader fetchData={this.fetchData} errorTitle="Failed to load peer details">
+                    <PeerList peers={this.state.peers} />
+                </Loader>
             </React.Fragment>
         );
     }

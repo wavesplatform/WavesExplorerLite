@@ -17,12 +17,6 @@ export default class NodesPage extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.fetchData();
-        }
-    }
-
     fetchData() {
         this.setState({nodes: [...configuration.nodes]}, this.fetchNodesDetails);
     }

@@ -4,6 +4,8 @@ import {TransactionTransformerService} from './TransactionTransformerService';
 import {SearchService} from './SearchService';
 import {StorageService} from './StorageService';
 import {SpamDetectionService} from './SpamDetectionService';
+import {PeersService} from './PeersService';
+import {NodesService} from './NodesService';
 
 class ServiceFactory {
     constructor() {
@@ -20,6 +22,10 @@ class ServiceFactory {
         this._spamDetectionService);
 
     searchService = () => new SearchService();
+
+    peersService = () => new PeersService();
+
+    nodesService = () => new NodesService();
 }
 
 const factoryInstance = new ServiceFactory();
