@@ -9,5 +9,11 @@ export class TransactionService {
         return api.transactions.info(id).then(infoResponse => {
             return this.transformer.transform(infoResponse.data);
         });
-    }
+    };
+
+    loadUnconfirmed = () => {
+        return api.transactions.unconfirmed().then(response => {
+            return this.transformer.transform(response.data);
+        })
+    };
 }

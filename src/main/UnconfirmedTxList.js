@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Loader from '../shared/Loader';
 import UnconfirmedTxListItem from './UnconfirmedTxListItem';
 
-export default class UnconfirmedTxList extends React.Component {
+import ServiceFactory from '../services/ServiceFactory';
+
+export class UnconfirmedTxList extends React.Component {
     static propTypes = {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired
     };
@@ -40,6 +43,25 @@ export default class UnconfirmedTxList extends React.Component {
             <div className={wrapperClassName}>
                 {isEmpty ? this.renderEmpty() : this.renderList()}
             </div>
+        );
+    }
+}
+
+export default class UnconfirmedTxListContainer extends React.Component {
+    state = {
+        unconfirmed: []
+    };
+
+    fetchData = () => {
+        return ServiceFactory.transactionService().loadUnconfirmed()
+            .then(unconfirmed => this.setState({unconfirmed}));
+    };
+
+    render() {
+        return (
+            <Loader fetchData={this.fetchData}>
+                <UnconfirmedTxList transactions={this.state.unconfirmed} />
+            </Loader>
         );
     }
 }

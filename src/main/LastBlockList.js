@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
 import {routes} from '../shared/Routing';
 import LastBlockListItem from './LastBlockListItem';
+import Loader from '../shared/Loader';
 
-class LastBlockList extends React.PureComponent {
+import ServiceFactory from '../services/ServiceFactory';
+
+const LAST_BLOCKS_COUNT = 20;
+
+export class LastBlockList extends React.PureComponent {
     static propTypes = {
         blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
         title: PropTypes.string
@@ -33,4 +37,25 @@ class LastBlockList extends React.PureComponent {
     }
 }
 
-export default withRouter(LastBlockList);
+export default class LastBlockListContainer extends React.Component {
+    state = {
+        blocks: []
+    };
+
+    fetchData = () => {
+        return ServiceFactory.infoService().loadHeight()
+            .then(height => {
+                const to = height;
+                const from = Math.max(1, to - LAST_BLOCKS_COUNT);
+                return ServiceFactory.blockService().loadSequence(from, to)
+            }).then(blocks => this.setState({blocks}));
+    };
+
+    render() {
+        return (
+            <Loader fetchData={this.fetchData} errorTitle="Failed to load last blocks">
+                <LastBlockList blocks={this.state.blocks} />
+            </Loader>
+        );
+    }
+}

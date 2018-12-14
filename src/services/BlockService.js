@@ -3,15 +3,10 @@ import groupBy from 'lodash/groupBy';
 import {api} from '../shared/NodeApi';
 
 export class BlockService {
-    constructor(transactionTransformerService) {
+    constructor(transactionTransformerService, infoService) {
         this.transformer = transactionTransformerService;
+        this.infoService = infoService;
     }
-
-    loadHeight = () => {
-        return api.blocks.height().then(heightResponse => {
-            return heightResponse.data.height;
-        });
-    };
 
     loadSequence = (from, to) => {
         return api.blocks.headers.sequence(from, to).then(blocksResponse => {
@@ -33,7 +28,7 @@ export class BlockService {
     loadBlock = (height) => {
         let block;
 
-        return Promise.all([this.loadHeight(),
+        return Promise.all([this.infoService.loadHeight(),
             api.blocks.at(height).then(blockResponse => {
             block = blockResponse.data;
             return this.transformer.transform(block.transactions);

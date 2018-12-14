@@ -9,6 +9,7 @@ import {NodesService} from './NodesService';
 import {TransactionService} from './TransactionService';
 import {BlockService} from './BlockService';
 import {AddressService} from './AddressService';
+import {InfoService} from './InfoService';
 
 class ServiceFactory {
     constructor() {
@@ -17,6 +18,7 @@ class ServiceFactory {
         this._spamDetectionService = new SpamDetectionService(this._storageService);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
             this._spamDetectionService);
+        this._infoService = new InfoService();
     }
 
     currencyService = () => this._currencyService;
@@ -33,9 +35,11 @@ class ServiceFactory {
 
     transactionService = () => new TransactionService(this._transactionTransformerService);
 
-    blockService = () => new BlockService(this._transactionTransformerService);
+    blockService = () => new BlockService(this._transactionTransformerService, this._infoService);
 
     addressService = () => new AddressService(this._transactionTransformerService, this._currencyService);
+
+    infoService = () => this._infoService;
 }
 
 const factoryInstance = new ServiceFactory();

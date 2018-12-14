@@ -18,8 +18,7 @@ export default class BlocksPage extends React.Component {
     };
 
     initialFetch = () => {
-        const blockService = ServiceFactory.blockService();
-        return blockService.loadHeight().then(height => {
+        return ServiceFactory.infoService().loadHeight().then(height => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
             this.setState({height, lastPage});
