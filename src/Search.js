@@ -100,6 +100,7 @@ class Search extends React.PureComponent {
                     </svg>
                 </div>
                 <input
+                    className="search-input"
                     ref={this.inputRef}
                     placeholder="Search address, TX id, block sig"
                     onKeyUp={this.handleKeyUp}

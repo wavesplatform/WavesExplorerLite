@@ -31,21 +31,57 @@ export default class NetworkSwitch extends React.PureComponent {
         return (
             <div>
                 <div className="network-switcher">
-                    <Network current={true} {...current} />
-                    <Network {...peer} />
-                    <div>
-                        <button onClick={this.toggleModal}>Settings</button>
+                    <div className="current-network">
+                        <i class="network-icon-active"></i>
+                        <span className="network-list">Mainnet</span> {/* TODO ischenko | add class .expanded onClick, show current network */}
+                        <div className="network-list-expanded">
+                            <div>Testnet</div>
+                            <div>Custom</div>
+                        </div>
                     </div>
+                    <div className="settings-button" onClick={this.toggleModal}></div>
                 </div>
-                <Modal
+                <Modal className="modal-content"
                     isOpen={this.state.showModal}
                     onRequestClose={this.toggleModal}
                     contentLabel="Modal example"
-                    className="modal-content"
                     overlayClassName="modal-overlay"
                 >
-                    <h2>Header</h2>
-                    <button onClick={this.toggleModal}>Close</button>
+                    <div className="header">
+                        Settings
+                        <div className="close-btn" onClick={this.toggleModal}></div>
+                    </div>
+
+                    <div className="row">
+                        <label>Blockchain Network</label>
+                        <div className="current-network">
+                            <i class="network-icon-active"></i>
+                            <span>Mainnet</span>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <label>Node address</label>
+                        <div className="input-wrapper">
+                            <input type="text"/> {/* TODO ischenko | class .invalid */}
+                            <button className="copy-btn"></button> {/* TODO ischenko */}
+                            {/* <!--div className="input-error">&error text&</div> */}
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <label>Spam list</label>
+                        <div className="input-wrapper">
+                            <input type="text" class="invalid"/> {/* TODO ischenko | class .invalid */}
+                            <button className="copy-btn"></button> {/* TODO ischenko */}
+                            <div className="input-error">&error text&</div>
+                        </div>
+                    </div>
+
+                    <div className="row buttons-wrapper">
+                        <button className="interface grey" disabled>Set Default</button> {/* TODO ischenko | add attr='disabled' if by default = true  */}
+                        <button className="interface blue" disabled>Save and apply</button> {/* TODO ischenko | add attr='disabled' if wasChanged = false */}
+                    </div>
                 </Modal>
             </div>
         );
