@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TransactionRef from '../shared/TransactionRef';
 import AddressRef from '../shared/AddressRef';
 
 export default class UnconfirmedTxListItem extends React.PureComponent {
@@ -15,7 +14,7 @@ export default class UnconfirmedTxListItem extends React.PureComponent {
             <div className="grid panel-row">
                 <div className="divider divider-utx grid-item-fixed"></div>
                 <div>
-                    <div className="line no-wrap"><TransactionRef txId={tx.id} /></div>
+                    <div className="line no-wrap">{tx.id}</div>
                     <div className="line">
                         <label>Amount</label> {tx.amount ? tx.amount.toString() : ''}
                         <div className="link-spacer"></div>
