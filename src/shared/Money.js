@@ -5,8 +5,6 @@ import Currency from './Currency';
 const DECIMAL_SEPARATOR = '.';
 const THOUSANDS_SEPARATOR = ',';
 
-const integerPart = value => value.trunc();
-const fractionPart = value => value.minus(integerPart(value));
 const format = (value, currency) => value.toFixed(currency.precision, currency.roundingMode);
 const validateCurrency = (expected, actual) => {
     if (expected.id !== actual.id)
@@ -117,7 +115,7 @@ export default class Money {
         return new Money(this.amount.mul(multiplier), this.currency);
     };
 
-    toString = () => this.formatAmount(false, true) + ' ' + this.currency.toString();
+    toString = () => this.formatAmount(true, true) + ' ' + this.currency.toString();
 }
 
 // set up decimal to format 0.00000001 as is instead of 1e-8
