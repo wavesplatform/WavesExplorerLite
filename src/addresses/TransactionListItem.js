@@ -3,9 +3,27 @@ import PropTypes from 'prop-types';
 
 import Address from './Address';
 import TransactionRef from '../shared/TransactionRef';
-import {typeToTitle} from '../shared/TransactionTypes';
+import {TransactionDirections} from '../shared/constants';
 import TransactionArrow from '../shared/TransactionArrow';
 import TransactionBadge from '../shared/TransactionBadge';
+
+const Endpoints = ({direction, sender, recipient}) => {
+    if (direction === TransactionDirections.OUTGOING) {
+        return (
+            <React.Fragment>
+                <div className="line no-wrap">{recipient ? <Address address={recipient} /> : '\u00A0'}</div>
+                <div className="line no-wrap"><Address address={sender} /></div>
+            </React.Fragment>
+        );
+    }
+
+    return (
+        <React.Fragment>
+            <div className="line no-wrap"><Address address={sender} /></div>
+            <div className="line no-wrap"><Address address={recipient} /></div>
+        </React.Fragment>
+    );
+};
 
 export default class TransactionListItem extends React.PureComponent {
     static propTypes = {
@@ -28,8 +46,7 @@ export default class TransactionListItem extends React.PureComponent {
                 </td>
                 <td data-label="Sender / Receiver">
                     <TransactionArrow type={tx.type} direction={tx.direction} />
-                    <div className="line no-wrap"><Address address={tx.sender} /></div>
-                    <div className="line no-wrap"><Address address={tx.recipient} /></div>
+                    <Endpoints direction={tx.direction} sender={tx.sender} recipient={tx.recipient} />
                 </td>
                 <td data-label="Amount in / out">
                     {tx.in && <div className="line">{tx.in.amount} {tx.in.currency}</div>}

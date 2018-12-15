@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {typeToCssClass} from '../shared/TransactionTypes';
-
-const INCOMING = 'incoming';
-const OUTGOING = 'outgoing';
+import {TransactionDirections} from '../shared/constants';
 
 const TransactionArrow = ({type, direction}) => {
     let className = 'arrow ' + typeToCssClass(type);
@@ -17,15 +15,15 @@ const TransactionArrow = ({type, direction}) => {
 
 TransactionArrow.propTypes = {
     type: PropTypes.number.isRequired,
-    direction: PropTypes.oneOf([INCOMING, OUTGOING])
+    direction: PropTypes.oneOf([TransactionDirections.INCOMING, TransactionDirections.OUTGOING])
 };
 
 const directionToArrowClass = direction => {
     switch (direction) {
-        case INCOMING:
+        case TransactionDirections.INCOMING:
             return 'in';
 
-        case OUTGOING:
+        case TransactionDirections.OUTGOING:
             return 'out';
 
         default:
