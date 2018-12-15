@@ -22,6 +22,6 @@ export default class Alias {
     };
 
     toString() {
-        return ALIAS_PREFIX + ':' + this.networkCode + ':' + this.text;
+        return ALIAS_PREFIX + ':' + this.networkCode + ':' + this.alias;
     }
 }

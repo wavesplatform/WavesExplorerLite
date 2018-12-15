@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 
 const TransferListItem = ({transfer}) => {
     return (
         <tr>
             <td data-label="Recipient">
-                <div className="line no-wrap"><AddressRef address={transfer.recipient}/></div>
+                <div className="line no-wrap"><EndpointRef endpoint={transfer.recipient}/></div>
             </td>
             <td data-label="Amount">
                 <div className="line">{transfer.amount.toString()}</div>

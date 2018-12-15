@@ -10,6 +10,7 @@ import {TransactionService} from './TransactionService';
 import {BlockService} from './BlockService';
 import {AddressService} from './AddressService';
 import {InfoService} from './InfoService';
+import {AliasService} from './AliasService';
 
 class ServiceFactory {
     constructor() {
@@ -40,6 +41,8 @@ class ServiceFactory {
     addressService = () => new AddressService(this._transactionTransformerService, this._currencyService);
 
     infoService = () => this._infoService;
+
+    aliasService = () => new AliasService();
 }
 
 const factoryInstance = new ServiceFactory();

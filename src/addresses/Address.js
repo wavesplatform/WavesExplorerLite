@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
-import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 
 class Address extends React.PureComponent {
     static propTypes = {
@@ -19,7 +19,7 @@ class Address extends React.PureComponent {
         if (address === currentAddress)
             return <label>{address}</label>;
 
-        return <AddressRef address={address} appearance="regular" />;
+        return <EndpointRef endpoint={address} appearance="regular" />;
     }
 }
 

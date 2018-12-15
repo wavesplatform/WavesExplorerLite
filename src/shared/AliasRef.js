@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import Alias from './Alias';
 import {routes} from './Routing';
 
 const REGULAR = 'regular';
@@ -17,9 +18,9 @@ const appearanceToClassName = appearance => {
     }
 };
 
-class AddressRef extends React.PureComponent {
+export default class AliasRef extends React.PureComponent {
     static propTypes = {
-        address: PropTypes.string.isRequired,
+        alias: PropTypes.string.isRequired,
         title: PropTypes.string,
         appearance: PropTypes.oneOf([REGULAR, BRIGHT])
     };
@@ -29,12 +30,11 @@ class AddressRef extends React.PureComponent {
     };
 
     render() {
-        const {address, appearance} = this.props;
-        const title = this.props.title || address;
+        const {alias, appearance} = this.props;
+        const a = Alias.fromString(alias);
+        const title = this.props.title || a.alias;
         const className = appearanceToClassName(appearance);
 
-        return (<Link to={routes.addresses.one(address)} className={className}>{title}</Link>);
+        return (<Link to={routes.aliases.one(a.alias)} className={className}>{title.substring(0, 50)}</Link>);
     }
 }
-
-export default AddressRef;

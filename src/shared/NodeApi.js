@@ -57,6 +57,9 @@ export const nodeApi = (baseUrl) => {
             info: id => get(`/transactions/info/${id}`),
             address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`)
         },
+        aliases: {
+            address: (alias) => get(`/alias/by-alias/${alias}`)
+        },
         peers: () => get('/peers/connected'),
     };
 };

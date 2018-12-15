@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import DateTime from '../shared/DateTime';
 import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 import CurrencyRef from '../shared/CurrencyRef';
 import TransactionRef from '../shared/TransactionRef';
 import TransactionArrow from '../shared/TransactionArrow';
@@ -92,7 +93,7 @@ class Subjects extends React.PureComponent {
                 <TransactionArrow type={this.props.type} />
                 <Line wrap={false}><AddressRef address={this.props.sender} appearance="regular"/></Line>
                 <Line wrap={false}>
-                    {this.props.recipient && <AddressRef address={this.props.recipient} appearance="regular"/>}
+                    {this.props.recipient && <EndpointRef endpoint={this.props.recipient} appearance="regular"/>}
                 </Line>
             </td>
         );
@@ -160,8 +161,8 @@ class ExchangeTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Seller / Buyer">
                     <div className="arrow exchange"></div>
-                    <div className="line no-wrap"><AddressRef address={tx.sender} appearance="regular"/></div>
-                    <div className="line no-wrap"><AddressRef address={tx.recipient} appearance="regular"/></div>
+                    <div className="line no-wrap"><EndpointRef endpoint={tx.sender} appearance="regular"/></div>
+                    <div className="line no-wrap"><EndpointRef endpoint={tx.recipient} appearance="regular"/></div>
                 </td>
                 <td data-label="Amount / Total">
                     <div className="line">{tx.amount.toString()}</div>

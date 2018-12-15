@@ -1,7 +1,8 @@
 export const routeParams = {
     blockHeight: ':height',
     transactionId: ':transactionId',
-    address: ':address'
+    address: ':address',
+    alias: ':alias'
 };
 
 const blocks = `/blocks`;
@@ -23,5 +24,8 @@ export const routes = {
     },
     addresses: {
         one: (address) => `/address/${address}`
+    },
+    aliases: {
+        one: (alias) => `/aliases/${alias}`
     }
 };

@@ -16,6 +16,7 @@ import BlocksPage from './blocks/BlocksPage';
 import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
+import SingleAliasPage from './aliases/SingleAliasPage';
 
 class App extends React.Component {
     state = {
@@ -48,6 +49,7 @@ class App extends React.Component {
                             <Route path={routes.peers.list} component={PeersPage} />
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
+                            <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
                             <Route path={routes.root} component={MainPage} />
                         </Switch>
                         </div>
