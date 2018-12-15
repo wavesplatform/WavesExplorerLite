@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AddressRef from '../shared/AddressRef';
+import CurrencyRef from '../shared/CurrencyRef';
 import TransactionBadge from '../shared/TransactionBadge';
 import TransactionRef from '../shared/TransactionRef';
 import BlockRef from '../shared/BlockRef';
@@ -129,6 +130,8 @@ const transferTransactionToItems = tx => {
 };
 
 const exchangeTransactionToItems = tx => {
+    const assetPair = tx.buyOrder.assetPair;
+
     const items = [{
         label: 'Price',
         value: tx.price.toString()
@@ -143,7 +146,13 @@ const exchangeTransactionToItems = tx => {
         buildAmountItem(tx),
         ...items,
         buildSenderItem(tx),
-        buildRecipientItem(tx)
+        buildRecipientItem(tx),
+        {
+            label: 'Pair',
+            value: <React.Fragment><CurrencyRef currency={assetPair.amountAsset}/> / <CurrencyRef currency={assetPair.priceAsset}/></React.Fragment>
+        },
+        ...buildOrderItems(tx.buyOrder),
+        ...buildOrderItems(tx.sellOrder)
     ];
 };
 
@@ -165,6 +174,24 @@ const massPaymentTransactionToItems = tx => {
     ];
 };
 
+const buildOrderItems = order => {
+    return [{
+        label: 'Order Id',
+        value: order.id
+    }, {
+        label: 'Order Type',
+        value: order.orderType
+    },
+        buildSenderItem(order),
+        buildAmountItem(order),
+    {
+        label: 'Price',
+        value: order.price.toString()
+    },
+        buildTimestampItem(order.timestamp)
+    ];
+};
+
 const buildDescriptionItem = tx => ({
     label: 'Description',
     value: <Description text={tx.description}/>
@@ -175,14 +202,16 @@ const buildAttachmentItem = tx => ({
     value: <Description text={tx.attachment} />
 });
 
+const buildTimestampItem = timestamp => ({
+    label: 'Timestamp',
+    value: timestamp.toLongString(),
+});
+
 const buildTransactionHeaderItems = tx => {
     return [{
         label: 'Type',
         value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge type={tx.type} /></React.Fragment>
-    }, {
-        label: 'Timestamp',
-        value: tx.timestamp.toLongString(),
-    }, {
+    }, buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height} />
     }];

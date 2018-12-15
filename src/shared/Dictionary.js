@@ -11,8 +11,8 @@ export default class Dictionary extends React.Component {
     render() {
         return (
             <div className="dictionary">
-                {this.props.items.map(item => {
-                    return <DictionaryItem key={item.label} {...item}/>
+                {this.props.items.map((item, index) => {
+                    return <DictionaryItem key={index} {...item}/>
                 })}
             </div>
         );
