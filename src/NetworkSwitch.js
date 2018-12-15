@@ -32,7 +32,7 @@ export default class NetworkSwitch extends React.PureComponent {
             <div>
                 <div className="network-switcher">
                     <div className="current-network">
-                        <i class="network-icon-active"></i>
+                        <i className="network-icon-active"></i>
                         <span className="network-list">Mainnet</span> {/* TODO ischenko | add class .expanded onClick, show current network */}
                         <div className="network-list-expanded">
                             <div>Testnet</div>
@@ -55,7 +55,7 @@ export default class NetworkSwitch extends React.PureComponent {
                     <div className="row">
                         <label>Blockchain Network</label>
                         <div className="current-network">
-                            <i class="network-icon-active"></i>
+                            <i className="network-icon-active"></i>
                             <span>Mainnet</span>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ export default class NetworkSwitch extends React.PureComponent {
                     <div className="row">
                         <label>Spam list</label>
                         <div className="input-wrapper">
-                            <input type="text" class="invalid"/> {/* TODO ischenko | class .invalid */}
+                            <input type="text" className="invalid"/> {/* TODO ischenko | class .invalid */}
                             <button className="copy-btn"></button> {/* TODO ischenko */}
                             <div className="input-error">&error text&</div>
                         </div>
