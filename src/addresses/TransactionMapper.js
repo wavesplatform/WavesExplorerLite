@@ -55,7 +55,7 @@ const defaultDirection = (tx, currentAddress) => {
 };
 
 const moneyToObject = money => ({
-    amount: money.formatAmount(),
+    amount: money.formatAmount(true),
     currency: money.currency.toString()
 });
 

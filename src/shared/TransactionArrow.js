@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {typeToCssClass} from '../shared/TransactionTypes';
-import {TransactionDirections} from '../shared/constants';
+import {typeToCssClass, TransactionDirections} from '../shared/TransactionDefinitions';
 
 const TransactionArrow = ({type, direction}) => {
     let className = 'arrow ' + typeToCssClass(type);

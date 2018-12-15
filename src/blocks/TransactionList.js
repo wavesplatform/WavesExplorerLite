@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {typeToTitle} from '../shared/TransactionTypes';
+import {typeToTitle} from '../shared/TransactionDefinitions';
 import {createListItem} from './TransactionListItem';
 
 export default class TransactionList extends React.Component {

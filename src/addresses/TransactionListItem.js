@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Address from './Address';
 import TransactionRef from '../shared/TransactionRef';
-import {TransactionDirections} from '../shared/constants';
+import {TransactionDirections} from '../shared/TransactionDefinitions';
 import TransactionArrow from '../shared/TransactionArrow';
 import TransactionBadge from '../shared/TransactionBadge';
 
@@ -38,7 +38,7 @@ export default class TransactionListItem extends React.PureComponent {
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap"><TransactionRef txId={tx.id}/></div>
-                    <div className="line no-wrap"><TransactionBadge type={tx.type}/></div>
+                    <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
                     <div className="line"><label>{tx.timestamp.date}</label></div>

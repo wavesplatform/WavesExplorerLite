@@ -124,13 +124,13 @@ a {
     &.asset-burn, &.lease-cancel, &.asset-transfer.out, &.mass-payment.out {
         background-color: map-get($colors, error500);
     }
-    &.lease, &.asset-transfer.in, &.mass-payment.in {
+    &.lease, &.asset-issue, &.asset-transfer.in, &.mass-payment.in {
         background-color: map-get($colors, success400);
     }
     &.exchange {
         background-color: map-get($colors, mixUnicorn);
     }
-    &.create-alias, &.asset-reissue, &.asset-issue, &.data {
+    &.create-alias, &.asset-reissue, &.data {
         background-color: map-get($colors, info400);
     }
 }
