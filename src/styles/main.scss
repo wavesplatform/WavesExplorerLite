@@ -276,19 +276,134 @@ body {
     @include responsive_styles($card);
 }
 
-.modal-content {
+.input-error {
+    color: map-get($colors, error500);
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.close-btn {
+    background: url(../images/close-24.svg) center no-repeat;
+    width: 24px;
+    height: 24px;
     position: absolute;
-    top: 40px;
-    left: 40px;
-    right: 40px;
-    bottom: 40px;
-    border: 1px solid #ccc;
+    right: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.modal-content {
+    font-family: map-get($font, family);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: #fff;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     border-radius: 4px;
-    outline: none;
-    padding: 20px;
+    padding: 0 36px 36px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05);
+    outline: 0 none;
+
+
+
+    .buttons-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        button:last-child {
+            margin-left: 24px;
+        }
+    }
+
+    button {
+        &.interface {
+            padding: 14px 24px;
+            line-height: 1em;
+            font-size: 13px;
+            transition: opacity .3s;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 0 none;
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: .3;
+            }
+
+            &.blue {
+                background: map-get($colors, submit400);
+                color: white;
+
+            }
+
+            &.grey {
+                background: map-get($colors, iceBlue);
+                color: black;
+            }
+        }
+    }
+
+    .row {
+        margin-top: 26px;
+        .input-wrapper {
+            position: relative;
+            .copy-btn {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+
+        label {
+            margin-bottom: 6px;
+            display: block;
+            font-size: 12px;
+        }
+    }
+
+    .current-network {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .header {
+        background: map-get($colors, basic50);
+        margin: 0 -36px;
+        line-height: 1;
+        padding: 24px 36px 20px 36px;
+        font-size: 18px;
+        height: auto;
+        position: relative;
+
+        .close-btn {
+            position: absolute;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .modal-content {
+        max-width: calc(100% - 72px);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translate(0, 0);
+        height: calc(100% - 36px);
+    }
+}
+
+.ReactModalPortal {
+    overflow: auto;
 }
 
 .modal-overlay {
@@ -297,52 +412,129 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.network-icon-active {
+    display:inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(../images/network-18-submit-400.svg);
+    margin-right: 7px;
+}
+
+.copy-btn {
+    display: block;
+    width: 36px;
+    height: 36px;
+    background: url(../images/copy-14-submit-400.svg) center no-repeat;
+    border: 0 none;
+    outline: 0 none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.settings-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: block;
+    cursor: pointer;
+    background-image: url(../images/setting-14-black.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: .3s;
+    background-color: map-get($colors, iceBlue);
+    &:hover {
+        background-color: map-get($colors, paleBlue);
+    }
 }
 
 .network-switcher {
-    display: inline-block;
-    border: solid 1px map-get($colors, accent50);
-    border-radius: 2px;
-    padding: 2px;
+    display: flex;
+    align-items: center;
+    width: 276px;
+    font-family: map-get($font, family);
+    font-size: 14px;
+    height: 28px;
+    overflow: visible;
 
-    div {
-        &::before {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 68px;
-            height: 28px;
+    .current-network {
+        display: flex;
+        align-items: center;
+        margin-right: 76px;
+        position: relative;
+
+        .network-list {
+            cursor: pointer;
+            border-radius: 6px;
             transition: .3s;
-            opacity: 0;
-            z-index: -1;
-            border-radius: 2px;
+            background: map-get($colors, iceBlue);
+            position: relative;
+            padding: 6px 40px 6px 8px;
+
+            &:hover {
+                background: map-get($colors, paleBlue);
+            }
+
+            &.expanded {
+                background: map-get($colors, white);
+                color: map-get($colors, basic500);
+                border-radius: 6px 6px 0 0;
+                &:hover {
+                    cursor: default;
+                }
+            }
+
+            &.expanded + .network-list-expanded {
+                display: block;
+                box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05)
+            }
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 5px;
+                background: url(../images/selector-14-black.svg) center no-repeat;
+            }
         }
 
-        &.current:before {
-            background-color: map-get($colors, submit400);
-            opacity: 1;
+        .network-list-expanded {
+            display: none;
+            width: calc(100% - 23px);
+            background: map_get($colors, white);
+            border-radius: 0 0 6px 6px;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1;
+            overflow: hidden;
+
+            div {
+                transition: background-color .3s;
+                padding-left: 8px;
+                line-height: 28px;
+                cursor: pointer;
+                border-bottom: 1px dotted map-get($colors, iceBlue);
+                &:last-child {
+                    border-bottom: 0 none;
+                }
+                &:first-child {
+                    border-top: 1px dotted map-get($colors, iceBlue);
+                }
+                &:hover {
+                    background-color: map-get($colors, iceBlue);
+                }
+            }
         }
-    }
 
-    > * {
-        display: inline-block;
-        width: 68px;
-        height: 28px;
-
-        @include font(body, disabled500);
-        text-align: center;
-        line-height: 28px;
-        cursor: pointer;
-
-        &.current {
-            cursor: default;
-            border-radius: 2px;
-            color: map-get($colors, white);
-        }
-
-        &:hover:not(.current) {
-            color: map-get($colors, black);
+        .network-icon-active {
+            margin-right: 5px;
         }
     }
 }

@@ -4,27 +4,43 @@
 input {
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid map-get($colors, basic500);
-    padding: 12px;
-    outline: none;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid map-get($colors, paleBlue);
+    outline: 0 none;
+    height: 36px;
+    padding: 0 14px;
 
-    @include font(headline3);
-    line-height: 1.25;
-
-    & ::placeholder {
-        @include font(headline3, basic500);
-        line-height: 1.25;
+    &:focus {
+        border: 1px solid map-get($colors, submit400);
     }
-
-    & :focus {
-        border-bottom-color: map-get($colors, submit400);
-    }
-
     &.invalid {
-        border-bottom-color: map-get($colors, error500);
+        border: 1px solid map-get($colors, error500);
+    }
+
+    &.search-input {
+        height: 100%;
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 12px;
+        outline: none;
+
+        @include font(headline3);
+        line-height: 1.25;
+
+        & ::placeholder {
+            @include font(headline3, basic500);
+            line-height: 1.25;
+        }
+
+        & :focus {
+            border-bottom-color: map-get($colors, submit400);
+        }
+
+        &.invalid {
+            border-bottom-color: map-get($colors, error500);
+        }
     }
 }
 
