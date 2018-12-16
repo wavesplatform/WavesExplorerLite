@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DateTime from '../shared/DateTime';
-import AddressRef from '../shared/AddressRef';
 import EndpointRef from '../shared/EndpointRef';
 import CurrencyRef from '../shared/CurrencyRef';
 import TransactionRef from '../shared/TransactionRef';
@@ -91,7 +90,7 @@ class Subjects extends React.PureComponent {
         return (
             <td data-label="Sender / Recipient">
                 <TransactionArrow type={this.props.type} />
-                <Line wrap={false}><AddressRef address={this.props.sender} appearance="regular"/></Line>
+                <Line wrap={false}><EndpointRef endpoint={this.props.sender} appearance="regular"/></Line>
                 <Line wrap={false}>
                     {this.props.recipient && <EndpointRef endpoint={this.props.recipient} appearance="regular"/>}
                 </Line>
@@ -225,7 +224,7 @@ class IssueTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Sender / Recipient">
                     <TransactionArrow type={tx.type} />
-                    <Line wrap={false}><AddressRef address={tx.sender} appearance="regular"/></Line>
+                    <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line wrap={false}>
                         <TransactionRef txId={tx.assetId}/>
                     </Line>
@@ -293,7 +292,7 @@ class MassPaymentTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Sender / Recipient">
                     <TransactionArrow type={tx.type} />
-                    <Line wrap={false}><AddressRef address={tx.sender} appearance="regular"/></Line>
+                    <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line>{tx.transferCount}</Line>
                 </td>
                 <AmountAndFee amount={tx.totalAmount} fee={tx.fee} />

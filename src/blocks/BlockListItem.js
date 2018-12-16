@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 import BlockRef from '../shared/BlockRef';
 
 export default class BlockListItem extends React.Component {
@@ -24,7 +24,7 @@ export default class BlockListItem extends React.Component {
                     <div className="line bold">{block.baseTarget}</div>
                 </td>
                 <td data-label="Generator / Signature">
-                    <div className="line no-wrap"><AddressRef address={block.generator}/></div>
+                    <div className="line no-wrap"><EndpointRef endpoint={block.generator}/></div>
                     <div className="line no-wrap"><label>{block.signature}</label></div>
                 </td>
                 <td data-label="TXs">

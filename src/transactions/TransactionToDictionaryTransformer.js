@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 import CurrencyRef from '../shared/CurrencyRef';
 import TransactionBadge from '../shared/TransactionBadge';
 import TransactionRef from '../shared/TransactionRef';
@@ -229,12 +229,12 @@ const buildReissuableItem = tx => ({
 
 const buildRecipientItem = tx => ({
     label: 'Recipient',
-    value: <AddressRef address={tx.recipient} />
+    value: <EndpointRef endpoint={tx.recipient} />
 });
 
 const buildSenderItem = tx => ({
     label: 'Sender',
-    value: <AddressRef address={tx.sender} />
+    value: <EndpointRef endpoint={tx.sender} />
 });
 
 const buildFeeItem = tx => ({

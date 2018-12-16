@@ -2,7 +2,7 @@ import React from 'react';
 
 import {routes} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
-import AddressRef from '../shared/AddressRef';
+import EndpointRef from '../shared/EndpointRef';
 import Headline from '../shared/Headline';
 import CopyButton from '../shared/CopyButton';
 import Dictionary from '../shared/Dictionary';
@@ -129,7 +129,7 @@ export default class SingleBlockPage extends React.Component {
             action: <CopyButton text={this.state.block.reference}/>
         }, {
             label: 'Generator',
-            value: <AddressRef address={this.state.block.generator}/>
+            value: <EndpointRef endpoint={this.state.block.generator}/>
         }, {
             label: 'Signature',
             value: this.state.block.signature,
