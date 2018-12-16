@@ -26,9 +26,8 @@ class AddressRef extends React.PureComponent {
     };
 
     render() {
-        const {address, appearance} = this.props;
+        const {address, className} = this.props;
         const title = this.props.title || address;
-        const className = appearanceToClassName(appearance);
 
         return (<Link to={routes.addresses.one(address)} className={className}>{title}</Link>);
     }
