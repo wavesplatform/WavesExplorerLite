@@ -59,14 +59,20 @@ export default class SingleBlockPage extends React.Component {
             timestamp: {},
             generator: ''
         },
-        groupedTransactions: {}
+        groupedTransactions: {},
+        loading: false
     };
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.height !== prevProps.match.params.height) {
             const height = parseInt(this.props.match.params.height);
             this.setState({currentHeight: height});
-            this.fetchData(height);
+            this.fetchData(height)
+                .catch(error => {
+                    console.error(error);
+                    console.log("Error response status: " + error.status);
+                    console.log(error.response.data);
+                });
         }
     }
 
@@ -75,8 +81,11 @@ export default class SingleBlockPage extends React.Component {
     };
 
     fetchData = height => {
+        this.setState({loading: true});
+
         return ServiceFactory.blockService().loadBlock(height)
-            .then(result => this.setState(result));
+            .then(result => this.setState(result))
+            .then(() => this.setState({loading: false}));
     };
 
     showBlock = height => {
@@ -108,6 +117,7 @@ export default class SingleBlockPage extends React.Component {
             label: 'Height',
             value: (
                 <BlockEnumerator
+                    disabled={this.state.loading}
                     height={this.state.currentHeight}
                     hasPrev={this.state.currentHeight > 1}
                     hasNext={this.state.currentHeight < this.state.maxHeight}

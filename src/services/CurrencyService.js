@@ -10,6 +10,7 @@ const FAILURE = new Currency({
 export class CurrencyService {
     constructor() {
         this.currencyCache = {};
+        this.promisesCashe = {};
     }
 
     put = currency => {
@@ -30,7 +31,11 @@ export class CurrencyService {
         if (currency) {
             return Promise.resolve(currency);
         } else {
-            return api.transactions.info(assetId)
+            if (this.promisesCashe[assetId]) {
+                return this.promisesCashe[assetId];
+            }
+
+            const promise = api.transactions.info(assetId)
                 .then(infoResponse => {
                     const c = Currency.fromIssueTransaction(infoResponse.data);
                     return this.put(c);
@@ -38,8 +43,17 @@ export class CurrencyService {
                 .catch(error => {
                     console.log(error);
 
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                    }
+
                     return FAILURE;
-            });
+                });
+
+            this.promisesCashe[assetId] = promise;
+
+            return promise;
         }
     };
 }

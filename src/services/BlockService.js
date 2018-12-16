@@ -30,9 +30,10 @@ export class BlockService {
 
         return Promise.all([this.infoService.loadHeight(),
             api.blocks.at(height).then(blockResponse => {
-            block = blockResponse.data;
-            return this.transformer.transform(block.transactions);
-        })]).then(results => {
+                block = blockResponse.data;
+                return this.transformer.transform(block.transactions);
+            }
+        )]).then(results => {
             const maxHeight = results[0];
             const transactions = results[1];
             const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
