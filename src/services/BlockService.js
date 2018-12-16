@@ -1,15 +1,17 @@
 import groupBy from 'lodash/groupBy';
 
-import {api} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
-export class BlockService {
-    constructor(transactionTransformerService, infoService) {
+export class BlockService extends ApiClientService {
+    constructor(transactionTransformerService, infoService, configurationService) {
+        super(configurationService);
+
         this.transformer = transactionTransformerService;
         this.infoService = infoService;
     }
 
     loadSequence = (from, to) => {
-        return api.blocks.headers.sequence(from, to).then(blocksResponse => {
+        return this.getApi().blocks.headers.sequence(from, to).then(blocksResponse => {
             const blocks = blocksResponse.data.map(block => {
                 return {
                     height: block.height,
@@ -29,7 +31,7 @@ export class BlockService {
         let block;
 
         return Promise.all([this.infoService.loadHeight(),
-            api.blocks.at(height).then(blockResponse => {
+            this.getApi().blocks.at(height).then(blockResponse => {
                 block = blockResponse.data;
                 return this.transformer.transform(block.transactions);
             }

@@ -1,12 +1,13 @@
 const ANTISPAM_CACHE_KEY = 'AntispamCache';
+const CONFIGURATION = 'Configuration';
 
 export class StorageService {
     constructor() {
         this.storage = window.localStorage;
     }
 
-    loadAntispamCache = () => {
-        const objectAsString = this.storage.getItem(ANTISPAM_CACHE_KEY);
+    loadObject = key => {
+        const objectAsString = this.storage.getItem(key);
 
         if (!objectAsString)
             return null;
@@ -14,7 +15,23 @@ export class StorageService {
         return JSON.parse(objectAsString);
     };
 
+    saveObject = (key, object) => {
+        this.storage.setItem(key, JSON.stringify(object));
+    };
+
+    loadAntispamCache = () => {
+        return this.loadObject(ANTISPAM_CACHE_KEY);
+    };
+
     saveAntispamCache = (cache) => {
-        this.storage.setItem(ANTISPAM_CACHE_KEY, JSON.stringify(cache));
+        this.saveObject(ANTISPAM_CACHE_KEY, cache);
+    };
+
+    loadConfiguration = () => {
+        return this.loadObject(CONFIGURATION);
+    };
+
+    saveConfiguration = (configuration) => {
+        this.saveObject(CONFIGURATION, configuration);
     };
 }

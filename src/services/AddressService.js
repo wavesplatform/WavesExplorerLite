@@ -1,18 +1,20 @@
 import groupBy from 'lodash/groupBy';
 
-import {api} from '../shared/NodeApi';
 import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
+import {ApiClientService} from './ApiClientService';
 
-export class AddressService {
-    constructor(transactionTransformerService, currencyService) {
+export class AddressService extends ApiClientService {
+    constructor(transactionTransformerService, currencyService, configurationService) {
+        super(configurationService);
+
         this.transformer = transactionTransformerService;
         this.currencyService = currencyService;
     }
 
     loadBalance = (address) => {
-        return api.addresses.details(address).then(balanceResponse => {
+        return this.getApi().addresses.details(address).then(balanceResponse => {
             const data = balanceResponse.data;
             return {
                 regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
@@ -24,13 +26,13 @@ export class AddressService {
     };
 
     loadTransactions = (address) => {
-        return api.transactions.address(address).then(transactionsResponse => {
+        return this.getApi().transactions.address(address).then(transactionsResponse => {
             return this.transformer.transform(transactionsResponse.data[0]);
         });
     };
 
     loadAliases = (address) => {
-        return api.addresses.aliases(address).then(aliasesResponse => {
+        return this.getApi().addresses.aliases(address).then(aliasesResponse => {
             const lines = aliasesResponse.data.map(item => Alias.fromString(item).alias);
             const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
             return Object.keys(grouped).sort().map(letter => ({
@@ -41,7 +43,7 @@ export class AddressService {
     };
 
     loadAssets = (address) => {
-        return api.addresses.assetsBalance(address).then(balanceResponse => {
+        return this.getApi().addresses.assetsBalance(address).then(balanceResponse => {
             const assets = balanceResponse.data.balances.map(item => {
                 const currency = Currency.fromIssueTransaction(item.issueTransaction);
                 this.currencyService.put(currency);

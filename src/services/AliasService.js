@@ -1,8 +1,12 @@
-import {api} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
-export class AliasService {
+export class AliasService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
+    }
+
     loadAddress = (alias) => {
-        return api.aliases.address(alias)
+        return this.getApi().aliases.address(alias)
             .then(addressResponse => addressResponse.data.address);
     };
 }

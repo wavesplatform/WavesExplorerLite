@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-const Network = ({title, url, current}) => {
-    return current ? (<div className="current">{title}</div>) : (<div><a href={url} target="_blank">{title}</a></div>);
+const Network = ({title, url, onSwitchNetwork}) => {
+    return <div onClick={() => onSwitchNetwork(url)}>{title}</div>;
 };
 
 const ExplorerShape = PropTypes.shape({
@@ -14,10 +14,17 @@ const ExplorerShape = PropTypes.shape({
 export default class NetworkSwitch extends React.PureComponent {
     static propTypes = {
         current: ExplorerShape.isRequired,
-        peer: ExplorerShape.isRequired
+        peers: PropTypes.arrayOf(ExplorerShape),
+        onSwitchNetwork: PropTypes.func
+    };
+
+    static defaultProps = {
+        peers: [],
+        onSwitchNetwork: () => {}
     };
 
     state = {
+        showPeers: false,
         showModal: false
     };
 
@@ -25,18 +32,31 @@ export default class NetworkSwitch extends React.PureComponent {
         this.setState({showModal: !this.state.showModal});
     };
 
+    togglePeers = () => {
+        this.setState({showPeers: !this.state.showPeers});
+    };
+
+    switchNetwork = (url) => {
+        this.setState({showPeers: false});
+
+        this.props.onSwitchNetwork(url);
+    };
+
     render() {
-        const {current, peer} = this.props;
+        const {current, peers} = this.props;
+
+        const listClassName = 'network-list' + (this.state.showPeers ? ' expanded' : '');
 
         return (
             <div>
                 <div className="network-switcher">
                     <div className="current-network">
                         <i className="network-icon-active"></i>
-                        <span className="network-list">Mainnet</span> {/* TODO ischenko | add class .expanded onClick, show current network */}
+                        <span className={listClassName} onClick={this.togglePeers}>{current.title}</span>
                         <div className="network-list-expanded">
-                            <div>Testnet</div>
-                            <div>Custom</div>
+                            {peers.map((item, index) => {
+                                return <Network key={index} {...item} onSwitchNetwork={this.switchNetwork} />
+                            })}
                         </div>
                     </div>
                     <div className="settings-button" onClick={this.toggleModal}></div>
@@ -56,7 +76,7 @@ export default class NetworkSwitch extends React.PureComponent {
                         <label>Blockchain Network</label>
                         <div className="current-network">
                             <i className="network-icon-active"></i>
-                            <span>Mainnet</span>
+                            <span>{current.title}</span>
                         </div>
                     </div>
 

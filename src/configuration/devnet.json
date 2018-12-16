@@ -2,6 +2,7 @@
     "networkId": "devnet",
     "displayName": "Devnet",
     "apiBaseUrl": "http://18.203.15.139:6869",
+    "spamListUrl": "https://raw.githubusercontent.com/wavesplatform/waves-community/master/Scam%20tokens%20according%20to%20the%20opinion%20of%20Waves%20Community.csv",
     "nodes": [
         {"url": "http://18.203.15.139:6869", "maintainer": "Waves", "showAsLink": true},
         {"url": "http://34.237.49.199:6869", "maintainer": "Waves", "showAsLink": true},
@@ -10,8 +11,8 @@
         {"url": "http://13.228.127.88:6869", "maintainer": "Waves", "showAsLink": true},
         {"url": "http://52.192.190.54:6869", "maintainer": "Waves", "showAsLink": true}
     ],
-    "peerExplorer": {
+    "peerExplorers": [{
         "url": "https://wavesexplorer.com",
         "title": "Mainnet"
-    }
+    }]
 }

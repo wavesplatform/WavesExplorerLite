@@ -1,13 +1,17 @@
-import {api} from '../shared/NodeApi';
 import {routes} from '../shared/Routing';
+import {ApiClientService} from './ApiClientService';
 
-export class SearchService {
+export class SearchService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
+    }
     search = query => {
         if (!query)
             return Promise.resolve();
 
         query = query.trim();
 
+        const api = this.getApi();
         return api.addresses.validate(query).then(validateResponse => {
             if (validateResponse.data.valid)
                 return routes.addresses.one(query);

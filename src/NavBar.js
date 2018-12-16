@@ -17,6 +17,10 @@ class NavBar extends React.Component {
         appearance: REGULAR_APPEARANCE
     };
 
+    switchNetwork = url => {
+        window.open(url, '_blank');
+    };
+
     render() {
         const current = {
             title: configuration.displayName,
@@ -31,7 +35,7 @@ class NavBar extends React.Component {
 
         return (
             <div className={className}>
-                <NetworkSwitch current={current} peer={configuration.peerExplorer} />
+                <NetworkSwitch current={current} peers={configuration.peerExplorers} onSwitchNetwork={this.switchNetwork} />
                 <NavMenu />
                 <Footer version={version} />
             </div>

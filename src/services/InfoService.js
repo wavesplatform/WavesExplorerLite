@@ -1,14 +1,21 @@
 import axios from 'axios';
 
-import {api} from '../shared/NodeApi';
+import {nodeApi} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
-export class InfoService {
+export class InfoService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
+    }
+
     loadHeight = () => {
-        return api.blocks.height()
+        return this.getApi().blocks.height()
             .then(heightResponse => heightResponse.data.height);
     };
 
     loadInfo = () => {
+        const api = this.getApi();
+
         return axios.all([
             api.version(),
             this.loadHeight(),
@@ -23,6 +30,8 @@ export class InfoService {
     };
 
     loadDelay = (info) => {
+        const api = this.getApi();
+
         return api.blocks.headers.last().then(headerResponse => {
                 return api.blocks.delay(headerResponse.data.signature, headerResponse.data.height - 2)
         }).then(delayResponse => {

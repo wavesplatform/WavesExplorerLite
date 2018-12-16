@@ -1,5 +1,5 @@
 import Currency from '../shared/Currency';
-import {api} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
 const FAILURE = new Currency({
     id: 'failure',
@@ -7,8 +7,9 @@ const FAILURE = new Currency({
     precision: 8
 });
 
-export class CurrencyService {
-    constructor() {
+export class CurrencyService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
         this.currencyCache = {};
         this.promisesCashe = {};
     }
@@ -35,7 +36,7 @@ export class CurrencyService {
                 return this.promisesCashe[assetId];
             }
 
-            const promise = api.transactions.info(assetId)
+            const promise = this.getApi().transactions.info(assetId)
                 .then(infoResponse => {
                     const c = Currency.fromIssueTransaction(infoResponse.data);
                     return this.put(c);

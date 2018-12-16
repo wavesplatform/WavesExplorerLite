@@ -1,11 +1,15 @@
 import axios from 'axios';
-import configuration from 'configuration';
 
 import {nodeApi} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
-export class NodesService {
+export class NodesService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
+    }
+
     loadNodes = () => {
-        const nodes = configuration.nodes.slice();
+        const nodes = this.configurationService.get().nodes.slice();
 
         const promises = nodes.map((node, index) => {
             const api = nodeApi(node.url);

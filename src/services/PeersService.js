@@ -1,8 +1,12 @@
-import {api} from '../shared/NodeApi';
+import {ApiClientService} from './ApiClientService';
 
-export class PeersService {
+export class PeersService extends ApiClientService {
+    constructor(configurationService) {
+        super(configurationService);
+    }
+
     loadPeers = () => {
-        return api.peers().then(response => {
+        return this.getApi().peers().then(response => {
             return response.data.peers.map(item => ({
                 address: item.address,
                 declaredAddress: item.declaredAddress,

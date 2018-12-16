@@ -1,5 +1,4 @@
 import axios from 'axios';
-import configuration from 'configuration';
 
 import DateTime from './DateTime';
 
@@ -63,5 +62,3 @@ export const nodeApi = (baseUrl) => {
         peers: () => get('/peers/connected'),
     };
 };
-
-export const api = nodeApi(configuration.apiBaseUrl);

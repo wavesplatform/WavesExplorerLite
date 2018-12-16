@@ -1,10 +1,11 @@
-import thirdPartyApi from '../shared/ThirdPartyApi';
+import {thirdPartyApi} from '../shared/ThirdPartyApi';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export class SpamDetectionService {
-    constructor(storageService) {
+    constructor(storageService, configurationService) {
         this.storageService = storageService;
+        this.configurationService = configurationService;
         this.cache = storageService.loadAntispamCache() || {
             spamAssets: {}
         };
@@ -26,7 +27,8 @@ export class SpamDetectionService {
         if (!this.cache.expirationTime || this.cache.expirationTime <= new Date().getTime()) {
             this.updating = true;
 
-            thirdPartyApi.antispamList().then(listResponse => {
+            const api = thirdPartyApi(this.configurationService.get().spamListUrl);
+            api.antispamList().then(listResponse => {
                 this.cache.spamAssets = this.parseAssetList(listResponse.data);
                 // cache should expire in one day
                 this.cache.expirationTime = new Date().getTime() + MILLISECONDS_PER_DAY;
