@@ -15,6 +15,9 @@ const socialLinks = [{
 }, {
     id: 'telegram',
     url: 'https://telegram.me/wavesnews'
+}, {
+    id: 'reddit',
+    url: 'https://reddit.com/r/Wavesplatform/'
 }];
 
 const Footer = ({version}) => {
