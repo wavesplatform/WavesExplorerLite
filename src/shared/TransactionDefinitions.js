@@ -8,10 +8,10 @@ const TransactionTypes = Object.freeze({
     8: {title: 'Lease', cssClassName: 'lease'},
     9: {title: 'Lease Cancel', cssClassName: 'lease-cancel'},
     10: {title: 'Create Alias', cssClassName: 'create-alias'},
-    11: {title: 'Mass payment', cssClassName: 'mass-payment'},
+    11: {title: 'Mass Payment', cssClassName: 'mass-payment'},
     12: {title: 'Data', cssClassName: 'data'},
-    13: {title: 'Sponsorship', cssClassName: 'sponsorship'},
-    14: {title: 'Script', cssClassName: 'script'},
+    13: {title: 'Script', cssClassName: 'script'},
+    14: {title: 'Sponsorship', cssClassName: 'sponsorship'},
 });
 
 export const TransactionDirections = {
