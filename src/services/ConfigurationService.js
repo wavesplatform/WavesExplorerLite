@@ -1,10 +1,13 @@
 import configuration from 'configuration';
 
+const copyAndFreeze = object => Object.freeze(Object.assign({}, object));
+
 export class ConfigurationService {
     constructor(storageService) {
         this.storageService = storageService;
+        this.defaultConfiguration = configuration;
 
-        this.configuration = Object.assign({}, configuration);
+        this.configuration = Object.assign({}, this.defaultConfiguration);
         const saved = this.storageService.loadConfiguration();
         if (saved) {
             this.configuration.apiBaseUrl = saved.apiBaseUrl;
@@ -12,7 +15,9 @@ export class ConfigurationService {
         }
     }
 
-    get = () => Object.freeze(this.configuration);
+    get = () => copyAndFreeze(this.configuration);
+
+    default = () => copyAndFreeze(this.defaultConfiguration);
 
     update = ({apiBaseUrl, spamListUrl}) => {
         this.configuration.apiBaseUrl = apiBaseUrl;

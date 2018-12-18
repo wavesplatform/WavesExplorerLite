@@ -59,7 +59,7 @@ export default class UnconfirmedTxListContainer extends React.Component {
 
     render() {
         return (
-            <Loader fetchData={this.fetchData}>
+            <Loader fetchData={this.fetchData} errorTitle="Failed to load unconfirmed transactions">
                 <UnconfirmedTxList transactions={this.state.unconfirmed} />
             </Loader>
         );

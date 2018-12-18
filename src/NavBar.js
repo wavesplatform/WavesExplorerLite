@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import configuration from 'configuration';
 
 import NavMenu from './NavMenu';
 import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
 
+import ServiceFactory from './services/ServiceFactory';
+
 const REGULAR_APPEARANCE = 'regular';
+
+const extractEditableConfiguration = configuration => (
+    (({apiBaseUrl, spamListUrl}) => ({apiBaseUrl, spamListUrl}))(configuration)
+);
 
 class NavBar extends React.Component {
     static propTypes = {
@@ -21,9 +26,15 @@ class NavBar extends React.Component {
         window.open(url, '_blank');
     };
 
+    applySettings = settings => {
+        ServiceFactory.configurationService().update(settings);
+        this.forceUpdate();
+    };
+
     render() {
+        const configurationService = ServiceFactory.configurationService();
         const current = {
-            title: configuration.displayName,
+            title: configurationService.get().displayName,
             url: window.location.href
         };
 
@@ -33,9 +44,20 @@ class NavBar extends React.Component {
 
         const version = __VERSION__ || '0';
 
+        const configuration = {
+            currentValues: extractEditableConfiguration(configurationService.get()),
+            defaultValues: extractEditableConfiguration(configurationService.default())
+        };
+
         return (
             <div className={className}>
-                <NetworkSwitch current={current} peers={configuration.peerExplorers} onSwitchNetwork={this.switchNetwork} />
+                <NetworkSwitch
+                    current={current}
+                    peers={configurationService.get().peerExplorers}
+                    onSwitchNetwork={this.switchNetwork}
+                    onUpdateConfiguration={this.applySettings}
+                    configuration={configuration}
+                />
                 <NavMenu />
                 <Footer version={version} />
             </div>

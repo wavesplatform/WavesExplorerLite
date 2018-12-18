@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
+import ConfigurationForm from './ConfigurationForm';
+
 const Network = ({title, url, onSwitchNetwork}) => {
     return <div onClick={() => onSwitchNetwork(url)}>{title}</div>;
 };
@@ -11,11 +13,21 @@ const ExplorerShape = PropTypes.shape({
     url: PropTypes.string
 });
 
+const valuesShape = PropTypes.shape({
+    apiBaseUrl: PropTypes.string,
+    spamListUrl: PropTypes.string
+});
+
 export default class NetworkSwitch extends React.PureComponent {
     static propTypes = {
         current: ExplorerShape.isRequired,
         peers: PropTypes.arrayOf(ExplorerShape),
-        onSwitchNetwork: PropTypes.func
+        onSwitchNetwork: PropTypes.func,
+        onUpdateConfiguration: PropTypes.func,
+        configuration: PropTypes.shape({
+            currentValues: valuesShape,
+            defaultValues: valuesShape
+        }).isRequired
     };
 
     static defaultProps = {
@@ -67,41 +79,12 @@ export default class NetworkSwitch extends React.PureComponent {
                     contentLabel="Modal example"
                     overlayClassName="modal-overlay"
                 >
-                    <div className="header">
-                        Settings
-                        <div className="close-btn" onClick={this.toggleModal}></div>
-                    </div>
-
-                    <div className="row">
-                        <label>Blockchain Network</label>
-                        <div className="current-network">
-                            <i className="network-icon-active"></i>
-                            <span>{current.title}</span>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <label>Node address</label>
-                        <div className="input-wrapper">
-                            <input type="text"/> {/* TODO ischenko | class .invalid */}
-                            <button className="copy-btn"></button> {/* TODO ischenko */}
-                            {/* <!--div className="input-error">&error text&</div> */}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <label>Spam list</label>
-                        <div className="input-wrapper">
-                            <input type="text" className="invalid"/> {/* TODO ischenko | class .invalid */}
-                            <button className="copy-btn"></button> {/* TODO ischenko */}
-                            <div className="input-error">&error text&</div>
-                        </div>
-                    </div>
-
-                    <div className="row buttons-wrapper">
-                        <button className="interface grey" disabled>Set Default</button> {/* TODO ischenko | add attr='disabled' if by default = true  */}
-                        <button className="interface blue" disabled>Save and apply</button> {/* TODO ischenko | add attr='disabled' if wasChanged = false */}
-                    </div>
+                    <ConfigurationForm
+                        onClose={this.toggleModal}
+                        title={current.title}
+                        onSubmit={this.props.onUpdateConfiguration}
+                        {...this.props.configuration}
+                    />
                 </Modal>
             </div>
         );
