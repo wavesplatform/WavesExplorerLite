@@ -7,7 +7,11 @@ export default class ScriptInfo extends React.PureComponent {
     };
 
     render() {
-        return (<div>
+        return (<div className="dataContainer empty">
+            <div className="empty-icon-wrapper"> {/* TODO @ischenko - add if */}
+                <div className="empty-icon"></div>
+                <div className="empty-label">No data</div>
+            </div>
             <pre>{this.props.script.script}</pre>
         </div>);
     }

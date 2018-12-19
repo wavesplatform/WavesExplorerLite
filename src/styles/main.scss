@@ -353,8 +353,16 @@ body {
             position: relative;
             .copy-btn {
                 position: absolute;
-                right: 0;
-                top: 0;
+                right: 1px;
+                top: 1px;
+                border-radius: 4px;
+                background-color: map-get($colors, white);
+            }
+
+            &.has-copy-button {
+                input {
+                    padding-right: 36px;
+                }
             }
         }
 
@@ -425,8 +433,8 @@ body {
 
 .copy-btn {
     display: block;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     background: url(../images/copy-14-submit-400.svg) center no-repeat;
     border: 0 none;
     outline: 0 none;

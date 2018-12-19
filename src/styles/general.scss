@@ -296,3 +296,47 @@ th.price, th.amount {
         background: url('../images/transaction-exchange.svg') no-repeat;
     }
 }
+
+
+.dataContainer {
+    background-color: map_get($colors, basic50);
+    padding: 20px;
+    overflow: auto;
+    margin-top: 20px;
+    position: relative;
+
+    &.empty {
+        .empty-icon-wrapper{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .empty-icon {
+            width: 88px;
+            height: 88px;
+            background: url(../images/empty-88.svg) center no-repeat;
+        }
+
+        .empty-label {
+            @include font(body, basic500);
+            text-align: center;
+        }
+    }
+
+    pre {
+        display: inline-block;
+        word-break: break-all;
+        min-height: 45vh;
+        max-height: 800px;
+        white-space: normal;
+        max-width: 100%;
+
+        &::after {
+            display: block;
+            content: '';
+            height: 20px;
+        }
+    }
+}

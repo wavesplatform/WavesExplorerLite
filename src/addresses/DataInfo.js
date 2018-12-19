@@ -14,6 +14,12 @@ export default class DataInfo extends React.PureComponent {
     };
 
     render() {
-        return <pre>{JSON.stringify(this.props.data)}</pre>;
+        return <div className="dataContainer empty">
+            <div className="empty-icon-wrapper"> {/* TODO @ischenko - add if */}
+                <div className="empty-icon"></div>
+                <div className="empty-label">No data</div>
+            </div>
+            <pre>{JSON.stringify(this.props.data)}</pre>
+        </div>;
     }
 }
