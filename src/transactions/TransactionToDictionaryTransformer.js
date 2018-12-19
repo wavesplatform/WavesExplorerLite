@@ -8,6 +8,8 @@ import BlockRef from '../shared/BlockRef';
 import Spacer from '../shared/Spacer';
 
 import Description from './Description';
+import ScriptInfo from './ScriptInfo';
+import DataInfo from './DataInfo';
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -51,6 +53,18 @@ const transactionToDictionary = (tx) => {
         default:
             return [];
     }
+};
+
+const scriptTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Script',
+            value: <ScriptInfo script={tx.script} />
+        },
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
 };
 
 const sponsorshipTransactionToItems = tx => {
