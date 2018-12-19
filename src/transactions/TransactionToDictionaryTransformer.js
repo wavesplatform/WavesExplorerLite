@@ -55,6 +55,18 @@ const transactionToDictionary = (tx) => {
     }
 };
 
+const dataTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Data',
+            value: <DataInfo data={tx.data} />
+        },
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
+};
+
 const scriptTransactionToItems = tx => {
     return [
         ...buildTransactionHeaderItems(tx),

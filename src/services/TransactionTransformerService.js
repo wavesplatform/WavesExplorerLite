@@ -39,6 +39,9 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
         case 11:
             return transformMassTransfer(currencyService, spamDetectionService, tx);
 
+        case 12:
+            return transformData(currencyService, tx);
+
         case 13:
             return transformScript(currencyService, tx);
 
@@ -63,6 +66,15 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
         currencyService.get(amountAssetId),
         currencyService.get(feeAssetId)
     ]);
+};
+
+const transformData = (currencyService, tx) => {
+    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            data: tx.data,
+            fee: Money.fromCoins(tx.fee, feeCurrency)
+        })
+    });
 };
 
 const transformScript = (currencyService, tx) => {
