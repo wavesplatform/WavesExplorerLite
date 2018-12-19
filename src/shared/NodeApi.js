@@ -32,7 +32,9 @@ export const nodeApi = (baseUrl) => {
             details: (address) => get(`/addresses/balance/details/${address}`),
             assetsBalance: (address) => get(`/assets/balance/${address}`),
             aliases: (address) => get(`/alias/by-address/${address}`),
-            validate: (address) => get(`/addresses/validate/${address}`)
+            validate: (address) => get(`/addresses/validate/${address}`),
+            data: (address) => get(`/addresses/data/${address}`),
+            script: (address) => get(`/addresses/scriptInfo/${address}`)
         },
         blocks: {
             height: () => get('/blocks/height'),

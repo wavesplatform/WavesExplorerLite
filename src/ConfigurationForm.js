@@ -58,8 +58,6 @@ export default class ConfigurationForm extends React.Component {
                     });
 
                     actions.setTouched(true);
-
-                    console.log(actions);
                 }}
                 render={({errors, status, touched, dirty, isSubmitting}) => (
                     <Form>

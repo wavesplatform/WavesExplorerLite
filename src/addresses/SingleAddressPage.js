@@ -8,6 +8,8 @@ import ServiceFactory from '../services/ServiceFactory';
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
 import GroupedAliasList from './GroupedAliasList';
+import DataInfo from './DataInfo';
+import ScriptInfo from './ScriptInfo';
 import Tabs from './Tabs';
 import Pane from './Pane';
 import BalanceDetails from './BalanceDetails';
@@ -19,6 +21,8 @@ export default class SingleAddressPage extends React.Component {
         assets: [],
         aliases: [],
         transactions: [],
+        data: [],
+        script: {},
         selectedTabIndex: 0
     };
 
@@ -55,6 +59,12 @@ export default class SingleAddressPage extends React.Component {
 
             case 2:
                 return addressService.loadAssets(address).then(assets => this.setState({assets}));
+
+            case 3:
+                return addressService.loadData(address).then(data => this.setState({data}));
+
+            case 4:
+                return addressService.loadScript(address).then(script => this.setState({script}));
         }
 
         return Promise.resolve();
@@ -80,6 +90,12 @@ export default class SingleAddressPage extends React.Component {
                         </Pane>
                         <Pane title="Assets">
                             <AssetList assets={this.state.assets} />
+                        </Pane>
+                        <Pane title="Data">
+                            <DataInfo data={this.state.data} />
+                        </Pane>
+                        <Pane title="Script">
+                            <ScriptInfo script={this.state.script} />
                         </Pane>
                     </Tabs>
                 </React.Fragment>

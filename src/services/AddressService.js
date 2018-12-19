@@ -59,5 +59,13 @@ export class AddressService extends ApiClientService {
 
             return assets;
         });
+    };
+
+    loadData = (address) => {
+        return this.getApi().addresses.data(address).then(dataResponse => dataResponse.data);
+    };
+
+    loadScript = (address) => {
+        return this.getApi().addresses.script(address).then(scriptResponse => scriptResponse.data);
     }
 }
