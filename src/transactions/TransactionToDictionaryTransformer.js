@@ -8,6 +8,8 @@ import BlockRef from '../shared/BlockRef';
 import Spacer from '../shared/Spacer';
 
 import Description from './Description';
+import ScriptInfo from './ScriptInfo';
+import DataInfo from './DataInfo';
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -40,11 +42,55 @@ const transactionToDictionary = (tx) => {
             return massPaymentTransactionToItems(tx);
 
         case 12:
+            return dataTransactionToItems(tx);
+
         case 13:
+            return scriptTransactionToItems(tx);
+
         case 14:
+            return sponsorshipTransactionToItems(tx);
+
         default:
             return [];
     }
+};
+
+const dataTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Data',
+            value: <DataInfo data={tx.data} />
+        },
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
+};
+
+const scriptTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Script',
+            value: <ScriptInfo script={tx.script} />
+        },
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
+};
+
+const sponsorshipTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Sponsored Fee',
+            value: tx.sponsoredFee.toString()
+        }, {
+            label: 'Transaction Fee',
+            value: tx.fee.toString()
+        },
+        buildSenderItem(tx)
+    ];
 };
 
 const aliasTransactionToItems = tx => {
