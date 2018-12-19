@@ -40,11 +40,31 @@ const transactionToDictionary = (tx) => {
             return massPaymentTransactionToItems(tx);
 
         case 12:
+            return dataTransactionToItems(tx);
+
         case 13:
+            return scriptTransactionToItems(tx);
+
         case 14:
+            return sponsorshipTransactionToItems(tx);
+
         default:
             return [];
     }
+};
+
+const sponsorshipTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Sponsored Fee',
+            value: tx.sponsoredFee.toString()
+        }, {
+            label: 'Transaction Fee',
+            value: tx.fee.toString()
+        },
+        buildSenderItem(tx)
+    ];
 };
 
 const aliasTransactionToItems = tx => {

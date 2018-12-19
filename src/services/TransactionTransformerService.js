@@ -39,6 +39,9 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
         case 11:
             return transformMassTransfer(currencyService, spamDetectionService, tx);
 
+        case 14:
+            return transformSponsorship(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -57,6 +60,18 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
         currencyService.get(amountAssetId),
         currencyService.get(feeAssetId)
     ]);
+};
+
+const transformSponsorship = (currencyService, tx) => {
+    return loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId).then(pair => {
+        const sponsoredCurrency = pair[0];
+        const feeCurrency = pair[1];
+
+        return Object.assign(copyMandatoryAttributes(tx), {
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            sponsoredFee: Money.fromCoins(tx.minSponsoredAssetFee, sponsoredCurrency)
+        });
+    });
 };
 
 const transformMassTransfer = (currencyService, spamDetectionService, tx) => {
