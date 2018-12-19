@@ -89,13 +89,11 @@ class Subjects extends React.PureComponent {
     render() {
         return (
             <td data-label="Sender / Recipient">
-                <TransactionArrow type={this.props.type} />
-                <Line wrap={false}>
-                    {this.props.recipient ?
-                        <EndpointRef endpoint={this.props.recipient} appearance="regular"/> :
-                        '\u00A0'}
-                </Line>
+                <TransactionArrow type={this.props.type} direction={'incoming'} />
                 <Line wrap={false}><EndpointRef endpoint={this.props.sender} appearance="regular"/></Line>
+                <Line wrap={false}>
+                    {this.props.recipient && <EndpointRef endpoint={this.props.recipient} appearance="regular"/>}
+                </Line>
             </td>
         );
     }
