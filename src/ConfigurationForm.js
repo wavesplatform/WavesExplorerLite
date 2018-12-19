@@ -13,7 +13,7 @@ const InputComponent = ({
     form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
 }) => (
-    <div className="input-wrapper">
+    <div className="input-wrapper has-copy-button">
         <input type="text" {...field} {...props} className={errors[field.name] ? 'invalid' : ''} />
         <button className="copy-btn"></button> {/* TODO ischenko */}
         {touched[field.name] &&
