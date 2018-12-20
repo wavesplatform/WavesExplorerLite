@@ -10,7 +10,7 @@ export default class LastBlockListItem extends React.PureComponent {
 
     render() {
         const block = this.props.block;
-        const emptyClassName = block.transactionCount > 0 ? '' : ' empty-block';
+        const emptyClassName = block.transactions > 0 ? '' : ' empty-block';
         const rowClassName = 'grid panel-row block-img-handler' + emptyClassName;
 
         return (
