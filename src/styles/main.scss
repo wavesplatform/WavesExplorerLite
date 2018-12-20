@@ -9,8 +9,15 @@
 @import "address.scss";
 @import "fonts.scss";
 
+html {
+    height: 100%;
+    display: block;
+}
+
 body {
     position: relative;
+    height: 100%;
+    display: block;
     background-color: map-get($colors, basic50);
     @include responsive_styles($layout);
     min-width: 360px;
