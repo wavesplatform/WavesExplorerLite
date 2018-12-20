@@ -17,7 +17,7 @@ export default class LastBlockListItem extends React.PureComponent {
             <div className={rowClassName}>
                 <div className="block-img grid-item-fixed"></div>
                 <div>
-                    <div className="line">Block <BlockRef height={block.height}/> contains <span className="bold">{block.transactionCount}</span> transactions</div>
+                    <div className="line">Block <BlockRef height={block.height}/> contains <span className="bold">{block.transactions}</span> transactions</div>
                     <div className="line no-wrap"><label>Signature: {block.signature}</label></div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>
