@@ -640,6 +640,7 @@ body {
     bottom: 24px;
     cursor: pointer;
     z-index: 99;
+    transition: .3s;
     @include responsive_styles($scroll_button);
 
     background: url("../images/upscroll-14.svg") no-repeat center center;
