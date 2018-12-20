@@ -32,14 +32,12 @@ $layout: (
 
 $current_menu_item: (
     left: -#{map-get($layout, padding-left)},
-    width: 30px,
+    width: 2px,
     lg: (
         left: -#{map-deep-get($layout, 'lg', 'padding-left')},
-        width: 24px
     ),
     md: (
         left: -#{map-deep-get($layout, 'md', 'padding-left')},
-        width: 10px
     )
 );
 
