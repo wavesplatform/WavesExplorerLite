@@ -139,6 +139,17 @@
     }
 }
 
+.empty-block {
+    .block-img-handler {
+        .block-img {
+            background: url(../images/empy-block.svg) center no-repeat;
+        }
+    }
+    * {
+        color: map_get($colors, basic500);
+    }
+}
+
 .headline {
     display: flex;
     align-items: center;

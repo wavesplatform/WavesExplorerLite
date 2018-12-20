@@ -5,7 +5,7 @@ import NavMenuItem from './NavMenuItem';
 
 const items = [{
     title: 'General info',
-    route: routes.root,
+    route: routes.root
 }, {
     title: 'Blocks',
     route: routes.blocks.list
