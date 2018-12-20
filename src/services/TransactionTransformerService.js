@@ -91,9 +91,13 @@ const transformSponsorship = (currencyService, tx) => {
         const sponsoredCurrency = pair[0];
         const feeCurrency = pair[1];
 
+        const sponsoredFee = tx.minSponsoredAssetFee ?
+            Money.fromCoins(tx.minSponsoredAssetFee, sponsoredCurrency) :
+            null;
+
         return Object.assign(copyMandatoryAttributes(tx), {
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            sponsoredFee: Money.fromCoins(tx.minSponsoredAssetFee, sponsoredCurrency)
+            sponsoredFee
         });
     });
 };

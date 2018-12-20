@@ -84,7 +84,7 @@ const sponsorshipTransactionToItems = tx => {
         ...buildTransactionHeaderItems(tx),
         {
             label: 'Sponsored Fee',
-            value: tx.sponsoredFee.toString()
+            value: tx.sponsoredFee ? tx.sponsoredFee.toString() : 'Cancelled'
         }, {
             label: 'Transaction Fee',
             value: tx.fee.toString()
