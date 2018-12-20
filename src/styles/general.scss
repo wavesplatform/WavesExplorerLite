@@ -252,7 +252,6 @@
             width: 100%;
             flex: 0 1 auto;
             padding: 0 14px;
-            word-break: break-word;
             @include font(body);
 
             @media screen and (max-width: 1100px) {
@@ -346,6 +345,7 @@ th.price, th.amount {
         max-height: 800px;
         white-space: normal;
         max-width: 100%;
+        white-space: pre-wrap;
 
         &::after {
             display: block;
