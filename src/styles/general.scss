@@ -249,6 +249,7 @@
         }
 
         > .dictionary-pair-value {
+            width: 100%;
             flex: 0 1 auto;
             padding: 0 14px;
             word-break: break-word;
@@ -315,6 +316,7 @@ th.price, th.amount {
     overflow: auto;
     margin-top: 20px;
     position: relative;
+    min-height: calc(45vh - 40px);
 
     &.empty {
         .empty-icon-wrapper{
@@ -333,6 +335,7 @@ th.price, th.amount {
         .empty-label {
             @include font(body, basic500);
             text-align: center;
+            margin-top: 10px;
         }
     }
 
@@ -349,5 +352,20 @@ th.price, th.amount {
             content: '';
             height: 20px;
         }
+    }
+}
+
+.dictionary-pair {
+    .dataContainer {
+        margin-top: 0;
+        min-height: auto;
+        width: 100%;
+
+        pre {
+            word-break: break-word;
+            min-height: auto;
+            display: flex;
+        }
+
     }
 }

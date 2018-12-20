@@ -202,19 +202,21 @@ body {
             display: flex;
             align-items: center;
 
-            a::after {
-                background-image: url(../images/menu-sprite.svg);
-                background-repeat: no-repeat;
-                background-position: 0 0;
-                content: '';
-                display: block;
-                margin-top: -1px;
-                width: 18px;
-                height: 18px;
-                position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%);
+            a {
+                &::after {
+                    background-image: url(../images/menu-sprite.svg);
+                    background-repeat: no-repeat;
+                    background-position: 0 0;
+                    content: '';
+                    display: block;
+                    margin-top: -1px;
+                    width: 18px;
+                    height: 18px;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
             }
 
             &.icon {
@@ -290,7 +292,9 @@ body {
             }
 
             &.current {
-                color: map-get($colors, black);
+                a {
+                    color: map-get($colors, black);
+                }
 
                 &::before {
                     @include responsive_styles($current_menu_item);
@@ -408,7 +412,7 @@ body {
             padding: 14px 24px;
             line-height: 1em;
             font-size: 13px;
-            transition: opacity .3s;
+            transition: .3s;
             border-radius: 6px;
             cursor: pointer;
             border: 0 none;
@@ -421,12 +425,17 @@ body {
             &.blue {
                 background: map-get($colors, submit400);
                 color: white;
-
             }
 
             &.grey {
                 background: map-get($colors, iceBlue);
                 color: black;
+            }
+
+            &:not(:disabled) {
+                &:hover {
+                    filter: brightness(120%);
+                }
             }
         }
     }
@@ -556,6 +565,9 @@ body {
         align-items: center;
         margin-right: 76px;
         position: relative;
+        @media screen and (max-width: 1366px) {
+            margin-right: 112px;
+        };
 
         .network-list {
             cursor: pointer;
