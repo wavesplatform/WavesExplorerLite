@@ -5,16 +5,20 @@ import NavMenuItem from './NavMenuItem';
 
 const items = [{
     title: 'General info',
-    route: routes.root
+    route: routes.root,
+    icon: 'icon-general'
 }, {
     title: 'Blocks',
-    route: routes.blocks.list
+    route: routes.blocks.list,
+    icon: 'icon-blocks'
 }, {
     title: 'Peers',
-    route: routes.peers.list
+    route: routes.peers.list,
+    icon: 'icon-peers'
 }, {
     title: 'Nodes',
-    route: routes.nodes.list
+    route: routes.nodes.list,
+    icon: 'icon-nodes'
 }];
 
 export default class NavMenu extends React.Component {

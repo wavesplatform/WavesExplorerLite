@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import EmptyData from './EmptyData';
+
 export default class DataInfo extends React.PureComponent {
     static propTypes = {
         data: PropTypes.arrayOf(PropTypes.shape({
@@ -14,12 +16,13 @@ export default class DataInfo extends React.PureComponent {
     };
 
     render() {
-        return <div className="dataContainer empty">
-            <div className="empty-icon-wrapper"> {/* TODO @ischenko - add if */}
-                <div className="empty-icon"></div>
-                <div className="empty-label">No data</div>
+        const isEmpty = this.props.data.length == 0;
+        const rowClassName = 'dataContainer' + (isEmpty ? ' empty' : '');
+
+        return (
+            <div className={rowClassName}>
+                {isEmpty ? <EmptyData /> : <pre>{JSON.stringify(this.props.data, null, 2)}</pre>}
             </div>
-            <pre>{JSON.stringify(this.props.data)}</pre>
-        </div>;
+        );
     }
 }

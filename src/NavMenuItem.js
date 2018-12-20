@@ -18,7 +18,7 @@ export default class NavMenuItem extends React.PureComponent {
     };
 
     render() {
-        let className = 'menu-item';
+        let className = `menu-item ${this.props.item.icon}`;
         if (this.props.current)
             className += ' current';
 

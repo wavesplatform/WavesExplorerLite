@@ -8,8 +8,8 @@ import BlockRef from '../shared/BlockRef';
 import Spacer from '../shared/Spacer';
 
 import Description from './Description';
-import ScriptInfo from './ScriptInfo';
-import DataInfo from './DataInfo';
+import ScriptInfo from '../shared/ScriptInfo';
+import DataInfo from '../shared/DataInfo';
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -84,7 +84,7 @@ const sponsorshipTransactionToItems = tx => {
         ...buildTransactionHeaderItems(tx),
         {
             label: 'Sponsored Fee',
-            value: tx.sponsoredFee.toString()
+            value: tx.sponsoredFee ? tx.sponsoredFee.toString() : 'Cancelled'
         }, {
             label: 'Transaction Fee',
             value: tx.fee.toString()

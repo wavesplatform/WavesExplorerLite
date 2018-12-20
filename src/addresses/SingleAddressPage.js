@@ -8,8 +8,8 @@ import ServiceFactory from '../services/ServiceFactory';
 import TransactionList from './TransactionList';
 import AssetList from './AssetList';
 import GroupedAliasList from './GroupedAliasList';
-import DataInfo from './DataInfo';
-import ScriptInfo from './ScriptInfo';
+import DataInfo from '../shared/DataInfo';
+import ScriptInfo from '../shared/ScriptInfo';
 import Tabs from './Tabs';
 import Pane from './Pane';
 import BalanceDetails from './BalanceDetails';
@@ -95,7 +95,7 @@ export default class SingleAddressPage extends React.Component {
                             <DataInfo data={this.state.data} />
                         </Pane>
                         <Pane title="Script">
-                            <ScriptInfo script={this.state.script} />
+                            <ScriptInfo script={this.state.script.script} />
                         </Pane>
                     </Tabs>
                 </React.Fragment>
