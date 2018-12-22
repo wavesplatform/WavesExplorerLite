@@ -97,6 +97,11 @@ var config = {
     },
 };
 
+const networks = {
+    mainnet: ['mainnet', 'testnet'],
+    devnet: ['devnet']
+};
+
 module.exports = (env, argv) => {
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
@@ -112,10 +117,10 @@ module.exports = (env, argv) => {
     }));
 
     const network = (env && env.network) || 'mainnet';
-
-    config.externals = [{
-        configuration: JSON.stringify(require('./src/configuration/' + network + '.json'))
-    }];
+    const networkConfiguration = networks[network];
+    config.plugins.push(new webpack.DefinePlugin({
+        __NETWORKS__: JSON.stringify(networkConfiguration)
+    }));
 
     return config;
 };

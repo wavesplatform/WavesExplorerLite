@@ -6,13 +6,21 @@ export class SpamDetectionService {
     constructor(storageService, configurationService) {
         this.storageService = storageService;
         this.configurationService = configurationService;
-        this.cache = storageService.loadAntispamCache() || {
-            spamAssets: {}
-        };
         this.updating = false;
+        this.active = !!this.spamListUrl();
+
+        if (this.active) {
+            this.cache = storageService.loadAntispamCache() || {
+                spamAssets: {}
+            };
+        }
     }
 
     isSpam = (assetId) => {
+        if (!this.active) {
+            return false;
+        }
+
         const result = !!this.cache.spamAssets[assetId];
 
         this.updateCacheIfNeeded();
@@ -27,7 +35,7 @@ export class SpamDetectionService {
         if (!this.cache.expirationTime || this.cache.expirationTime <= new Date().getTime()) {
             this.updating = true;
 
-            const api = thirdPartyApi(this.configurationService.get().spamListUrl);
+            const api = thirdPartyApi(this.spamListUrl());
             api.antispamList().then(listResponse => {
                 this.cache.spamAssets = this.parseAssetList(listResponse.data);
                 // cache should expire in one day
@@ -53,5 +61,7 @@ export class SpamDetectionService {
         });
 
         return result;
-    }
+    };
+
+    spamListUrl = () => this.configurationService.get().spamListUrl;
 }

@@ -9,9 +9,7 @@ import ServiceFactory from './services/ServiceFactory';
 
 const REGULAR_APPEARANCE = 'regular';
 
-const extractEditableConfiguration = configuration => (
-    (({apiBaseUrl, spamListUrl}) => ({apiBaseUrl, spamListUrl}))(configuration)
-);
+const reloadWindow = () => window.location.reload();
 
 class NavBar extends React.Component {
     static propTypes = {
@@ -22,21 +20,20 @@ class NavBar extends React.Component {
         appearance: REGULAR_APPEARANCE
     };
 
-    switchNetwork = url => {
-        window.open(url, '_blank');
+    switchNetwork = networkId => {
+        ServiceFactory.configurationService().select(networkId);
+
+        reloadWindow();
     };
 
     applySettings = settings => {
         ServiceFactory.configurationService().update(settings);
         this.forceUpdate();
+        reloadWindow();
     };
 
     render() {
         const configurationService = ServiceFactory.configurationService();
-        const current = {
-            title: configurationService.get().displayName,
-            url: window.location.href
-        };
 
         let className = 'menu grid-item-fixed';
         if (this.props.appearance === REGULAR_APPEARANCE)
@@ -44,19 +41,14 @@ class NavBar extends React.Component {
 
         const version = __VERSION__ || '0';
 
-        const configuration = {
-            currentValues: extractEditableConfiguration(configurationService.get()),
-            defaultValues: extractEditableConfiguration(configurationService.default())
-        };
-
         return (
             <div className={className}>
                 <NetworkSwitch
-                    current={current}
-                    peers={configurationService.get().peerExplorers}
+                    current={configurationService.get()}
+                    networks={configurationService.all()}
+                    custom={configurationService.custom()}
                     onSwitchNetwork={this.switchNetwork}
-                    onUpdateConfiguration={this.applySettings}
-                    configuration={configuration}
+                    onUpdateCustomNetwork={this.applySettings}
                 />
                 <NavMenu />
                 <Footer version={version} />

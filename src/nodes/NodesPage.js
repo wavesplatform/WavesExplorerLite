@@ -1,5 +1,4 @@
 import React from 'react';
-import configuration from 'configuration';
 
 import ServiceFactory from '../services/ServiceFactory';
 import Loader from '../shared/Loader';
@@ -24,7 +23,7 @@ export default class NodesPage extends React.Component {
             <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
                 <React.Fragment>
                     <div className="headline">
-                        <span className="title">{configuration.displayName} Nodes</span>
+                        <span className="title">{ServiceFactory.configurationService().get().displayName} Nodes</span>
                     </div>
                     <NodeList nodes={this.state.nodes} />
                 </React.Fragment>

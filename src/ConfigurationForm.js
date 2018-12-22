@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
@@ -27,7 +28,6 @@ const ConfigurationSchema = Yup.object().shape({
         .required('Node address is required'),
     spamListUrl: Yup.string()
         .url('Invalid url')
-        .required('Spam list url is required')
 });
 
 export default class ConfigurationForm extends React.Component {
@@ -35,29 +35,18 @@ export default class ConfigurationForm extends React.Component {
         onClose: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         title: PropTypes.string.isRequired,
-        defaultValues: valuesShape.isRequired,
-        currentValues: valuesShape.isRequired
+        values: valuesShape.isRequired,
     };
 
     render() {
-        const {currentValues, defaultValues} = this.props;
-        const isDefault = currentValues.apiBaseUrl == defaultValues.apiBaseUrl &&
-            currentValues.spamListUrl == defaultValues.spamListUrl;
         return (
             <Formik
-                initialValues={this.props.currentValues}
+                initialValues={this.props.values}
                 validationSchema={ConfigurationSchema}
                 onSubmit={(values, actions) => {
                     this.props.onSubmit(values);
                     actions.setSubmitting(false);
                     this.props.onClose();
-                }}
-                onReset={(values, actions) => {
-                    Object.keys(this.props.defaultValues).forEach(key => {
-                        values[key] = this.props.defaultValues[key];
-                    });
-
-                    actions.setTouched(true);
                 }}
                 render={({errors, status, touched, dirty, isSubmitting}) => (
                     <Form>
@@ -84,8 +73,7 @@ export default class ConfigurationForm extends React.Component {
                         </div>
 
                         <div className="row buttons-wrapper">
-                            <button className="interface grey" type="reset" disabled={!touched && isDefault}>Set Default</button> {/* TODO ischenko | add attr='disabled' if by default = true  */}
-                            <button className="interface blue" type="submit" disabled={!touched || isSubmitting}>Save and apply</button> {/* TODO ischenko | add attr='disabled' if wasChanged = false */}
+                            <button className="interface blue" type="submit" disabled={!touched || isSubmitting}>Save and apply</button>
                         </div>
                     </Form>
                 )}

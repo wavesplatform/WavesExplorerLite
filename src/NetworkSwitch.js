@@ -4,39 +4,38 @@ import Modal from 'react-modal';
 
 import ConfigurationForm from './ConfigurationForm';
 
-const Network = ({title, url, onSwitchNetwork}) => {
-    return <div onClick={() => onSwitchNetwork(url)}>{title}</div>;
+const Network = ({networkId, displayName, onSwitchNetwork}) => {
+    return <div onClick={() => onSwitchNetwork(networkId)}>{displayName}</div>;
 };
 
-const ExplorerShape = PropTypes.shape({
-    title: PropTypes.string,
-    url: PropTypes.string
-});
+const extractEditableConfiguration = configuration => (
+    (({apiBaseUrl, spamListUrl}) => ({apiBaseUrl, spamListUrl}))(configuration)
+);
 
-const valuesShape = PropTypes.shape({
+const NetworkShape = PropTypes.shape({
+    networkId: PropTypes.string,
+    displayName: PropTypes.string,
+    url: PropTypes.string,
     apiBaseUrl: PropTypes.string,
     spamListUrl: PropTypes.string
 });
 
 export default class NetworkSwitch extends React.PureComponent {
     static propTypes = {
-        current: ExplorerShape.isRequired,
-        peers: PropTypes.arrayOf(ExplorerShape),
+        current: NetworkShape.isRequired,
+        networks: PropTypes.arrayOf(NetworkShape).isRequired,
+        custom: NetworkShape,
         onSwitchNetwork: PropTypes.func,
-        onUpdateConfiguration: PropTypes.func,
-        configuration: PropTypes.shape({
-            currentValues: valuesShape,
-            defaultValues: valuesShape
-        }).isRequired
+        onUpdateCustomNetwork: PropTypes.func
     };
 
     static defaultProps = {
-        peers: [],
-        onSwitchNetwork: () => {}
+        onSwitchNetwork: () => {},
+        onUpdateCustomNetwork: () => {}
     };
 
     state = {
-        showPeers: false,
+        showNetworks: false,
         showModal: false
     };
 
@@ -44,31 +43,39 @@ export default class NetworkSwitch extends React.PureComponent {
         this.setState({showModal: !this.state.showModal});
     };
 
-    togglePeers = () => {
-        this.setState({showPeers: !this.state.showPeers});
+    toggleNetworks = () => {
+        this.setState({showNetworks: !this.state.showNetworks});
     };
 
-    switchNetwork = (url) => {
-        this.setState({showPeers: false});
+    switchNetwork = (networkId) => {
+        this.setState({showNetworks: false});
 
-        this.props.onSwitchNetwork(url);
+        this.props.onSwitchNetwork(networkId);
     };
 
     render() {
-        const {current, peers} = this.props;
+        const {current, networks} = this.props;
+        const listClassName = 'network-list' + (this.state.showNetworks ? ' expanded' : '');
 
-        const listClassName = 'network-list' + (this.state.showPeers ? ' expanded' : '');
+        const custom = this.props.custom || {
+            apiBaseUrl: '',
+            spamListUrl: ''
+        };
+        const configuration = extractEditableConfiguration(custom);
 
         return (
             <div>
                 <div className="network-switcher">
                     <div className="current-network">
                         <i className="network-icon-active"></i>
-                        <span className={listClassName} onClick={this.togglePeers}>{current.title}</span>
+                        <span className={listClassName} onClick={this.toggleNetworks}>{current.displayName}</span>
                         <div className="network-list-expanded">
-                            {peers.map((item, index) => {
-                                return <Network key={index} {...item} onSwitchNetwork={this.switchNetwork} />
-                            })}
+                            {networks
+                                .filter(item => item.networkId !== current.networkId)
+                                .map((item, index) => {
+                                    return <Network key={index} {...item} onSwitchNetwork={this.switchNetwork} />
+                                })
+                            }
                         </div>
                     </div>
                     <div className="settings-button" onClick={this.toggleModal}></div>
@@ -81,9 +88,9 @@ export default class NetworkSwitch extends React.PureComponent {
                 >
                     <ConfigurationForm
                         onClose={this.toggleModal}
-                        title={current.title}
-                        onSubmit={this.props.onUpdateConfiguration}
-                        {...this.props.configuration}
+                        title="Custom"
+                        onSubmit={this.props.onUpdateCustomNetwork}
+                        values={configuration}
                     />
                 </Modal>
             </div>
