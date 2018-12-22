@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 
 import {routes} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
@@ -21,13 +22,15 @@ const items = [{
     icon: 'icon-nodes'
 }];
 
-export default class NavMenu extends React.Component {
+class NavMenu extends React.Component {
     constructor(props) {
         super(props);
 
+        const {pathname} = this.props.location;
+
         this.state = {
             items,
-            current: items[0]
+            current: items.find(item => item.route === pathname) || items[0]
         };
     }
 
@@ -54,3 +57,5 @@ export default class NavMenu extends React.Component {
         );
     }
 }
+
+export default withRouter(NavMenu);
