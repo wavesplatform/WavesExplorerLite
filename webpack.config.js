@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const buildPath = path.join(__dirname, 'dist');
 const sourcesPath = path.join(__dirname, 'src');
@@ -76,6 +77,7 @@ var config = {
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(require('./package.json').version)
         }),
+        new LodashModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
             from: path.join(sourcesPath, 'favicon.png'),
             to: buildPath
