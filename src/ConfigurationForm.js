@@ -16,7 +16,9 @@ const InputComponent = ({
 }) => (
     <div className="input-wrapper has-copy-button">
         <input type="text" {...field} {...props} className={errors[field.name] ? 'invalid' : ''} />
-        <button className="copy-btn"></button> {/* TODO ischenko */}
+        <CopyToClipboard text={field.value}>
+            <div className="copy-btn"></div>
+        </CopyToClipboard>
         {touched[field.name] &&
         errors[field.name] && <div className="input-error">{errors[field.name]}</div>}
     </div>
