@@ -42,6 +42,18 @@ function buildApp(network, done) {
     })
 }
 
+function invalidateCache(distributionId) {
+    const settings = {
+        accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.EXPLORER_AWS_ACCESS_SECRET,
+        distribution: distributionId,
+        paths: ['/index.html']
+    };
+
+    return gulp.src('.')
+        .pipe(cloudfront(settings));
+}
+
 gulp.task('clean', function (done) {
     return del([
         config.releaseDirectory + '/*',
@@ -61,26 +73,28 @@ gulp.task('build-devnet', ['clean'], function (done) {
     buildApp('devnet', done);
 });
 
-gulp.task('invalidate', ['upload'], function() {
-    const settings = {
-        accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.EXPLORER_AWS_ACCESS_SECRET,
-        distribution: 'EJSIVKMWKE29F',
-        paths: ['/index.html']
-    };
-
-    return gulp.src('.')
-        .pipe(cloudfront(settings));
+gulp.task('invalidate-mainnet', ['upload-mainnet'], function() {
+    return invalidateCache('EJSIVKMWKE29F');
 });
 
-gulp.task('upload', ['build-mainnet'], function () {
+gulp.task('invalidate-devnet', ['upload-devnet'], function() {
+    return invalidateCache('EJSIVKMWKE29F');
+});
+
+gulp.task('upload-mainnet', ['build-mainnet'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('publish-mainnet', ['build-mainnet', 'upload', 'invalidate']);
-gulp.task('publish-testnet', ['build-testnet', 'upload', 'invalidate']);
-gulp.task('publish-devnet', ['build-devnet', 'upload', 'invalidate']);
+gulp.task('upload-devnet', ['build-devnet'], function () {
+    var credentials = awsCredentials('eu-west-1', 'devnet.wavesexplorer.com');
 
-gulp.task('publish', ['build-mainnet', 'upload', 'invalidate']);
+    return publishToS3(credentials, config.releaseDirectory + '/**');
+});
+
+
+gulp.task('publish-mainnet', ['build-mainnet', 'upload-mainnet', 'invalidate-mainnet']);
+gulp.task('publish-devnet', ['build-devnet', 'upload-devnet', 'invalidate-devnet']);
+
+gulp.task('publish', ['publish-mainnet']);
