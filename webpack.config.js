@@ -77,7 +77,9 @@ var config = {
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(require('./package.json').version)
         }),
-        new LodashModuleReplacementPlugin(),
+        new LodashModuleReplacementPlugin({
+            shorthands: true
+        }),
         new CopyWebpackPlugin([{
             from: path.join(sourcesPath, 'favicon.png'),
             to: buildPath
