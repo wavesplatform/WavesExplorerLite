@@ -38,7 +38,7 @@ export class ConfigurationService {
         this.save();
     };
 
-    update = ({apiBaseUrl, spamListUrl}) => {
+    update = ({apiBaseUrl}) => {
         if (!this.customNetwork) {
             this.customNetwork = {
                 networkId: CUSTOM_NETWORK_ID,
@@ -48,7 +48,6 @@ export class ConfigurationService {
         }
 
         this.customNetwork.apiBaseUrl = apiBaseUrl;
-        this.customNetwork.spamListUrl = spamListUrl;
         this.customNetwork.nodes = [{url: apiBaseUrl}];
         this.selectedIndex = this.networks.length - 1;
 

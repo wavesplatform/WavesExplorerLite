@@ -9,7 +9,7 @@ const Network = ({networkId, displayName, onSwitchNetwork}) => {
 };
 
 const extractEditableConfiguration = configuration => (
-    (({apiBaseUrl, spamListUrl}) => ({apiBaseUrl, spamListUrl}))(configuration)
+    (({apiBaseUrl}) => ({apiBaseUrl}))(configuration)
 );
 
 const NetworkShape = PropTypes.shape({
@@ -58,8 +58,7 @@ export default class NetworkSwitch extends React.PureComponent {
         const listClassName = 'network-list' + (this.state.showNetworks ? ' expanded' : '');
 
         const custom = this.props.custom || {
-            apiBaseUrl: '',
-            spamListUrl: ''
+            apiBaseUrl: ''
         };
         const configuration = extractEditableConfiguration(custom);
 

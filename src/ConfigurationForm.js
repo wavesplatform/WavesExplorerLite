@@ -27,9 +27,7 @@ const InputComponent = ({
 const ConfigurationSchema = Yup.object().shape({
     apiBaseUrl: Yup.string()
         .url('Invalid url')
-        .required('Node address is required'),
-    spamListUrl: Yup.string()
-        .url('Invalid url')
+        .required('Node address is required')
 });
 
 export default class ConfigurationForm extends React.Component {
@@ -67,11 +65,6 @@ export default class ConfigurationForm extends React.Component {
                         <div className="row">
                             <label>Node address</label>
                             <Field name="apiBaseUrl" component={InputComponent} />
-                        </div>
-
-                        <div className="row">
-                            <label>Spam list</label>
-                            <Field name="spamListUrl" component={InputComponent} />
                         </div>
 
                         <div className="row buttons-wrapper">

@@ -5,7 +5,7 @@ import EmptyData from './EmptyData';
 
 export default class ScriptInfo extends React.PureComponent {
     static propTypes = {
-        script: PropTypes.string.isRequired
+        script: PropTypes.string
     };
 
     render() {
