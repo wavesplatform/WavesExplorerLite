@@ -47,7 +47,8 @@ const copyMandatoryAttributes = tx => ({
     id: tx.id,
     type: tx.type,
     timestamp: tx.timestamp,
-    sender: tx.sender
+    sender: tx.sender,
+    isSpam: tx.isSpam
 });
 
 const defaultDirection = (tx, currentAddress) => {
