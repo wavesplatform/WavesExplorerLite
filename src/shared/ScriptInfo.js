@@ -10,7 +10,7 @@ export default class ScriptInfo extends React.PureComponent {
 
     render() {
         const isEmpty = !this.props.script;
-        const rowClassName = 'dataContainer' + (isEmpty ? ' empty' : '');
+        const rowClassName = 'data-container' + (isEmpty ? ' empty' : '');
 
         return (
             <div className={rowClassName}>

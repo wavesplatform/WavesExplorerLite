@@ -17,7 +17,7 @@ export default class DataInfo extends React.PureComponent {
 
     render() {
         const isEmpty = this.props.data.length == 0;
-        const rowClassName = 'dataContainer' + (isEmpty ? ' empty' : '');
+        const rowClassName = 'data-container' + (isEmpty ? ' empty' : '');
 
         return (
             <div className={rowClassName}>
