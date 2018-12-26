@@ -109,16 +109,16 @@ const networks = {
 module.exports = (env, argv) => {
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
+
+        config.plugins.push(new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false
+        }));
     }
 
     if (argv.mode === 'production') {
         //...
     }
-
-    config.plugins.push(new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false
-    }));
 
     const network = (env && env.network) || 'mainnet';
     const networkConfiguration = networks[network];

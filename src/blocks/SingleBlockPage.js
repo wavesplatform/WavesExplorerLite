@@ -28,6 +28,11 @@ const typeToHeader = type => {
             result.price = 'Asset name';
             break;
 
+        case 4:
+        case 11:
+            result.price = 'Asset';
+            break;
+
         case 7:
             result.subjects = 'Seller / Buyer';
             result.amount = 'Amount / Total';
