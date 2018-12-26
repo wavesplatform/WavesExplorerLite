@@ -13,7 +13,7 @@ var config = {
         main: path.join(sourcesPath, 'index.js')
     },
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].[chunkhash].js',
         path: buildPath,
         publicPath: '/'
     },
@@ -80,6 +80,7 @@ var config = {
         new LodashModuleReplacementPlugin({
             shorthands: true
         }),
+        new webpack.HashedModuleIdsPlugin(),
         new CopyWebpackPlugin([{
             from: path.join(sourcesPath, 'favicon.png'),
             to: buildPath
