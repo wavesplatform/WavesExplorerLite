@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
-import * as Yup from 'yup';
+import {isWebUri} from 'valid-url';
 
 const valuesShape = PropTypes.shape({
     apiBaseUrl: PropTypes.string,
@@ -24,11 +24,18 @@ const InputComponent = ({
     </div>
 );
 
-const ConfigurationSchema = Yup.object().shape({
-    apiBaseUrl: Yup.string()
-        .url('Invalid url')
-        .required('Node address is required')
-});
+const validate = values => {
+    let errors = {};
+
+    const url = values.apiBaseUrl.trim();
+    if (!url) {
+        errors.apiBaseUrl = 'Url is required';
+    } else if (!isWebUri(values.apiBaseUrl)) {
+        errors.apiBaseUrl = 'Invalid url';
+    }
+
+    return errors;
+};
 
 export default class ConfigurationForm extends React.Component {
     static propTypes = {
@@ -42,7 +49,7 @@ export default class ConfigurationForm extends React.Component {
         return (
             <Formik
                 initialValues={this.props.values}
-                validationSchema={ConfigurationSchema}
+                validate={validate}
                 onSubmit={(values, actions) => {
                     this.props.onSubmit(values);
                     actions.setSubmitting(false);

@@ -78,7 +78,7 @@ gulp.task('invalidate-mainnet', ['upload-mainnet'], function() {
 });
 
 gulp.task('invalidate-devnet', ['upload-devnet'], function() {
-    return invalidateCache('EJSIVKMWKE29F');
+    return invalidateCache('ECH0R3VC2E1B');
 });
 
 gulp.task('upload-mainnet', ['build-mainnet'], function () {
