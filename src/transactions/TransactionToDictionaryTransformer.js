@@ -270,7 +270,7 @@ const buildQuantityItem = tx => ({
 
 const buildReissuableItem = tx => ({
     label: 'Reissuable',
-    value: tx.reissuable
+    value: (!!tx.reissuable).toString()
 });
 
 const buildRecipientItem = tx => ({
