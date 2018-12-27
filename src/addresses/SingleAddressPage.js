@@ -72,6 +72,7 @@ export default class SingleAddressPage extends React.Component {
 
     handleTabActivate = (selectedIndex) => {
         this.fetchTabData(selectedIndex);
+        this.setState({selectedTabIndex: selectedIndex});
     };
 
     render() {

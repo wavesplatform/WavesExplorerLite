@@ -16,6 +16,12 @@ export default class SingleTransactionPage extends React.Component {
         }
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.transactionId !== prevProps.match.params.transactionId) {
+            this.fetchData();
+        }
+    }
+
     fetchData = () => {
         const {transactionId} = this.props.match.params;
         return ServiceFactory.transactionService().loadTransaction(transactionId)

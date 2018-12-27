@@ -40,28 +40,25 @@ export default class Tabs extends React.Component {
         selectedIndex: 0
     };
 
-    state = {
-        selectedIndex: this.props.selectedIndex
-    };
-
     handleTabActivate = (selectedIndex) => {
-        this.setState({selectedIndex});
         this.props.onTabActivate(selectedIndex);
     };
 
     render() {
+        const {selectedIndex} = this.props;
+
         return (
             <React.Fragment>
                 <div className="page-navigation">
                     {this.props.children.map((child, index) => {
                         return <TabHeader key={index}
                                           index={index}
-                                          isActive={this.state.selectedIndex === index}
+                                          isActive={selectedIndex === index}
                                           title={child.props.title}
                                           onActivate={this.handleTabActivate}/>
                     })}
                 </div>
-                {this.props.children[this.state.selectedIndex]}
+                {this.props.children[selectedIndex]}
             </React.Fragment>
         );
     }
