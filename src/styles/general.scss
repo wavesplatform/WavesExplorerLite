@@ -308,14 +308,13 @@ th.price, th.amount {
     }
 }
 
-
 .data-container {
     background-color: map_get($colors, basic50);
     padding: 20px;
     overflow: auto;
     margin-top: 20px;
     position: relative;
-    min-height: calc(15vh - 40px);
+    min-height: 45vh;
 
     &.empty {
         .empty-icon-wrapper{
@@ -341,7 +340,7 @@ th.price, th.amount {
     pre {
         display: inline-block;
         word-break: break-all;
-        min-height: 15vh;
+        min-height: calc(45vh - 40px);
         max-height: 800px;
         max-width: 100%;
         white-space: pre-wrap;
