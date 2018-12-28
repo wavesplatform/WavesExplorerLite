@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
 import {routes} from './shared/Routing';
@@ -23,6 +24,10 @@ const items = [{
 }];
 
 class NavMenu extends React.Component {
+    static propTypes = {
+        onAfterNavigate: PropTypes.func.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -38,6 +43,8 @@ class NavMenu extends React.Component {
         this.setState({
             current: item
         });
+
+        this.props.onAfterNavigate();
     };
 
     render() {

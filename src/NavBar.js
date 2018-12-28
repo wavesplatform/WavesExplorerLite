@@ -13,11 +13,13 @@ const reloadWindow = () => window.location.reload();
 
 class NavBar extends React.Component {
     static propTypes = {
-        appearance: PropTypes.string
+        appearance: PropTypes.string,
+        onAfterNavigate: PropTypes.func
     };
 
     static defaultProps = {
-        appearance: REGULAR_APPEARANCE
+        appearance: REGULAR_APPEARANCE,
+        onAfterNavigate: () => {}
     };
 
     switchNetwork = networkId => {
@@ -50,7 +52,7 @@ class NavBar extends React.Component {
                     onSwitchNetwork={this.switchNetwork}
                     onUpdateCustomNetwork={this.applySettings}
                 />
-                <NavMenu />
+                <NavMenu onAfterNavigate={this.props.onAfterNavigate} />
                 <Footer version={version} />
             </div>
         );

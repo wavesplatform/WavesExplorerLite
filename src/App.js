@@ -58,7 +58,7 @@ class App extends React.Component {
                 </div>
                 <div className="mobile-menu">
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
-                    <NavBar appearance="mobile" />
+                    <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle} />
                 </div>
                 <ScrollToTop showUnder={100}>
                     <div className="scroll-button"></div>
