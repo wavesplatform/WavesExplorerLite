@@ -1,12 +1,15 @@
-const nodeUrl = 'http://18.203.15.139:6869';
+const nodeUrl = 'http://0.devnet.wavesnodes.com:6869';
 export default {
     networkId: 'devnet',
     displayName: 'Devnet',
     apiBaseUrl: nodeUrl,
     nodes: [
         {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
-        {url: 'http://34.237.49.199:6869', maintainer: 'Waves', showAsLink: true},
-        {url: 'http://35.157.212.173:6869', maintainer: 'Waves', showAsLink: true},
-        {url: 'http://13.228.127.88:6869', maintainer: 'Waves', showAsLink: true}
+        {url: 'http://1.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
+        {url: 'http://2.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
+        {url: 'http://3.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
+        {url: 'http://4.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
+        {url: 'http://5.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
+        {url: 'http://6.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true}
     ]
 };
