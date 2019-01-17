@@ -13,7 +13,7 @@ var config = {
         main: path.join(sourcesPath, 'index.js')
     },
     output: {
-        filename: '[name].[chunkhash].js',
+        filename: '[name].js',
         path: buildPath,
         publicPath: '/'
     },
@@ -118,7 +118,7 @@ module.exports = (env, argv) => {
     }
 
     if (argv.mode === 'production') {
-        //...
+        config.output.filename = '[name].[chunkhash].js';
     }
 
     const network = (env && env.network) || 'mainnet';

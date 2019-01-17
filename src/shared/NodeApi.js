@@ -1,8 +1,16 @@
 import axios from 'axios';
+import * as rax from 'retry-axios';
 
 import DateTime from './DateTime';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+
+const retryableAxios = axios.create();
+retryableAxios.defaults.raxConfig = {
+    instance: retryableAxios,
+    retryDelay: 10
+};
+rax.attach(retryableAxios);
 
 export const replaceTimestampWithDateTime = obj => {
     if (obj.timestamp) {
@@ -24,6 +32,7 @@ const transformTimestampToDateTime = (responseData) => {
 
 export const nodeApi = (baseUrl) => {
     const get = (url, config) => axios.get(baseUrl + url, config);
+    const retryableGet = (url, config) => retryableAxios.get(baseUrl + url, config);
 
     return {
         version: () => get('/node/version'),
@@ -55,7 +64,7 @@ export const nodeApi = (baseUrl) => {
         transactions: {
             unconfirmed: () => get('/transactions/unconfirmed'),
             utxSize: () => get('/transactions/unconfirmed/size'),
-            info: id => get(`/transactions/info/${id}`),
+            info: id => retryableGet(`/transactions/info/${id}`),
             address: (address) => get(`/transactions/address/${address}/limit/${TRANSACTIONS_BY_ADDRESS_LIMIT}`)
         },
         aliases: {
