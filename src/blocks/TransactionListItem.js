@@ -36,6 +36,15 @@ export const createListItem = (transaction) => {
         case 11:
             return <MassPaymentTransactionListItem key={transaction.id} tx={transaction} />;
 
+        case 12:
+            return <DataTransactionListItem key={transaction.id} tx={transaction} />;
+
+        case 13:
+            return <ScriptTransactionListItem key={transaction.id} tx={transaction} />;
+
+        case 14:
+            return <SponsorshipTransactionListItem key={transaction.id} tx={transaction} />;
+
         default:
             return null;
     }
@@ -298,6 +307,60 @@ class MassPaymentTransactionListItem extends React.PureComponent {
                 <AmountAndFee amount={tx.totalAmount} fee={tx.fee} />
                 <td data-label="Price">
                     <Line><CurrencyRef currency={tx.totalAmount.currency} /></Line>
+                </td>
+            </tr>
+        );
+    }
+}
+
+class DataTransactionListItem extends React.PureComponent {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                <JustFee fee={tx.fee} />
+            </tr>
+        );
+    }
+}
+
+class ScriptTransactionListItem extends React.PureComponent {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                <JustFee fee={tx.fee} />
+            </tr>
+        );
+    }
+}
+
+class SponsorshipTransactionListItem extends React.PureComponent {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                <JustFee fee={tx.fee} />
+                <td data-label="Price">
+                    {tx.sponsoredFee && <Line>{this.sponsoredFee.toString()}</Line>}
                 </td>
             </tr>
         );
