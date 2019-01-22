@@ -69,7 +69,7 @@ export default class Pagination extends React.PureComponent {
         }
 
         return (
-            <div className="page-navigation right">
+            <div className="page-navigation right no-select">
                 <PageLimit className="page-link first" title="First" pageNumber={1}
                            onPageChange={this.handlePageChange}
                            disabled={this.state.currentPage === 1}/>
