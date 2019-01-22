@@ -1,9 +1,11 @@
+const nodeUrl = 'https://testnode1.wavesnodes.com';
+
 export default {
     networkId: 'testnet',
     displayName: 'Testnet',
-    apiBaseUrl: 'https://pool.testnet.wavesnodes.com',
+    apiBaseUrl: nodeUrl,
     nodes: [
-        {url: 'https://testnode1.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
+        {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode3.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode4.wavesnodes.com', maintainer: 'Waves', showAsLink: true}
