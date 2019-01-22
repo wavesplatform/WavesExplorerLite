@@ -29,18 +29,38 @@ export default class NetworkInfoContainer extends React.Component {
         info: {}
     };
 
+    componentWillUnmount() {
+        this.removeRefreshInterval();
+    }
+
+    initialFetch = () => {
+        return this.fetchData().then(this.setRefreshInterval);
+    };
+
     fetchData = () => {
         const infoService = ServiceFactory.infoService();
         return infoService.loadInfo().then(info => {
-            this.setState({info});
+            const change = Object.assign({}, this.state.info, info);
+            this.setState({info: change});
 
             infoService.loadDelay(info).then(info => this.setState({info}));
         });
     };
 
+    setRefreshInterval = () => {
+        this.interval = setInterval(() => this.fetchData(), 5000);
+    };
+
+    removeRefreshInterval = () => {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        }
+    };
+
     render() {
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load blockchain info">
+            <Loader fetchData={this.initialFetch} errorTitle="Failed to load blockchain info">
                 <NetworkInfo info={this.state.info} />
             </Loader>
         );

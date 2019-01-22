@@ -52,14 +52,33 @@ export default class UnconfirmedTxListContainer extends React.Component {
         unconfirmed: []
     };
 
+    componentWillUnmount() {
+        this.removeRefreshInterval();
+    }
+
+    initialFetch = () => {
+        return this.fetchData().then(this.setRefreshInterval);
+    };
+
     fetchData = () => {
         return ServiceFactory.transactionService().loadUnconfirmed()
             .then(unconfirmed => this.setState({unconfirmed}));
     };
 
+    setRefreshInterval = () => {
+        this.interval = setInterval(() => this.fetchData(), 5000);
+    };
+
+    removeRefreshInterval = () => {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        }
+    };
+
     render() {
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load unconfirmed transactions">
+            <Loader fetchData={this.initialFetch} errorTitle="Failed to load unconfirmed transactions">
                 <UnconfirmedTxList transactions={this.state.unconfirmed} />
             </Loader>
         );

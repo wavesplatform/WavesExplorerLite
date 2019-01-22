@@ -42,6 +42,14 @@ export default class LastBlockListContainer extends React.Component {
         blocks: []
     };
 
+    componentWillUnmount() {
+        this.removeRefreshInterval();
+    }
+
+    initialFetch = () => {
+        return this.fetchData().then(this.setRefreshInterval);
+    };
+
     fetchData = () => {
         return ServiceFactory.infoService().loadHeight()
             .then(height => {
@@ -51,9 +59,20 @@ export default class LastBlockListContainer extends React.Component {
             }).then(blocks => this.setState({blocks}));
     };
 
+    setRefreshInterval = () => {
+        this.interval = setInterval(() => this.fetchData(), 5000);
+    };
+
+    removeRefreshInterval = () => {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        }
+    };
+
     render() {
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load last blocks">
+            <Loader fetchData={this.initialFetch} errorTitle="Failed to load last blocks">
                 <LastBlockList blocks={this.state.blocks} />
             </Loader>
         );
