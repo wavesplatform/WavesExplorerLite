@@ -360,7 +360,7 @@ class SponsorshipTransactionListItem extends React.PureComponent {
                 <Subjects type={tx.type} sender={tx.sender} />
                 <JustFee fee={tx.fee} />
                 <td data-label="Price">
-                    {tx.sponsoredFee && <Line>{this.sponsoredFee.toString()}</Line>}
+                    {tx.sponsoredFee && <Line>{tx.sponsoredFee.toString()}</Line>}
                 </td>
             </tr>
         );
