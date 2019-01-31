@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins.scss";
+
+table.address-tr-list {
+    th.timestamp, td.timestamp {
+        @include responsive_styles(map_get($address_tr_list_columns, 'timestamp'))
+    }
+
+    th.amount {
+        @include responsive_styles(map_get($address_tr_list_columns, 'amount'))
+    }
+
+    th.price {
+        @include responsive_styles(map_get($address_tr_list_columns, 'price'))
+    }
+}
+
+table.address-alias-list {
+    th.letter {
+        @include responsive_styles(map_get($address_alias_list_columns, 'letter'))
+    }
+
+    .grid .line {
+        padding-right: 10px;
+    }
+}

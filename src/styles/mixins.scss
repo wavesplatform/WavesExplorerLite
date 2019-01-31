@@ -1,0 +1,95 @@
+@import "variables";
+
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+@function map-deep-has-key($map, $keys...) {
+    $root: $map;
+    $index: 1;
+    $result: true;
+
+    @while $index <= length($keys) and $result {
+        $key: nth($keys, $index);
+        $result: map-has-key($root, $key);
+        $root: map-get($root, $key);
+        $index: $index + 1;
+    }
+    @return $result;
+}
+
+@function map-deep-merge($parent-map, $child-map) {
+    $result: $parent-map;
+    @each $key, $value in $child-map {
+        @if (not map-has-key($result, $key)) or
+        (type-of(map-get($result, $key)) != type-of($value)) or
+        (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+            $result: map-merge($result, ($key: $value));
+        } @else {
+            $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+        }
+    }
+    @return $result;
+}
+
+@mixin breakpoint($name) {
+    @if not map-has-key($breakpoints, $name) {
+        @warn "Warning: `#{$name}` is not a valid breakpoint name.";
+    } @else {
+        @media (max-width: map-get($breakpoints, $name)) {
+            @content;
+        }
+    }
+}
+
+@mixin responsive_styles($map, $keys...) {
+    @each $style_name in map-keys($map) {
+        @if map-has-key($breakpoints, $style_name) {
+            @include breakpoint($style_name) {
+                @include responsive_styles(map-get($map, $style_name), $keys...);
+            }
+        } @else if length($keys) == 0 or index($keys, $style_name) {
+            #{$style_name}: map-get($map, $style_name);
+        }
+    }
+}
+
+@mixin font($type, $color_name: black) {
+    font-weight: map-get($font, weight);
+    font-family: map-get($font, family);
+    font-size: map-get($font, #{$type}_size);
+    color: map-get($colors, $color_name);
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+}
+
+@mixin loading() {
+    width: 24px;
+    height: 24px;
+    background: url('../images/loading-24.svg') no-repeat center center;
+    animation: spin 1s linear infinite;
+    svg {display: none;}
+
+    @-moz-keyframes spin {
+        100% {
+            -moz-transform: rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    @keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+}
+

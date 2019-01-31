@@ -1,7 +1,0 @@
-{
-  "name": "waves-explorer-lite",
-  "description": "Waves blockchain information tool",
-  "main": "index.html",
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/wavesplatform/WavesExplorerLite"
-}

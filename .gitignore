@@ -1,7 +1,16 @@
-.idea
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# production
+/build
+dist/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+/.idea
 *.iml
 *.log
-/nbproject/private/
-node_modules/
-dist/
-build/

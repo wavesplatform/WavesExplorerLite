@@ -1,0 +1,33 @@
+@import "variables";
+@import "mixins.scss";
+
+table.blocks {
+    th.timestamp {
+        @include responsive_styles(map_get($blocks_columns, 'timestamp'))
+    }
+
+    th.target {
+        @include responsive_styles(map_get($blocks_columns, 'target'))
+    }
+
+    th.txs {
+        @include responsive_styles(map_get($blocks_columns, 'txs'))
+    }
+
+    tbody tr {
+        .block-img {
+            background: url(../images/waves-block-1.svg) center no-repeat
+        }
+        &:nth-child(3n) .block-img {
+            background: url(../images/waves-block-2.svg) center no-repeat
+        }
+        &:nth-child(3n + 1) .block-img {
+            background: url(../images/waves-block-3.svg) center no-repeat
+        }
+        &.empty-block {
+            .block-img {
+                background: url(../images/empty-block.svg) center no-repeat;
+            }
+        }
+    }
+}

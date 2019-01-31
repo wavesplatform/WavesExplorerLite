@@ -1,0 +1,368 @@
+@import "variables";
+@import "mixins.scss";
+
+.info-box {
+    justify-content: space-between;
+    background-color: map-get($colors, basic50);
+    margin-bottom: 12px;
+
+    > * {
+        @include responsive_styles(
+                map-deep-merge($card_inner, (sm: (
+                    padding-top: 14px,
+                    padding-bottom: 14px
+                )))
+        );
+    }
+}
+
+.line {
+    @include font(body);
+    padding-bottom: 8px;
+
+    &.wide {
+        padding-top: 18px;
+    }
+
+    &.bold {
+        font-weight: bold;
+    }
+
+    & + .wide, &:last-child {
+        padding-bottom: 0;
+    }
+
+    &.no-wrap {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &.no-break {
+        white-space: nowrap;
+        word-break: keep-all;
+    }
+}
+
+.panel {
+    @include responsive_styles($card_inner);
+    padding-top: 0 !important;
+    margin-top: 24px;
+
+    &:not(:last-child) {
+        border-right: 1px solid map-get($colors, accent50);
+    }
+
+    .panel-title {
+        padding-bottom: 24px;
+
+        .title {
+            @include font(headline1);
+        }
+    }
+
+    @each $size in map-keys($breakpoints) {
+        &.column-#{$size}-12 {
+            @include breakpoint($size) {
+                border: none;
+            }
+        }
+    }
+
+    &.panel-empty {
+        >.panel-empty-icon {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto;
+        }
+
+        >.panel-empty-label {
+            @include font(body, basic500);
+            text-align: center;
+        }
+
+        &.confirmed {
+            margin-top: 20vh;
+
+            >.panel-empty-icon {
+                background: url('../images/confirmed-88.svg') no-repeat center center;
+            }
+        }
+
+        &.error {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: calc(100vh - 140px);
+            box-sizing: border-box;
+
+            >.panel-empty-icon {
+                background: url('../images/erroring-88.svg') no-repeat center center;
+            }
+        }
+
+        &.no-data {
+            @include responsive_styles($panel_empty);
+
+            >.panel-empty-icon {
+                background: url('../images/empty-88.svg') no-repeat center center;
+            }
+        }
+    }
+
+    .panel-row {
+        padding-bottom: 36px;
+        &:last-child {
+            padding-bottom: 0;
+        }
+
+        > div {
+            margin-right: 14px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.block-img-handler {
+    @for $i from 1 through 3 {
+        &:nth-child(3n+#{$i}) {
+            .block-img {
+                background: url('../images/waves-block-#{$i}.svg') no-repeat center center;
+                width: 40px;
+                height: 40px;
+                float: left;
+                margin-right: 14px;
+            }
+        }
+    }
+}
+
+.empty-block {
+    .block-img-handler {
+        .block-img {
+            background: url(../images/empty-block.svg) center no-repeat;
+        }
+    }
+    * {
+        color: map_get($colors, basic500);
+    }
+}
+
+.headline {
+    display: flex;
+    align-items: center;
+
+    @include responsive_styles($card_inner);
+
+    .title {
+        @include font(headline1);
+    }
+
+    .title-details {
+        @include font(headline2, disabled500);
+        flex-wrap: nowrap;
+        flex-grow: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .title-details + .btn{
+        margin-left: 8px;
+    }
+
+    .btn {
+        vertical-align: bottom;
+    }
+}
+
+.headline2 {
+    @include responsive_styles($card_inner);
+    margin-top: 12px;
+    margin-bottom: -6px;
+
+    > .title {
+        @include font(headline2);
+    }
+
+    > .title-details {
+        @include font(headline2, disabled500);
+    }
+
+    > .action {
+        border-bottom: 1px dashed map-get($colors, black);
+        float: right;
+        cursor: pointer;
+    }
+}
+
+.back {
+    @include responsive_styles($card_inner, padding-right, padding-left);
+}
+
+.divider {
+    width: 1px;
+
+    &.divider-dashed {
+        border-left: 1px dashed map-get($colors, accent50);
+    }
+
+    &.divider-utx {
+        border-left: 2px solid map-get($colors, submit200);
+    }
+}
+
+.link-spacer {
+    display: inline-block;
+    width: 28px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.dictionary {
+    > .dictionary-pair {
+        display: flex;
+        min-height: 44px;
+        margin-bottom: 4px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        > * {
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        > .dictionary-pair-key {
+            flex: 0 0 auto;
+            background-color: map-get($colors, basic50);
+
+            @include responsive_styles($card_inner, padding-right, padding-left);
+            @include responsive_styles($card_column);
+            @include font(body, basic500);
+        }
+
+        > .dictionary-pair-value {
+            width: 100%;
+            flex: 0 1 auto;
+            padding: 0 14px;
+            @include font(body);
+
+            @media screen and (max-width: 1100px) {
+                max-width: calc(100% - 110px);
+            }
+
+            .ellipsis {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                @media screen and (max-width: 1100px) {
+                    max-width: calc(100% - 70px);
+                }
+            }
+        }
+
+        > .dictionary-action {
+            flex: 0 0 auto;
+            @media screen and (max-width: 1100px) {
+                margin-left: -84px;
+            }
+        }
+    }
+}
+
+th.price, th.amount {
+    width: 160px;
+}
+
+.arrow {
+    float: left;
+    width: 14px;
+    height: 40px;
+    padding-left: 8px;
+
+    &.asset-transfer {
+        background: url('../images/transaction-transfer-out.svg') no-repeat;
+
+        &.in {
+            background: url('../images/transaction-transfer-in.svg') no-repeat;
+        }
+    }
+
+    &.mass-payment {
+        background: url('../images/transaction-masspay-out.svg') no-repeat;
+
+        &.in {
+            background: url('../images/transaction-masspay-in.svg') no-repeat;
+        }
+    }
+
+    &.exchange {
+        background: url('../images/transaction-exchange.svg') no-repeat;
+    }
+}
+
+.data-container {
+    background-color: map_get($colors, basic50);
+    padding: 20px;
+    overflow: auto;
+    margin-top: 20px;
+    position: relative;
+    min-height: 45vh;
+
+    &.empty {
+        .empty-icon-wrapper{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .empty-icon {
+            width: 88px;
+            height: 88px;
+            background: url(../images/empty-88.svg) center no-repeat;
+        }
+
+        .empty-label {
+            @include font(body, basic500);
+            text-align: center;
+            margin-top: 10px;
+        }
+    }
+
+    pre {
+        display: inline-block;
+        word-break: break-all;
+        min-height: calc(45vh - 40px);
+        max-height: 800px;
+        max-width: 100%;
+        white-space: pre-wrap;
+
+        &::after {
+            display: block;
+            content: '';
+            height: 20px;
+        }
+    }
+}
+
+.dictionary-pair {
+    .data-container {
+        margin-top: 0;
+        min-height: auto;
+        width: 100%;
+
+        pre {
+            word-break: break-word;
+            min-height: auto;
+            display: flex;
+        }
+    }
+}

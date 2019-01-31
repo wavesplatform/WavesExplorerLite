@@ -1,0 +1,98 @@
+@import "variables";
+@import "mixins.scss";
+
+.search-box {
+    position: relative;
+
+    &::before {
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        content: '';
+        bottom: 0;
+        display: block;
+        transition: background-color .5s;
+        background-color: map-get($colors, basic500);
+    }
+
+    .search {
+        width: 24px;
+        height: 24px;
+        padding-right: 12px;
+        svg {
+            transition: .3s;
+        }
+    }
+
+    &.search-box-active {
+        svg {
+            color: map-get($colors, black);
+        }
+        &::before {
+            background-color: map-get($colors, black);
+        }
+    }
+
+    &.search-box-focus {
+        svg {
+            color: map-get($colors, submit400);
+        }
+        &::before {
+            background-color: map-get($colors, submit400);
+        }
+    }
+
+    &.search-box-invalid {
+        svg {
+            color: map-get($colors, error500);
+        }
+        &::before {
+            background-color: map-get($colors, error500);
+        }
+        &::after {
+            content: "Nothing has been found for query";
+            display: block;
+            background-color: map-get($colors, error500);
+            @include font(body, white);
+            position: absolute;
+            bottom: -48px;
+            left: 36px;
+            padding: 14px 24px;
+            white-space: nowrap;
+        }
+    }
+
+    &.search-box-loading > .search {
+        @include loading();
+    }
+
+    > input {
+        border-bottom: none;
+    }
+
+    > .clear {
+        display: block;
+        height: 24px;
+        padding-left: 10px;
+        cursor: pointer;
+        @include font(body, basic500);
+        line-height: 24px;
+        transition: .3s;
+
+        svg {
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -2px;
+            margin-right: 7px;
+            fill: map-get($colors, basic500);
+            transition: .3s;
+        }
+
+        &:hover {
+            color: black;
+            svg {
+                fill: map-get($colors, black);
+            }
+        }
+    }
+}

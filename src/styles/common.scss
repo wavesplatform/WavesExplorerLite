@@ -1,0 +1,152 @@
+@import "variables";
+@import "reset.css";
+@import "grid.scss";
+@import "table.scss";
+@import "form.scss";
+
+.bold {
+    font-weight: bold;
+}
+
+.right {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.width-25 {
+    width: 25%;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+// **** link ****
+a {
+    font-weight: bold;
+    color: map-get($colors, submit400);
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.no-accent {
+        color: map-get($colors, black);
+        font-weight: normal;
+    }
+
+    &.fade {
+        color: map-get($colors, basic500);
+        font-weight: normal;
+    }
+
+    &.disabled {
+        pointer-events: none;
+    }
+
+    &.no-style {
+        font-weight: inherit;
+        color: inherit;
+        text-decoration: inherit;
+    }
+}
+
+// **** button ****
+.btn {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: map-get($colors, submit400);
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    @include font(body, white);
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover:not(.disabled) {
+        opacity: 0.7
+    }
+
+    &.disabled {
+        background-color: map-get($colors, accent50);
+    }
+
+    &.btn-copy {
+        min-width: 70px;
+        width: 70px;
+        height: 28px;
+        background-image: url('../images/copy-14-white.svg');
+        background-position: 8px center;
+        padding-left: 30px;
+        padding-top: 6px;
+    }
+
+    &.btn-prev {
+        width: 18px;
+        height: 24px;
+        background-image: url('../images/back-14-white.svg');
+        margin-right: 14px;
+    }
+
+    &.btn-next {
+        width: 18px;
+        height: 24px;
+        background-image: url('../images/next-14-white.svg');
+        margin-left: 14px;
+    }
+
+    &.btn-back {
+        width: 14px;
+        height: 14px;
+        background-image: url('../images/back-14-black.svg');
+        background-color: transparent;
+    }
+}
+
+.copied {
+    display: inline-block;
+    padding: 0 16px;
+    @include font(body, success400);
+}
+
+.badge {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: map-get($colors, info400);
+    vertical-align: middle;
+    padding: 4px 4px 4px 6px;
+    @include font(body, white);
+
+    &.asset-burn, &.lease-cancel, &.asset-transfer.out, &.mass-payment.out {
+        background-color: map-get($colors, error500);
+    }
+    &.lease, &.asset-issue, &.asset-transfer.in, &.mass-payment.in {
+        background-color: map-get($colors, success400);
+    }
+    &.exchange {
+        background-color: map-get($colors, mixUnicorn);
+    }
+    &.create-alias, &.asset-reissue, &.data {
+        background-color: map-get($colors, info400);
+    }
+}
+
+.no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.loading {
+    .loading-icon {
+        margin: 0 auto;
+        @include loading();
+    }
+}
