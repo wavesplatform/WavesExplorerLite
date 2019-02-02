@@ -2,26 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
-import {routes} from './shared/Routing';
+import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 
-const items = [{
-    title: 'General info',
-    route: routes.root,
-    icon: 'icon-general'
-}, {
-    title: 'Blocks',
-    route: routes.blocks.list,
-    icon: 'icon-blocks'
-}, {
-    title: 'Peers',
-    route: routes.peers.list,
-    icon: 'icon-peers'
-}, {
-    title: 'Nodes',
-    route: routes.nodes.list,
-    icon: 'icon-nodes'
-}];
+const buildItems = () => {
+    return [{
+        title: 'General info',
+        route: networkId => routeBuilder(networkId).root,
+        icon: 'icon-general'
+    }, {
+        title: 'Blocks',
+        route: networkId => routeBuilder(networkId).blocks.list,
+        icon: 'icon-blocks'
+    }, {
+        title: 'Peers',
+        route: networkId => routeBuilder(networkId).peers.list,
+        icon: 'icon-peers'
+    }, {
+        title: 'Nodes',
+        route: networkId => routeBuilder(networkId).nodes.list,
+        icon: 'icon-nodes'
+    }];
+};
 
 class NavMenu extends React.Component {
     static propTypes = {
@@ -32,11 +34,17 @@ class NavMenu extends React.Component {
         super(props);
 
         const {pathname} = this.props.location;
-
+        const items = buildItems();
         this.state = {
             items,
             current: items.find(item => item.route === pathname) || items[0]
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.setState({current: this.state.items[0]}); // really?
+        }
     }
 
     handleNavigate = item => {

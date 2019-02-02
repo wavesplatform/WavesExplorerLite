@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import {routes} from '../shared/Routing';
+import {routeBuilder} from '../shared/Routing';
 import LastBlockListItem from './LastBlockListItem';
 import Loader from '../shared/Loader';
 
@@ -10,8 +11,9 @@ import ServiceFactory from '../services/ServiceFactory';
 
 const LAST_BLOCKS_COUNT = 20;
 
-export class LastBlockList extends React.PureComponent {
+class LastBlockList extends React.PureComponent {
     static propTypes = {
+        networkId: PropTypes.string.isRequired,
         blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
         title: PropTypes.string
     };
@@ -21,6 +23,8 @@ export class LastBlockList extends React.PureComponent {
     };
 
     render() {
+        const routes = routeBuilder(this.props.networkId);
+
         return (
             <div className="panel">
                 <div className="grid grid-baseline panel-title">
@@ -37,7 +41,7 @@ export class LastBlockList extends React.PureComponent {
     }
 }
 
-export default class LastBlockListContainer extends React.Component {
+class LastBlockListContainer extends React.Component {
     state = {
         blocks: []
     };
@@ -71,10 +75,13 @@ export default class LastBlockListContainer extends React.Component {
     };
 
     render() {
+        const {networkId} = this.props.match.params;
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load last blocks">
-                <LastBlockList blocks={this.state.blocks} />
+                <LastBlockList blocks={this.state.blocks} networkId={networkId} />
             </Loader>
         );
     }
 }
+
+export default withRouter(LastBlockListContainer);

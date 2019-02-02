@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {routes} from '../shared/Routing';
+import {routeBuilder} from '../shared/Routing';
 import GoBack from '../shared/GoBack';
 import EndpointRef from '../shared/EndpointRef';
 import Headline from '../shared/Headline';
@@ -69,9 +69,11 @@ export default class SingleBlockPage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.height !== prevProps.match.params.height) {
-            const height = parseInt(this.props.match.params.height);
-            this.setState({currentHeight: height});
+        const {height: prevHeight, networkId: prevNetworkId} = prevProps.match.params;
+        const {height, networkId} = this.props.match.params;
+
+        if (height !== prevHeight || networkId !== prevNetworkId) {
+            this.setState({currentHeight: parseInt(height)});
             this.fetchData(height)
                 .catch(error => {
                     console.error(error);
@@ -94,6 +96,8 @@ export default class SingleBlockPage extends React.Component {
     };
 
     showBlock = height => {
+        const {networkId} = this.props.match.params;
+        const routes = routeBuilder(networkId);
         this.props.history.push(routes.blocks.one(height));
     };
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import './styles/main.scss';
 import {Route, Switch} from 'react-router';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
-import {routeParams, routes} from './shared/Routing';
+import {routeParams, routeBuilder} from './shared/Routing';
 import Search from './Search';
 import Header from './Header';
 import NavBar from './NavBar';
@@ -17,6 +17,24 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 import SingleAliasPage from './aliases/SingleAliasPage';
+
+const routes = routeBuilder(routeParams.networkId);
+
+const withNetworkRouter = (RootComponent) => {
+    return class extends React.Component {
+        render() {
+            //TODO: redirect to the first configuration in the list
+            return (
+                <Router>
+                    <Switch>
+                        <Route exact path="/" render={() => <Redirect to="/mainnet" />} />
+                        <Route path={routes.root} component={RootComponent} />
+                    </Switch>
+                </Router>
+            );
+        }
+    };
+};
 
 class App extends React.Component {
     state = {
@@ -33,8 +51,7 @@ class App extends React.Component {
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
         return (
-            <Router>
-                <React.Fragment>
+            <React.Fragment>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
                         <Search />
@@ -63,10 +80,9 @@ class App extends React.Component {
                 <ScrollToTop showUnder={100}>
                     <div className="scroll-button"></div>
                 </ScrollToTop>
-                </React.Fragment>
-            </Router>
+            </React.Fragment>
         );
     }
 }
 
-export default hot(module)(App);
+export default hot(module)(withNetworkRouter(App));

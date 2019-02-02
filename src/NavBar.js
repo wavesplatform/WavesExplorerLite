@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 
+import {routeBuilder} from './shared/Routing';
 import NavMenu from './NavMenu';
 import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
@@ -23,9 +25,8 @@ class NavBar extends React.Component {
     };
 
     switchNetwork = networkId => {
-        ServiceFactory.configurationService().select(networkId);
-
-        reloadWindow();
+        const route = routeBuilder(networkId);
+        this.props.history.push(route.root);
     };
 
     applySettings = settings => {
@@ -35,6 +36,7 @@ class NavBar extends React.Component {
     };
 
     render() {
+        const networkId = this.props.match.params.networkId;
         const configurationService = ServiceFactory.configurationService();
 
         let className = 'menu grid-item-fixed';
@@ -59,4 +61,4 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

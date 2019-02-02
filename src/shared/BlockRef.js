@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import {routes} from './Routing';
+import {routeBuilder} from './Routing';
 
 class BlockRef extends React.PureComponent {
     static propTypes = {
@@ -11,9 +12,11 @@ class BlockRef extends React.PureComponent {
 
     render() {
         const {height} = this.props;
+        const {networkId} = this.props.match.params;
+        const routes = routeBuilder(networkId);
 
         return (<Link to={routes.blocks.one(height)}>{height}</Link>);
     }
 }
 
-export default BlockRef;
+export default withRouter(BlockRef);

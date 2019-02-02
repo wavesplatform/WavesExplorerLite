@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
-export default class NavMenuItem extends React.PureComponent {
+class NavMenuItem extends React.PureComponent {
     static propTypes = {
         item: PropTypes.object.isRequired,
         current: PropTypes.bool,
@@ -18,6 +19,7 @@ export default class NavMenuItem extends React.PureComponent {
     };
 
     render() {
+        const {networkId} = this.props.match.params;
         let className = `menu-item ${this.props.item.icon}`;
         if (this.props.current)
             className += ' current';
@@ -26,9 +28,11 @@ export default class NavMenuItem extends React.PureComponent {
             <div className={className}>
                 <Link
                     className="no-style"
-                    to={this.props.item.route}
+                    to={this.props.item.route(networkId)}
                     onClick={this.handleClick}>{this.props.item.title}</Link>
             </div>
         );
     }
 }
+
+export default withRouter(NavMenuItem);

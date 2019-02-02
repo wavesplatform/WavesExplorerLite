@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import {routes} from '../shared/Routing';
+import {routeBuilder} from '../shared/Routing';
 import ServiceFactory from '../services/ServiceFactory';
 
 import Loader from '../shared/Loader';
@@ -18,6 +18,8 @@ export default class SingleAliasPage extends React.Component {
     };
 
     render() {
+        const {networkId} = this.props.match.params;
+        const routes = routeBuilder(networkId);
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to resolve alias">
                 {this.state.address && <Redirect to={routes.addresses.one(this.state.address)}/>}

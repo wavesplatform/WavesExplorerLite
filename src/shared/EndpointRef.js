@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
 import Alias from './Alias';
-import {routes} from './Routing';
+import {routeBuilder} from './Routing';
 
 const REGULAR = 'regular';
 const BRIGHT = 'bright';
@@ -20,6 +21,7 @@ const appearanceToClassName = appearance => {
 
 class AddressRef extends React.PureComponent {
     static propTypes = {
+        networkId: PropTypes.string.isRequired,
         address: PropTypes.string.isRequired,
         title: PropTypes.string,
         className: PropTypes.string
@@ -28,6 +30,7 @@ class AddressRef extends React.PureComponent {
     render() {
         const {address, className} = this.props;
         const title = this.props.title || address;
+        const routes = routeBuilder(this.props.networkId);
 
         return (<Link to={routes.addresses.one(address)} className={className}>{title}</Link>);
     }
@@ -35,6 +38,7 @@ class AddressRef extends React.PureComponent {
 
 class AliasRef extends React.PureComponent {
     static propTypes = {
+        networkId: PropTypes.string.isRequired,
         alias: PropTypes.string.isRequired,
         title: PropTypes.string,
         className: PropTypes.string
@@ -44,19 +48,21 @@ class AliasRef extends React.PureComponent {
         const {alias, className} = this.props;
         const a = Alias.fromString(alias);
         const title = this.props.title || a.alias;
+        const routes = routeBuilder(this.props.networkId);
 
         return (<Link to={routes.aliases.one(a.alias)} className={className}>{title.substring(0, 50)}</Link>);
     }
 }
 
-const EndpointRef = ({endpoint, title, appearance}) => {
+const EndpointRef = ({endpoint, title, appearance, match}) => {
     const className = appearanceToClassName(appearance);
+    const {networkId} = match.params;
 
     if (Alias.isAlias(endpoint)) {
-        return <AliasRef alias={endpoint} title={title} className={className} />;
+        return <AliasRef networkId={networkId} alias={endpoint} title={title} className={className} />;
     }
 
-    return <AddressRef address={endpoint} title={title} className={className} />;
+    return <AddressRef networkId={networkId} address={endpoint} title={title} className={className} />;
 };
 
 EndpointRef.propTypes = {
@@ -69,4 +75,4 @@ EndpointRef.defaultProps = {
     appearance: BRIGHT
 };
 
-export default EndpointRef;
+export default withRouter(EndpointRef);
