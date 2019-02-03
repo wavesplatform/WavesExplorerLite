@@ -4,12 +4,12 @@ import {nodeApi} from '../shared/NodeApi';
 import {ApiClientService} from './ApiClientService';
 
 export class NodesService extends ApiClientService {
-    constructor(configurationService) {
-        super(configurationService);
+    constructor(configurationService, networkId) {
+        super(configurationService, networkId);
     }
 
     loadNodes = () => {
-        const nodes = this.configurationService.get().nodes.slice();
+        const nodes = this.configuration().nodes.slice();
 
         const promises = nodes.map((node, index) => {
             const api = nodeApi(node.url);

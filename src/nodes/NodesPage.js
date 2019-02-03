@@ -14,16 +14,24 @@ export default class NodesPage extends React.Component {
     }
 
     fetchData = () => {
-        return ServiceFactory.nodesService().loadNodes()
+        const {networkId} = this.props.match.params;
+
+        return ServiceFactory
+            .forNetwork(networkId)
+            .nodesService()
+            .loadNodes()
             .then(nodes => this.setState({nodes}));
     };
 
     render() {
+        const {networkId} = this.props.match.params;
+        const configuration = ServiceFactory.global().configurationService().get(networkId);
+
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
                 <React.Fragment>
                     <div className="headline">
-                        <span className="title">{ServiceFactory.configurationService().get().displayName} Nodes</span>
+                        <span className="title">{configuration.displayName} Nodes</span>
                     </div>
                     <NodeList nodes={this.state.nodes} />
                 </React.Fragment>

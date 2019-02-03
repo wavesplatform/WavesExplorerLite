@@ -33,8 +33,8 @@ export default class SingleAddressPage extends React.Component {
     }
 
     fetchData = () => {
-        const {address} = this.props.match.params;
-        const addressService = ServiceFactory.addressService();
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadBalance(address)
             .then(balance => this.setState({balance}))
@@ -42,8 +42,8 @@ export default class SingleAddressPage extends React.Component {
     };
 
     fetchTabData = (selectedIndex) => {
-        const {address} = this.props.match.params;
-        const addressService = ServiceFactory.addressService();
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         switch (selectedIndex) {
             case 0:

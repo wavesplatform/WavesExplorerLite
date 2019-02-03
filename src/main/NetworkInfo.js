@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 
 import ServiceFactory from '../services/ServiceFactory';
 
@@ -24,7 +25,7 @@ export class NetworkInfo extends React.PureComponent {
     }
 }
 
-export default class NetworkInfoContainer extends React.Component {
+class NetworkInfoContainer extends React.Component {
     state = {
         info: {}
     };
@@ -38,7 +39,8 @@ export default class NetworkInfoContainer extends React.Component {
     };
 
     fetchData = () => {
-        const infoService = ServiceFactory.infoService();
+        const {networkId} = this.props.match.params;
+        const infoService = ServiceFactory.forNetwork(networkId).infoService();
         return infoService.loadInfo().then(info => {
             const change = Object.assign({}, this.state.info, info);
             this.setState({info: change});
@@ -66,3 +68,5 @@ export default class NetworkInfoContainer extends React.Component {
         );
     }
 }
+
+export default withRouter(NetworkInfoContainer);

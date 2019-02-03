@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-import {nodeApi} from '../shared/NodeApi';
 import {ApiClientService} from './ApiClientService';
 
 export class InfoService extends ApiClientService {
-    constructor(configurationService) {
-        super(configurationService);
+    constructor(configurationService, networkId) {
+        super(configurationService, networkId);
     }
 
     loadHeight = () => {

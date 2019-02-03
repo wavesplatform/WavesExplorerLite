@@ -30,21 +30,17 @@ export class ConfigurationService {
         }
     }
 
-    get = () => copyAndFreeze(this.networks[this.selectedIndex]);
+    get = (networkId) => {
+        const configuration = this.networks.find(network => network.networkId === networkId);
+        if (!configuration)
+            throw new Error(`Configuration hasn't been found by id '${networkId}'`);
+
+        return copyAndFreeze(configuration);
+    };
 
     all = () => this.networks.slice();
 
     custom = () => this.customNetwork ? copyAndFreeze(this.customNetwork) : null;
-
-    select = (networkId) => {
-        const index = this.networks.findIndex(item => item.networkId === networkId);
-        if (index < 0) {
-            throw new Error(`Network with id ${networkId} is not found`);
-        }
-
-        this.selectedIndex = index;
-        this.save();
-    };
 
     update = ({apiBaseUrl}) => {
         if (!this.customNetwork) {
@@ -57,14 +53,11 @@ export class ConfigurationService {
 
         this.customNetwork.apiBaseUrl = trimEnd(apiBaseUrl, '/');
         this.customNetwork.nodes = [{url: apiBaseUrl}];
-        this.selectedIndex = this.networks.length - 1;
-
         this.save();
     };
 
     save = () => {
         this.storageService.saveConfiguration({
-            selectedIndex: this.selectedIndex,
             customNetwork: this.customNetwork
         });
     }

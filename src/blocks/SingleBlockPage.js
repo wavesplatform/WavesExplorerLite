@@ -90,7 +90,11 @@ export default class SingleBlockPage extends React.Component {
     fetchData = height => {
         this.setState({loading: true});
 
-        return ServiceFactory.blockService().loadBlock(height)
+        const {networkId} = this.props.match.params;
+        return ServiceFactory
+            .forNetwork(networkId)
+            .blockService()
+            .loadBlock(height)
             .then(result => this.setState(result))
             .then(() => this.setState({loading: false}));
     };

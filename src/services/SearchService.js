@@ -1,16 +1,16 @@
-import {routes} from '../shared/Routing';
+import {routeBuilder} from '../shared/Routing';
 import {ApiClientService} from './ApiClientService';
 
 export class SearchService extends ApiClientService {
-    constructor(configurationService) {
-        super(configurationService);
+    constructor(configurationService, networkId) {
+        super(configurationService, networkId);
     }
     search = query => {
         if (!query)
             return Promise.resolve();
 
         query = query.trim();
-
+        const routes = routeBuilder(this.networkId);
         const api = this.getApi();
         return api.addresses.validate(query).then(validateResponse => {
             if (validateResponse.data.valid)

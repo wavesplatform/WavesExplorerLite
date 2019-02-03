@@ -30,14 +30,14 @@ class NavBar extends React.Component {
     };
 
     applySettings = settings => {
-        ServiceFactory.configurationService().update(settings);
+        ServiceFactory.global().configurationService().update(settings);
         this.forceUpdate();
         reloadWindow();
     };
 
     render() {
         const networkId = this.props.match.params.networkId;
-        const configurationService = ServiceFactory.configurationService();
+        const configurationService = ServiceFactory.global().configurationService();
 
         let className = 'menu grid-item-fixed';
         if (this.props.appearance === REGULAR_APPEARANCE)
@@ -48,7 +48,7 @@ class NavBar extends React.Component {
         return (
             <div className={className}>
                 <NetworkSwitch
-                    current={configurationService.get()}
+                    current={configurationService.get(networkId)}
                     networks={configurationService.all()}
                     custom={configurationService.custom()}
                     onSwitchNetwork={this.switchNetwork}

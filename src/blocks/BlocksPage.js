@@ -18,7 +18,8 @@ export default class BlocksPage extends React.Component {
     };
 
     initialFetch = () => {
-        return ServiceFactory.infoService().loadHeight().then(height => {
+        const {networkId} = this.props.match.params;
+        return ServiceFactory.forNetwork(networkId).infoService().loadHeight().then(height => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
             this.setState({height, lastPage});
@@ -28,10 +29,15 @@ export default class BlocksPage extends React.Component {
     };
 
     loadCurrentPage = (pageNumber) => {
+        const {networkId} = this.props.match.params;
         const from = Math.max(1, this.state.height - pageNumber * BLOCKS_PER_PAGE + 1);
         const to = Math.min(this.state.height, from + BLOCKS_PER_PAGE);
 
-        ServiceFactory.blockService().loadSequence(from, to).then(blocks => this.setState({blocks}));
+        ServiceFactory
+            .forNetwork(networkId)
+            .blockService()
+            .loadSequence(from, to)
+            .then(blocks => this.setState({blocks}));
     };
 
     handlePageChange = pageNumber => {

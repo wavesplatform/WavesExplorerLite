@@ -1,8 +1,8 @@
 import {ApiClientService} from './ApiClientService';
 
 export class PeersService extends ApiClientService {
-    constructor(configurationService) {
-        super(configurationService);
+    constructor(configurationService, networkId) {
+        super(configurationService, networkId);
     }
 
     loadPeers = () => {

@@ -14,7 +14,12 @@ export default class PeersPage extends React.Component {
     }
 
     fetchData = () => {
-        return ServiceFactory.peersService().loadPeers()
+        const {networkId} = this.props.match.params;
+
+        return ServiceFactory
+            .forNetwork(networkId)
+            .peersService()
+            .loadPeers()
             .then(peers => this.setState({peers}));
     };
 

@@ -2,8 +2,8 @@ import {api} from '../shared/NodeApi';
 import {ApiClientService} from './ApiClientService';
 
 export class TransactionService extends ApiClientService {
-    constructor(transactionTransformerService, configurationService) {
-        super(configurationService);
+    constructor(transactionTransformerService, configurationService, networkId) {
+        super(configurationService, networkId);
 
         this.transformer = transactionTransformerService;
     }

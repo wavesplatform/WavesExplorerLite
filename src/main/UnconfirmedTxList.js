@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 
 import Loader from '../shared/Loader';
 import UnconfirmedTxListItem from './UnconfirmedTxListItem';
@@ -47,7 +48,7 @@ export class UnconfirmedTxList extends React.Component {
     }
 }
 
-export default class UnconfirmedTxListContainer extends React.Component {
+class UnconfirmedTxListContainer extends React.Component {
     state = {
         unconfirmed: []
     };
@@ -61,7 +62,8 @@ export default class UnconfirmedTxListContainer extends React.Component {
     };
 
     fetchData = () => {
-        return ServiceFactory.transactionService().loadUnconfirmed()
+        const {networkId} = this.props.match.params;
+        return ServiceFactory.forNetwork(networkId).transactionService().loadUnconfirmed()
             .then(unconfirmed => this.setState({unconfirmed}));
     };
 
@@ -84,3 +86,5 @@ export default class UnconfirmedTxListContainer extends React.Component {
         );
     }
 }
+
+export default withRouter(UnconfirmedTxListContainer);

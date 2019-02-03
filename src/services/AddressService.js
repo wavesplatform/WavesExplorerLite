@@ -6,8 +6,8 @@ import Money from '../shared/Money';
 import {ApiClientService} from './ApiClientService';
 
 export class AddressService extends ApiClientService {
-    constructor(transactionTransformerService, currencyService, configurationService) {
-        super(configurationService);
+    constructor(transactionTransformerService, currencyService, configurationService, networkId) {
+        super(configurationService, networkId);
 
         this.transformer = transactionTransformerService;
         this.currencyService = currencyService;

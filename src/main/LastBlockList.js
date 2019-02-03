@@ -55,11 +55,13 @@ class LastBlockListContainer extends React.Component {
     };
 
     fetchData = () => {
-        return ServiceFactory.infoService().loadHeight()
+        const {networkId} = this.props.match.params;
+        const factory = ServiceFactory.forNetwork(networkId);
+        return factory.infoService().loadHeight()
             .then(height => {
                 const to = height;
                 const from = Math.max(1, to - LAST_BLOCKS_COUNT);
-                return ServiceFactory.blockService().loadSequence(from, to)
+                return factory.blockService().loadSequence(from, to)
             }).then(blocks => this.setState({blocks}));
     };
 

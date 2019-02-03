@@ -13,44 +13,74 @@ import {InfoService} from './InfoService';
 import {AliasService} from './AliasService';
 import {ConfigurationService} from './ConfigurationService';
 
-class ServiceFactory {
+class GlobalServices {
     constructor() {
         this._storageService = new StorageService();
         this._configurationService = new ConfigurationService(this._storageService);
-        this._currencyService = new CurrencyService(this._configurationService);
-        this._spamDetectionService = new SpamDetectionService(this._storageService, this._configurationService);
-        this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
-            this._spamDetectionService);
-        this._infoService = new InfoService(this._configurationService);
     }
 
-    currencyService = () => this._currencyService;
+    configurationService = () => this._configurationService;
+    storageService = () => this._storageService;
+}
 
-    moneyService = () => new MoneyService(this._currencyService);
+class NetworkDependentServices {
+    constructor(globalServices, networkId) {
+        this._globalServices = globalServices;
+        this._networkId = networkId;
+        this._currencyService = new CurrencyService(globalServices.configurationService(), networkId);
+        this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
+            globalServices.configurationService(), networkId);
+        this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
+            this._spamDetectionService);
+        this._infoService = new InfoService(globalServices.configurationService(), networkId);
+    }
 
-    transactionTransformerService = () => this._transactionTransformerService;
+    searchService = () => new SearchService(this._globalServices.configurationService(), this._networkId);
 
-    searchService = () => new SearchService(this._configurationService);
+    peersService = () => new PeersService(this._globalServices.configurationService(), this._networkId);
 
-    peersService = () => new PeersService(this._configurationService);
+    nodesService = () => new NodesService(this._globalServices.configurationService(), this._networkId);
 
-    nodesService = () => new NodesService(this._configurationService);
-
-    transactionService = () => new TransactionService(this._transactionTransformerService, this._configurationService);
+    transactionService = () => new TransactionService(this._transactionTransformerService,
+        this._globalServices.configurationService(), this._networkId);
 
     blockService = () => new BlockService(this._transactionTransformerService,
         this._infoService,
-        this._configurationService);
+        this._globalServices.configurationService(),
+        this._networkId);
 
     addressService = () => new AddressService(this._transactionTransformerService,
         this._currencyService,
-        this._configurationService);
+        this._globalServices.configurationService(),
+        this._networkId);
 
     infoService = () => this._infoService;
 
-    aliasService = () => new AliasService(this._configurationService);
+    aliasService = () => new AliasService(this._globalServices.configurationService(), this._networkId);
+}
 
-    configurationService = () => this._configurationService;
+class ServiceFactory {
+    constructor() {
+        this._globalServices = new GlobalServices();
+        this._serviceMap = {};
+    }
+
+    global = () => ({
+        configurationService: this._globalServices.configurationService,
+    });
+
+    forNetwork = networkId => {
+        if (!networkId)
+            throw new Error('NetworkId must be provided to get access to services');
+
+        let services = this._serviceMap[networkId];
+        if (!services) {
+            services = new NetworkDependentServices(this._globalServices, networkId);
+            this._serviceMap[networkId] = services;
+        }
+
+        return services;
+    };
 }
 
 const factoryInstance = new ServiceFactory();

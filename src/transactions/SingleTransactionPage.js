@@ -17,14 +17,20 @@ export default class SingleTransactionPage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.transactionId !== prevProps.match.params.transactionId) {
+        const {transactionId, networkId} = this.props.match.params;
+        const {transactionId: prevTransactionId, networkId: prevNetworkId} = prevProps.match.params;
+
+        if (transactionId !== prevTransactionId || networkId !== prevNetworkId) {
             this.fetchData();
         }
     }
 
     fetchData = () => {
-        const {transactionId} = this.props.match.params;
-        return ServiceFactory.transactionService().loadTransaction(transactionId)
+        const {transactionId, networkId} = this.props.match.params;
+        return ServiceFactory
+            .forNetwork(networkId)
+            .transactionService()
+            .loadTransaction(transactionId)
             .then(tx => this.setState({tx}));
     };
 

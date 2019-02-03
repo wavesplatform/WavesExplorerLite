@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
 import ServiceFactory from './services/ServiceFactory';
@@ -30,7 +29,8 @@ class Search extends React.PureComponent {
                 isLoading: true
             });
 
-            const searchService = ServiceFactory.searchService();
+            const {networkId} = this.props.match.params;
+            const searchService = ServiceFactory.forNetwork(networkId).searchService();
 
             return searchService.search(this.state.searchText).then(route => {
                 this.setState({

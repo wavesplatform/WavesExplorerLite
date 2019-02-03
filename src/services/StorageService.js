@@ -2,8 +2,8 @@ const ANTISPAM_CACHE_KEY = 'AntispamCache';
 const CONFIGURATION = 'Configuration';
 
 export class StorageService {
-    constructor() {
-        this.storage = window.localStorage;
+    constructor(storage) {
+        this.storage = storage || window.localStorage;
     }
 
     loadObject = key => {

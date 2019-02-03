@@ -8,8 +8,8 @@ const FAILURE = new Currency({
 });
 
 export class CurrencyService extends ApiClientService {
-    constructor(configurationService) {
-        super(configurationService);
+    constructor(configurationService, networkId) {
+        super(configurationService, networkId);
         this.currencyCache = {};
         this.promisesCashe = {};
     }

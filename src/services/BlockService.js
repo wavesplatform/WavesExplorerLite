@@ -3,8 +3,8 @@ import groupBy from 'lodash/groupBy';
 import {ApiClientService} from './ApiClientService';
 
 export class BlockService extends ApiClientService {
-    constructor(transactionTransformerService, infoService, configurationService) {
-        super(configurationService);
+    constructor(transactionTransformerService, infoService, configurationService, networkId) {
+        super(configurationService, networkId);
 
         this.transformer = transactionTransformerService;
         this.infoService = infoService;

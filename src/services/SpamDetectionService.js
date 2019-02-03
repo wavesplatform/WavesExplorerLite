@@ -1,11 +1,12 @@
 import {thirdPartyApi} from '../shared/ThirdPartyApi';
+import {ConfigurableService} from './ConfigurableService';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
-export class SpamDetectionService {
-    constructor(storageService, configurationService) {
+export class SpamDetectionService extends ConfigurableService {
+    constructor(storageService, configurationService, networkId) {
+        super(configurationService, networkId);
         this.storageService = storageService;
-        this.configurationService = configurationService;
         this.updating = false;
         this.active = !!this.spamListUrl();
 
@@ -63,5 +64,5 @@ export class SpamDetectionService {
         return result;
     };
 
-    spamListUrl = () => this.configurationService.get().spamListUrl;
+    spamListUrl = () => this.configuration().spamListUrl;
 }

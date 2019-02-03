@@ -12,7 +12,8 @@ export default class SingleAliasPage extends React.Component {
     };
 
     fetchData = () => {
-        return ServiceFactory.aliasService()
+        const {networkId} = this.props.match.params;
+        return ServiceFactory.forNetwork(networkId).aliasService()
             .loadAddress(this.props.match.params.alias)
             .then(address => this.setState({address}))
     };
