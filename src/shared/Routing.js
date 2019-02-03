@@ -3,7 +3,8 @@ export const routeParams = {
     blockHeight: ':height',
     transactionId: ':transactionId',
     address: ':address',
-    alias: ':alias'
+    alias: ':alias',
+    assetId: ':assetId'
 };
 
 export const routeBuilder = (networkId) => {
@@ -29,7 +30,10 @@ export const routeBuilder = (networkId) => {
             one: (address) => `${root}/address/${address}`
         },
         aliases: {
-            one: (alias) => `/aliases/${alias}`
+            one: (alias) => `${root}/aliases/${alias}`
+        },
+        assets: {
+            one: (assetId) => `${root}/assets/${assetId}`
         }
     };
 };

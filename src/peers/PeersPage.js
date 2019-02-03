@@ -9,6 +9,12 @@ export default class PeersPage extends React.Component {
         peers: []
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
     componentDidMount() {
         this.fetchData();
     }

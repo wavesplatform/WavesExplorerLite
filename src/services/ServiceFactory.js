@@ -1,4 +1,3 @@
-import {MoneyService} from './MoneyService';
 import {CurrencyService} from './CurrencyService';
 import {TransactionTransformerService} from './TransactionTransformerService';
 import {SearchService} from './SearchService';
@@ -11,6 +10,7 @@ import {BlockService} from './BlockService';
 import {AddressService} from './AddressService';
 import {InfoService} from './InfoService';
 import {AliasService} from './AliasService';
+import {AssetService} from './AssetService';
 import {ConfigurationService} from './ConfigurationService';
 
 class GlobalServices {
@@ -57,6 +57,8 @@ class NetworkDependentServices {
     infoService = () => this._infoService;
 
     aliasService = () => new AliasService(this._globalServices.configurationService(), this._networkId);
+
+    assetService = () => new AssetService(this._globalServices.configurationService(), this._networkId);
 }
 
 class ServiceFactory {

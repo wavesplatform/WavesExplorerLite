@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
 import {routeParams, routeBuilder} from './shared/Routing';
+import ServiceFactory from './services/ServiceFactory';
 import Search from './Search';
 import Header from './Header';
 import NavBar from './NavBar';
@@ -17,17 +18,19 @@ import SingleBlockPage from './blocks/SingleBlockPage';
 import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 import SingleAliasPage from './aliases/SingleAliasPage';
+import SingleAssetPage from './assets/SingleAssetPage';
 
 const routes = routeBuilder(routeParams.networkId);
 
 const withNetworkRouter = (RootComponent) => {
     return class extends React.Component {
         render() {
-            //TODO: redirect to the first configuration in the list
+            const defaultNetwork = ServiceFactory.global().configurationService().all()[0];
+            const defaultRoutes = routeBuilder(defaultNetwork.networkId);
             return (
                 <Router>
                     <Switch>
-                        <Route exact path="/" render={() => <Redirect to="/mainnet" />} />
+                        <Route exact path="/" render={() => <Redirect to={defaultRoutes.root} />} />
                         <Route path={routes.root} component={RootComponent} />
                     </Switch>
                 </Router>
@@ -67,6 +70,7 @@ class App extends React.Component {
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
+                            <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
                             <Route path={routes.root} component={MainPage} />
                         </Switch>
                         </div>

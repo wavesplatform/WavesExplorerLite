@@ -39,7 +39,6 @@ export const nodeApi = (baseUrl) => {
         baseTarget: () => get('/consensus/basetarget'),
         addresses: {
             details: (address) => get(`/addresses/balance/details/${address}`),
-            assetsBalance: (address) => get(`/assets/balance/${address}`),
             aliases: (address) => get(`/alias/by-address/${address}`),
             validate: (address) => get(`/addresses/validate/${address}`),
             data: (address) => get(`/addresses/data/${address}`),
@@ -69,6 +68,14 @@ export const nodeApi = (baseUrl) => {
         },
         aliases: {
             address: (alias) => get(`/alias/by-alias/${alias}`)
+        },
+        assets: {
+            balance: (address) => get(`/assets/balance/${address}`),
+            details: (assetId, full) => get(`/assets/details/${assetId}`, {
+                params: {
+                    full: !!full
+                }
+            })
         },
         peers: () => get('/peers/connected'),
     };

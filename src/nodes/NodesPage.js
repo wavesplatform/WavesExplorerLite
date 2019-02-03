@@ -9,6 +9,12 @@ export default class NodesPage extends React.Component {
         nodes: []
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
     componentDidMount() {
         this.fetchData();
     }

@@ -43,7 +43,7 @@ export class AddressService extends ApiClientService {
     };
 
     loadAssets = (address) => {
-        return this.getApi().addresses.assetsBalance(address).then(balanceResponse => {
+        return this.getApi().assets.balance(address).then(balanceResponse => {
             const assets = balanceResponse.data.balances.map(item => {
                 const currency = Currency.fromIssueTransaction(item.issueTransaction);
                 this.currencyService.put(currency);

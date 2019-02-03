@@ -27,7 +27,10 @@ export default class SingleAddressPage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.address !== prevProps.match.params.address) {
+        const {networkId, address} = this.props.match.params;
+        const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
+
+        if (networkId !== prevNetworkId || address !== prevAddress) {
             this.fetchData();
         }
     }
