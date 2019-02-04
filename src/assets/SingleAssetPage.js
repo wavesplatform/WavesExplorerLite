@@ -57,7 +57,7 @@ class SingleAssetPage extends React.Component {
 
         const {details} = this.state;
         return [{
-            label: 'Asset Id',
+            label: 'Transaction Id',
             value: <TransactionRef txId={details.id} />
         }, {
             label: 'Issue Height',
@@ -87,8 +87,8 @@ class SingleAssetPage extends React.Component {
             label: 'Scripted',
             value: (!!details.scripted).toString()
         }, {
-            label: 'Min Sponsored Fee',
-            value: details.minSponsoredFee ? details.minSponsoredFee.toString() : ''
+            label: 'Sponsored Fee',
+            value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
         }];
     }
 }

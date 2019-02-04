@@ -22,11 +22,3 @@ export default class DictionaryItem extends React.PureComponent {
         );
     }
 }
-
-{/*<div className="dictionary-pair">*/}
-    {/*<div className="dictionary-pair-key">{this.props.label}</div>*/}
-    {/*<div className="dictionary-pair-value">{this.props.action && <div className="ellipsis">{this.props.value}</div>}</div>*/}
-    {/*{this.props.action && <div className="dictionary-action">*/}
-        {/*{this.props.action}*/}
-    {/*</div>}*/}
-{/*</div>*/}
