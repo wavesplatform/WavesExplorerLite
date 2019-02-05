@@ -48,6 +48,9 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
         case 14:
             return transformSponsorship(currencyService, tx);
 
+        case 15:
+            return transformAssetScript(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -66,6 +69,16 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
         currencyService.get(amountAssetId),
         currencyService.get(feeAssetId)
     ]);
+};
+
+const transformAssetScript = (currencyService, tx) => {
+    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            script: tx.script,
+            assetId: tx.assetId,
+            fee: Money.fromCoins(tx.fee, feeCurrency)
+        })
+    });
 };
 
 const transformData = (currencyService, tx) => {
