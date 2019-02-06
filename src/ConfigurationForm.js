@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {isWebUri} from 'valid-url';
+import {isWebUri, isHttpsUri} from 'valid-url';
 
 const valuesShape = PropTypes.shape({
     apiBaseUrl: PropTypes.string,
@@ -25,16 +25,27 @@ const InputComponent = ({
 );
 
 const validate = values => {
-    let errors = {};
-
     const url = values.apiBaseUrl.trim();
     if (!url) {
-        errors.apiBaseUrl = 'Url is required';
-    } else if (!isWebUri(values.apiBaseUrl)) {
-        errors.apiBaseUrl = 'Invalid url';
+        return {
+            apiBaseUrl: 'Url is required'
+        };
     }
 
-    return errors;
+    const currentProtocol = window.location.protocol;
+    if (currentProtocol.startsWith('https') && !isHttpsUri(values.apiBaseUrl)) {
+        return {
+            apiBaseUrl: `Invalid url. The url must match protocol definition (${currentProtocol})`
+        };
+    }
+
+    if (!isWebUri(values.apiBaseUrl)) {
+        return {
+            apiBaseUrl: `Invalid url`
+        };
+    }
+
+    return {};
 };
 
 export default class ConfigurationForm extends React.Component {
@@ -71,7 +82,7 @@ export default class ConfigurationForm extends React.Component {
 
                         <div className="row">
                             <label>Node address</label>
-                            <Field name="apiBaseUrl" component={InputComponent} />
+                            <Field name="apiBaseUrl" component={InputComponent} placeholder="Node absolute URL with port number" />
                         </div>
 
                         <div className="row buttons-wrapper">
