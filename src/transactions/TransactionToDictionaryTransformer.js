@@ -50,6 +50,9 @@ const transactionToDictionary = (tx) => {
         case 14:
             return sponsorshipTransactionToItems(tx);
 
+        case 15:
+            return assetScriptTransactionToItems(tx);
+
         default:
             return [];
     }
@@ -70,10 +73,7 @@ const dataTransactionToItems = tx => {
 const scriptTransactionToItems = tx => {
     return [
         ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Script',
-            value: <ScriptInfo script={tx.script} />
-        },
+        buildScriptItem(tx),
         buildFeeItem(tx),
         buildSenderItem(tx)
     ];
@@ -89,6 +89,19 @@ const sponsorshipTransactionToItems = tx => {
             label: 'Transaction Fee',
             value: tx.fee.toString()
         },
+        buildSenderItem(tx)
+    ];
+};
+
+const assetScriptTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Asset',
+            value: <CurrencyRef currency={tx.asset} />
+        },
+        buildScriptItem(tx),
+        buildFeeItem(tx),
         buildSenderItem(tx)
     ];
 };
@@ -237,6 +250,11 @@ const buildOrderItems = order => {
         buildTimestampItem(order.timestamp)
     ];
 };
+
+const buildScriptItem = tx => ({
+    label: 'Script',
+    value: <ScriptInfo script={tx.script} />
+});
 
 const buildDescriptionItem = tx => ({
     label: 'Description',

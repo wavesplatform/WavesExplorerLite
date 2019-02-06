@@ -72,11 +72,11 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
 };
 
 const transformAssetScript = (currencyService, tx) => {
-    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+    return currencyService.get(tx.assetId).then(asset => {
         return Object.assign(copyMandatoryAttributes(tx), {
             script: tx.script,
-            assetId: tx.assetId,
-            fee: Money.fromCoins(tx.fee, feeCurrency)
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES)
         })
     });
 };
