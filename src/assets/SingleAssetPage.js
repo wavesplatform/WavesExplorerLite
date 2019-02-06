@@ -6,6 +6,7 @@ import Loader from '../shared/Loader';
 import Dictionary from '../shared/Dictionary';
 import TransactionRef from '../shared/TransactionRef';
 import EndpointRef from '../shared/EndpointRef';
+import ScriptInfo from '../shared/ScriptInfo';
 import ServiceFactory from '../services/ServiceFactory';
 
 class SingleAssetPage extends React.Component {
@@ -86,9 +87,21 @@ class SingleAssetPage extends React.Component {
         }, {
             label: 'Scripted',
             value: (!!details.scripted).toString()
-        }, {
+        },
+        ...this.buildScriptItem(details.scriptDetails),
+        {
             label: 'Sponsored Fee',
             value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
+        }];
+    }
+
+    buildScriptItem(scriptDetails) {
+        if (!scriptDetails)
+            return [];
+
+        return [{
+            label: 'Script',
+            value: <ScriptInfo script={scriptDetails.script} />
         }];
     }
 }
