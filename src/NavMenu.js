@@ -25,7 +25,7 @@ const buildItems = () => {
     }, {
         title: 'Faucet',
         route: networkId => routeBuilder(networkId).faucet,
-        icon: 'icon-nodes'
+        icon: 'icon-faucet'
     }];
 };
 

@@ -85,6 +85,11 @@ export default class ConfigurationForm extends React.Component {
                             <Field name="apiBaseUrl" component={InputComponent} placeholder="Node absolute URL with port number" />
                         </div>
 
+                        <div className="row">
+                            <label>Node address</label>
+                            <Field name="apiBaseUrl" component={InputComponent} placeholder="Node absolute URL with port number" />
+                        </div>
+
                         <div className="row buttons-wrapper">
                             <button className="interface blue" type="submit" disabled={!touched || isSubmitting}>Save and apply</button>
                         </div>

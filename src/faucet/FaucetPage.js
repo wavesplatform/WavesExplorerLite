@@ -9,7 +9,12 @@ export default class FaucetPage extends React.Component {
                         <form action="">
                             <label className="basic700 margin4">Testnet addres</label>
                             <label className="basic500 margin6 fs12">Fill out your Testnet address to receive 10 WAVES</label>
-                            <input type="text" className="basic500 margin24 fs14"/>
+
+                            <div className="margin24 fs14">
+                                <input type="text" className="basic500 margin4"/>
+                                <div className="error500">Address requied</div> {/* TODO @Ishchenko - add validation */}
+                                <div className="error500">Invalid address</div>
+                            </div>
 
                             <label className="basic700 margin6">Confirm you're a human</label>
                             <div className="captcha margin24"> {/* TODO @uIsk - remove .captcha class */}

@@ -221,6 +221,15 @@ body {
                 }
             }
 
+
+            &.icon-faucet {
+                a {
+                    &::after {
+                        background-image: url(../images/menu-faucet-active.svg) center no-repeat;
+                    }
+                }
+            }
+
             &.icon {
 
                 &-general {

@@ -11,8 +11,6 @@ button {
         align-items: center;
         border-radius: 4px;
         border: 0 none;
-        apperance: none;
-        -webkit-apperance: none;
         font-size: 14px;
         outline: none;
         text-align: center;
@@ -20,6 +18,8 @@ button {
         height: 48px;
         line-height: 48px;
         transition: .3s;
+        apperance: none;
+        -webkit-apperance: none;
 
         &.submit {
             background-color: map-get($colors, submit400);
@@ -34,8 +34,8 @@ button {
             }
 
             &:disabled, &.disabled {
-                background-color: map-get($colors, submit400);
                 opacity: .3;
+                cursor: default;
             }
         }
     }
