@@ -19,6 +19,7 @@ import SingleTransactionPage from './transactions/SingleTransactionPage';
 import SingleAddressPage from './addresses/SingleAddressPage';
 import SingleAliasPage from './aliases/SingleAliasPage';
 import SingleAssetPage from './assets/SingleAssetPage';
+import FaucetPage from './faucet/FaucetPage';
 
 const routes = routeBuilder(routeParams.networkId);
 
@@ -71,6 +72,7 @@ class App extends React.Component {
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
                             <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
+                            <Route exact path={routes.faucet} component={FaucetPage} />
                             <Route path={routes.root} component={MainPage} />
                         </Switch>
                         </div>
