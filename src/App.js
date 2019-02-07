@@ -62,7 +62,7 @@ class App extends React.Component {
                     </Header>
                     <div className="container grid">
                         <NavBar />
-                        <div className="content card">
+                        <div className="content card card-multicolumn">
                         <Switch>
                             <Route exact path={routes.blocks.list} component={BlocksPage} />
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
