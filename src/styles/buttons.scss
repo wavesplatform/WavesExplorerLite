@@ -1,5 +1,7 @@
 button {
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     &.long {
         width: 100%;

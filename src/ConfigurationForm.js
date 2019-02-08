@@ -86,8 +86,8 @@ export default class ConfigurationForm extends React.Component {
                         </div>
 
                         <div className="row">
-                            <label>Node address</label>
-                            <Field name="apiBaseUrl" component={InputComponent} placeholder="Node absolute URL with port number" />
+                            <label>Spam list</label>
+                            <Field name="apiBaseUrl" component={InputComponent} placeholder="Spam list absolute URL with port number"/> {/* TODO @Ishchenko - add spamlist url input */}
                         </div>
 
                         <div className="row buttons-wrapper">

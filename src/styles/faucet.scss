@@ -1,33 +1,43 @@
-.card.content.card-multicolumn {
+.card-multicolumn {
     position: relative;
-    background: none transparent;
-    box-shadow: none;
-    padding: 0;
+    background: none transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
     display: flex;
     justify-content: space-between;
 
-    .card {
-        flex-grow: 1;
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
     }
 
-    .card.faucet {
-        flex-grow: 0;
+    .card {
         min-width: 312px;
-        margin-right: 24px;
-
         .headline {
             padding-top: 0;
         }
-
-        label {
-            display: block;
-        }
-
-        input[type="text"] {
-            height: 42px;
-            border-radius: 4px;
+        &.faucet {
+            label {
+                display: block;
+            }
+            input[type="text"] {
+                border-radius: 4px;
+            }
         }
     }
+}
+
+.content-side__left {
+    flex-grow: 0;
+    width: 100%;
+    min-width: 360px;
+    @media screen and (min-width: 801px) {
+        max-width: 360px;
+        margin-right: 24px;
+    }
+}
+
+.content-side__right {
+    flex-grow: 1;
 }
 
 .faucet-image {
@@ -44,11 +54,14 @@
     }
 }
 
-.captcha { //TODO remove it
+.faucet-description {
+    padding: 24px;
+}
+
+.captcha { //TODO @uIsk remove it
     width: 100%;
     height: 76px;
     border: 1px solid #d6d6d6;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 }
-

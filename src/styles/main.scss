@@ -18,10 +18,11 @@ html {
 
 body {
     position: relative;
-    height: 100%;
+    height: calc(100% - 36px);
     display: block;
     background-color: map-get($colors, basic50);
     @include responsive_styles($layout);
+    padding-bottom: 0;
     min-width: 360px;
     @media screen and(min-width: 800px) {
         min-height: 560px;
@@ -222,14 +223,6 @@ body {
             }
 
 
-            &.icon-faucet {
-                a {
-                    &::after {
-                        background-image: url(../images/menu-faucet-active.svg) center no-repeat;
-                    }
-                }
-            }
-
             &.icon {
 
                 &-general {
@@ -285,6 +278,20 @@ body {
                      }
                     &.current a::after {
                         background-position: 0 -84px;
+                    }
+                }
+
+                &-faucet {
+                    a {
+                        &::after {
+                            background-position: -28px -110px;
+                        }
+                        &:hover::after {
+                            background-position: 0 -110px;
+                        }
+                    }
+                    &.current a::after {
+                        background-position: 0 -110px;
                     }
                 }
             }

@@ -14,6 +14,7 @@ input {
     &:focus {
         border: 1px solid map-get($colors, submit400);
     }
+
     &.invalid {
         border: 1px solid map-get($colors, error500);
     }
@@ -40,6 +41,21 @@ input {
 
         &.invalid {
             border-bottom-color: map-get($colors, error500);
+        }
+    }
+
+    &:not(.search-input) {
+        &::-webkit-input-placeholder {
+            color: map-get($colors, basic500);
+        }
+        &::-moz-placeholder {
+            color: map-get($colors, basic500);
+        }
+        &:-ms-input-placeholder {
+            color: map-get($colors, basic500);
+        }
+        &:-moz-placeholder {
+            color: map-get($colors, basic500);
         }
     }
 }
