@@ -383,6 +383,26 @@ body {
     @include responsive_styles($card);
 }
 
+.card-multicolumn {
+    position: relative;
+    background: none transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
+
+    .card {
+        min-width: 312px;
+        .headline {
+            padding-top: 0;
+        }
+    }
+}
+
 .input-error {
     color: map-get($colors, error500);
     margin-top: 6px;
