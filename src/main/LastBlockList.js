@@ -13,7 +13,7 @@ const LAST_BLOCKS_COUNT = 20;
 
 class LastBlockList extends React.PureComponent {
     static propTypes = {
-        networkId: PropTypes.string.isRequired,
+        networkId: PropTypes.string,
         blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
         title: PropTypes.string
     };

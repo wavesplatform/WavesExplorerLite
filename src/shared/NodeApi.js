@@ -8,7 +8,8 @@ const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const retryableAxios = axios.create();
 retryableAxios.defaults.raxConfig = {
     instance: retryableAxios,
-    retryDelay: 10
+    retryDelay: 10,
+    httpMethodsToRetry: ['GET']
 };
 rax.attach(retryableAxios);
 

@@ -1,14 +1,18 @@
-export const routeParams = {
-    networkId: ':networkId',
-    blockHeight: ':height',
-    transactionId: ':transactionId',
-    address: ':address',
-    alias: ':alias',
-    assetId: ':assetId'
+export const routeParamsBuilder = (networks) => {
+    const regex = networks.map(network => network.networkId).join('|');
+
+    return {
+        networkId: `:networkId(${regex})?`,
+        blockHeight: ':height',
+        transactionId: ':transactionId',
+        address: ':address',
+        alias: ':alias',
+        assetId: ':assetId'
+    };
 };
 
 export const routeBuilder = (networkId) => {
-    const root = `/${networkId}`;
+    const root = networkId ? `/${networkId}` : '';
     const blocks = `${root}/blocks`;
 
     return {

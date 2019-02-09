@@ -72,9 +72,6 @@ class ServiceFactory {
     });
 
     forNetwork = networkId => {
-        if (!networkId)
-            throw new Error('NetworkId must be provided to get access to services');
-
         let services = this._serviceMap[networkId];
         if (!services) {
             services = new NetworkDependentServices(this._globalServices, networkId);

@@ -31,11 +31,18 @@ export class ConfigurationService {
     }
 
     get = (networkId) => {
+        if (!networkId)
+            return this.default();
+
         const configuration = this.networks.find(network => network.networkId === networkId);
         if (!configuration)
             throw new Error(`Configuration hasn't been found by id '${networkId}'`);
 
         return copyAndFreeze(configuration);
+    };
+
+    default = () => {
+        return copyAndFreeze(this.networks[0]);
     };
 
     all = () => this.networks.slice();

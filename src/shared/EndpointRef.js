@@ -21,7 +21,7 @@ const appearanceToClassName = appearance => {
 
 class AddressRef extends React.PureComponent {
     static propTypes = {
-        networkId: PropTypes.string.isRequired,
+        networkId: PropTypes.string,
         address: PropTypes.string.isRequired,
         title: PropTypes.string,
         className: PropTypes.string
@@ -38,7 +38,7 @@ class AddressRef extends React.PureComponent {
 
 class AliasRef extends React.PureComponent {
     static propTypes = {
-        networkId: PropTypes.string.isRequired,
+        networkId: PropTypes.string,
         alias: PropTypes.string.isRequired,
         title: PropTypes.string,
         className: PropTypes.string
