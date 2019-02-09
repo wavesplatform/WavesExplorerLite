@@ -73,6 +73,7 @@
     height: 24px;
     background: url('../images/loading-24.svg') no-repeat center center;
     animation: spin 1s linear infinite;
+    margin: 10px auto;
     svg {display: none;}
 
     @-moz-keyframes spin {

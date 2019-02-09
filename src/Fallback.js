@@ -10,6 +10,7 @@ const Fallback = () => {
             left: '50%',
             marginTop: '-24px', /* Half the height */
             marginLeft: '-24px', /* Half the width */
+            boxShadow: '0 0 0 10000px white'
         }}/>
     );
 };
