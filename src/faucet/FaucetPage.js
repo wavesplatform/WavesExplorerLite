@@ -1,6 +1,41 @@
 import React from 'react';
 
+import Loader from '../shared/Loader';
+import Headline from '../shared/Headline';
+import ServiceFactory from '../services/ServiceFactory';
+import transactionMapper from '../addresses/TransactionMapper';
+import TransactionList from './TransactionList';
+
 export default class FaucetPage extends React.Component {
+    state = {
+        tx: []
+    };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+            this.fetchData();
+        }
+    }
+
+    fetchData = () => {
+        const {networkId} = this.props.match.params;
+        const faucet = ServiceFactory
+            .global()
+            .configurationService()
+            .get(networkId)
+            .faucet;
+
+        if (!faucet)
+            return Promise.reject(new Error('Faucet is not configured for current network'));
+
+        return ServiceFactory
+            .forNetwork(networkId)
+            .faucetService()
+            .loadTransactions()
+            .then(transactions => transactionMapper(transactions, faucet.address))
+            .then(tx => this.setState({tx}));
+    };
+
     render() {
         return (
             <div className="content card card-multicolumn">
@@ -32,13 +67,12 @@ export default class FaucetPage extends React.Component {
                 </div>
 
                 <div className="content-side__right">
-                    <div className="card">
-                        <div class="headline">
-                            <span class="title">Faucet Transactions (&Counter&)</span> {/*  TODO @Ishchenko - Counter */}
+                    <Loader fetchData={this.fetchData} errorTitle="Failed to load faucet transactions">
+                        <div className="card">
+                            <Headline title={`Faucet Transactions (${this.state.tx.length})`} copyVisible={false}/>
+                            <TransactionList transactions={this.state.tx} />
                         </div>
-
-                        {/* TODO @Ishchenko - add singleTransactionPage content here */}
-                    </div>
+                    </Loader>
                 </div>
             </div>
         );

@@ -2,6 +2,7 @@ import React from 'react';
 
 import ServiceFactory from '../services/ServiceFactory';
 import Loader from '../shared/Loader';
+import Headline from '../shared/Headline';
 import NodeList from './NodeList';
 
 export default class NodesPage extends React.Component {
@@ -36,9 +37,7 @@ export default class NodesPage extends React.Component {
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
                 <div className="content card">
-                    <div className="headline">
-                        <span className="title">{configuration.displayName} Nodes</span>
-                    </div>
+                    <Headline title={`${configuration.displayName} Nodes`} copyVisible={false}/>
                     <NodeList nodes={this.state.nodes} />
                 </div>
             </Loader>

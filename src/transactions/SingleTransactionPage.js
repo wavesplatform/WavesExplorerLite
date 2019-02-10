@@ -7,7 +7,7 @@ import Dictionary from '../shared/Dictionary';
 import ServiceFactory from '../services/ServiceFactory';
 
 import transactionToDictionary from './TransactionToDictionaryTransformer';
-import MassPaymentDetails from "./MassPaymentDetails";
+import MassPaymentDetails from './MassPaymentDetails';
 
 export default class SingleTransactionPage extends React.Component {
     state = {
