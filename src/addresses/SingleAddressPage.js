@@ -81,7 +81,7 @@ export default class SingleAddressPage extends React.Component {
     render() {
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
-                <React.Fragment>
+                <div className="content card">
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
@@ -102,7 +102,7 @@ export default class SingleAddressPage extends React.Component {
                             <ScriptInfo script={this.state.script.script} />
                         </Pane>
                     </Tabs>
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }

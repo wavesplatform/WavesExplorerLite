@@ -35,12 +35,12 @@ export default class NodesPage extends React.Component {
 
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
-                <React.Fragment>
+                <div className="content card">
                     <div className="headline">
                         <span className="title">{configuration.displayName} Nodes</span>
                     </div>
                     <NodeList nodes={this.state.nodes} />
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }

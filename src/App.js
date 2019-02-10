@@ -62,7 +62,6 @@ class App extends React.Component {
                     </Header>
                     <div className="container grid">
                         <NavBar />
-                        <div className="content card card-multicolumn">
                         <Switch>
                             <Route exact path={routes.blocks.list} component={BlocksPage} />
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
@@ -75,7 +74,6 @@ class App extends React.Component {
                             <Route exact path={routes.faucet} component={FaucetPage} />
                             <Route path={routes.root} component={MainPage} />
                         </Switch>
-                        </div>
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
