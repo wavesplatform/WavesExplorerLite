@@ -243,7 +243,8 @@ const transformIssue = (currencyService, tx) => {
             name: tx.name,
             reissuable: tx.reissuable,
             decimals: tx.decimals,
-            description: tx.description
+            description: tx.description,
+            script: tx.script
         });
     });
 };

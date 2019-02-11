@@ -155,6 +155,8 @@ const reissueTransactionToItems = tx => {
 };
 
 const issueTransactionToItems = tx => {
+    const scriptItems = tx.script ? [buildScriptItem(tx)] : [];
+
     return [
         ...buildTransactionHeaderItems(tx),
         buildQuantityItem(tx),
@@ -164,6 +166,7 @@ const issueTransactionToItems = tx => {
         },
         buildDescriptionItem(tx),
         buildReissuableItem(tx),
+        ...scriptItems,
         buildFeeItem(tx),
         buildSenderItem(tx)
     ];
