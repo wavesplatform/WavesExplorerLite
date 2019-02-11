@@ -5,10 +5,12 @@ import Headline from '../shared/Headline';
 import ServiceFactory from '../services/ServiceFactory';
 import transactionMapper from '../addresses/TransactionMapper';
 import TransactionList from './TransactionList';
+import Recaptcha from 'react-google-recaptcha';
 
 export default class FaucetPage extends React.Component {
     state = {
-        tx: []
+        tx: [],
+        captchaToken: null
     };
 
     componentDidUpdate(prevProps) {
@@ -36,7 +38,16 @@ export default class FaucetPage extends React.Component {
             .then(tx => this.setState({tx}));
     };
 
+    handleCaptchaChanged = (value) => {
+        console.log('Captcha', value);
+    };
+
     render() {
+        const {networkId} = this.props.match.params;
+        const {faucet} = ServiceFactory.global().configurationService().get(networkId);
+        if (!faucet)
+            return null;
+
         return (
             <div className="content card card-multicolumn">
                 <div className="content-side__left">
@@ -48,13 +59,17 @@ export default class FaucetPage extends React.Component {
 
                             <div className="margin24 fs14">
                                 <input type="text" placeholder="Address" className="basic500"/>
-                                <div className="input-error">Address requied</div> {/* TODO @Ishchenko - add validation */}
+                                <div className="input-error">Address required</div> {/* TODO @Ishchenko - add validation */}
                                 <div className="input-error">Invalid address</div>
                             </div>
 
                             <label className="basic700 margin6">Confirm you're a human</label>
                             <div className="captcha margin24"> {/* TODO @uIsk - remove .captcha class */}
-                                {/* @Ishchenko - TODO captcha here */}
+                                <Recaptcha
+                                    style={{ display: "inline-block" }}
+                                    sitekey={faucet.captchaKey}
+                                    onChange={this.handleCaptchaChanged} />
+                                <div className="input-error">Captcha is expired</div>
                             </div>
 
                             <button className="submit big long get-waves-btn disabled"> {/* @Ishchenko - addClass .disabled if empty onput field */}

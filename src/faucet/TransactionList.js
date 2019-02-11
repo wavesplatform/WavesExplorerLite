@@ -9,8 +9,6 @@ export default class TransactionList extends React.Component {
     };
 
     render() {
-        debugger;
-
         return (
             <table className="address-tr-list table-sm-transform">
                 <thead>
