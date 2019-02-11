@@ -67,5 +67,9 @@ export class AddressService extends ApiClientService {
 
     loadScript = (address) => {
         return this.getApi().addresses.script(address).then(scriptResponse => scriptResponse.data);
-    }
+    };
+
+    validate = (address) => {
+        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
+    };
 }

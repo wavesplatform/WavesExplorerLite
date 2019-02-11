@@ -12,7 +12,7 @@ export default {
     ],
     faucet: {
         url: 'https://testnode1.wavesnodes.com/faucet',
-        captchaKey: '6Le9hSgUAAAAAAtIe04SrgDy23PsBZOazfb-li66',
+        captchaKey: '6LdAnJAUAAAAAKc_bMxyYc704zey5Yh8ZKoawXti',
         address: '3MxyKNmnQkVuDCG9AzMpixKCdUWXfMUsxdg'
     }
 };

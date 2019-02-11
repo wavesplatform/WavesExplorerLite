@@ -5,12 +5,11 @@ import Headline from '../shared/Headline';
 import ServiceFactory from '../services/ServiceFactory';
 import transactionMapper from '../addresses/TransactionMapper';
 import TransactionList from './TransactionList';
-import Recaptcha from 'react-google-recaptcha';
+import RequestForm from './RequestForm';
 
 export default class FaucetPage extends React.Component {
     state = {
-        tx: [],
-        captchaToken: null
+        tx: []
     };
 
     componentDidUpdate(prevProps) {
@@ -38,13 +37,27 @@ export default class FaucetPage extends React.Component {
             .then(tx => this.setState({tx}));
     };
 
-    handleCaptchaChanged = (value) => {
-        console.log('Captcha', value);
+    requestMoney = (values) => {
+        const {networkId} = this.props.match.params;
+
+        return ServiceFactory
+            .forNetwork(networkId)
+            .faucetService()
+            .requestMoney(values.address, values.captchaToken);
+    };
+
+    validateAddress = (address) => {
+        const {networkId} = this.props.match.params;
+
+        return ServiceFactory
+            .forNetwork(networkId)
+            .addressService()
+            .validate(address);
     };
 
     render() {
         const {networkId} = this.props.match.params;
-        const {faucet} = ServiceFactory.global().configurationService().get(networkId);
+        const {faucet, displayName} = ServiceFactory.global().configurationService().get(networkId);
         if (!faucet)
             return null;
 
@@ -53,29 +66,12 @@ export default class FaucetPage extends React.Component {
                 <div className="content-side__left">
                     <div className="card faucet">
                         <div className="faucet-image"></div>
-                        <form action="">
-                            <label className="basic700 margin4">Testnet address</label>
-                            <label className="basic500 margin6 fs12">Fill out your Testnet address to receive 10 WAVES</label>
-
-                            <div className="margin24 fs14">
-                                <input type="text" placeholder="Address" className="basic500"/>
-                                <div className="input-error">Address required</div> {/* TODO @Ishchenko - add validation */}
-                                <div className="input-error">Invalid address</div>
-                            </div>
-
-                            <label className="basic700 margin6">Confirm you're a human</label>
-                            <div className="captcha margin24"> {/* TODO @uIsk - remove .captcha class */}
-                                <Recaptcha
-                                    style={{ display: "inline-block" }}
-                                    sitekey={faucet.captchaKey}
-                                    onChange={this.handleCaptchaChanged} />
-                                <div className="input-error">Captcha is expired</div>
-                            </div>
-
-                            <button className="submit big long get-waves-btn disabled"> {/* @Ishchenko - addClass .disabled if empty onput field */}
-                                <span>Request 10 WAVES</span>
-                            </button>
-                        </form>
+                        <RequestForm
+                            networkName={displayName}
+                            onSubmit={this.requestMoney}
+                            captchaKey={faucet.captchaKey}
+                            validateAddress={this.validateAddress}
+                        />
                     </div>
                     <div className="basic500 faucet-description fs12">If you experience any problems with the faucet,
                         please contact <a href="mailto:support@wavesplatform.com">support@wavesplatform.com</a></div>
