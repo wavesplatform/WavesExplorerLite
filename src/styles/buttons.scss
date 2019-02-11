@@ -35,7 +35,7 @@ button {
                 background-color: map-get($colors, submit600);
             }
 
-            &:disabled, &.disabled {
+            &[disabled] {
                 opacity: .3;
                 cursor: default;
             }
