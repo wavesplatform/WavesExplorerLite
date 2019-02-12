@@ -15,10 +15,6 @@ export default class PeersPage extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
     fetchData = () => {
         const {networkId} = this.props.match.params;
 

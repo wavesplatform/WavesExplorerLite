@@ -16,10 +16,6 @@ export default class NodesPage extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
     fetchData = () => {
         const {networkId} = this.props.match.params;
 

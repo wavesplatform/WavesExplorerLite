@@ -4,27 +4,40 @@ import {withRouter} from 'react-router';
 
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
+import ServiceFactory from './services/ServiceFactory';
+
+const alwaysVisible = networkId => true;
+const visibleIfConfigured = networkId => {
+    const {faucet} = ServiceFactory.global().configurationService().get(networkId);
+
+    return !!faucet;
+};
 
 const buildItems = () => {
     return [{
         title: 'General info',
         route: networkId => routeBuilder(networkId).root,
+        visible: alwaysVisible,
         icon: 'icon-general'
     }, {
         title: 'Blocks',
         route: networkId => routeBuilder(networkId).blocks.list,
+        visible: alwaysVisible,
         icon: 'icon-blocks'
     }, {
         title: 'Peers',
         route: networkId => routeBuilder(networkId).peers.list,
+        visible: alwaysVisible,
         icon: 'icon-peers'
     }, {
         title: 'Nodes',
         route: networkId => routeBuilder(networkId).nodes.list,
+        visible: alwaysVisible,
         icon: 'icon-nodes'
     }, {
         title: 'Faucet',
         route: networkId => routeBuilder(networkId).faucet,
+        visible: visibleIfConfigured,
         icon: 'icon-faucet'
     }];
 };
