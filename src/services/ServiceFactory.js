@@ -11,6 +11,7 @@ import {AddressService} from './AddressService';
 import {InfoService} from './InfoService';
 import {AliasService} from './AliasService';
 import {AssetService} from './AssetService';
+import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 
 class GlobalServices {
@@ -55,6 +56,10 @@ class NetworkDependentServices {
         this._networkId);
 
     infoService = () => this._infoService;
+
+    faucetService = () => new FaucetService(this._transactionTransformerService,
+        this._globalServices.configurationService(),
+        this._networkId);
 
     aliasService = () => new AliasService(this._globalServices.configurationService(), this._networkId);
 

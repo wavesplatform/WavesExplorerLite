@@ -7,7 +7,7 @@ const Headline = (props) => {
     return (
         <div className="headline">
             <span className="title">{props.title}</span>
-            <span className="title-details"> / {props.subtitle}</span>
+            {props.subtitle && <span className="title-details"> / {props.subtitle}</span>}
             {props.copyVisible && <CopyButton text={props.subtitle} />}
         </div>
     );
@@ -15,7 +15,7 @@ const Headline = (props) => {
 
 Headline.propTypes = {
     title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string.isRequired,
+    subtitle: PropTypes.string,
     copyVisible: PropTypes.bool
 };
 

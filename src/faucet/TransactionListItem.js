@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TransactionRef from '../shared/TransactionRef';
-import DirectionalEndpoints from './DirectionalEndpoints';
+import DirectionalEndpoints from '../addresses/DirectionalEndpoints';
 import TransactionArrow from '../shared/TransactionArrow';
 import TransactionBadge from '../shared/TransactionBadge';
 
@@ -32,12 +32,6 @@ export default class TransactionListItem extends React.PureComponent {
                 <td data-label="Amount in / out">
                     {tx.in && <div className="line">{tx.in.amount} {tx.in.currency}</div>}
                     {tx.out && <div className="line">{tx.out.amount} {tx.out.currency}</div>}
-                </td>
-                <td data-label="Price">
-                    {tx.price && <React.Fragment>
-                        <div className="line">{tx.price.amount}</div>
-                        <div className="line"><label>{tx.price.currency}</label></div>
-                    </React.Fragment>}
                 </td>
             </tr>
         );

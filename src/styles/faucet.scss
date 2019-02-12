@@ -1,0 +1,42 @@
+.card {
+    &.faucet {
+        label {
+            display: block;
+        }
+        input[type="text"] {
+            border-radius: 4px;
+        }
+    }
+}
+
+.content-side__left {
+    flex-grow: 0;
+    width: 100%;
+    min-width: 352px;
+    @media screen and (min-width: 801px) {
+        max-width: 352px;
+        margin-right: 24px;
+    }
+}
+
+.content-side__right {
+    flex-grow: 1;
+}
+
+.faucet-image {
+    background: url(../images/userimg-faucet-260.svg) center no-repeat;
+    width: 260px;
+    height: 216px;
+    margin: -24px auto 24px;
+}
+
+.get-waves-btn {
+    span {
+        background: url(../images/money-plus-18-white.svg) center left no-repeat;
+        padding-left: 26px;
+    }
+}
+
+.faucet-description {
+    padding: 24px;
+}

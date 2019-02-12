@@ -109,7 +109,7 @@ export default class SingleBlockPage extends React.Component {
         const dictionaryItems = this.stateToDictionaryItems();
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load block">
-                <React.Fragment>
+                <div className="content card">
                     <GoBack />
                     <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false} />
                     <Dictionary items={dictionaryItems} />
@@ -120,7 +120,7 @@ export default class SingleBlockPage extends React.Component {
                         return <TransactionList key={numericType} type={numericType} header={header}
                                                 transactions={this.state.groupedTransactions[type]}/>
                     })}
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }

@@ -7,7 +7,7 @@ import UnconfirmedTxList from './UnconfirmedTxList';
 export default class MainPage extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <div className="content card">
                 <div className="info-box">
                     <NetworkInfo />
                 </div>
@@ -19,7 +19,7 @@ export default class MainPage extends React.Component {
                         <UnconfirmedTxList />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }

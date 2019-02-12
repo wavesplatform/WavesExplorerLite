@@ -9,5 +9,10 @@ export default {
         {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode3.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode4.wavesnodes.com', maintainer: 'Waves', showAsLink: true}
-    ]
+    ],
+    faucet: {
+        url: 'https://testnode1.wavesnodes.com/faucet',
+        captchaKey: '6Le9hSgUAAAAAAtIe04SrgDy23PsBZOazfb-li66',
+        address: '3MxyKNmnQkVuDCG9AzMpixKCdUWXfMUsxdg'
+    }
 };

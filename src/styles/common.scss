@@ -4,6 +4,66 @@
 @import "table.scss";
 @import "form.scss";
 
+.basic50 {
+    color: #f8f9fb
+}
+
+.basic500 {
+    color: #9ba6b2
+}
+
+.basic700 {
+    color: #4e5c6e
+}
+
+.accent50 {
+    color: #e9e9eb
+}
+
+.disabled500 {
+    color: #999999
+}
+
+.black {
+    color: #000000
+}
+
+.white {
+    color: #ffffff
+}
+
+.submit200 {
+    color: #bacaf4
+}
+
+.submit400 {
+    color: #1f5af6
+}
+
+.success400 {
+    color: #4aad02
+}
+
+.error500 {
+    color: #ef4829
+}
+
+.info400 {
+    color: #8dabc4
+}
+
+.mixUnicorn {
+    color: #ab7df6
+}
+
+.iceBlue {
+    color: #eef0f3
+}
+
+.paleBlue {
+    color: #dee3ea
+}
+
 .bold {
     font-weight: bold;
 }
@@ -20,6 +80,31 @@
 .width-30 {
     width: 30%;
 }
+
+.margin4 {
+    margin-bottom: 4px;
+}
+
+.margin6 {
+    margin-bottom: 6px;
+}
+
+.margin34 {
+    margin-bottom: 34px;
+}
+
+.margin24 {
+    margin-bottom: 24px;
+}
+
+.fs14 {
+    font-size: 14px;
+}
+
+.fs12 {
+    font-size: 12px;
+}
+
 
 // **** link ****
 a {

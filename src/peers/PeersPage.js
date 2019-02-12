@@ -15,10 +15,6 @@ export default class PeersPage extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
     fetchData = () => {
         const {networkId} = this.props.match.params;
 
@@ -32,8 +28,8 @@ export default class PeersPage extends React.Component {
     render() {
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load peer details">
-                <React.Fragment>
-                    <div className="headline">
+                <div className="content card">
+                   <div className="headline">
                         <span className="title">Peers</span>
                         <label className="right">
                             <span>Connected </span>
@@ -41,7 +37,7 @@ export default class PeersPage extends React.Component {
                         </label>
                     </div>
                     <PeerList peers={this.state.peers} />
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }

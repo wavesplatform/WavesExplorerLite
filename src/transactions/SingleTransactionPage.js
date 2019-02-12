@@ -7,7 +7,7 @@ import Dictionary from '../shared/Dictionary';
 import ServiceFactory from '../services/ServiceFactory';
 
 import transactionToDictionary from './TransactionToDictionaryTransformer';
-import MassPaymentDetails from "./MassPaymentDetails";
+import MassPaymentDetails from './MassPaymentDetails';
 
 export default class SingleTransactionPage extends React.Component {
     state = {
@@ -39,12 +39,12 @@ export default class SingleTransactionPage extends React.Component {
 
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load transaction">
-                <React.Fragment>
+                <div className="content card">
                     <GoBack />
                     <Headline title="Transaction" subtitle={this.state.tx.id} />
                     <Dictionary items={transactionItems}/>
                     <MassPaymentDetails tx={this.state.tx} />
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }

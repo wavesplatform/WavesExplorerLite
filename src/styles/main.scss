@@ -8,6 +8,8 @@
 @import "nodes.scss";
 @import "address.scss";
 @import "fonts.scss";
+@import "buttons.scss";
+@import "faucet.scss";
 
 html {
     height: 100%;
@@ -16,10 +18,11 @@ html {
 
 body {
     position: relative;
-    height: 100%;
+    height: calc(100% - 36px);
     display: block;
     background-color: map-get($colors, basic50);
     @include responsive_styles($layout);
+    padding-bottom: 0;
     min-width: 360px;
     @media screen and(min-width: 800px) {
         min-height: 560px;
@@ -219,6 +222,7 @@ body {
                 }
             }
 
+
             &.icon {
 
                 &-general {
@@ -274,6 +278,20 @@ body {
                      }
                     &.current a::after {
                         background-position: 0 -84px;
+                    }
+                }
+
+                &-faucet {
+                    a {
+                        &::after {
+                            background-position: -28px -110px;
+                        }
+                        &:hover::after {
+                            background-position: 0 -110px;
+                        }
+                    }
+                    &.current a::after {
+                        background-position: 0 -110px;
                     }
                 }
             }
@@ -363,6 +381,26 @@ body {
 
     @include font(body);
     @include responsive_styles($card);
+}
+
+.card-multicolumn {
+    position: relative;
+    background: none transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
+
+    .card {
+        min-width: 304px;
+        .headline {
+            padding-top: 0;
+        }
+    }
 }
 
 .input-error {
@@ -525,8 +563,8 @@ body {
 
 .copy-btn {
     display: block;
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
     background: url(../images/copy-14-submit-400.svg) center no-repeat;
     border: 0 none;
     outline: 0 none;

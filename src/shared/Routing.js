@@ -38,6 +38,7 @@ export const routeBuilder = (networkId) => {
         },
         assets: {
             one: (assetId) => `${root}/assets/${assetId}`
-        }
+        },
+        faucet: `${root}/faucet`
     };
 };

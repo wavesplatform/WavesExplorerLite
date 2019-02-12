@@ -20,6 +20,10 @@ class NavMenuItem extends React.PureComponent {
 
     render() {
         const {networkId} = this.props.match.params;
+        const visible = this.props.item.visible(networkId);
+        if (!visible)
+            return null;
+
         let className = `menu-item ${this.props.item.icon}`;
         if (this.props.current)
             className += ' current';

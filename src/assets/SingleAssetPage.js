@@ -43,11 +43,11 @@ class SingleAssetPage extends React.Component {
         const dictionaryItems = this.stateToDictionaryItems();
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load asset details">
-                <React.Fragment>
+                <div className="content card">
                     <GoBack />
                     <Headline title="Asset" subtitle={this.props.match.params.assetId} />
                     <Dictionary items={dictionaryItems} />
-                </React.Fragment>
+                </div>
             </Loader>
         );
     }
