@@ -2,6 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
+import {libs} from '@waves/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, transactions) => {
     const promises = transactions.map(item => transformSingle(currencyService, spamDetectionService, item));
@@ -54,6 +55,21 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
+};
+
+const attachmentToString = (attachment) => {
+    if (!attachment)
+        return '';
+
+    const bytes = libs.base58.decode(attachment);
+    let result = '';
+    try {
+        result = libs.converters.byteArrayToString(bytes);
+    } catch (e) {
+        // do nothing
+    }
+
+    return result;
 };
 
 const copyMandatoryAttributes = tx => ({
@@ -127,7 +143,7 @@ const transformMassTransfer = (currencyService, spamDetectionService, tx) => {
 
         return Object.assign(copyMandatoryAttributes(tx), {
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            attachment: tx.attachment,
+            attachment: attachmentToString(tx.attachment),
             totalAmount: Money.fromCoins(tx.totalAmount, amountCurrency),
             transferCount: tx.transferCount,
             isSpam: spamDetectionService.isSpam(tx.assetId),
@@ -257,7 +273,7 @@ const transformTransfer = (currencyService, spamDetectionService, tx) => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.amount, amountCurrency),
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            attachment: tx.attachment,
+            attachment: attachmentToString(tx.attachment),
             recipient: tx.recipient,
             isSpam: spamDetectionService.isSpam(tx.assetId)
         });
