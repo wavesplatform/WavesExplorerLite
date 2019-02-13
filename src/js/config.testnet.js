@@ -14,7 +14,7 @@
         ],
         faucet: {
             url: 'https://testnode1.wavesnodes.com/faucet',
-            captchaKey: '6Le9hSgUAAAAAAtIe04SrgDy23PsBZOazfb-li66'
+            captchaKey: '6LdT8pAUAAAAAOhIIJGKA6HAOo7O98gdIoUgznKL'
         },
         peerExplorer: {
             url: 'https://wavesexplorer.com',
