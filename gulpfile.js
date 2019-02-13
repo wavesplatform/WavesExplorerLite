@@ -81,6 +81,10 @@ gulp.task('invalidate-devnet', ['upload-devnet'], function() {
     return invalidateCache('ECH0R3VC2E1B');
 });
 
+gulp.task('invalidate-testnet', function() {
+    return invalidateCache('EQKVTOJX3PEGY');
+});
+
 gulp.task('upload-mainnet', ['build-mainnet'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 

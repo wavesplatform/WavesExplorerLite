@@ -71,7 +71,7 @@ export default class RequestForm extends React.Component {
                 validateOnChange={false}
                 render={({errors, touched, dirty, isSubmitting, isValidating, validateForm, isValid}) => (
                     <Form>
-                        <label className="basic700 margin4">{this.props.networkName} address</label>
+                        <label className="basic700 margin4">{this.props.networkName} Address</label>
                         <label className="basic500 margin6 fs12">Fill out your {this.props.networkName} address to receive {this.props.amount} WAVES</label>
 
                         <div className="margin24 fs14">
