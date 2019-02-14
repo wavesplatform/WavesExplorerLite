@@ -9,7 +9,8 @@ const retryableAxios = axios.create();
 retryableAxios.defaults.raxConfig = {
     instance: retryableAxios,
     retryDelay: 10,
-    httpMethodsToRetry: ['GET']
+    httpMethodsToRetry: ['GET'],
+    shouldRetry: shouldRetryRequest
 };
 rax.attach(retryableAxios);
 
@@ -30,6 +31,58 @@ const transformTimestampToDateTime = (responseData) => {
 
     return responseData;
 };
+
+/**
+ * Determine based on config if we should retry the request.
+ * @param err The AxiosError passed to the interceptor.
+ */
+function shouldRetryRequest(err) {
+    const config = err.config.raxConfig;
+
+    // If there's no config, or retries are disabled, return.
+    if (!config || config.retry === 0) {
+        return false;
+    }
+
+    config.currentRetryAttempt = config.currentRetryAttempt || 0;
+
+    // Check if this error has no response (ETIMEDOUT, ENOTFOUND, etc)
+    if (!err.response && (config.currentRetryAttempt >= config.noResponseRetries)) {
+        return false;
+    }
+
+    // Only retry with configured HttpMethods.
+    const methodsToRetry = Array.isArray(config.httpMethodsToRetry) ?
+        config.httpMethodsToRetry :
+        Object.values(config.httpMethodsToRetry);
+    if (!err.config.method ||
+        methodsToRetry.indexOf(err.config.method.toUpperCase()) < 0) {
+        return false;
+    }
+
+    // If this wasn't in the list of status codes where we want
+    // to automatically retry, return.
+    if (err.response && err.response.status) {
+        let isInRange = false;
+        for (const [min, max] of config.statusCodesToRetry) {
+            const status = err.response.status;
+            if (status >= min && status <= max) {
+                isInRange = true;
+                break;
+            }
+        }
+        if (!isInRange) {
+            return false;
+        }
+    }
+
+    // If we are out of retry attempts, return
+    if (config.currentRetryAttempt >= config.retry) {
+        return false;
+    }
+
+    return true;
+}
 
 export const nodeApi = (baseUrl) => {
     const get = (url, config) => axios.get(baseUrl + url, config);
