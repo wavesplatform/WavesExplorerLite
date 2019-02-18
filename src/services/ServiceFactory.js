@@ -13,15 +13,21 @@ import {AliasService} from './AliasService';
 import {AssetService} from './AssetService';
 import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
+import {AnalyticsService} from './AnalyticsService';
+
+const GOOGLE_TRACKING_ID = '';
+const AMPLITUDE_API_KEY = '';
 
 class GlobalServices {
     constructor() {
         this._storageService = new StorageService();
         this._configurationService = new ConfigurationService(this._storageService);
+        this._analyticsService = new AnalyticsService(GOOGLE_TRACKING_ID, AMPLITUDE_API_KEY);
     }
 
     configurationService = () => this._configurationService;
     storageService = () => this._storageService;
+    analyticsService = () => this._analyticsService;
 }
 
 class NetworkDependentServices {
