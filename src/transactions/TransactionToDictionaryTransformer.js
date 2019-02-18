@@ -307,7 +307,7 @@ const buildSenderItem = tx => ({
 
 const buildFeeItem = tx => ({
     label: 'Fee',
-    value: tx.fee.toString()
+    value: <MoneyInfo value={tx.fee}/>
 });
 
 const buildAmountItem = tx => ({
