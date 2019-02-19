@@ -92,7 +92,10 @@ body {
 .wrapper.show + .mobile-menu {
     @include responsive_styles($layout);
     transform: translateX(0);
-    padding-top: 0;
+    padding: 0 48px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh;
 }
 
 .header {
@@ -188,9 +191,7 @@ body {
 
 .menu {
     width: map-get($header, title_width);
-    height: calc(100% - #{map-get($header, hight) + map-get($layout, padding-top) + map-get($layout, padding-top)});
-    min-height: 500px;
-    position: relative;
+    height: calc(100% - 116px);
 
     @media screen and (min-width: 1367px) {
         position: fixed;
@@ -198,6 +199,8 @@ body {
 
     > .menu-list {
         padding-top: 39px;
+        flex-grow: 1;
+        min-height: calc(100vh - 350px);
 
         > .menu-item {
             position: relative;
@@ -222,9 +225,7 @@ body {
                 }
             }
 
-
             &.icon {
-
                 &-general {
                     a {
                         &::after {
@@ -327,7 +328,6 @@ body {
 
     > .menu-footer {
         @include font(body, basic500);
-        position: fixed;
         bottom: map-get($layout, padding-top);
 
         > * {
