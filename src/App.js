@@ -24,6 +24,8 @@ import FaucetPage from './faucet/FaucetPage';
 const routeParams = routeParamsBuilder(ServiceFactory.global().configurationService().all());
 const routes = routeBuilder(routeParams.networkId);
 
+ServiceFactory.global().analyticsService().initialize();
+
 const withNetworkRouter = (RootComponent) => {
     return class extends React.Component {
         render() {

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
+import EventBuilder from './shared/analytics/EventBuilder';
+import ServiceFactory from './services/ServiceFactory';
 import ConfigurationForm from './ConfigurationForm';
 
 const Network = ({networkId, displayName, onSwitchNetwork}) => {
@@ -40,7 +42,13 @@ export default class NetworkSwitch extends React.PureComponent {
     };
 
     toggleModal = () => {
-        this.setState({showModal: !this.state.showModal});
+        const showModal = !this.state.showModal;
+        if (showModal) {
+            const event = new EventBuilder().settings().events().show().build();
+            ServiceFactory.global().analyticsService().sendEvent(event);
+        }
+
+        this.setState({showModal});
     };
 
     toggleNetworks = () => {

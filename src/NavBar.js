@@ -7,6 +7,7 @@ import NavMenu from './NavMenu';
 import Footer from './Footer';
 import NetworkSwitch from './NetworkSwitch';
 
+import EventBuilder from './shared/analytics/EventBuilder';
 import ServiceFactory from './services/ServiceFactory';
 
 const REGULAR_APPEARANCE = 'regular';
@@ -25,12 +26,18 @@ class NavBar extends React.Component {
     };
 
     switchNetwork = networkId => {
+        const event = new EventBuilder().settings().events().networkSelected(networkId).build();
+        ServiceFactory.global().analyticsService().sendEvent(event);
+
         const defaultNetwork = ServiceFactory.global().configurationService().default();
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
         this.props.history.push(route.root);
     };
 
     applySettings = settings => {
+        const event = new EventBuilder().settings().events().customSettingsApplied(settings.apiBaseUrl).build();
+        ServiceFactory.global().analyticsService().sendEvent(event);
+
         ServiceFactory.global().configurationService().update(settings);
         this.forceUpdate();
         reloadWindow();

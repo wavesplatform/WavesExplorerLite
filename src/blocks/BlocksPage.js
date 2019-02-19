@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Loader from '../shared/Loader';
+import EventBuilder from '../shared/analytics/EventBuilder';
 import ServiceFactory from '../services/ServiceFactory';
 
 import Pagination from './Pagination';
@@ -16,6 +17,11 @@ export default class BlocksPage extends React.Component {
         blocks: [],
         hasError: false
     };
+
+    componentDidMount() {
+        const event = new EventBuilder().blocks().events().show().build();
+        ServiceFactory.global().analyticsService().sendEvent(event);
+    }
 
     initialFetch = () => {
         const {networkId} = this.props.match.params;

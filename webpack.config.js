@@ -108,6 +108,8 @@ const networks = {
 };
 
 module.exports = (env, argv) => {
+    let googleTrackingId;
+    let amplitudeApiKey;
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
 
@@ -115,16 +117,24 @@ module.exports = (env, argv) => {
             analyzerMode: 'static',
             openAnalyzer: false
         }));
+
+        googleTrackingId = 'UA-75283398-17';
+        amplitudeApiKey = '0b3481b4cb40d949738933a57eaeb4fe';
     }
 
     if (argv.mode === 'production') {
         config.output.filename = '[name].[chunkhash].js';
+
+        googleTrackingId = 'UA-75283398-13';
+        amplitudeApiKey = 'e15743e3459050165886afc936f1a08e';
     }
 
     const network = (env && env.network) || 'mainnet';
     const networkConfiguration = networks[network];
     config.plugins.push(new webpack.DefinePlugin({
-        __NETWORKS__: JSON.stringify(networkConfiguration)
+        __NETWORKS__: JSON.stringify(networkConfiguration),
+        __GOOGLE_TRACKING_ID__: JSON.stringify(googleTrackingId),
+        __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey)
     }));
 
     return config;

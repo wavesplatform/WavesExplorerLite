@@ -1,5 +1,6 @@
 import React from 'react';
 
+import EventBuilder from '../shared/analytics/EventBuilder';
 import ServiceFactory from '../services/ServiceFactory';
 import Loader from '../shared/Loader';
 import Headline from '../shared/Headline';
@@ -9,6 +10,11 @@ export default class NodesPage extends React.Component {
     state = {
         nodes: []
     };
+
+    componentDidMount() {
+        const event = new EventBuilder().nodes().events().show().build();
+        ServiceFactory.global().analyticsService().sendEvent(event);
+    }
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.networkId !== prevProps.match.params.networkId) {

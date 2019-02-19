@@ -1,45 +1,3 @@
-const EVENT_DIRECTORY = {
-    main: {
-        category: 'Main',
-        events: {
-            show: 'Main Info Show'
-        }
-    },
-    blocks: {
-        category: 'Blocks',
-        events: {
-            show: 'Blocks Show'
-        }
-    },
-    peers: {
-        category: 'Peers',
-        events: {
-            show: 'Peers Show'
-        }
-    },
-    nodes: {
-        category: 'Nodes',
-        events: {
-            show: 'Nodes Show'
-        }
-    },
-    settings: {
-        category: 'Settings',
-        events: {
-            show: 'Settings Show',
-            testnetSelected: 'Testnet Selected',
-            mainnetSelected: 'Mainnet Selected',
-            customNetworkApplied: 'Settings Custom Network Applied'
-        }
-    },
-    search: {
-        category: 'Search',
-        events: {
-            results: 'Search Results'
-        }
-    }
-};
-
 class EventBuilder {
     constructor(categoryBuilder, eventName, properties) {
         this.categoryName = categoryBuilder.categoryName;
@@ -92,10 +50,11 @@ class SettingsCategoryBuilder extends AbstractCategoryBuilder {
     events() {
         return {
             show: () => new ShowEventBuilder(this),
-            testnetSelected: () => new EventBuilder(this, 'Testnet Selected'),
-            mainnetSelected: () => new EventBuilder(this, 'Mainnet Selected'),
-            customNetworkApplied: networkId => new EventBuilder(this, 'Custom Network Applied', {
+            networkSelected: networkId => new EventBuilder(this, 'Network Selected', {
                 Network: networkId
+            }),
+            customSettingsApplied: nodeUrl => new EventBuilder(this, 'Custom Network Applied', {
+                ['Node URL']: nodeUrl
             })
         }
     }
@@ -108,7 +67,9 @@ class SearchCategoryBuilder extends AbstractCategoryBuilder {
 
     events() {
         return {
-            results: () => new EventBuilder(this, 'Results')
+            results: (searchResult) => new EventBuilder(this, 'Results', {
+                ['Result Type']: searchResult
+            })
         }
     }
 }

@@ -15,14 +15,11 @@ import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 
-const GOOGLE_TRACKING_ID = '';
-const AMPLITUDE_API_KEY = '';
-
 class GlobalServices {
     constructor() {
         this._storageService = new StorageService();
         this._configurationService = new ConfigurationService(this._storageService);
-        this._analyticsService = new AnalyticsService(GOOGLE_TRACKING_ID, AMPLITUDE_API_KEY);
+        this._analyticsService = new AnalyticsService(__GOOGLE_TRACKING_ID__, __AMPLITUDE_API_KEY__);
     }
 
     configurationService = () => this._configurationService;
@@ -42,7 +39,9 @@ class NetworkDependentServices {
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
     }
 
-    searchService = () => new SearchService(this._globalServices.configurationService(), this._networkId);
+    searchService = () => new SearchService(this._globalServices.configurationService(),
+        this._globalServices.analyticsService(),
+        this._networkId);
 
     peersService = () => new PeersService(this._globalServices.configurationService(), this._networkId);
 
@@ -80,6 +79,7 @@ class ServiceFactory {
 
     global = () => ({
         configurationService: this._globalServices.configurationService,
+        analyticsService: this._globalServices.analyticsService
     });
 
     forNetwork = networkId => {
