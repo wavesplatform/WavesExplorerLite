@@ -12,7 +12,6 @@ export class FaucetService extends ApiClientService {
 
     loadTransactions = () => {
         const faucet = this.getFaucet();
-
         const api = this.getApi();
 
         return api.transactions.address(faucet.address, FAUCET_TRANSACTIONS_COUNT)
@@ -23,7 +22,6 @@ export class FaucetService extends ApiClientService {
 
     requestMoney = (address, captchaToken) => {
         const faucet = this.getFaucet();
-
         const api = faucetApi(faucet.url);
 
         return api.requestMoney(address, captchaToken);

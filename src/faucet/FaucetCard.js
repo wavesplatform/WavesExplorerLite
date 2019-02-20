@@ -21,7 +21,14 @@ class FaucetCardContainer extends React.Component {
         return ServiceFactory
             .forNetwork(networkId)
             .faucetService()
-            .requestMoney(values.address, values.captchaToken);
+            .requestMoney(values.address, values.captchaToken)
+            .then(() => {
+                // say all good
+            })
+            .catch(response => {
+                console.log(response);
+                // say it breaks
+            });
     };
 
     validateAddress = (address) => {
