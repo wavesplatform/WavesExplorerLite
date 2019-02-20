@@ -15,8 +15,14 @@ class EventBuilder {
 }
 
 class ShowEventBuilder extends EventBuilder {
-    constructor(categoryBuilder) {
+    constructor(categoryBuilder, networkId) {
         super(categoryBuilder, 'Show');
+
+        if (networkId) {
+            this.properties = {
+                Network: networkId
+            }
+        }
     }
 }
 
@@ -37,7 +43,7 @@ class SimpleCategoryBuilder extends AbstractCategoryBuilder {
 
     events() {
         return {
-            show: () => new ShowEventBuilder(this)
+            show: networkId => new ShowEventBuilder(this, networkId)
         };
     }
 }
@@ -49,10 +55,7 @@ class SettingsCategoryBuilder extends AbstractCategoryBuilder {
 
     events() {
         return {
-            show: () => new ShowEventBuilder(this),
-            networkSelected: networkId => new EventBuilder(this, 'Network Selected', {
-                Network: networkId
-            }),
+            show: networkId => new ShowEventBuilder(this, networkId),
             customSettingsApplied: nodeUrl => new EventBuilder(this, 'Custom Network Applied', {
                 ['Node URL']: nodeUrl
             })

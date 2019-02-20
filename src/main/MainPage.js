@@ -9,7 +9,8 @@ import ServiceFactory from '../services/ServiceFactory';
 
 export default class MainPage extends React.Component {
     componentDidMount() {
-        const event = new EventBuilder().main().events().show().build();
+        const {networkId} = this.props.match.params;
+        const event = new EventBuilder().main().events().show(networkId).build();
         ServiceFactory.global().analyticsService().sendEvent(event);
     }
 

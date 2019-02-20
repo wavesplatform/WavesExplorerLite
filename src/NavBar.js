@@ -26,9 +26,6 @@ class NavBar extends React.Component {
     };
 
     switchNetwork = networkId => {
-        const event = new EventBuilder().settings().events().networkSelected(networkId).build();
-        ServiceFactory.global().analyticsService().sendEvent(event);
-
         const defaultNetwork = ServiceFactory.global().configurationService().default();
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
         this.props.history.push(route.root);
