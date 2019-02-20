@@ -87,6 +87,16 @@ export default class RequestForm extends React.Component {
                             {errors.captchaToken && <div className="input-error">{errors.captchaToken}</div>}
                         </div>
 
+                        <div className="faucetValidation faucetValidation__isValid"> {/*if inValid*/}
+                            <div className="status-icon"></div>
+                            <div>Your request was successfully submitted please check your wallet</div>
+                        </div>
+
+                        <div className="faucetValidation faucetValidation__isInvalid"> {/*if Valid*/}
+                            <div className="status-icon"></div>
+                            <div>You have reached your submission limit please try again later</div>
+                        </div>
+
                         <button className="submit big long get-waves-btn" type="submit" disabled={!isValid || isSubmitting || isValidating}> {/* @Ishchenko - addClass .disabled if empty onput field */}
                             <span>Request {this.props.amount} WAVES</span>
                         </button>
