@@ -13,7 +13,7 @@ var config = {
         main: path.join(sourcesPath, 'index.js')
     },
     output: {
-        filename: '[name].js',
+        filename: '[name].[hash:16].js',
         path: buildPath,
         publicPath: '/'
     },

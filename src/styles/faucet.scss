@@ -40,3 +40,34 @@
 .faucet-description {
     padding: 24px;
 }
+
+.faucetValidation {
+    display: flex;
+    margin: 24px 0 34px;
+    padding: 12px;
+    width: calc(100% - 27px);
+    border-radius: 4px;
+
+    &.valid {
+        color: map-get($colors, success400);
+        border: 1px dashed #dee3ea;
+        .status-icon {
+            background: url(../images/check-18-success-400.svg);
+        }
+    }
+
+    &.invalid {
+        color: map-get($colors, error500);
+        border: 1px dashed map-get($colors, error500);
+        .status-icon {
+            background: url(../images/alert-triangle-18-error-500.svg);
+        }
+    }
+}
+
+.status-icon {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+}

@@ -3,13 +3,33 @@ import PropTypes from 'prop-types';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import Recaptcha from 'react-google-recaptcha';
 
+const RequestStatus = ({status}) => {
+    if (!status) {
+        return null;
+    }
+
+    const className = 'faucetValidation ' + (status.successful ? 'valid' : 'invalid');
+    const message = status.message || 'Your request was successfully submitted please check your wallet';
+
+    return (
+        <div className={className}>
+            <div className="status-icon"></div>
+            <div>{message}</div>
+        </div>
+    );
+};
+
 export default class RequestForm extends React.Component {
     static propTypes = {
         networkName: PropTypes.string.isRequired,
         onSubmit: PropTypes.func.isRequired,
         validateAddress: PropTypes.func.isRequired,
         captchaKey: PropTypes.string.isRequired,
-        amount: PropTypes.string
+        amount: PropTypes.string,
+        status: PropTypes.shape({
+            successful: PropTypes.bool.isRequired,
+            message: PropTypes.string
+        })
     };
 
     static defaultProps = {
@@ -87,7 +107,9 @@ export default class RequestForm extends React.Component {
                             {errors.captchaToken && <div className="input-error">{errors.captchaToken}</div>}
                         </div>
 
-                        <button className="submit big long get-waves-btn" type="submit" disabled={!isValid || isSubmitting || isValidating}> {/* @Ishchenko - addClass .disabled if empty onput field */}
+                        <RequestStatus status={this.props.status}/>
+
+                        <button className="submit big long get-waves-btn" type="submit" disabled={!isValid || isSubmitting || isValidating}>
                             <span>Request {this.props.amount} WAVES</span>
                         </button>
                     </Form>
