@@ -12,7 +12,8 @@ class FaucetCardContainer extends React.Component {
     };
 
     state = {
-        tx: []
+        tx: [],
+        status: null
     };
 
     requestMoney = (values) => {
@@ -23,11 +24,19 @@ class FaucetCardContainer extends React.Component {
             .faucetService()
             .requestMoney(values.address, values.captchaToken)
             .then(() => {
-                // say all good
+                this.setState({status: {
+                    successful: true
+                }});
             })
-            .catch(response => {
-                console.log(response);
-                // say it breaks
+            .catch(error => {
+                let message = error.message;
+                if (error.response && error.response.data && error.response.data.message) {
+                    message = error.response.data.message;
+                }
+                this.setState({status: {
+                    successful: false,
+                    message
+                }});
             });
     };
 
@@ -50,6 +59,7 @@ class FaucetCardContainer extends React.Component {
                         onSubmit={this.requestMoney}
                         captchaKey={this.props.captchaKey}
                         validateAddress={this.validateAddress}
+                        status={this.state.status}
                     />
                 </div>
                 <div className="basic500 faucet-description fs12">If you experience any problems with the faucet,

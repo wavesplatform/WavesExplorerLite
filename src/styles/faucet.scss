@@ -48,7 +48,7 @@
     width: calc(100% - 27px);
     border-radius: 4px;
 
-    &__isValid {
+    &.valid {
         color: map-get($colors, success400);
         border: 1px dashed #dee3ea;
         .status-icon {
@@ -56,7 +56,7 @@
         }
     }
 
-    &__isInvalid {
+    &.invalid {
         color: map-get($colors, error500);
         border: 1px dashed map-get($colors, error500);
         .status-icon {
