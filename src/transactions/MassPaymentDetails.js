@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Money from '../shared/Money';
 import EndpointRef from '../shared/EndpointRef';
 
 const TransferListItem = ({transfer}) => {
@@ -19,7 +20,7 @@ const TransferListItem = ({transfer}) => {
 TransferListItem.propTypes = {
     transfer: PropTypes.shape({
         recipient: PropTypes.string.isRequired,
-        amount: PropTypes.number.isRequired
+        amount: PropTypes.instanceOf(Money).isRequired
     })
 };
 

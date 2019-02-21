@@ -10,6 +10,7 @@ import Spacer from '../shared/Spacer';
 import Description from './Description';
 import ScriptInfo from '../shared/ScriptInfo';
 import DataInfo from '../shared/DataInfo';
+import MoneyInfo from '../shared/MoneyInfo';
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -221,7 +222,7 @@ const exchangeTransactionToItems = tx => {
 const massPaymentTransactionToItems = tx => {
     const items = [{
         label: 'Total amount',
-        value: tx.totalAmount.toString()
+        value: <MoneyInfo value={tx.totalAmount} />
     }, {
         label: 'Transfers count',
         value: tx.transferCount,
@@ -306,12 +307,12 @@ const buildSenderItem = tx => ({
 
 const buildFeeItem = tx => ({
     label: 'Fee',
-    value: tx.fee.toString()
+    value: <MoneyInfo value={tx.fee}/>
 });
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: tx.amount.toString()
+    value: <MoneyInfo value={tx.amount}/>
 });
 
 export default transactionToDictionary;
