@@ -109,7 +109,7 @@ export default class RequestForm extends React.Component {
 
                         <RequestStatus status={this.props.status}/>
 
-                        <button className="submit big long get-waves-btn" type="submit" disabled={!isValid || isSubmitting || isValidating}> {/* @Ishchenko - addClass .disabled if empty onput field */}
+                        <button className="submit big long get-waves-btn" type="submit" disabled={!isValid || isSubmitting || isValidating}>
                             <span>Request {this.props.amount} WAVES</span>
                         </button>
                     </Form>

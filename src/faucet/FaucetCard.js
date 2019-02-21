@@ -55,7 +55,7 @@ class FaucetCardContainer extends React.Component {
                 <div className="card faucet">
                     <div className="faucet-image"></div>
                     <RequestForm
-                        networkName={this.props.displayName}
+                        networkName={this.props.networkName}
                         onSubmit={this.requestMoney}
                         captchaKey={this.props.captchaKey}
                         validateAddress={this.validateAddress}
