@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as rax from 'retry-axios';
+import json from 'json-bigint';
 
 import DateTime from './DateTime';
 
@@ -31,6 +32,20 @@ const transformTimestampToDateTime = (responseData) => {
 
     return responseData;
 };
+
+const parseResponse = (response) => {
+    if (typeof response === 'string') {
+        try {
+            return json.parse(response);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    return response;
+};
+
+axios.defaults.transformResponse = [parseResponse];
 
 /**
  * Determine based on config if we should retry the request.

@@ -1,4 +1,5 @@
 import {Decimal} from 'decimal.js';
+import BigNumber from 'bignumber.js';
 import isNumber from 'lodash/isNumber';
 import Currency from './Currency';
 
@@ -34,6 +35,9 @@ export default class Money {
 
         if (currency === undefined)
             throw new Error('Currency is required');
+
+        if (amount instanceof BigNumber)
+            amount = amount.toString();
 
         this.amount = new Decimal(amount)
             .toDecimalPlaces(currency.precision, Decimal.ROUND_FLOOR);

@@ -1,4 +1,5 @@
 import {Decimal} from 'decimal.js';
+import BigNumber from 'bignumber.js';
 
 const MATCHER_SCALE = 1e8;
 
@@ -7,6 +8,9 @@ const roundToPriceAsset = (price, pair) => {
 };
 
 const normalizePrice = (price, pair) => {
+    if (price instanceof BigNumber)
+        price = price.toString();
+
     return new Decimal(price)
         .div(MATCHER_SCALE)
         .div(Math.pow(10, pair.priceAsset.precision - pair.amountAsset.precision));
