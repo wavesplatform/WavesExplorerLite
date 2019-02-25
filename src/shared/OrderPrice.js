@@ -1,5 +1,6 @@
 import {Decimal} from 'decimal.js';
 import BigNumber from 'bignumber.js';
+import Money from './Money';
 
 const MATCHER_SCALE = 1e8;
 
@@ -23,9 +24,16 @@ class OrderPrice {
         this.price = roundToPriceAsset(price, pair);
     }
 
-    toTokens = () => this.price.toNumber();
-    toCoins = () => this.toTokens() * Math.pow(10, this.priceAsset.precision - this.amountAsset.precision);
-    toBackendPrice = () => Math.round(this.toCoins() * MATCHER_SCALE);
+    toTokens = () => this.price;
+    toCoins = () => this.toTokens().mul(Decimal.pow(10, this.priceAsset.precision - this.amountAsset.precision));
+    toBackendPrice = () => this.toCoins().mul(MATCHER_SCALE).round().toNumber();
+
+    volume = amount => {
+        if (amount.currency.id !== this.amountAsset.id)
+            throw new Error('Wrong amount currency. Expected: ' + this.amountAsset.toString());
+
+        return Money.fromTokens(this.toTokens().mul(amount.toTokens()), this.priceAsset);
+    };
 
     toString() {
         return this.toTokens().toFixed(8);

@@ -205,7 +205,7 @@ const transformExchange = (currencyService, tx) => {
             sellFee: Money.fromCoins(tx.sellMatcherFee, Currency.WAVES),
             price,
             amount,
-            total: Money.fromTokens(price.toTokens() * amount.toTokens(), currencyPair.priceAsset),
+            total: price.volume(amount),
             buyOrder: transformOrder(buyOrder, currencyPair),
             sellOrder: transformOrder(sellOrder, currencyPair),
             sender: sellOrder.sender,
