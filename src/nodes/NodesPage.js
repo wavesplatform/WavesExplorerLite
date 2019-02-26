@@ -37,12 +37,14 @@ export default class NodesPage extends React.Component {
         const configuration = ServiceFactory.global().configurationService().get(networkId);
 
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
-                <div className="content card">
-                    <Headline title={`${configuration.displayName} Nodes`} copyVisible={false}/>
-                    <NodeList nodes={this.state.nodes} />
-                </div>
-            </Loader>
+            <div className="loaderWrapper">
+                <Loader fetchData={this.fetchData} errorTitle="Failed to load node details">
+                    <div className="content card">
+                        <Headline title={`${configuration.displayName} Nodes`} copyVisible={false}/>
+                        <NodeList nodes={this.state.nodes} />
+                    </div>
+                </Loader>
+            </div>
         );
     }
 }

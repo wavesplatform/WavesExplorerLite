@@ -33,18 +33,20 @@ export default class PeersPage extends React.Component {
 
     render() {
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load peer details">
-                <div className="content card">
-                   <div className="headline">
-                        <span className="title">Peers</span>
-                        <label className="right">
-                            <span>Connected </span>
-                            <span className="bold">{this.state.peers.length}</span>
-                        </label>
+            <div className="loaderWrapper">
+                <Loader fetchData={this.fetchData} errorTitle="Failed to load peer details">
+                    <div className="content card">
+                        <div className="headline">
+                            <span className="title">Peers</span>
+                            <label className="right">
+                                <span>Connected </span>
+                                <span className="bold">{this.state.peers.length}</span>
+                            </label>
+                        </div>
+                        <PeerList peers={this.state.peers} />
                     </div>
-                    <PeerList peers={this.state.peers} />
-                </div>
-            </Loader>
+                </Loader>
+            </div>
         );
     }
 }

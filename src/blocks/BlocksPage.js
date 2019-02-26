@@ -52,16 +52,18 @@ export default class BlocksPage extends React.Component {
 
     render() {
         return (
-            <Loader fetchData={this.initialFetch} errorTitle="Failed to load blocks">
-                <div className="content card">
-                    <div className="headline">
-                        <span className="title">Blocks</span>
-                        <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
-                                    onPageChange={this.handlePageChange} />
+            <div className="loaderWrapper">
+                <Loader fetchData={this.initialFetch} errorTitle="Failed to load blocks">
+                    <div className="content card">
+                        <div className="headline">
+                            <span className="title">Blocks</span>
+                            <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
+                                        onPageChange={this.handlePageChange} />
+                        </div>
+                        <BlockList blocks={this.state.blocks} />
                     </div>
-                    <BlockList blocks={this.state.blocks} />
-                </div>
-            </Loader>
+                </Loader>
+            </div>
         );
     }
 }

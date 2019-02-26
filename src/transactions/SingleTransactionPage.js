@@ -38,14 +38,16 @@ export default class SingleTransactionPage extends React.Component {
         const transactionItems = transactionToDictionary(this.state.tx);
 
         return (
-            <Loader fetchData={this.fetchData} errorTitle="Failed to load transaction">
-                <div className="content card">
-                    <GoBack />
-                    <Headline title="Transaction" subtitle={this.state.tx.id} />
-                    <Dictionary items={transactionItems}/>
-                    <MassPaymentDetails tx={this.state.tx} />
-                </div>
-            </Loader>
+            <div className="loaderWrapper">
+                <Loader fetchData={this.fetchData} errorTitle="Failed to load transaction">
+                    <div className="content card">
+                        <GoBack />
+                        <Headline title="Transaction" subtitle={this.state.tx.id} />
+                        <Dictionary items={transactionItems}/>
+                        <MassPaymentDetails tx={this.state.tx} />
+                    </div>
+                </Loader>
+            </div>
         );
     }
 }

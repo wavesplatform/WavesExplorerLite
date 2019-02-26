@@ -16,7 +16,6 @@ export default class FaucetPage extends React.Component {
                 <div className="content-side__left">
                     <FaucetCard networkName={displayName} captchaKey={faucet.captchaKey} />
                 </div>
-
                 <div className="content-side__right">
                     <TransactionCard />
                 </div>
