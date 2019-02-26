@@ -37,12 +37,19 @@ export class SearchService extends ApiClientService {
                 this.analyticsService.sendEvent(event);
 
                 return routes.transactions.one(infoResponse.data.id);
-            }).catch(e => {
-                const event = this.createEvent(SearchResult.unknown);
+            });
+        }).catch(() => {
+            return api.aliases.address(query).then(addressResponse => {
+                const event = this.createEvent(SearchResult.alias);
                 this.analyticsService.sendEvent(event);
 
-                throw e;
+                return routes.addresses.one(addressResponse.data.address);
             });
+        }).catch(e => {
+            const event = this.createEvent(SearchResult.unknown);
+            this.analyticsService.sendEvent(event);
+
+            throw e;
         });
     };
 
