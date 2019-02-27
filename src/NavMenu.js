@@ -58,10 +58,6 @@ class NavMenu extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.setState({current: this.state.items[0]}); // really?
-        }
-
         if (this.props.location.pathname !== prevProps.location.pathname) {
             const currentItemCandidate = this.findItemByCurrentRoute(this.state.items);
             if (this.state.current !== currentItemCandidate)
@@ -73,7 +69,7 @@ class NavMenu extends React.Component {
         const {pathname} = this.props.location;
         const {networkId} = this.props.match.params;
 
-        return items.find(item => item.route(networkId) === pathname);
+        return items.find(item => (item.route(networkId) || '/') === pathname);
     }
 
     handleNavigate = item => {
