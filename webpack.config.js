@@ -110,6 +110,7 @@ const networks = {
 module.exports = (env, argv) => {
     let googleTrackingId;
     let amplitudeApiKey;
+    let sentryDsn;
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
 
@@ -120,6 +121,7 @@ module.exports = (env, argv) => {
 
         googleTrackingId = 'UA-75283398-17';
         amplitudeApiKey = '0b3481b4cb40d949738933a57eaeb4fe';
+        sentryDsn = 'https://1b5911ae5b1849b9b114809877eb6d84@sentry.io/1401737';
     }
 
     if (argv.mode === 'production') {
@@ -127,6 +129,7 @@ module.exports = (env, argv) => {
 
         googleTrackingId = 'UA-75283398-13';
         amplitudeApiKey = 'e15743e3459050165886afc936f1a08e';
+        sentryDsn = 'https://9ee88f8e9ec741d5897e64c89a38e4f6@sentry.io/1401739';
     }
 
     const network = (env && env.network) || 'mainnet';
@@ -134,7 +137,8 @@ module.exports = (env, argv) => {
     config.plugins.push(new webpack.DefinePlugin({
         __NETWORKS__: JSON.stringify(networkConfiguration),
         __GOOGLE_TRACKING_ID__: JSON.stringify(googleTrackingId),
-        __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey)
+        __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey),
+        __SENTRY_DSN__: JSON.stringify(sentryDsn)
     }));
 
     return config;

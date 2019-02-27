@@ -14,17 +14,20 @@ import {AssetService} from './AssetService';
 import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
+import {ErrorReportingService} from './ErrorReportingService';
 
 class GlobalServices {
     constructor() {
         this._storageService = new StorageService();
         this._configurationService = new ConfigurationService(this._storageService);
         this._analyticsService = new AnalyticsService(__GOOGLE_TRACKING_ID__, __AMPLITUDE_API_KEY__);
+        this._errorReportingService = new ErrorReportingService(__SENTRY_DSN__);
     }
 
     configurationService = () => this._configurationService;
     storageService = () => this._storageService;
     analyticsService = () => this._analyticsService;
+    errorReportingService = () => this._errorReportingService;
 }
 
 class NetworkDependentServices {
@@ -79,7 +82,8 @@ class ServiceFactory {
 
     global = () => ({
         configurationService: this._globalServices.configurationService,
-        analyticsService: this._globalServices.analyticsService
+        analyticsService: this._globalServices.analyticsService,
+        errorReportingService: this._globalServices.errorReportingService
     });
 
     forNetwork = networkId => {
