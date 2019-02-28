@@ -10,6 +10,13 @@ export default class PeersPage extends React.Component {
         peers: []
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidMount() {
         const event = new EventBuilder().peers().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);

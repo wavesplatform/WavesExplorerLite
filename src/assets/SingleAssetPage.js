@@ -15,6 +15,13 @@ class SingleAssetPage extends React.Component {
         details: {}
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidUpdate(prevProps) {
         const {networkId, assetId} = this.props.match.params;
         const {networkId: prevNetworkId, assetId: prevAssetId} = prevProps.match.params;

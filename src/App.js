@@ -46,6 +46,13 @@ class App extends React.Component {
         mobileMenuVisible: null
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     handleMobileMenuToggle = () => {
         this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
     };

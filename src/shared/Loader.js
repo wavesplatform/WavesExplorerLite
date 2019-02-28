@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ServiceFactory from '../services/ServiceFactory';
 import Loading from './Loading';
 import Error from './Error';
 
@@ -26,6 +27,11 @@ export default class Loader extends React.Component {
             })
             .catch(error => {
                 console.log(error);
+
+                ServiceFactory
+                    .global()
+                    .errorReportingService()
+                    .captureException(error);
 
                 this.setState({
                     loading: false,

@@ -11,6 +11,13 @@ export default class NodesPage extends React.Component {
         nodes: []
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidMount() {
         const event = new EventBuilder().nodes().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);

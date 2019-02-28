@@ -26,6 +26,13 @@ export default class SingleAddressPage extends React.Component {
         selectedTabIndex: 0
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidUpdate(prevProps) {
         const {networkId, address} = this.props.match.params;
         const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;

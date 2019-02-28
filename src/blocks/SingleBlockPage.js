@@ -68,6 +68,13 @@ export default class SingleBlockPage extends React.Component {
         loading: false
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidUpdate(prevProps) {
         const {height: prevHeight, networkId: prevNetworkId} = prevProps.match.params;
         const {height, networkId} = this.props.match.params;

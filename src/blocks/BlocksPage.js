@@ -18,6 +18,13 @@ export default class BlocksPage extends React.Component {
         hasError: false
     };
 
+    componentDidCatch(error, errorInfo) {
+        ServiceFactory
+            .global()
+            .errorReportingService()
+            .captureComponentError(error, errorInfo);
+    }
+
     componentDidMount() {
         const event = new EventBuilder().blocks().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);
