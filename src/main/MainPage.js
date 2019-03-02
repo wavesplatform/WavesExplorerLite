@@ -8,13 +8,6 @@ import EventBuilder from '../shared/analytics/EventBuilder';
 import ServiceFactory from '../services/ServiceFactory';
 
 export default class MainPage extends React.Component {
-    componentDidCatch(error, errorInfo) {
-        ServiceFactory
-            .global()
-            .errorReportingService()
-            .captureComponentError(error, errorInfo);
-    }
-
     componentDidMount() {
         const event = new EventBuilder().main().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);

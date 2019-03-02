@@ -11,13 +11,6 @@ export default class SingleAliasPage extends React.Component {
         address: null
     };
 
-    componentDidCatch(error, errorInfo) {
-        ServiceFactory
-            .global()
-            .errorReportingService()
-            .captureComponentError(error, errorInfo);
-    }
-
     fetchData = () => {
         const {networkId} = this.props.match.params;
         return ServiceFactory.forNetwork(networkId).aliasService()

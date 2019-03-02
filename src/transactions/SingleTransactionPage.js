@@ -16,13 +16,6 @@ export default class SingleTransactionPage extends React.Component {
         }
     };
 
-    componentDidCatch(error, errorInfo) {
-        ServiceFactory
-            .global()
-            .errorReportingService()
-            .captureComponentError(error, errorInfo);
-    }
-
     componentDidUpdate(prevProps) {
         const {transactionId, networkId} = this.props.match.params;
         const {transactionId: prevTransactionId, networkId: prevNetworkId} = prevProps.match.params;
