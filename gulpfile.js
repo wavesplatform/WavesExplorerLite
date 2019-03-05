@@ -61,19 +61,15 @@ gulp.task('clean', function (done) {
     ], done);
 });
 
-gulp.task('build-mainnet', ['clean'], function (done) {
+gulp.task('build-official', ['clean'], function (done) {
     buildApp('mainnet', done);
-});
-
-gulp.task('build-testnet', ['clean'], function (done) {
-    buildApp('testnet', done);
 });
 
 gulp.task('build-devnet', ['clean'], function (done) {
     buildApp('devnet', done);
 });
 
-gulp.task('invalidate-mainnet', ['upload-mainnet'], function() {
+gulp.task('invalidate-official-staging', ['upload-official-staging'], function() {
     return invalidateCache('EJSIVKMWKE29F');
 });
 
@@ -81,12 +77,14 @@ gulp.task('invalidate-devnet', ['upload-devnet'], function() {
     return invalidateCache('ECH0R3VC2E1B');
 });
 
-gulp.task('invalidate-testnet', function() {
-    return invalidateCache('EQKVTOJX3PEGY');
+gulp.task('upload-official-staging', ['build-official'], function () {
+    var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
+
+    return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('upload-mainnet', ['build-mainnet'], function () {
-    var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
+gulp.task('upload-official-prod', ['build-official'], function () {
+    var credentials = awsCredentials('eu-central-1', 'wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
@@ -98,7 +96,8 @@ gulp.task('upload-devnet', ['build-devnet'], function () {
 });
 
 
-gulp.task('publish-mainnet', ['build-mainnet', 'upload-mainnet', 'invalidate-mainnet']);
+gulp.task('publish-official-staging', ['build-official', 'upload-official-staging', 'invalidate-official-staging']);
+gulp.task('publish-official-prod', ['build-official', 'upload-official-prod']);
 gulp.task('publish-devnet', ['build-devnet', 'upload-devnet', 'invalidate-devnet']);
 
-gulp.task('publish', ['publish-mainnet']);
+gulp.task('publish', ['publish-official-staging']);
