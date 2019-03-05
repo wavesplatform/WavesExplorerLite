@@ -14,7 +14,7 @@ Install [yarn](https://yarnpkg.com/lang/en/docs/install/)
 
 Install gulp:
 ```
-yarn add -g gulp-cli
+yarn global add gulp-cli
 ```
 
 # Run locally
