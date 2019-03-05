@@ -10,6 +10,8 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# we use yarn here!
+package-lock.json
 
 /.idea
 *.iml

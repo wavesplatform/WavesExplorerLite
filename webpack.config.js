@@ -7,10 +7,11 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const buildPath = path.join(__dirname, 'dist');
 const sourcesPath = path.join(__dirname, 'src');
+const scriptsPath = path.join(sourcesPath, 'js');
 
 var config = {
     entry: {
-        main: path.join(sourcesPath, 'index.js')
+        main: path.join(scriptsPath, 'index.js')
     },
     output: {
         filename: '[name].[hash:16].js',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import './styles/main.scss';
+import '../styles/main.scss';
 import {Route, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';

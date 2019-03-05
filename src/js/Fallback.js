@@ -1,6 +1,6 @@
 import React from 'react';
 
-import appLoading from './images/app-loading.gif';
+import appLoading from '../images/app-loading.gif';
 
 const Fallback = () => {
     return (

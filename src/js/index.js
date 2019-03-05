@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
-import './styles/main.scss';
+import '../styles/main.scss';
 
 import Fallback from './Fallback';
 
