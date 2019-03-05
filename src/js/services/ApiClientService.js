@@ -1,4 +1,4 @@
-import {nodeApi} from '../shared/NodeApi';
+import {nodeApi} from '../shared/api/NodeApi';
 import {ConfigurableService} from './ConfigurableService';
 
 export class ApiClientService extends ConfigurableService {

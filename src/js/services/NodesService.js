@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {nodeApi} from '../shared/NodeApi';
+import {nodeApi} from '../shared/api/NodeApi';
 import {ApiClientService} from './ApiClientService';
 
 export class NodesService extends ApiClientService {

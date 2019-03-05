@@ -1,4 +1,4 @@
-import {api} from '../shared/NodeApi';
+import {api} from '../shared/api/NodeApi';
 import {ApiClientService} from './ApiClientService';
 
 export class TransactionService extends ApiClientService {

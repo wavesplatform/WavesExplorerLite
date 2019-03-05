@@ -1,4 +1,4 @@
-import {thirdPartyApi} from '../shared/ThirdPartyApi';
+import {thirdPartyApi} from '../shared/api/ThirdPartyApi';
 import {ConfigurableService} from './ConfigurableService';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;

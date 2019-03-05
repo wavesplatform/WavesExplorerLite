@@ -1,5 +1,5 @@
 import {ApiClientService} from './ApiClientService';
-import {faucetApi} from '../shared/FaucetApi';
+import {faucetApi} from '../shared/api/FaucetApi';
 
 const FAUCET_TRANSACTIONS_COUNT = 20;
 
