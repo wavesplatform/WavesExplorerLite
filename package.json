@@ -20,6 +20,7 @@
         "axios": "0.18.0",
         "decimal.js": "10.0.1",
         "formik": "^1.4.1",
+        "json-bigint": "^0.3.0",
         "lodash": "4.17.11",
         "prop-types": "15.6.2",
         "react": "16.6.1",

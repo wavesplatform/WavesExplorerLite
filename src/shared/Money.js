@@ -1,4 +1,5 @@
 import {Decimal} from 'decimal.js';
+import BigNumber from 'bignumber.js';
 import isNumber from 'lodash/isNumber';
 import Currency from './Currency';
 
@@ -35,6 +36,9 @@ export default class Money {
         if (currency === undefined)
             throw new Error('Currency is required');
 
+        if (amount instanceof BigNumber)
+            amount = amount.toString();
+
         this.amount = new Decimal(amount)
             .toDecimalPlaces(currency.precision, Decimal.ROUND_FLOOR);
         this.currency = currency;
@@ -46,6 +50,9 @@ export default class Money {
         if (currency.precision === undefined)
             throw new Error('A valid currency must be provided');
 
+        if (amount instanceof BigNumber)
+            amount = amount.toString();
+
         amount = new Decimal(amount);
         amount = amount.div(Math.pow(10, currency.precision));
 
@@ -54,20 +61,17 @@ export default class Money {
 
     formatAmount = (stripZeroes, useThousandsSeparator) => {
         const result = stripZeroes ?
-            this.toTokens().toFixed(this.amount.decimalPlaces()) :
+            this.amount.toFixed(this.amount.decimalPlaces()) :
             format(this.amount, this.currency);
 
         return useThousandsSeparator ? formatWithThousandsSeparator(result) : result;
     };
 
     toTokens = () => {
-        var result = fromCoinsToTokens(fromTokensToCoins(this.amount, this.currency.precision),
-            this.currency.precision);
-
-        return result.toNumber();
+        return this.amount;
     };
 
-    toCoins = () => fromTokensToCoins(this.amount, this.currency.precision).toNumber();
+    toCoins = () => fromTokensToCoins(this.amount, this.currency.precision);
 
     plus = money => {
         validateCurrency(this.currency, money.currency);

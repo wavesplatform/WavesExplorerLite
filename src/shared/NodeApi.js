@@ -1,9 +1,24 @@
 import axios from 'axios';
 import * as rax from 'retry-axios';
+import json from 'json-bigint';
 
 import DateTime from './DateTime';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+
+const parseResponse = (response) => {
+    if (typeof response === 'string') {
+        try {
+            return json.parse(response);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    return response;
+};
+
+axios.defaults.transformResponse = [parseResponse];
 
 const retryableAxios = axios.create();
 retryableAxios.defaults.raxConfig = {
