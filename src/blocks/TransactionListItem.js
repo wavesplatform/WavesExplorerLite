@@ -238,7 +238,7 @@ class IssueTransactionListItem extends React.PureComponent {
                     <TransactionArrow type={tx.type} />
                     <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line wrap={false}>
-                        <TransactionRef txId={tx.assetId}/>
+                        <TransactionRef txId={tx.id}/>
                     </Line>
                 </td>
                 <AmountAndFee amount={tx.amount} fee={tx.fee} />

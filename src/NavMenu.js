@@ -50,18 +50,26 @@ class NavMenu extends React.Component {
     constructor(props) {
         super(props);
 
-        const {pathname} = this.props.location;
         const items = buildItems();
         this.state = {
             items,
-            current: items.find(item => item.route === pathname) || items[0]
+            current: this.findItemByCurrentRoute(items) || items[0]
         };
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
-            this.setState({current: this.state.items[0]}); // really?
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            const currentItemCandidate = this.findItemByCurrentRoute(this.state.items);
+            if (this.state.current !== currentItemCandidate)
+                this.setState({current: currentItemCandidate});
         }
+    }
+
+    findItemByCurrentRoute(items) {
+        const {pathname} = this.props.location;
+        const {networkId} = this.props.match.params;
+
+        return items.find(item => (item.route(networkId) || '/') === pathname);
     }
 
     handleNavigate = item => {

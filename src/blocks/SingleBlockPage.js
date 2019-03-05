@@ -96,7 +96,7 @@ export default class SingleBlockPage extends React.Component {
             .blockService()
             .loadBlock(height)
             .then(result => this.setState(result))
-            .then(() => this.setState({loading: false}));
+            .finally(() => this.setState({loading: false}));
     };
 
     showBlock = height => {
