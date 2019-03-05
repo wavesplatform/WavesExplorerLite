@@ -99,6 +99,10 @@
             >.panel-empty-icon {
                 background: url('../images/erroring-88.svg') no-repeat center center;
             }
+
+            @media screen and (min-width: 1366px) {
+                margin-left: 316px;
+            }
         }
 
         &.no-data {
@@ -250,21 +254,31 @@
 
         > .dictionary-pair-value {
             width: 100%;
+            max-width: calc(100% - 40px);
             flex: 0 1 auto;
             padding: 0 14px;
+            overflow: hidden;
             @include font(body);
 
             @media screen and (max-width: 1100px) {
                 max-width: calc(100% - 110px);
             }
 
+            & > a {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 100%;
+            }
+
             .ellipsis {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                @media screen and (max-width: 1100px) {
-                    max-width: calc(100% - 70px);
-                }
+                max-width: calc(100% - 70px);
+            }
+
+            &.has-copy-button {
+                padding-right: 70px;
             }
         }
 
@@ -314,9 +328,11 @@ th.price, th.amount {
     overflow: auto;
     margin-top: 20px;
     position: relative;
-    min-height: 45vh;
+    min-height: auto;
 
     &.empty {
+        min-height: 250px;
+
         .empty-icon-wrapper{
             position: absolute;
             top: 50%;
@@ -340,7 +356,7 @@ th.price, th.amount {
     pre {
         display: inline-block;
         word-break: break-all;
-        min-height: calc(45vh - 40px);
+        min-height: 200px;
         max-height: 800px;
         max-width: 100%;
         white-space: pre-wrap;
@@ -358,6 +374,10 @@ th.price, th.amount {
         margin-top: 0;
         min-height: auto;
         width: 100%;
+
+        &.empty {
+            min-height: 250px;
+        }
 
         pre {
             word-break: break-word;

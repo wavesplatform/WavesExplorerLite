@@ -12,7 +12,6 @@
 @import "faucet.scss";
 
 html {
-    height: 100%;
     display: block;
 }
 
@@ -22,12 +21,20 @@ body {
     display: block;
     background-color: map-get($colors, basic50);
     @include responsive_styles($layout);
-    padding-bottom: 0;
     min-width: 360px;
+    padding-bottom: 36px;
     @media screen and(min-width: 800px) {
         min-height: 560px;
     }
 }
+
+.loaderWrapper {
+    .loading {
+       @media screen and (min-width: 800px) {
+           transform: translateX(150px);
+       }
+    }
+ }
 
 #root {
     overflow: hidden;
@@ -180,8 +187,6 @@ body {
 
 .container {
     @include responsive_styles($layout, padding-top);
-    padding-bottom: 36px;
-
     @media screen and (min-width: 1367px) {
         .content {
             margin-left: 316px;
