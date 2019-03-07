@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TransactionListItem from './TransactionListItem.view';
+import {TransactionListItem} from './TransactionListItem.view';
 
 export class TransactionList extends React.Component {
     static propTypes = {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
 import TransactionBadge from '../../components/TransactionBadge';
-import DirectionalEndpoints from '../SingleAddressPage/DirectionalEndpoints.view';
+import {DirectionalEndpoints} from '../SingleAddressPage/DirectionalEndpoints.view';
 
 export class TransactionListItem extends React.PureComponent {
     static propTypes = {

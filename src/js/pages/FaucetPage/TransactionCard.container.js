@@ -5,7 +5,7 @@ import Loader from '../../components/Loader';
 import Headline from '../../components/Headline';
 import ServiceFactory from '../../services/ServiceFactory';
 import transactionMapper from '../SingleAddressPage/TransactionMapper';
-import TransactionList from './TransactionList.view';
+import {TransactionList} from './TransactionList.view';
 
 class TransactionCardContainer extends React.Component {
     state = {
