@@ -34,8 +34,8 @@ function publishToS3(credentials, fileSpec) {
         .pipe(awspublish.reporter());
 }
 
-function buildApp(network, done) {
-    exec('yarn run app:prod --env.network=' + network, function (err, stdout, stderr) {
+function buildApp(network, env, done) {
+    exec('yarn run app:' + env + ' --env.network=' + network, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
@@ -61,12 +61,16 @@ gulp.task('clean', function (done) {
     ], done);
 });
 
-gulp.task('build-official', ['clean'], function (done) {
-    buildApp('mainnet', done);
+gulp.task('build-official-prod', ['clean'], function (done) {
+    buildApp('mainnet', 'prod', done);
+});
+
+gulp.task('build-official-staging', ['clean'], function (done) {
+    buildApp('mainnet', 'dev', done);
 });
 
 gulp.task('build-devnet', ['clean'], function (done) {
-    buildApp('devnet', done);
+    buildApp('devnet', 'prod', done);
 });
 
 gulp.task('invalidate-official-staging', ['upload-official-staging'], function() {
@@ -77,13 +81,13 @@ gulp.task('invalidate-devnet', ['upload-devnet'], function() {
     return invalidateCache('ECH0R3VC2E1B');
 });
 
-gulp.task('upload-official-staging', ['build-official'], function () {
+gulp.task('upload-official-staging', ['build-official-staging'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('upload-official-prod', ['build-official'], function () {
+gulp.task('upload-official-prod', ['build-official-prod'], function () {
     var credentials = awsCredentials('eu-central-1', 'wavesexplorer.com');
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
@@ -96,8 +100,8 @@ gulp.task('upload-devnet', ['build-devnet'], function () {
 });
 
 
-gulp.task('publish-official-staging', ['build-official', 'upload-official-staging', 'invalidate-official-staging']);
-gulp.task('publish-official-prod', ['build-official', 'upload-official-prod']);
+gulp.task('publish-official-staging', ['build-official-staging', 'upload-official-staging', 'invalidate-official-staging']);
+gulp.task('publish-official-prod', ['build-official-prod', 'upload-official-prod']);
 gulp.task('publish-devnet', ['build-devnet', 'upload-devnet', 'invalidate-devnet']);
 
 gulp.task('publish', ['publish-official-staging']);
