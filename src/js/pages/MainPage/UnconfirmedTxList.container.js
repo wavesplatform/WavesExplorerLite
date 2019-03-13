@@ -8,7 +8,8 @@ import {UnconfirmedTxList} from './UnconfirmedTxList.view';
 
 class UnconfirmedTxListContainer extends React.Component {
     state = {
-        unconfirmed: []
+        transactions: [],
+        size: 0
     };
 
     componentWillUnmount() {
@@ -22,7 +23,10 @@ class UnconfirmedTxListContainer extends React.Component {
     fetchData = () => {
         const {networkId} = this.props.match.params;
         return ServiceFactory.forNetwork(networkId).transactionService().loadUnconfirmed()
-            .then(unconfirmed => this.setState({unconfirmed}));
+            .then(unconfirmed => this.setState({
+                size: unconfirmed.size,
+                transactions: unconfirmed.transactions
+            }));
     };
 
     setRefreshInterval = () => {
@@ -39,7 +43,7 @@ class UnconfirmedTxListContainer extends React.Component {
     render() {
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load unconfirmed transactions">
-                <UnconfirmedTxList transactions={this.state.unconfirmed} />
+                <UnconfirmedTxList transactions={this.state.transactions} />
             </Loader>
         );
     }
