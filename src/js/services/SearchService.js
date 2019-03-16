@@ -4,10 +4,11 @@ import EventBuilder from '../shared/analytics/EventBuilder';
 import {ApiClientService} from './ApiClientService';
 
 export class SearchService extends ApiClientService {
-    constructor(configurationService, analyticsService, networkId) {
+    constructor(configurationService, analyticsService, aliasService, networkId) {
         super(configurationService, networkId);
 
         this.analyticsService = analyticsService;
+        this.aliasService = aliasService;
     }
 
     search = query => {
@@ -39,11 +40,11 @@ export class SearchService extends ApiClientService {
                 return routes.transactions.one(infoResponse.data.id);
             });
         }).catch(() => {
-            return api.aliases.address(query).then(addressResponse => {
+            return this.aliasService.loadAddress(query).then(address => {
                 const event = this.createEvent(SearchResult.alias);
                 this.analyticsService.sendEvent(event);
 
-                return routes.addresses.one(addressResponse.data.address);
+                return routes.addresses.one(address);
             });
         }).catch(e => {
             const event = this.createEvent(SearchResult.unknown);

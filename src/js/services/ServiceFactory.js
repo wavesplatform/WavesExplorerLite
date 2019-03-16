@@ -40,10 +40,12 @@ class NetworkDependentServices {
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
             this._spamDetectionService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
+        this._aliasService = new AliasService(globalServices.configurationService(), networkId);
     }
 
     searchService = () => new SearchService(this._globalServices.configurationService(),
         this._globalServices.analyticsService(),
+        this._aliasService,
         this._networkId);
 
     peersService = () => new PeersService(this._globalServices.configurationService(), this._networkId);
@@ -69,7 +71,7 @@ class NetworkDependentServices {
         this._globalServices.configurationService(),
         this._networkId);
 
-    aliasService = () => new AliasService(this._globalServices.configurationService(), this._networkId);
+    aliasService = () => this._aliasService;
 
     assetService = () => new AssetService(this._globalServices.configurationService(), this._networkId);
 }

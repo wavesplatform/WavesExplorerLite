@@ -23,7 +23,8 @@ axios.defaults.transformResponse = [parseResponse];
 const retryableAxios = axios.create();
 retryableAxios.defaults.raxConfig = {
     instance: retryableAxios,
-    retryDelay: 10,
+    retryDelay: 100,
+    retry: 5,
     httpMethodsToRetry: ['GET'],
     shouldRetry: shouldRetryRequest
 };

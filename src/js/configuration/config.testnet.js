@@ -4,6 +4,7 @@ export default {
     networkId: 'testnet',
     displayName: 'Testnet',
     apiBaseUrl: nodeUrl,
+    dataServicesBaseUrl: 'https://api.wavesplatform.com/v0',
     nodes: [
         {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
