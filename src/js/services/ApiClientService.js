@@ -6,5 +6,7 @@ export class ApiClientService extends ConfigurableService {
         super(configurationService, networkId);
     }
 
-    getApi = () => nodeApi(this.configuration().apiBaseUrl);
+    getApi() {
+        return nodeApi(this.configuration().apiBaseUrl);
+    }
 }
