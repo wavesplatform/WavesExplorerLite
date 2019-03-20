@@ -43,7 +43,7 @@ class UnconfirmedTxListContainer extends React.Component {
     render() {
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load unconfirmed transactions">
-                <UnconfirmedTxList transactions={this.state.transactions} />
+                <UnconfirmedTxList transactions={this.state.transactions} count={this.state.size} />
             </Loader>
         );
     }

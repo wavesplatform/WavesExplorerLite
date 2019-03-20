@@ -5,14 +5,19 @@ import {UnconfirmedTxListItem} from './UnconfirmedTxListItem.view';
 
 export class UnconfirmedTxList extends React.Component {
     static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired
+        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
+        count: PropTypes.number
+    };
+
+    static defaultProps = {
+        count: 0
     };
 
     renderList() {
         return (
             <React.Fragment>
                 <div className="panel-title">
-                    <span className="title">Unconfirmed Transactions ({this.props.transactions.length})</span>
+                    <span className="title">Unconfirmed Transactions ({this.props.count})</span>
                 </div>
                 {this.props.transactions.map((item) => {
                     return (<UnconfirmedTxListItem key={item.id} transaction={item}/>);
