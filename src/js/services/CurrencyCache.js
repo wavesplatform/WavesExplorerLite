@@ -1,21 +1,19 @@
-import Dexie from 'dexie';
 import Currency from '../shared/Currency';
 
-const CURRENT_DATABASE_VERSION = 1;
-
-class CurrencyCache {
-    constructor() {
-        this.db = new Dexie('CurrencyCache');
-        this.db.version(CURRENT_DATABASE_VERSION).stores({
-            cache: 'id, *lastAccess'
-        });
+export class CurrencyCache {
+    constructor(database) {
+        this.cache = database.currencyCache();
     }
 
     get = id => {
-        return this.db.cache.get(id)
+        return this.cache.get(id)
             .then(entry => {
-                if (!entry)
+                if (!entry) {
                     return null;
+                }
+
+                entry.lastAccess = Date.now();
+                this.cache.put(entry);
 
                 return new Currency(entry);
             });
@@ -28,6 +26,6 @@ class CurrencyCache {
             precision: currency.precision,
             lastAccess: Date.now()
         };
-        return this.db.stores.cache.put(entry);
+        return this.cache.put(entry);
     };
 }

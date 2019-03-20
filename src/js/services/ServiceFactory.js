@@ -1,3 +1,5 @@
+import {Database} from './Database';
+import {CurrencyCache} from './CurrencyCache';
 import {CurrencyService} from './CurrencyService';
 import {TransactionTransformerService} from './TransactionTransformerService';
 import {SearchService} from './SearchService';
@@ -15,6 +17,8 @@ import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
+
+const database = new Database();
 
 class GlobalServices {
     constructor() {
@@ -34,7 +38,8 @@ class NetworkDependentServices {
     constructor(globalServices, networkId) {
         this._globalServices = globalServices;
         this._networkId = networkId;
-        this._currencyService = new CurrencyService(globalServices.configurationService(), networkId);
+        this._currencyService = new CurrencyService(globalServices.configurationService(),
+            new CurrencyCache(database), networkId);
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
