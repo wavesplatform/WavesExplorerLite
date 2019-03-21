@@ -1,5 +1,6 @@
-import {api} from '../shared/api/NodeApi';
 import {ApiClientService} from './ApiClientService';
+
+const MAX_UNCONFIRMED_TRANSACTIONS = 25;
 
 export class TransactionService extends ApiClientService {
     constructor(transactionTransformerService, configurationService, networkId) {
@@ -16,7 +17,16 @@ export class TransactionService extends ApiClientService {
 
     loadUnconfirmed = () => {
         return this.getApi().transactions.unconfirmed().then(response => {
-            return this.transformer.transform(response.data);
-        })
+            const transactions = response.data;
+            transactions.sort((a, b) => b.timestamp - a.timestamp);
+
+            const size = transactions.length;
+            const sliced = transactions.slice(0, MAX_UNCONFIRMED_TRANSACTIONS);
+
+            return this.transformer.transform(sliced).then(transformed => ({
+                size,
+                transactions: transformed
+            }));
+        });
     };
 }
