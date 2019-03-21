@@ -14,6 +14,12 @@ export class AliasService extends ApiClientService {
                 }
 
                 return addressResponse.data.address;
+            })
+            .then(address => {
+                if (!address)
+                    throw new Error('Invalid alias detected');
+
+                return address;
             });
     };
 
