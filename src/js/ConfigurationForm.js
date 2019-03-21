@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import {isWebUri, isHttpsUri} from 'valid-url';
+import {nodeApi} from './shared/api/NodeApi';
 
 const valuesShape = PropTypes.shape({
     apiBaseUrl: PropTypes.string,
@@ -25,27 +26,41 @@ const InputComponent = ({
 );
 
 const validate = values => {
-    const url = values.apiBaseUrl.trim();
-    if (!url) {
-        return {
-            apiBaseUrl: 'Url is required'
-        };
-    }
+    return Promise.resolve().then(() => {
+        const url = values.apiBaseUrl.trim();
+        if (!url) {
+            throw {
+                apiBaseUrl: 'Url is required'
+            };
+        }
 
-    const currentProtocol = window.location.protocol;
-    if (currentProtocol.startsWith('https') && !isHttpsUri(values.apiBaseUrl)) {
-        return {
-            apiBaseUrl: `Invalid url. The url must match protocol definition (${currentProtocol})`
-        };
-    }
+        const currentProtocol = window.location.protocol;
+        if (currentProtocol.startsWith('https') && !isHttpsUri(values.apiBaseUrl)) {
+            throw {
+                apiBaseUrl: `Invalid url. The url must match protocol definition (${currentProtocol})`
+            };
+        }
 
-    if (!isWebUri(values.apiBaseUrl)) {
-        return {
-            apiBaseUrl: `Invalid url`
-        };
-    }
+        if (!isWebUri(values.apiBaseUrl)) {
+            throw {
+                apiBaseUrl: `Invalid url`
+            };
+        }
 
-    return {};
+        return nodeApi(values.apiBaseUrl)
+            .version()
+            .catch(() => {
+                throw {
+                    apiBaseUrl: 'Failed to connect to the specified node'
+                }
+            });
+    }).then(versionResponse => {
+        if (!versionResponse.data.version) {
+            throw {
+                apiBaseUrl: `Node has failed to report it's version`
+            }
+        }
+    });
 };
 
 export default class ConfigurationForm extends React.Component {

@@ -1,16 +1,9 @@
 import configuredNetworks from '../configuration';
+import Strings from '../shared/Strings';
 
 const CUSTOM_NETWORK_ID = 'custom';
 const CUSTOM_NETWORK_NAME = 'Custom';
 const copyAndFreeze = object => Object.freeze(Object.assign({}, object));
-
-const trimEnd = (string, char) => {
-    while (string.charAt(string.length - 1) === char) {
-        string = string.substring(0, string.length - 1);
-    }
-
-    return string;
-};
 
 export class ConfigurationService {
     constructor(storageService) {
@@ -58,7 +51,7 @@ export class ConfigurationService {
             this.networks.push(this.customNetwork);
         }
 
-        this.customNetwork.apiBaseUrl = trimEnd(apiBaseUrl, '/');
+        this.customNetwork.apiBaseUrl = Strings.trimEnd(apiBaseUrl, '/');
         this.customNetwork.nodes = [{url: apiBaseUrl}];
         this.save();
     };
