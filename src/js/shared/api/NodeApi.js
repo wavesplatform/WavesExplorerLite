@@ -3,6 +3,7 @@ import * as rax from 'retry-axios';
 import json from 'json-bigint';
 
 import DateTime from '../DateTime';
+import Strings from '../Strings';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 
@@ -100,8 +101,9 @@ function shouldRetryRequest(err) {
 }
 
 export const nodeApi = (baseUrl) => {
-    const get = (url, config) => axios.get(baseUrl + url, config);
-    const retryableGet = (url, config) => retryableAxios.get(baseUrl + url, config);
+    const trimmedUrl = Strings.trimEnd(baseUrl, '/');
+    const get = (url, config) => axios.get(trimmedUrl + url, config);
+    const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {
         version: () => get('/node/version'),
