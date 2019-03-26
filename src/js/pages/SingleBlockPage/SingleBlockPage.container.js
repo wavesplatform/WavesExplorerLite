@@ -76,9 +76,7 @@ export class SingleBlockPage extends React.Component {
             this.setState({currentHeight: parseInt(height)});
             this.fetchData(height)
                 .catch(error => {
-                    console.error(error);
-                    console.log("Error response status: " + error.status);
-                    console.log(error.response.data);
+                    ServiceFactory.global().errorReportingService().captureException(error);
                 });
         }
     }
