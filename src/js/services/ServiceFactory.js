@@ -1,5 +1,5 @@
 import {Database} from './Database';
-import {CurrencyCache} from './CurrencyCache';
+import {SafeCurrencyCache} from './SafeCurrencyCache';
 import {CurrencyService} from './CurrencyService';
 import {TransactionTransformerService} from './TransactionTransformerService';
 import {SearchService} from './SearchService';
@@ -39,7 +39,7 @@ class NetworkDependentServices {
         this._globalServices = globalServices;
         this._networkId = networkId;
         this._currencyService = new CurrencyService(globalServices.configurationService(),
-            new CurrencyCache(database), networkId);
+            new SafeCurrencyCache(database, globalServices.errorReportingService()), networkId);
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
