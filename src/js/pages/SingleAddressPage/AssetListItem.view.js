@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TransactionRef from '../../components/TransactionRef';
+import AssetRef from '../../components/AssetRef';
 
 export class AssetListItem extends React.PureComponent {
     static propTypes = {
@@ -13,7 +13,7 @@ export class AssetListItem extends React.PureComponent {
         return (
             <tr>
                 <td data-label="ID">
-                    <div className="line no-wrap"><TransactionRef txId={asset.id}/></div>
+                    <div className="line no-wrap"><AssetRef assetId={asset.id}/></div>
                 </td>
                 <td data-label="Name">
                     <div className="line">{asset.name}</div>
