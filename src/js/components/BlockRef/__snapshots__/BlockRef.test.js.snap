@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockRef should render 1`] = `
+<a
+  href="/blocks/4312"
+  onClick={[Function]}
+>
+  4312
+</a>
+`;
