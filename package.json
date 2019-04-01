@@ -49,6 +49,7 @@
         "babel-loader": "^8",
         "copy-webpack-plugin": "4.5.2",
         "css-loader": "1.0.0",
+        "enzyme": "^3.9.0",
         "file-loader": "1.1.11",
         "gulp": "3.9.1",
         "gulp-awspublish": "3.4.0",
