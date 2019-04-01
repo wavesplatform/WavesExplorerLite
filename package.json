@@ -12,7 +12,9 @@
         "start": "webpack-dev-server --hot --open --mode development --history-api-fallback --env.network=mainnet",
         "app:dev": "webpack --mode development --config=webpack.config.js",
         "app:prod": "webpack --mode production --config=webpack.config.js",
-        "test": "jest"
+        "test": "jest",
+        "build:dev": "yarn test && yarn app:dev",
+        "build:prod": "yarn test && yarn app:prod"
     },
     "dependencies": {
         "@babel/runtime": "^7.3.4",
