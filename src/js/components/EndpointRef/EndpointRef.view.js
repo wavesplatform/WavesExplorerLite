@@ -33,7 +33,12 @@ const EndpointRef = ({endpoint, title, appearance, match}) => {
 EndpointRef.propTypes = {
     endpoint: PropTypes.string.isRequired,
     title: PropTypes.string,
-    appearance: PropTypes.oneOf([REGULAR, BRIGHT])
+    appearance: PropTypes.oneOf([REGULAR, BRIGHT]),
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            networkId: PropTypes.string
+        })
+    }).isRequired
 };
 
 EndpointRef.defaultProps = {

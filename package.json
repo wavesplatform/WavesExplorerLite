@@ -52,6 +52,8 @@
         "copy-webpack-plugin": "4.5.2",
         "css-loader": "1.0.0",
         "enzyme": "^3.9.0",
+        "enzyme-adapter-react-16": "^1.11.2",
+        "enzyme-to-json": "^3.3.5",
         "file-loader": "1.1.11",
         "gulp": "3.9.1",
         "gulp-awspublish": "3.4.0",
