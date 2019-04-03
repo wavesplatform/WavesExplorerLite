@@ -35,7 +35,7 @@ function publishToS3(credentials, fileSpec) {
 }
 
 function buildApp(network, env, done) {
-    exec('yarn run app:' + env + ' --env.network=' + network, function (err, stdout, stderr) {
+    exec('yarn run build:' + env + ' --env.network=' + network, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
