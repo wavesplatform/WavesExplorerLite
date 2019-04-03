@@ -7,9 +7,15 @@ jest.mock('../../services/ServiceFactory');
 import ServiceFactory from '../../services/ServiceFactory';
 
 describe('Loader', () => {
-    it('should render spinner when promise is in flight', () => {
+    const waitForAsync = () => new Promise(resolve => setImmediate(resolve));
+
+    it('should render spinner when promise is in flight', async () => {
+        expect.assertions(1);
         const promise = new Promise(() => {});
         const wrapper = shallow(<Loader fetchData={() => promise} />);
+
+        await waitForAsync();
+        wrapper.update();
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -18,11 +24,12 @@ describe('Loader', () => {
         const promise = Promise.resolve();
         const wrapper = shallow(<Loader fetchData={() => promise}>children</Loader>);
 
-        await promise;
+        await waitForAsync();
+        wrapper.update();
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('should render error when promise is rejected', () => {
+    it('should render error when promise is rejected', async () => {
         ServiceFactory.global.mockReturnValue({
             errorReportingService: jest.fn().mockReturnValue({
                 captureException: jest.fn()
@@ -30,13 +37,12 @@ describe('Loader', () => {
         });
 
         expect.assertions(1);
-        const promise = Promise.reject(1);
         const wrapper = shallow(
-            <Loader fetchData={() => promise} errorTitle="Epic fail" />
+            <Loader fetchData={() => Promise.reject(1)} errorTitle="Epic fail" />
         );
 
-        return promise.catch(() => {
-            expect(wrapper).toMatchSnapshot();
-        });
+        await waitForAsync();
+        wrapper.update();
+        expect(wrapper).toMatchSnapshot();
     });
 });
