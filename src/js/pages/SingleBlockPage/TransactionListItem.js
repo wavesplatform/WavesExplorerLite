@@ -47,6 +47,9 @@ export const createListItem = (transaction) => {
         case 15:
             return <AssetScriptTransactionListItem key={transaction.id} tx={transaction} />;
 
+        case 16:
+            return <ScriptInvocationTransactionListItem key={transaction.id} tx={transaction} />;
+
         default:
             return null;
     }
@@ -381,6 +384,23 @@ class AssetScriptTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} />
                 <JustFee fee={tx.fee} />
+            </tr>
+        );
+    }
+}
+
+class ScriptInvocationTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee} /> : <JustFee fee={tx.fee} />}
             </tr>
         );
     }
