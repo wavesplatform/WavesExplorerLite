@@ -13,7 +13,7 @@ export class InvocationInfoView extends React.Component {
         return (
             <span>
                 <span>{this.props.function}</span>
-                ({this.props.args.map((item, index) => value)})
+                ({this.props.args.map((item, index) => item.value)})
             </span>
         );
     }
