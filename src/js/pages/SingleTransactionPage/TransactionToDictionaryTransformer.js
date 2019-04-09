@@ -63,10 +63,10 @@ const transactionToDictionary = (tx) => {
 };
 
 const scriptInvocationTransactionToItems = tx => {
-    const paymentItems = tx.payment ? [{
+    const paymentItems = [{
         label: 'Payment',
-        value: <MoneyInfo value={tx.payment}/>
-    }] : [];
+        value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
+    }];
 
     return [
         ...buildTransactionHeaderItems(tx),
