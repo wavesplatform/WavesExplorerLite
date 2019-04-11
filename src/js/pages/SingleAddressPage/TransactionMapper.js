@@ -4,42 +4,42 @@ import Money from '../../shared/Money';
 const INCOMING = 'incoming';
 const OUTGOING = 'outgoing';
 
-const transactionMapper = (transactions, currentAddress) => {
-    return transactions.map(item => mapTransactionToPromise(item, currentAddress));
+const transactionMapper = (transactions, currentUser) => {
+    return transactions.map(item => mapTransactionToPromise(item, currentUser));
 };
 
-const mapTransactionToPromise = (tx, currentAddress) => {
+const mapTransactionToPromise = (tx, currentUser) => {
     switch (tx.type) {
         case 2:
         case 4:
-            return mapTransfer(tx, currentAddress);
+            return mapTransfer(tx, currentUser.address);
 
         case 3:
-            return mapIssue(tx, currentAddress);
+            return mapIssue(tx, currentUser.address);
 
         case 5:
-            return mapReissue(tx, currentAddress);
+            return mapReissue(tx, currentUser.address);
 
         case 6:
-            return mapBurn(tx, currentAddress);
+            return mapBurn(tx, currentUser.address);
 
         case 7:
-            return mapExchange(tx, currentAddress);
+            return mapExchange(tx, currentUser.address);
 
         case 8:
-            return mapLease(tx, currentAddress);
+            return mapLease(tx, currentUser.address);
 
         case 9:
-            return mapLeaseCancel(tx, currentAddress);
+            return mapLeaseCancel(tx, currentUser.address);
 
         case 10:
-            return mapAlias(tx, currentAddress);
+            return mapAlias(tx, currentUser.address);
 
         case 11:
-            return mapMassTransfer(tx, currentAddress);
+            return mapMassTransfer(tx, currentUser);
 
         case 16:
-            return mapScriptInvocation(tx, currentAddress);
+            return mapScriptInvocation(tx, currentUser.address);
 
         default:
             return Object.assign({}, tx);
@@ -63,6 +63,13 @@ const moneyToObject = money => ({
     currency: money.currency.toString()
 });
 
+const matchesUser = (currentUser, addressOrAlias) => {
+    if (addressOrAlias === currentUser.address)
+        return true;
+
+    return !!currentUser.aliases[addressOrAlias];
+};
+
 const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
         recipient: tx.dappAddress
@@ -79,17 +86,17 @@ const mapScriptInvocation = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), tail);
 };
 
-const mapMassTransfer = (tx, currentAddress) => {
+const mapMassTransfer = (tx, currentUser) => {
     const tail = {};
-    if (tx.sender === currentAddress) {
+    if (matchesUser(currentUser, tx.sender)) {
         tail.direction = OUTGOING;
         tail.out = moneyToObject(tx.totalAmount);
     } else {
         tail.direction = INCOMING;
-        tail.recipient = currentAddress;
+        tail.recipient = currentUser.address;
 
         let total = new Money(0, tx.totalAmount.currency);
-        tx.transfers.filter(transfer => transfer.recipient === currentAddress).forEach(t => {
+        tx.transfers.filter(transfer => matchesUser(currentUser, transfer.recipient)).forEach(t => {
             total = total.plus(t.amount);
         });
 

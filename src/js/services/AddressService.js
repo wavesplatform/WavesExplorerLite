@@ -31,15 +31,21 @@ export class AddressService extends ApiClientService {
         });
     };
 
+    loadRawAliases = (address) => {
+        return this.getApi().addresses.aliases(address).then(aliasesResponse => aliasesResponse.data);
+    };
+
+    transformAndGroupAliases = (rawAliases) => {
+        const lines = rawAliases.map(item => Alias.fromString(item).alias);
+        const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
+        return Object.keys(grouped).sort().map(letter => ({
+            letter,
+            aliases: grouped[letter].sort()
+        }));
+    };
+
     loadAliases = (address) => {
-        return this.getApi().addresses.aliases(address).then(aliasesResponse => {
-            const lines = aliasesResponse.data.map(item => Alias.fromString(item).alias);
-            const grouped = groupBy(lines, item => item.toUpperCase().charAt(0));
-            return Object.keys(grouped).sort().map(letter => ({
-                letter,
-                aliases: grouped[letter].sort()
-            }));
-        });
+        return this.loadRawAliases(address).then(rawAliases => this.transformAndGroupAliases(rawAliases));
     };
 
     loadAssets = (address) => {

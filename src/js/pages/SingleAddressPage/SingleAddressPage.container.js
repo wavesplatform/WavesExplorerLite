@@ -41,36 +41,81 @@ export class SingleAddressPage extends React.Component {
 
         return addressService.loadBalance(address)
             .then(balance => this.setState({balance}))
-            .then(_ => this.fetchTabData(this.state.selectedTabIndex));
+            .then(_ => this.fetchTabData(this.state.selectedTabIndex, true));
     };
 
-    fetchTabData = (selectedIndex) => {
+    fetchTabData = (selectedIndex, forceUpdate) => {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         switch (selectedIndex) {
             case 0:
-                return addressService.loadTransactions(address).then(transactions => {
-                    return transactionMapper(transactions, address);
+                return this._loadTransactions(addressService, address, forceUpdate);
+
+            case 1:
+                return this._loadAliases(addressService, address, forceUpdate);
+
+            case 2:
+                return this._loadAssets(addressService, address, forceUpdate);
+
+            case 3:
+                return this._loadData(addressService, address, forceUpdate);
+
+            case 4:
+                return this._loadScript(addressService, address);
+        }
+
+        return Promise.resolve();
+    };
+
+    _loadTransactions = (addressService, address, forceUpdate) => {
+        if (!forceUpdate && this.state.transactions.length > 0)
+            return Promise.resolve();
+
+        return addressService.loadRawAliases(address).then(rawAliases => {
+            const aliases = addressService.transformAndGroupAliases(rawAliases);
+            this.setState({aliases});
+
+            return addressService.loadTransactions(address).then(transactions => {
+                    const currentUser = {
+                        address,
+                        aliases: {}
+                    };
+                    rawAliases.forEach(item => {
+                       currentUser.aliases[item] = true;
+                    });
+
+                    return transactionMapper(transactions, currentUser);
                 })
                 .then(transactions => {
                     this.setState({transactions});
                 });
+        });
+    };
 
-            case 1:
-                return addressService.loadAliases(address).then(aliases => this.setState({aliases}));
+    _loadAliases = (addressService, address, forceUpdate) => {
+        if (!forceUpdate && this.state.aliases.length > 0)
+            return Promise.resolve();
 
-            case 2:
-                return addressService.loadAssets(address).then(assets => this.setState({assets}));
+        return addressService.loadAliases(address).then(aliases => this.setState({aliases}));
+    };
 
-            case 3:
-                return addressService.loadData(address).then(data => this.setState({data}));
+    _loadAssets = (addressService, address, forceUpdate) => {
+        if (!forceUpdate && this.state.assets.length > 0)
+            return Promise.resolve();
 
-            case 4:
-                return addressService.loadScript(address).then(script => this.setState({script}));
-        }
+        return addressService.loadAssets(address).then(assets => this.setState({assets}));
+    };
 
-        return Promise.resolve();
+    _loadData = (addressService, address, forceUpdate) => {
+        if (!forceUpdate && this.state.data.length > 0)
+            return Promise.resolve();
+
+        return addressService.loadData(address).then(data => this.setState({data}));
+    };
+
+    _loadScript = (addressService, address) => {
+        return addressService.loadScript(address).then(script => this.setState({script}));
     };
 
     handleTabActivate = (selectedIndex) => {
