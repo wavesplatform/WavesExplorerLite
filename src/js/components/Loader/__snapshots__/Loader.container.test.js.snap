@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader should render children when promise is resolved 1`] = `"children"`;
+
+exports[`Loader should render error when promise is rejected 1`] = `
+<Error
+  title="Epic fail"
+/>
+`;
+
+exports[`Loader should render spinner when promise is in flight 1`] = `<Loading />`;

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EndpointRef should render address ref 1`] = `
+<a
+  className=""
+  href="/address/3PPKDQ3G67gekeobR8MENopXytEf6M8WXhs"
+  onClick={[Function]}
+>
+  3PPKDQ3G67gekeobR8MENopXytEf6M8WXhs
+</a>
+`;
+
+exports[`EndpointRef should render alias ref 1`] = `
+<a
+  className=""
+  href="/aliases/test"
+  onClick={[Function]}
+>
+  test
+</a>
+`;
