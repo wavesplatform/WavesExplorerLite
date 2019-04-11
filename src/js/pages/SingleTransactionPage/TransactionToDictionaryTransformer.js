@@ -9,6 +9,7 @@ import Spacer from '../../components/Spacer';
 import ScriptInfo from '../../components/ScriptInfo';
 import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
+import InvocationInfo from '../../components/InvocationInfo';
 import {Description} from './Description.view';
 
 const transactionToDictionary = (tx) => {
@@ -53,9 +54,33 @@ const transactionToDictionary = (tx) => {
         case 15:
             return assetScriptTransactionToItems(tx);
 
+        case 16:
+            return scriptInvocationTransactionToItems(tx);
+
         default:
             return [];
     }
+};
+
+const scriptInvocationTransactionToItems = tx => {
+    const paymentItems = [{
+        label: 'Payment',
+        value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
+    }];
+
+    return [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'DApp Address',
+            value: <EndpointRef endpoint={tx.dappAddress} />
+        }, {
+            label: 'Call',
+            value: <InvocationInfo {...tx.call} />
+        },
+        ...paymentItems,
+        buildFeeItem(tx),
+        buildSenderItem(tx)
+    ];
 };
 
 const dataTransactionToItems = tx => {
