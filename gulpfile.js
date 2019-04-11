@@ -77,7 +77,7 @@ gulp.task('build-official-staging', ['clean'], function (done) {
     buildApp('mainnet', 'dev', done);
 });
 
-gulp.task('docker-official-prod', ['build-official-prod'], function (done) {
+gulp.task('docker-official-prod', function (done) {
     dockerImage(done);
 });
 
