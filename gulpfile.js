@@ -42,6 +42,14 @@ function buildApp(network, env, done) {
     })
 }
 
+function dockerImage(done) {
+    exec('docker build . -t waves-explorer:' + config.package.data.version, function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    })
+}
+
 function invalidateCache(distributionId) {
     const settings = {
         accessKeyId: process.env.EXPLORER_AWS_ACCESS_KEY_ID,
@@ -67,6 +75,10 @@ gulp.task('build-official-prod', ['clean'], function (done) {
 
 gulp.task('build-official-staging', ['clean'], function (done) {
     buildApp('mainnet', 'dev', done);
+});
+
+gulp.task('docker-official-prod', function (done) {
+    dockerImage(done);
 });
 
 gulp.task('build-devnet', ['clean'], function (done) {
