@@ -1,8 +1,9 @@
 import Currency from '../shared/Currency';
 
-export class CurrencyCache {
-    constructor(database) {
+export class DatabaseCurrencyCache {
+    constructor(database, errorReportingService) {
         this.cache = database.currencyCache();
+        this.errorReportingService = errorReportingService;
     }
 
     get = id => {
@@ -13,7 +14,7 @@ export class CurrencyCache {
                 }
 
                 entry.lastAccess = Date.now();
-                this.cache.put(entry);
+                this._putSilently(entry);
 
                 return new Currency(entry);
             });
@@ -26,6 +27,12 @@ export class CurrencyCache {
             precision: currency.precision,
             lastAccess: Date.now()
         };
-        return this.cache.put(entry);
+        return this._putSilently(entry);
     };
+
+    _putSilently = entry => {
+        return this.cache.put(entry).catch(error => {
+            this.errorReportingService.captureException(error);
+        });
+    }
 }

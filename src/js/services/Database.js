@@ -10,5 +10,15 @@ export class Database {
         });
     }
 
+    ensureSupported = () => {
+        const id = -1;
+        this.currencyCache().put({
+            id,
+            lastAccess: Date.now()
+        }).then(() => {
+            this.currencyCache().delete(id);
+        });
+    };
+
     currencyCache = () => this.db.currency;
 }
