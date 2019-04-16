@@ -593,6 +593,74 @@ body {
     }
 }
 
+.select-list {
+    cursor: pointer;
+    border-radius: 6px;
+    transition: .3s;
+    background: map-get($colors, iceBlue);
+    position: relative;
+    padding: 6px 40px 6px 8px;
+
+    &:hover {
+        background: map-get($colors, paleBlue);
+    }
+
+    &.expanded {
+        background: map-get($colors, white);
+        color: map-get($colors, basic500);
+        border-radius: 6px 6px 0 0;
+        &:hover {
+            cursor: default;
+        }
+    }
+
+    &.expanded + .select-list-expanded {
+        display: block;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05)
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 5px;
+        background: url(../images/selector-14-black.svg) center no-repeat;
+    }
+}
+
+.select-list-expanded {
+    display: none;
+    width: calc(100% - 23px);
+    background: map_get($colors, white);
+    border-radius: 0 0 6px 6px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+    overflow: hidden;
+
+    div {
+        transition: background-color .3s;
+        padding-left: 8px;
+        line-height: 28px;
+        cursor: pointer;
+        border-bottom: 1px dotted map-get($colors, iceBlue);
+        &:last-child {
+            border-bottom: 0 none;
+        }
+        &:first-child {
+            border-top: 1px dotted map-get($colors, iceBlue);
+        }
+        &:hover {
+            background-color: map-get($colors, iceBlue);
+        }
+    }
+}
+
 .network-switcher {
     display: flex;
     align-items: center;

@@ -4,6 +4,7 @@ import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import {ApiClientService} from './ApiClientService';
+import {thirdPartyApi} from '../shared/api/ThirdPartyApi';
 
 export class AddressService extends ApiClientService {
     constructor(transactionTransformerService, currencyService, configurationService, networkId) {
@@ -77,5 +78,12 @@ export class AddressService extends ApiClientService {
 
     validate = (address) => {
         return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
+    };
+
+    decompileScript = (scriptBase64) => {
+        const config = this.configuration();
+        const api = thirdPartyApi(config.spamListUrl, config.decompileScriptUrl);
+
+        return api.decompileScript(scriptBase64).then(decompileResponse => decompileResponse.data.script);
     };
 }

@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EmptyData from '../EmptyData';
+import SelectList from '../SelectList';
+
+const EmptyScript = () => (
+    <div className='data-container empty'>
+        <EmptyData />
+    </div>
+);
 
 export class ScriptInfo extends React.PureComponent {
     static propTypes = {
@@ -10,11 +17,12 @@ export class ScriptInfo extends React.PureComponent {
 
     render() {
         const isEmpty = !this.props.script;
-        const rowClassName = 'data-container' + (isEmpty ? ' empty' : '');
+        if (isEmpty)
+            return <EmptyScript />;
 
         return (
-            <div className={rowClassName}>
-                {isEmpty ? <EmptyData /> : <pre>{this.props.script}</pre> }
+            <div className="data-container">
+                <pre>{this.props.script}</pre>
             </div>
         );
     }

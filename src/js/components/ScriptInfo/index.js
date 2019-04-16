@@ -1,1 +1,1 @@
-export {ScriptInfo as default} from './ScriptInfo.view';
+export {RoutedScriptInfoContainer as default} from './ScriptInfo.container';
