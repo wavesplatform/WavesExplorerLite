@@ -322,6 +322,15 @@ th.price, th.amount {
     }
 }
 
+.data-container-tools {
+    background-color: map_get($colors, basic50);
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
 .data-container {
     background-color: map_get($colors, basic50);
     padding: 20px;

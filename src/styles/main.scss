@@ -593,6 +593,12 @@ body {
     }
 }
 
+.select-list-container {
+    height: 28px;
+    position: relative;
+    display: flex;
+}
+
 .select-list {
     cursor: pointer;
     border-radius: 6px;
@@ -634,7 +640,7 @@ body {
 
 .select-list-expanded {
     display: none;
-    width: calc(100% - 23px);
+    width: 100%;
     background: map_get($colors, white);
     border-radius: 0 0 6px 6px;
     position: absolute;

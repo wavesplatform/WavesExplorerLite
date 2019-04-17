@@ -2,20 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
-import {ScriptInfo} from './ScriptInfo.view';
-import SelectList from '../SelectList';
+import {ScriptInfoView, BASE64_FORMAT, JSON_FORMAT} from './ScriptInfo.view';
 import ServiceFactory from '../../services/ServiceFactory';
-
-const JSON_FORMAT = 'json';
-const BASE64_FORMAT = 'base64';
-
-const options = [{
-    option: JSON_FORMAT,
-    value: 'JSON'
-}, {
-    option: BASE64_FORMAT,
-    value: 'Base64'
-}];
 
 class ScriptInfoContainer extends React.Component {
     static propTypes = {
@@ -26,12 +14,18 @@ class ScriptInfoContainer extends React.Component {
         value: this.props.script
     };
 
-    handleSelectedItemChanged = (selectedItem) => {
-        if (selectedItem.option === BASE64_FORMAT) {
+    componentDidUpdate(prevProps) {
+        if (this.props.script !== prevProps.script) {
+            this.setState({value: this.props.script});
+        }
+    }
+
+    handleDisplayFormatChanged = (format) => {
+        if (format === BASE64_FORMAT) {
             this.setState({
                 value: this.props.script
             });
-        } else if (selectedItem.option === JSON_FORMAT) {
+        } else if (format === JSON_FORMAT) {
             const {networkId} = this.props.match.params;
 
             ServiceFactory
@@ -43,15 +37,7 @@ class ScriptInfoContainer extends React.Component {
     };
 
     render() {
-        return (
-            <React.Fragment>
-                <ScriptInfo script={this.state.value} />
-                <SelectList
-                    items={options}
-                    selectedItem={options[1]}
-                    onSelectedItemChanged={this.handleSelectedItemChanged} />
-            </React.Fragment>
-        );
+        return <ScriptInfoView script={this.state.value} onDisplayFormatChanged={this.handleDisplayFormatChanged} />;
     }
 }
 

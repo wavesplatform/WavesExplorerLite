@@ -28,7 +28,7 @@ export class SelectListView extends React.Component {
         const listClassName = 'select-list' + (expanded ? ' expanded' : '');
 
         return (
-            <div>
+            <div className="select-list-container">
                 <span className={listClassName} onClick={this.props.onToggle}>{selectedItem.value}</span>
                 <div className="select-list-expanded">
                     {items
