@@ -259,7 +259,7 @@
             padding: 0 14px;
             overflow: hidden;
             @include font(body);
-            flex-direction: column;
+            flex-wrap: wrap;
 
             @media screen and (max-width: 1100px) {
                 max-width: calc(100% - 110px);
