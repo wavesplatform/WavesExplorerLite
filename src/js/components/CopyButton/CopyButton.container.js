@@ -21,6 +21,6 @@ export class CopyButtonContainer extends React.PureComponent {
     };
 
     render() {
-        return this.state.hasCopied ? <Copied /> : <CopyButton text={this.props.text} onCopy={this.handleCopy} />;
+        return this.state.hasCopied ? <Copied /> : <CopyButton className={this.props.className} text={this.props.text} onCopy={this.handleCopy} />;
     }
 }

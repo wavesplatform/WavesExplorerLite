@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-const CopyButton = ({text, onCopy}) => {
+const CopyButton = ({text, onCopy, className}) => {
     return <CopyToClipboard text={text} onCopy={onCopy}>
-        <div className="btn btn-copy">Copy</div>
+        <div className={'btn btn-copy ' + className || ''}>Copy</div>
     </CopyToClipboard>
 };
 

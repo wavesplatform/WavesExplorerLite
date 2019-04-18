@@ -4,6 +4,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import EmptyData from '../EmptyData';
 import SelectList from '../SelectList';
+import CopyButton from "../CopyButton";
 
 export const JSON_FORMAT = 'json';
 export const BASE64_FORMAT = 'base64';
@@ -50,9 +51,7 @@ export class ScriptInfoView extends React.PureComponent {
                         selectedItem={options[1]}
                         onSelectedItemChanged={this.handleSelectedItemChanged} />
 
-                    <CopyToClipboard text={script}>
-                        <a>Copy</a>
-                    </CopyToClipboard>
+                    <CopyButton className={'btn-link'} text={script} />
                 </div>
             </React.Fragment>
         );
