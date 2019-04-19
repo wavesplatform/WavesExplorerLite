@@ -606,6 +606,7 @@ body {
     background: map-get($colors, iceBlue);
     position: relative;
     padding: 6px 40px 6px 8px;
+    min-width: 80px;
 
     &:hover {
         background: map-get($colors, paleBlue);

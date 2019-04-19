@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 import EmptyData from '../EmptyData';
 import SelectList from '../SelectList';
-import CopyButton from "../CopyButton";
+import CopyButton from '../CopyButton';
 
-export const JSON_FORMAT = 'json';
+export const DECOMPILED_FORMAT = 'decompiled';
 export const BASE64_FORMAT = 'base64';
 
 const options = [{
-    option: JSON_FORMAT,
-    value: 'JSON'
+    option: DECOMPILED_FORMAT,
+    value: 'Decompiled'
 }, {
     option: BASE64_FORMAT,
     value: 'Base64'
