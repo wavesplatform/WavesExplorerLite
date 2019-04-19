@@ -11,7 +11,7 @@ export const BASE64_FORMAT = 'base64';
 
 const options = [{
     option: JSON_FORMAT,
-    value: 'JSON'
+    value: 'Decompiled'
 }, {
     option: BASE64_FORMAT,
     value: 'Base64'
