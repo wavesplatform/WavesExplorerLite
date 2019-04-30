@@ -20,6 +20,7 @@ const parseResponse = (response) => {
 };
 
 axios.defaults.transformResponse = [parseResponse];
+axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 const retryableAxios = axios.create();
 retryableAxios.defaults.raxConfig = {
