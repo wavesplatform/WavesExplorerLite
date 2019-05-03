@@ -19,9 +19,14 @@ const parseResponse = (response) => {
     return response;
 };
 
-axios.defaults.transformResponse = [parseResponse];
+const defaultConfig = {
+    transformResponse: [parseResponse],
+    withCredentials: true
+};
 
-const retryableAxios = axios.create();
+const nodeAxios = axios.create(defaultConfig);
+
+const retryableAxios = axios.create(defaultConfig);
 retryableAxios.defaults.raxConfig = {
     instance: retryableAxios,
     retryDelay: 100,
@@ -103,7 +108,7 @@ function shouldRetryRequest(err) {
 
 export const nodeApi = (baseUrl) => {
     const trimmedUrl = Strings.trimEnd(baseUrl, '/');
-    const get = (url, config) => axios.get(trimmedUrl + url, config);
+    const get = (url, config) => nodeAxios.get(trimmedUrl + url, config);
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {
