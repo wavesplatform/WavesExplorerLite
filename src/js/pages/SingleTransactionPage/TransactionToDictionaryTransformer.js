@@ -79,7 +79,7 @@ const scriptInvocationTransactionToItems = tx => {
         },
         ...paymentItems,
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -91,7 +91,7 @@ const dataTransactionToItems = tx => {
             value: <DataInfo data={tx.data} />
         },
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -100,7 +100,7 @@ const scriptTransactionToItems = tx => {
         ...buildTransactionHeaderItems(tx),
         buildScriptItem(tx),
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -114,7 +114,7 @@ const sponsorshipTransactionToItems = tx => {
             label: 'Transaction Fee',
             value: tx.fee.toString()
         },
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -127,7 +127,7 @@ const assetScriptTransactionToItems = tx => {
         },
         buildScriptItem(tx),
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -139,7 +139,7 @@ const aliasTransactionToItems = tx => {
             value: <Description text={tx.alias} />
         },
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -151,7 +151,7 @@ const cancelLeaseTransactionItems = tx => {
             value: <TransactionRef txId={tx.leaseId} />
         },
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -161,7 +161,7 @@ const leaseTransactionToItems = tx => {
         buildAmountItem(tx),
         buildFeeItem(tx),
         buildRecipientItem(tx),
-        buildSenderItem(tx),
+        ...buildSenderAddressAndKeyItems(tx),
         {
             label: 'Status',
             value: tx.status
@@ -175,7 +175,7 @@ const reissueTransactionToItems = tx => {
         buildQuantityItem(tx),
         buildReissuableItem(tx),
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -193,7 +193,7 @@ const issueTransactionToItems = tx => {
         buildReissuableItem(tx),
         ...scriptItems,
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -212,7 +212,7 @@ const transferTransactionToItems = tx => {
         buildAmountItem(tx),
         buildFeeItem(tx),
         buildAttachmentItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -257,7 +257,7 @@ const massPaymentTransactionToItems = tx => {
         ...items,
         buildAttachmentItem(tx),
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        ...buildSenderAddressAndKeyItems(tx)
     ];
 };
 
@@ -303,11 +303,21 @@ const buildTransactionHeaderItems = tx => {
     return [{
         label: 'Type',
         value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge type={tx.type} /></React.Fragment>
-    }, buildTimestampItem(tx.timestamp), {
+    }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height} />
     }];
 };
+
+const buildVersionItem = tx => ({
+    label: 'Version',
+    value: tx.version
+});
+
+const buildSenderAddressAndKeyItems = tx => ([
+    buildSenderItem(tx),
+    buildSenderPublicKeyItem(tx)
+]);
 
 const buildQuantityItem = tx => ({
     label: 'Quantity',
@@ -327,6 +337,11 @@ const buildRecipientItem = tx => ({
 const buildSenderItem = tx => ({
     label: 'Sender',
     value: <EndpointRef endpoint={tx.sender} />
+});
+
+const buildSenderPublicKeyItem = tx => ({
+    label: 'Sender PublicKey',
+    value: tx.senderPublicKey
 });
 
 const buildFeeItem = tx => ({
