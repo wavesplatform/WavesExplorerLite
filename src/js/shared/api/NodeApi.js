@@ -21,9 +21,13 @@ const parseResponse = (response) => {
 
 const defaultConfig = {
     transformResponse: [parseResponse],
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+        common: {
+            ['Cache-Control']: 'no-cache'
+        }
+    }
 };
-defaultConfig.headers.common['Cache-Control'] = 'no-cache';
 
 const nodeAxios = axios.create(defaultConfig);
 
