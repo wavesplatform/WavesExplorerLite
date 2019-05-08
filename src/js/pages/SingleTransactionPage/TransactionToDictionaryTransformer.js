@@ -10,6 +10,7 @@ import ScriptInfo from '../../components/ScriptInfo';
 import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
+import StateChangesInfo from '../../components/StateChangesInfo';
 import {Description} from './Description.view';
 
 const transactionToDictionary = (tx) => {
@@ -68,6 +69,11 @@ const scriptInvocationTransactionToItems = tx => {
         value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
     }];
 
+    const stateItems = tx.stateChanges ? [{
+        label: 'State Changes',
+        value: <StateChangesInfo changes={tx.stateChanges} />
+    }] : [];
+
     return [
         ...buildTransactionHeaderItems(tx),
         {
@@ -79,7 +85,8 @@ const scriptInvocationTransactionToItems = tx => {
         },
         ...paymentItems,
         buildFeeItem(tx),
-        buildSenderItem(tx)
+        buildSenderItem(tx),
+        ...stateItems
     ];
 };
 
