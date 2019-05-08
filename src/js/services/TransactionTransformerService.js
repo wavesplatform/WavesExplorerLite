@@ -99,7 +99,7 @@ const transformScriptInvocation = (currencyService, tx) => {
 
         return promise.then(payment => {
             return Object.assign(copyMandatoryAttributes(tx), {
-                dappAddress: tx.dappAddress,
+                dappAddress: tx.dApp,
                 call: tx.call,
                 payment,
                 fee: Money.fromCoins(tx.fee, feeCurrency)
