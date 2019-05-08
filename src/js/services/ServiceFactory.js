@@ -17,6 +17,7 @@ import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
+import {StateChangeService} from './StateChangeService';
 
 const database = new Database();
 
@@ -42,8 +43,9 @@ class NetworkDependentServices {
             new SafeCurrencyCache(database, globalServices.errorReportingService()), networkId);
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
+        this._stateChangeService = new StateChangeService(globalServices.configurationService(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
-            this._spamDetectionService);
+            this._spamDetectionService, this._stateChangeService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
         this._aliasService = new AliasService(globalServices.configurationService(), networkId);
     }

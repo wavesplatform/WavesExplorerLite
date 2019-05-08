@@ -146,7 +146,8 @@ export const nodeApi = (baseUrl) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
 
                 return get(`/transactions/address/${address}/limit/${top}`);
-            }
+            },
+            stateChanges: id => get(`/debug/stateChanges/info/${id}`)
         },
         aliases: {
             address: (alias) => get(`/alias/by-alias/${alias}`)

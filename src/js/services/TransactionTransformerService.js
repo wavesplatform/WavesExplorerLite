@@ -4,13 +4,13 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
-const transformMultiple = (currencyService, spamDetectionService, transactions) => {
+const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
     const promises = transactions.map(item => transformSingle(currencyService, spamDetectionService, item));
 
     return Promise.all(promises);
 };
 
-const transformSingle = (currencyService, spamDetectionService, tx) => {
+const transformSingle = (currencyService, spamDetectionService, stateChangeService, tx) => {
     switch (tx.type) {
         case 2:
         case 4:
@@ -53,7 +53,7 @@ const transformSingle = (currencyService, spamDetectionService, tx) => {
             return transformAssetScript(currencyService, tx);
 
         case 16:
-            return transformScriptInvocation(currencyService, tx);
+            return transformScriptInvocation(currencyService, stateChangeService, tx);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -90,7 +90,7 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
-const transformScriptInvocation = (currencyService, tx) => {
+const transformScriptInvocation = (currencyService, stateChangeService, tx) => {
     return currencyService.get(tx.feeAssetId).then(feeCurrency => {
         const promise = tx.payment && tx.payment.length > 0
             ? currencyService.get(tx.payment[0].assetId)
@@ -98,12 +98,18 @@ const transformScriptInvocation = (currencyService, tx) => {
             : Promise.resolve(null);
 
         return promise.then(payment => {
-            return Object.assign(copyMandatoryAttributes(tx), {
+            const result = Object.assign(copyMandatoryAttributes(tx), {
                 dappAddress: tx.dApp,
                 call: tx.call,
                 payment,
                 fee: Money.fromCoins(tx.fee, feeCurrency)
             });
+
+            return stateChangeService.loadStateChanges(tx.id).then(changes => {
+                result.stateChanges = changes.stateChanges;
+
+                return result;
+            }).catch(() => result);
         });
     });
 };
@@ -303,15 +309,18 @@ const transformTransfer = (currencyService, spamDetectionService, tx) => {
 
 
 export class TransactionTransformerService {
-    constructor(currencyService, spamDetectionService) {
+    constructor(currencyService, spamDetectionService, stateChangeService) {
         this.currencyService = currencyService;
         this.spamDetectionService = spamDetectionService;
+        this.stateChangeService = stateChangeService;
     }
 
     transform = (input) => {
         if (Array.isArray(input))
-            return transformMultiple(this.currencyService, this.spamDetectionService, input);
+            return transformMultiple(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, input);
 
-        return transformSingle(this.currencyService, this.spamDetectionService, input);
+        return transformSingle(this.currencyService,
+            this.spamDetectionService, this.stateChangeService, input);
     };
 }
