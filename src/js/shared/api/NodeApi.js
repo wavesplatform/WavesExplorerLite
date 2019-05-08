@@ -23,6 +23,7 @@ const defaultConfig = {
     transformResponse: [parseResponse],
     withCredentials: true
 };
+defaultConfig.headers.common['Cache-Control'] = 'no-cache';
 
 const nodeAxios = axios.create(defaultConfig);
 
