@@ -5,7 +5,8 @@ import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
-    const promises = transactions.map(item => transformSingle(currencyService, spamDetectionService, item));
+    const promises = transactions.map(item => transformSingle(currencyService,
+        spamDetectionService, stateChangeService, item));
 
     return Promise.all(promises);
 };
