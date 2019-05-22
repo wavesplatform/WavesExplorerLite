@@ -5,7 +5,6 @@ export default {
     displayName: 'Testnet',
     apiBaseUrl: nodeUrl,
     dataServicesBaseUrl: 'https://api.testnet.wavesplatform.com/v0',
-    decompileScriptUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile',
     nodes: [
         {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
         {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
