@@ -57,42 +57,44 @@ export class SingleAssetPage extends React.Component {
             return [];
 
         const {details} = this.state;
-        return [{
-            label: 'Transaction Id',
-            value: <TransactionRef txId={details.id} />
-        }, {
-            label: 'Issue Height',
-            value: details.issued.height
-        }, {
-            label: 'Issued at',
-            value: details.issued.timestamp.toLongString()
-        }, {
-            label: 'Issuer',
-            value: <EndpointRef endpoint={details.issuer} />
-        }, {
-            label: 'Asset Name',
-            value: details.name,
-        }, {
-            label: 'Description',
-            value: <span>{details.description}</span>
-        }, {
-            label: 'Decimals',
-            value: details.decimals
-        }, {
-            label: 'Reissuable',
-            value: (!!details.reissuable).toString()
-        }, {
-            label: 'Quantity',
-            value: details.quantity.toString()
-        }, {
-            label: 'Scripted',
-            value: (!!details.scripted).toString()
-        },
-        ...this.buildScriptItem(details.scriptDetails),
-        {
-            label: 'Sponsored Fee',
-            value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
-        }];
+        return {
+            default: [{
+                label: 'Transaction Id',
+                value: <TransactionRef txId={details.id}/>
+            }, {
+                label: 'Issue Height',
+                value: details.issued.height
+            }, {
+                label: 'Issued at',
+                value: details.issued.timestamp.toLongString()
+            }, {
+                label: 'Issuer',
+                value: <EndpointRef endpoint={details.issuer}/>
+            }, {
+                label: 'Asset Name',
+                value: details.name,
+            }, {
+                label: 'Description',
+                value: <span>{details.description}</span>
+            }, {
+                label: 'Decimals',
+                value: details.decimals
+            }, {
+                label: 'Reissuable',
+                value: (!!details.reissuable).toString()
+            }, {
+                label: 'Quantity',
+                value: details.quantity.toString()
+            }, {
+                label: 'Scripted',
+                value: (!!details.scripted).toString()
+            },
+            ...this.buildScriptItem(details.scriptDetails),
+            {
+                label: 'Sponsored Fee',
+                value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
+            }]
+        };
     }
 
     buildScriptItem(scriptDetails) {

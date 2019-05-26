@@ -124,41 +124,44 @@ export class SingleBlockPage extends React.Component {
     }
 
     stateToDictionaryItems() {
-        const items = [{
-            label: 'Height',
-            value: (
-                <BlockEnumerator
-                    disabled={this.state.loading}
-                    height={this.state.currentHeight}
-                    hasPrev={this.state.currentHeight > 1}
-                    hasNext={this.state.currentHeight < this.state.maxHeight}
-                    onNext={() => this.showBlock(this.state.currentHeight + 1)}
-                    onPrev={() => this.showBlock(this.state.currentHeight - 1)}/>
-            )
-        }, {
-            label: 'Version',
-            value: this.state.block.version
-        }, {
-            label: 'Timestamp',
-            value: <React.Fragment>{this.state.block.timestamp.time}, {this.state.block.timestamp.date}</React.Fragment>
-        }, {
-            label: 'Transactions',
-            value: this.state.block.transactionCount
-        }, {
-            label: 'Parent block',
-            value: this.state.block.reference,
-            action: <CopyButton text={this.state.block.reference}/>
-        }, {
-            label: 'Generator',
-            value: <EndpointRef endpoint={this.state.block.generator}/>
-        }, {
-            label: 'Signature',
-            value: this.state.block.signature,
-            action: <CopyButton text={this.state.block.signature}/>
-        }, {
-            label: 'Size',
-            value: <React.Fragment>{this.state.block.blocksize} bytes</React.Fragment>
-        }];
+        const items = {
+            default: [{
+                label: 'Height',
+                value: (
+                    <BlockEnumerator
+                        disabled={this.state.loading}
+                        height={this.state.currentHeight}
+                        hasPrev={this.state.currentHeight > 1}
+                        hasNext={this.state.currentHeight < this.state.maxHeight}
+                        onNext={() => this.showBlock(this.state.currentHeight + 1)}
+                        onPrev={() => this.showBlock(this.state.currentHeight - 1)}/>
+                )
+            }, {
+                label: 'Version',
+                value: this.state.block.version
+            }, {
+                label: 'Timestamp',
+                value:
+                    <React.Fragment>{this.state.block.timestamp.time}, {this.state.block.timestamp.date}</React.Fragment>
+            }, {
+                label: 'Transactions',
+                value: this.state.block.transactionCount
+            }, {
+                label: 'Parent block',
+                value: this.state.block.reference,
+                action: <CopyButton text={this.state.block.reference}/>
+            }, {
+                label: 'Generator',
+                value: <EndpointRef endpoint={this.state.block.generator}/>
+            }, {
+                label: 'Signature',
+                value: this.state.block.signature,
+                action: <CopyButton text={this.state.block.signature}/>
+            }, {
+                label: 'Size',
+                value: <React.Fragment>{this.state.block.blocksize} bytes</React.Fragment>
+            }]
+        };
 
         return items;
     }

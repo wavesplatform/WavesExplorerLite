@@ -36,8 +36,6 @@ export class SingleTransactionPage extends React.Component {
     render() {
         const transactionItems = transactionToDictionary(this.state.tx);
 
-        console.log('tx', this.state.tx);
-
         return (
             <div className="loaderWrapper">
                 <Loader fetchData={this.fetchData} errorTitle="Failed to load transaction">
