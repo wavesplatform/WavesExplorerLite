@@ -4,6 +4,7 @@ export default {
     networkId: 'testnet',
     displayName: 'Testnet',
     apiBaseUrl: nodeUrl,
+    useCustomRequestConfig: true,
     dataServicesBaseUrl: 'https://api.testnet.wavesplatform.com/v0',
     decompileScriptUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile',
     nodes: [
