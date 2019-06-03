@@ -35,7 +35,7 @@ const CUSTOM_AXIOS_CONFIG = {
 const buildAxiosConfig = useCustomRequestConfig => {
     let result = DEFAULT_AXIOS_CONFIG;
     if (useCustomRequestConfig)
-        result = Object.assign(result, CUSTOM_AXIOS_CONFIG);
+        result = Object.assign({}, result, CUSTOM_AXIOS_CONFIG);
 
     return result;
 };
