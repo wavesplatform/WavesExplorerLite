@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Money from '../../shared/Money';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -257,22 +258,32 @@ const exchangeTransactionToItems = tx => {
         value: tx.price.toString()
     }, {
         label: 'Total',
-        value: tx.total.toString()
+        value: <MoneyInfo value={tx.total} />
     }];
+
+    const feeItems = [
+        buildFeeItem(tx),
+    {
+        label: 'Buy Matcher Fee',
+        value: <MoneyInfo value={tx.buyFee} />
+    }, {
+        label: 'Sell Matcher Fee',
+        value: <MoneyInfo value={tx.sellFee} />
+    }];
+
+    const headerItems = buildTransactionHeaderItems(tx);
+    headerItems.splice(1, 0, {
+        label: 'Pair',
+        value: <React.Fragment><CurrencyRef currency={assetPair.amountAsset}/> / <CurrencyRef
+            currency={assetPair.priceAsset}/></React.Fragment>
+    });
 
     return {
         default: [
-            ...buildTransactionHeaderItems(tx),
-            buildFeeItem(tx),
+            ...headerItems,
             buildAmountItem(tx),
             ...items,
-            buildSenderItem(tx),
-            buildRecipientItem(tx),
-            {
-                label: 'Pair',
-                value: <React.Fragment><CurrencyRef currency={assetPair.amountAsset}/> / <CurrencyRef
-                    currency={assetPair.priceAsset}/></React.Fragment>
-            }
+            ...feeItems
         ],
         ['Buy Order']: [...buildOrderItems(tx.buyOrder)],
         ['Sell Order']: [...buildOrderItems(tx.sellOrder)]
@@ -303,17 +314,18 @@ const buildOrderItems = order => {
     return [{
         label: 'Order Id',
         value: order.id
-    }, {
-        label: 'Order Type',
-        value: order.orderType
     },
-        buildSenderItem(order),
+        buildTimestampItem(order.timestamp),
         buildAmountItem(order),
     {
         label: 'Price',
         value: order.price.toString()
     },
-        buildTimestampItem(order.timestamp)
+        buildSenderItem(order),
+    {
+        label: 'Matcher Fee',
+        value: <MoneyInfo value={order.fee} />
+    }
     ];
 };
 
