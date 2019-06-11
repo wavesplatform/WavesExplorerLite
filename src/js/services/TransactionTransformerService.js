@@ -207,12 +207,13 @@ const transformExchange = (currencyService, tx) => {
     const buyOrder = tx.order1.orderType === 'buy' ? tx.order1 : tx.order2;
     const sellOrder = tx.order2.orderType === 'sell' ? tx.order2 : tx.order1;
     const assetPair = buyOrder.assetPair;
-    const matcherFeeAsset = buyOrder.matcherFeeAssetId;
 
     return Promise.all([
         currencyService.get(assetPair.amountAsset),
         currencyService.get(assetPair.priceAsset),
-        currencyService.get(matcherFeeAsset)
+        currencyService.get(tx.feeAssetId),
+        currencyService.get(buyOrder.matcherFeeAssetId),
+        currencyService.get(sellOrder.matcherFeeAssetId)
     ]).then(tuple => {
         const currencyPair = {
             amountAsset: tuple[0],
@@ -220,6 +221,8 @@ const transformExchange = (currencyService, tx) => {
         };
 
         const feeAsset = tuple[2];
+        const buyFeeAsset = tuple[3];
+        const sellFeeAsset = tuple[4];
         const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
@@ -230,8 +233,8 @@ const transformExchange = (currencyService, tx) => {
             price,
             amount,
             total: price.volume(amount),
-            buyOrder: transformOrder(buyOrder, currencyPair, feeAsset),
-            sellOrder: transformOrder(sellOrder, currencyPair, feeAsset),
+            buyOrder: transformOrder(buyOrder, currencyPair, buyFeeAsset),
+            sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
             sender: sellOrder.sender,
             recipient: buyOrder.sender
         });
