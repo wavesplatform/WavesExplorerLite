@@ -13,6 +13,9 @@ const transformMultiple = (currencyService, spamDetectionService, stateChangeSer
 
 const transformSingle = (currencyService, spamDetectionService, stateChangeService, tx) => {
     switch (tx.type) {
+        case 1:
+            return transformGenesis(currencyService, tx);
+
         case 2:
         case 4:
             return transformTransfer(currencyService, spamDetectionService, tx);
@@ -308,6 +311,17 @@ const transformTransfer = (currencyService, spamDetectionService, tx) => {
     });
 };
 
+const transformGenesis = (currencyService, tx) => {
+    const amount = Money.fromCoins(tx.amount, Currency.WAVES);
+    const fee = Money.fromCoins(tx.fee, Currency.WAVES);
+
+    return Object.assign(copyMandatoryAttributes(tx), {
+        amount,
+        fee,
+        recipient: tx.recipient,
+        height: 1
+    });
+};
 
 export class TransactionTransformerService {
     constructor(currencyService, spamDetectionService, stateChangeService) {

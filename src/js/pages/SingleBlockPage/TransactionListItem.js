@@ -9,6 +9,9 @@ import TransactionArrow from '../../components/TransactionArrow';
 
 export const createListItem = (transaction) => {
     switch (transaction.type) {
+        case 1:
+            return <GenesisTransactionListItem key={transaction.id} tx={transaction} />;
+
         case 2:
         case 4:
             return <TransferTransactionListItem key={transaction.id} tx={transaction} />;
@@ -140,6 +143,31 @@ class JustFee extends React.PureComponent {
                 <Line>{this.props.fee.toString()}</Line>
                 <Line />
             </td>
+        );
+    }
+}
+
+class GenesisTransactionListItem extends React.PureComponent {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <td data-label="Sender / Recipient">
+                    <TransactionArrow type={tx.type} />
+                    <Line wrap={false}>N/A</Line>
+                    <Line wrap={false}><EndpointRef endpoint={tx.recipient} appearance="regular"/></Line>
+                </td>
+                <AmountAndFee amount={tx.amount} fee={tx.fee} />
+                <td data-label="Price">
+                    <Line><CurrencyRef currency={tx.amount.currency} /></Line>
+                </td>
+            </tr>
         );
     }
 }
