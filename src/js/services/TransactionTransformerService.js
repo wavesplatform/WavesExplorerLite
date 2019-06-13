@@ -82,8 +82,10 @@ const attachmentToString = (attachment) => {
 const copyMandatoryAttributes = tx => ({
     id: tx.id,
     type: tx.type,
+    version: tx.version,
     timestamp: new DateTime(tx.timestamp),
     sender: tx.sender,
+    senderPublicKey: tx.senderPublicKey,
     height: tx.height
 });
 
