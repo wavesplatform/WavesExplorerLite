@@ -282,6 +282,7 @@ const buildOrderItems = order => {
         label: 'Price',
         value: order.price.toString()
     },
+        buildFeeItem(order),
         buildTimestampItem(order.timestamp)
     ];
 };

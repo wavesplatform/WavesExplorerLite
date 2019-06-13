@@ -24,7 +24,7 @@ const transformSingle = (currencyService, spamDetectionService, stateChangeServi
             return transformReissue(currencyService, tx);
 
         case 6:
-            return tranformBurn(currencyService, tx);
+            return transformBurn(currencyService, tx);
 
         case 7:
             return transformExchange(currencyService, tx);
@@ -217,32 +217,38 @@ const transformExchange = (currencyService, tx) => {
 
     return Promise.all([
         currencyService.get(assetPair.amountAsset),
-        currencyService.get(assetPair.priceAsset)
-    ]).then(pair => {
+        currencyService.get(assetPair.priceAsset),
+        currencyService.get(tx.feeAssetId),
+        currencyService.get(buyOrder.matcherFeeAssetId),
+        currencyService.get(sellOrder.matcherFeeAssetId)
+    ]).then(tuple => {
         const currencyPair = {
-            amountAsset: pair[0],
-            priceAsset: pair[1]
+            amountAsset: tuple[0],
+            priceAsset: tuple[1]
         };
 
+        const feeAsset = tuple[2];
+        const buyFeeAsset = tuple[3];
+        const sellFeeAsset = tuple[4];
         const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
         return Object.assign(copyMandatoryAttributes(tx), {
             fee: Money.fromCoins(tx.fee, Currency.WAVES),
-            buyFee: Money.fromCoins(tx.buyMatcherFee, Currency.WAVES),
-            sellFee: Money.fromCoins(tx.sellMatcherFee, Currency.WAVES),
+            buyFee: Money.fromCoins(tx.buyMatcherFee, feeAsset),
+            sellFee: Money.fromCoins(tx.sellMatcherFee, feeAsset),
             price,
             amount,
             total: price.volume(amount),
-            buyOrder: transformOrder(buyOrder, currencyPair),
-            sellOrder: transformOrder(sellOrder, currencyPair),
+            buyOrder: transformOrder(buyOrder, currencyPair, buyFeeAsset),
+            sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
             sender: sellOrder.sender,
             recipient: buyOrder.sender
         });
     });
 };
 
-const transformOrder = (order, assetPair) => {
+const transformOrder = (order, assetPair, feeAsset) => {
     return {
         id: order.id,
         sender: order.sender,
@@ -252,11 +258,11 @@ const transformOrder = (order, assetPair) => {
         price: OrderPrice.fromBackendPrice(order.price, assetPair),
         timestamp: new DateTime(order.timestamp),
         expiration: new DateTime(order.expiration),
-        fee: Money.fromCoins(order.matcherFee, Currency.WAVES)
+        fee: Money.fromCoins(order.matcherFee, feeAsset)
     };
 };
 
-const tranformBurn = (currencyService, tx) => {
+const transformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
             amount: Money.fromCoins(tx.amount, currency),
