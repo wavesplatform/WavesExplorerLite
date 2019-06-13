@@ -10,6 +10,9 @@ const transactionMapper = (transactions, currentUser) => {
 
 const mapTransactionToPromise = (tx, currentUser) => {
     switch (tx.type) {
+        case 1:
+            return mapGenesis(tx, currentUser.address);
+
         case 2:
         case 4:
             return mapTransfer(tx, currentUser.address);
@@ -159,6 +162,18 @@ const mapIssue = (tx, currentAddress) => {
         direction: defaultDirection(tx, currentAddress),
         out: moneyToObject(tx.amount)
     });
+};
+
+const mapGenesis = (tx, currentAddress) => {
+    const tail = {recipient: tx.recipient};
+    const money = moneyToObject(tx.amount);
+
+    if (tx.recipient === currentAddress) {
+        tail.direction = INCOMING;
+        tail.in = money;
+    }
+
+    return Object.assign(copyMandatoryAttributes(tx), tail);
 };
 
 const mapTransfer = (tx, currentAddress) => {

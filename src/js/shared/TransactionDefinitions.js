@@ -1,4 +1,5 @@
 const TransactionTypes = Object.freeze({
+    1: {title: 'Genesis', cssClassName: 'genesis'},
     2: {title: 'Payment', cssClassName: 'asset-transfer'},
     3: {title: 'Asset Issue', cssClassName: 'asset-issue'},
     4: {title: 'Asset Transfer', cssClassName: 'asset-transfer'},

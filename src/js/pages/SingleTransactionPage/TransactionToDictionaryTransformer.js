@@ -15,6 +15,9 @@ import {Description} from './Description.view';
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
+        case 1:
+            return genesisTransactionToItems(tx);
+
         case 2:
         case 4:
             return transferTransactionToItems(tx);
@@ -207,6 +210,15 @@ const issueTransactionToItems = tx => {
 const burnTransactionToItems = tx => {
     return [
         ...buildTransactionHeaderItems(tx),
+        buildAmountItem(tx),
+        buildFeeItem(tx)
+    ];
+};
+
+const genesisTransactionToItems = tx => {
+    return [
+        ...buildTransactionHeaderItems(tx),
+        buildRecipientItem(tx),
         buildAmountItem(tx),
         buildFeeItem(tx)
     ];
