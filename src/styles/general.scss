@@ -160,8 +160,16 @@
 
     @include responsive_styles($card_inner);
 
-    .title {
+    .title.large {
         @include font(headline1);
+    }
+
+    .title.medium {
+        @include font(headline2);
+    }
+
+    .title.small {
+        @include font(headline3);
     }
 
     .title-details {

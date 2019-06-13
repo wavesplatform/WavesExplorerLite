@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Money from '../../shared/Money';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -62,7 +63,9 @@ const transactionToDictionary = (tx) => {
             return scriptInvocationTransactionToItems(tx);
 
         default:
-            return [];
+            return {
+                default: []
+            };
     }
 };
 
@@ -77,142 +80,164 @@ const scriptInvocationTransactionToItems = tx => {
         value: <StateChangesInfo changes={tx.stateChanges} />
     }] : [];
 
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'DApp Address',
-            value: <EndpointRef endpoint={tx.dappAddress} />
-        }, {
-            label: 'Call',
-            value: <InvocationInfo {...tx.call} />
-        },
-        ...paymentItems,
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx),
-        ...stateItems
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'DApp Address',
+                value: <EndpointRef endpoint={tx.dappAddress} />
+            }, {
+                label: 'Call',
+                value: <InvocationInfo {...tx.call} />
+            },
+            ...paymentItems,
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx),
+            ...stateItems
+        ]
+    };
 };
 
 const dataTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Data',
-            value: <DataInfo data={tx.data} />
-        },
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Data',
+                value: <DataInfo data={tx.data} />
+            },
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const scriptTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildScriptItem(tx),
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+            default: [
+            ...buildTransactionHeaderItems(tx),
+            buildScriptItem(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const sponsorshipTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Sponsored Fee',
-            value: tx.sponsoredFee ? tx.sponsoredFee.toString() : 'Cancelled'
-        }, {
-            label: 'Transaction Fee',
-            value: tx.fee.toString()
-        },
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Sponsored Fee',
+                value: tx.sponsoredFee ? tx.sponsoredFee.toString() : 'Cancelled'
+            }, {
+                label: 'Transaction Fee',
+                value: tx.fee.toString()
+            },
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const assetScriptTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Asset',
-            value: <CurrencyRef currency={tx.asset} />
-        },
-        buildScriptItem(tx),
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Asset',
+                value: <CurrencyRef currency={tx.asset} />
+            },
+            buildScriptItem(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const aliasTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Alias',
-            value: <Description text={tx.alias} />
-        },
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Alias',
+                value: <Description text={tx.alias} />
+            },
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const cancelLeaseTransactionItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        {
-            label: 'Lease',
-            value: <TransactionRef txId={tx.leaseId} />
-        },
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default:[
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Lease',
+                value: <TransactionRef txId={tx.leaseId} />
+            },
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const leaseTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildAmountItem(tx),
-        buildFeeItem(tx),
-        buildRecipientItem(tx),
-        ...buildSenderAddressAndKeyItems(tx),
-        {
-            label: 'Status',
-            value: tx.status
-        }
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildAmountItem(tx),
+            buildFeeItem(tx),
+            buildRecipientItem(tx),
+            ...buildSenderAddressAndKeyItems(tx),
+            {
+                label: 'Status',
+                value: tx.status
+            }
+        ]
+    };
 };
 
 const reissueTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildQuantityItem(tx),
-        buildReissuableItem(tx),
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildQuantityItem(tx),
+            buildReissuableItem(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const issueTransactionToItems = tx => {
     const scriptItems = tx.script ? [buildScriptItem(tx)] : [];
 
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildQuantityItem(tx),
-        {
-            label: 'Decimals',
-            value: tx.decimals
-        },
-        buildDescriptionItem(tx),
-        buildReissuableItem(tx),
-        ...scriptItems,
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildQuantityItem(tx),
+            {
+                label: 'Decimals',
+                value: tx.decimals
+            },
+            buildDescriptionItem(tx),
+            buildReissuableItem(tx),
+            ...scriptItems,
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const burnTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildAmountItem(tx),
-        buildFeeItem(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildAmountItem(tx),
+            buildFeeItem(tx)
+        ]
+    };
 };
 
 const genesisTransactionToItems = tx => {
@@ -225,14 +250,16 @@ const genesisTransactionToItems = tx => {
 };
 
 const transferTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildRecipientItem(tx),
-        buildAmountItem(tx),
-        buildFeeItem(tx),
-        buildAttachmentItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildRecipientItem(tx),
+            buildAmountItem(tx),
+            buildFeeItem(tx),
+            buildAttachmentItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const exchangeTransactionToItems = tx => {
@@ -243,23 +270,36 @@ const exchangeTransactionToItems = tx => {
         value: tx.price.toString()
     }, {
         label: 'Total',
-        value: tx.total.toString()
+        value: <MoneyInfo value={tx.total} />
     }];
 
-    return [
-        ...buildTransactionHeaderItems(tx),
+    const feeItems = [
         buildFeeItem(tx),
-        buildAmountItem(tx),
-        ...items,
-        buildSenderItem(tx),
-        buildRecipientItem(tx),
-        {
-            label: 'Pair',
-            value: <React.Fragment><CurrencyRef currency={assetPair.amountAsset}/> / <CurrencyRef currency={assetPair.priceAsset}/></React.Fragment>
-        },
-        ...buildOrderItems(tx.buyOrder),
-        ...buildOrderItems(tx.sellOrder)
-    ];
+    {
+        label: 'Buy Matcher Fee',
+        value: <MoneyInfo value={tx.buyFee} />
+    }, {
+        label: 'Sell Matcher Fee',
+        value: <MoneyInfo value={tx.sellFee} />
+    }];
+
+    const headerItems = buildTransactionHeaderItems(tx);
+    headerItems.splice(1, 0, {
+        label: 'Pair',
+        value: <React.Fragment><CurrencyRef currency={assetPair.amountAsset}/> / <CurrencyRef
+            currency={assetPair.priceAsset}/></React.Fragment>
+    });
+
+    return {
+        default: [
+            ...headerItems,
+            buildAmountItem(tx),
+            ...items,
+            ...feeItems
+        ],
+        ['Buy Order']: [...buildOrderItems(tx.buyOrder)],
+        ['Sell Order']: [...buildOrderItems(tx.sellOrder)]
+    };
 };
 
 const massPaymentTransactionToItems = tx => {
@@ -271,31 +311,33 @@ const massPaymentTransactionToItems = tx => {
         value: tx.transferCount,
     }];
 
-    return [
-        ...buildTransactionHeaderItems(tx),
-        ...items,
-        buildAttachmentItem(tx),
-        buildFeeItem(tx),
-        ...buildSenderAddressAndKeyItems(tx)
-    ];
+    return {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            ...items,
+            buildAttachmentItem(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
+        ]
+    };
 };
 
 const buildOrderItems = order => {
     return [{
         label: 'Order Id',
         value: order.id
-    }, {
-        label: 'Order Type',
-        value: order.orderType
     },
-        buildSenderItem(order),
+        buildTimestampItem(order.timestamp),
         buildAmountItem(order),
     {
         label: 'Price',
         value: order.price.toString()
     },
-        buildFeeItem(order),
-        buildTimestampItem(order.timestamp)
+        buildSenderItem(order),
+    {
+        label: 'Matcher Fee',
+        value: <MoneyInfo value={order.fee} />
+    }
     ];
 };
 
