@@ -76,7 +76,8 @@ var config = {
             filename: './index.html'
         }),
         new webpack.DefinePlugin({
-            __VERSION__: JSON.stringify(require('./package.json').version)
+            __VERSION__: JSON.stringify(require('./package.json').version),
+            __DECOMPILE_SCRIPT_URL__: JSON.stringify('https://testnode1.wavesnodes.com/utils/script/decompile')
         }),
         new LodashModuleReplacementPlugin({
             shorthands: true

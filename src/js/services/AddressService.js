@@ -82,7 +82,7 @@ export class AddressService extends ApiClientService {
 
     decompileScript = (scriptBase64) => {
         const config = this.configuration();
-        const api = thirdPartyApi(config.spamListUrl, config.decompileScriptUrl);
+        const api = thirdPartyApi(config.spamListUrl, this.configurationService.getDecompileScriptUrl());
 
         return api.decompileScript(scriptBase64).then(decompileResponse => decompileResponse.data.script);
     };

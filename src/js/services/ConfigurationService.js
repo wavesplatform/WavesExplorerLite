@@ -60,5 +60,7 @@ export class ConfigurationService {
         this.storageService.saveConfiguration({
             customNetwork: this.customNetwork
         });
-    }
+    };
+
+    getDecompileScriptUrl = () => __DECOMPILE_SCRIPT_URL__;
 }

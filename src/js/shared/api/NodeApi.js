@@ -19,8 +19,11 @@ const parseResponse = (response) => {
     return response;
 };
 
-const defaultConfig = {
+const DEFAULT_AXIOS_CONFIG = {
     transformResponse: [parseResponse],
+};
+
+const CUSTOM_AXIOS_CONFIG = {
     withCredentials: true,
     headers: {
         common: {
@@ -29,17 +32,21 @@ const defaultConfig = {
     }
 };
 
-const nodeAxios = axios.create(defaultConfig);
+const buildAxiosConfig = useCustomRequestConfig => {
+    let result = DEFAULT_AXIOS_CONFIG;
+    if (useCustomRequestConfig)
+        result = Object.assign({}, result, CUSTOM_AXIOS_CONFIG);
 
-const retryableAxios = axios.create(defaultConfig);
-retryableAxios.defaults.raxConfig = {
-    instance: retryableAxios,
+    return result;
+};
+
+const buildRetryableAxiosConfig = axiosInstance => ({
+    instance: axiosInstance,
     retryDelay: 100,
     retry: 5,
     httpMethodsToRetry: ['GET'],
     shouldRetry: shouldRetryRequest
-};
-rax.attach(retryableAxios);
+});
 
 export const replaceTimestampWithDateTime = obj => {
     if (obj.timestamp) {
@@ -111,9 +118,15 @@ function shouldRetryRequest(err) {
     return true;
 }
 
-export const nodeApi = (baseUrl) => {
+export const nodeApi = (baseUrl, useCustomRequestConfig) => {
     const trimmedUrl = Strings.trimEnd(baseUrl, '/');
+    const config = buildAxiosConfig(useCustomRequestConfig);
+    const nodeAxios = axios.create(config);
     const get = (url, config) => nodeAxios.get(trimmedUrl + url, config);
+
+    const retryableAxios = axios.create(config);
+    retryableAxios.defaults.raxConfig = buildRetryableAxiosConfig(retryableAxios);
+    rax.attach(retryableAxios);
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {

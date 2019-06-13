@@ -3,7 +3,7 @@ export default {
     networkId: 'devnet',
     displayName: 'Devnet',
     apiBaseUrl: nodeUrl,
-    decompileScriptUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile',
+    useCustomRequestConfig: false,
     nodes: [
         {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
         {url: 'http://1.devnet.wavesnodes.com:6869', maintainer: 'Waves', showAsLink: true},
