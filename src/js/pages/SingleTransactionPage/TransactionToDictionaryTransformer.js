@@ -241,12 +241,14 @@ const burnTransactionToItems = tx => {
 };
 
 const genesisTransactionToItems = tx => {
-    return [
-        ...buildTransactionHeaderItems(tx),
-        buildRecipientItem(tx),
-        buildAmountItem(tx),
-        buildFeeItem(tx)
-    ];
+    return {
+        default:[
+            ...buildTransactionHeaderItems(tx),
+            buildRecipientItem(tx),
+            buildAmountItem(tx),
+            buildFeeItem(tx)
+        ]
+    };
 };
 
 const transferTransactionToItems = tx => {
