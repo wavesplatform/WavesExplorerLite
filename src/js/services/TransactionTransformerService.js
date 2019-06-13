@@ -64,6 +64,11 @@ const transformSingle = (currencyService, spamDetectionService, stateChangeServi
     }
 };
 
+const DEFAULT_FUNCTION_CALL = {
+    function: 'default',
+    args: []
+};
+
 const attachmentToString = (attachment) => {
     if (!attachment)
         return '';
@@ -106,7 +111,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, tx) => {
         return promise.then(payment => {
             const result = Object.assign(copyMandatoryAttributes(tx), {
                 dappAddress: tx.dApp,
-                call: tx.call,
+                call: tx.call || DEFAULT_FUNCTION_CALL,
                 payment,
                 fee: Money.fromCoins(tx.fee, feeCurrency)
             });
