@@ -244,9 +244,9 @@ const transformExchange = (currencyService, tx) => {
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
         return Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
-            buyFee: Money.fromCoins(tx.buyMatcherFee, feeAsset),
-            sellFee: Money.fromCoins(tx.sellMatcherFee, feeAsset),
+            fee: Money.fromCoins(tx.fee, feeAsset),
+            buyFee: Money.fromCoins(tx.buyMatcherFee, buyFeeAsset),
+            sellFee: Money.fromCoins(tx.sellMatcherFee, sellFeeAsset),
             price,
             amount,
             total: price.volume(amount),
