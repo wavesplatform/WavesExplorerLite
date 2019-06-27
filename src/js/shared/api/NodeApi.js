@@ -6,6 +6,7 @@ import DateTime from '../DateTime';
 import Strings from '../Strings';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+const ASSETS_PER_PAGE = 100;
 
 const parseResponse = (response) => {
     if (typeof response === 'string') {
@@ -175,7 +176,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 params: {
                     full: !!full
                 }
-            })
+            }),
+            nft: (address) => get(`/assets/nft/${address}/limit/${ASSETS_PER_PAGE}`)
         },
         peers: () => get('/peers/connected'),
     };

@@ -9,6 +9,7 @@ import ScriptInfo from '../../components/ScriptInfo';
 
 import {TransactionList} from './TransactionList.view';
 import {AssetList} from './AssetList.view';
+import {NonFungibleTokenList} from './NonFungibleTokenList.view';
 import {GroupedAliasList} from './GroupedAliasList.view';
 import {Tabs} from './Tabs.container';
 import {Pane} from './Pane.view';
@@ -19,6 +20,7 @@ export class SingleAddressPage extends React.Component {
     state = {
         balance: {},
         assets: [],
+        nfts: [],
         aliases: [],
         transactions: [],
         data: [],
@@ -59,9 +61,12 @@ export class SingleAddressPage extends React.Component {
                 return this._loadAssets(addressService, address, forceUpdate);
 
             case 3:
-                return this._loadData(addressService, address, forceUpdate);
+                return this._loadNfts(addressService, address, forceUpdate);
 
             case 4:
+                return this._loadData(addressService, address, forceUpdate);
+
+            case 5:
                 return this._loadScript(addressService, address);
         }
 
@@ -107,6 +112,13 @@ export class SingleAddressPage extends React.Component {
         return addressService.loadAssets(address).then(assets => this.setState({assets}));
     };
 
+    _loadNfts = (addressService, address, forceUpdate) => {
+        if (!forceUpdate && this.state.nfts.length > 0)
+            return Promise.resolve();
+
+        return addressService.loadNftTokens(address).then(nfts => this.setState({nfts}));
+    };
+
     _loadData = (addressService, address, forceUpdate) => {
         if (!forceUpdate && this.state.data.length > 0)
             return Promise.resolve();
@@ -139,6 +151,9 @@ export class SingleAddressPage extends React.Component {
                         </Pane>
                         <Pane title="Assets">
                             <AssetList assets={this.state.assets} />
+                        </Pane>
+                        <Pane title="Non-fungible tokens">
+                            <NonFungibleTokenList tokens={this.state.nfts} />
                         </Pane>
                         <Pane title="Data">
                             <DataInfo data={this.state.data} />

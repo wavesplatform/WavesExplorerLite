@@ -68,6 +68,19 @@ export class AddressService extends ApiClientService {
         });
     };
 
+    loadNftTokens = (address) => {
+        return this.getApi().assets.nft(address).then(balanceResponse => {
+            const tokens = balanceResponse.data.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                };
+            });
+
+            return tokens;
+        });
+    };
+
     loadData = (address) => {
         return this.getApi().addresses.data(address).then(dataResponse => dataResponse.data);
     };
