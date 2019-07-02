@@ -235,7 +235,8 @@ const burnTransactionToItems = tx => {
         default: [
             ...buildTransactionHeaderItems(tx),
             buildAmountItem(tx),
-            buildFeeItem(tx)
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx)
         ]
     };
 };
