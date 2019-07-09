@@ -295,6 +295,7 @@ const exchangeTransactionToItems = tx => {
     return {
         default: [
             ...headerItems,
+            ...buildSenderAddressAndKeyItems(tx),
             buildAmountItem(tx),
             ...items,
             ...feeItems
