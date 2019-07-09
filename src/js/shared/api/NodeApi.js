@@ -159,10 +159,15 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             unconfirmed: () => get('/transactions/unconfirmed'),
             utxSize: () => get('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
-            address: (address, limit) => {
+            address: (address, limit, after) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
+                const config = after ? {
+                    params: {
+                        after
+                    }
+                } : undefined;
 
-                return get(`/transactions/address/${address}/limit/${top}`);
+                return get(`/transactions/address/${address}/limit/${top}`, config);
             },
             stateChanges: id => get(`/debug/stateChanges/info/${id}`)
         },

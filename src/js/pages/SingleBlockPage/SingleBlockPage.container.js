@@ -9,8 +9,7 @@ import Headline from '../../components/Headline';
 import CopyButton from '../../components/CopyButton';
 import Dictionary from '../../components/Dictionary';
 import Loader from '../../components/Loader';
-
-import {BlockEnumerator} from './BlockEnumerator.view';
+import Enumerator from '../../components/Enumerator';
 import {TransactionList} from './TransactionList.container';
 
 const typeToHeader = type => {
@@ -128,9 +127,9 @@ export class SingleBlockPage extends React.Component {
             default: [{
                 label: 'Height',
                 value: (
-                    <BlockEnumerator
+                    <Enumerator
                         disabled={this.state.loading}
-                        height={this.state.currentHeight}
+                        label={this.state.currentHeight}
                         hasPrev={this.state.currentHeight > 1}
                         hasNext={this.state.currentHeight < this.state.maxHeight}
                         onNext={() => this.showBlock(this.state.currentHeight + 1)}

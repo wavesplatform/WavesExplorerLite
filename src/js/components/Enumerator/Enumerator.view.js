@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export class BlockEnumerator extends React.PureComponent {
+export class Enumerator extends React.PureComponent {
     static propTypes = {
-        height: PropTypes.number.isRequired,
+        label: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
         hasPrev: PropTypes.bool,
         hasNext: PropTypes.bool,
         disabled: PropTypes.bool,
@@ -41,7 +44,7 @@ export class BlockEnumerator extends React.PureComponent {
         return (
             <React.Fragment>
                 <span className={prevClass} onClick={this.handleClickPrev}></span>
-                <span>{this.props.height}</span>
+                <span>{this.props.label}</span>
                 <span className={nextClass} onClick={this.handleClickNext}></span>
             </React.Fragment>
         );
