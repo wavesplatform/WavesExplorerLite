@@ -6,6 +6,7 @@ import DateTime from '../DateTime';
 import Strings from '../Strings';
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+const ASSETS_PER_PAGE = 100;
 
 const parseResponse = (response) => {
     if (typeof response === 'string') {
@@ -159,10 +160,15 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             unconfirmed: () => get('/transactions/unconfirmed'),
             utxSize: () => get('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
-            address: (address, limit) => {
+            address: (address, limit, after) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
+                const config = after ? {
+                    params: {
+                        after
+                    }
+                } : undefined;
 
-                return get(`/transactions/address/${address}/limit/${top}`);
+                return get(`/transactions/address/${address}/limit/${top}`, config);
             },
             stateChanges: id => get(`/debug/stateChanges/info/${id}`)
         },
@@ -175,7 +181,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 params: {
                     full: !!full
                 }
-            })
+            }),
+            nft: (address) => get(`/assets/nft/${address}/limit/${ASSETS_PER_PAGE}`)
         },
         peers: () => get('/peers/connected'),
     };

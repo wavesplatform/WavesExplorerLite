@@ -36,7 +36,7 @@ export class TransactionList extends React.Component {
             <React.Fragment>
                 <div className="headline2">
                     <span className="title">{typeToTitle(this.props.type)}</span>
-                    <span className="title-details"> — Type {this.props.type}</span>
+                    <span className="title-details"> — Type {this.props.type} ({this.props.transactions.length})</span>
                     <span className="action" onClick={this.handleClick}>{actionTitle}</span>
                 </div>
                 <table className={tableClass}>
