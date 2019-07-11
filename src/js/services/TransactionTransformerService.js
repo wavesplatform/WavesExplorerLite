@@ -252,8 +252,8 @@ const transformExchange = (currencyService, tx) => {
             total: price.volume(amount),
             buyOrder: transformOrder(buyOrder, currencyPair, buyFeeAsset),
             sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
-            sender: sellOrder.sender,
-            recipient: buyOrder.sender
+            seller: sellOrder.sender,
+            buyer: buyOrder.sender
         });
     });
 };
