@@ -4,85 +4,62 @@ import {withRouter} from 'react-router';
 
 import {TransactionListView} from './TransactionList.view';
 
-const INITIAL_NAV_STATE = {
-    history: [],
-    after: null,
-    loading: false
-};
-
-class TransactionListContainer extends React.Component {
+export class TransactionListContainer extends React.Component {
     static propTypes = {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
         pageSize: PropTypes.number.isRequired,
-        loadAfter: PropTypes.func.isRequired
+        loadMore: PropTypes.func.isRequired,
+        cardElement: PropTypes.instanceOf(Element)
     };
 
-    state = INITIAL_NAV_STATE;
+    state = {
+        transactions: this.props.transactions,
+        loading: false,
+        x: this.props.pageSize,
+        y: this.props.transactions.length,
+        hasMore: this.props.transactions.length === this.props.pageSize
+    };
 
     componentDidUpdate(prevProps) {
-        const {networkId, address} = this.props.match.params;
-        const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
-
-        if (networkId !== prevNetworkId || address !== prevAddress) {
-            this.setState(INITIAL_NAV_STATE);
+        if (prevProps.transactions.length !== this.props.transactions.length) {
+            console.log('updating state');
+            this.setState({
+                transactions: this.props.transactions,
+                hasMore: this.props.transactions.length === this.props.pageSize
+            });
         }
     }
 
-    handleNext = () => {
-        if (this.props.transactions.length < 1)
+    handleMore = () => {
+        console.log('Loading more!');
+
+        if (this.state.transactions.length < 1)
             return;
 
         this.setState({loading: true});
-        const nextAfter = this.props.transactions[this.props.transactions.length - 1].id;
+        const next = this.state.transactions[this.state.transactions.length - 1].id;
 
-        this.props.loadAfter(nextAfter).then(() => {
-            this.setState((prevState) => {
-                const history = prevState.history.slice();
-                history.push(prevState.after);
-
-                return {
-                    history,
-                    loading: false,
-                    after: nextAfter
-                };
-            });
-        });
-    };
-
-    handlePrev = () => {
-        if (this.state.history.length < 1)
-            return;
-
-        this.setState({loading: true});
-        const prevAfter = this.state.history[this.state.history.length - 1];
-
-        this.props.loadAfter(prevAfter).then(() => {
-            this.setState((prevState) => ({
-                history: prevState.history.slice(0, -1),
+        this.props.loadMore(next).then(transactions => {
+            this.setState(prevState => ({
+                transactions: prevState.transactions.concat(transactions),
                 loading: false,
-                after: prevAfter
-            }));
+                hasMore: transactions.length === this.props.pageSize
+            }))
         });
     };
 
     render() {
-        const x = this.state.history.length * this.props.pageSize;
-        const from = x + 1;
-        const to = this.props.transactions.length + x;
-
-        const nav = {
-            label: `${from}-${to}`,
-            hasPrev: this.state.history.length > 0,
-            hasNext: this.props.transactions.length === this.props.pageSize,
-            disabled: this.state.loading,
-            onNext: this.handleNext,
-            onPrev: this.handlePrev
-        };
+        console.log('state', this.state);
+        console.log('props', this.props);
 
         return (
-            <TransactionListView transactions={this.props.transactions} navigation={nav} />
+            <TransactionListView
+                transactions={this.state.transactions}
+                hasMore={this.state.hasMore}
+                loadMore={this.handleMore}
+                pageSize={this.props.pageSize}
+                cardElement={this.props.cardElement}
+            />
         );
     }
 }
-
-export const RoutedTransactionListContainer = withRouter(TransactionListContainer);

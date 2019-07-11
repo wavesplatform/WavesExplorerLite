@@ -7,7 +7,7 @@ import Loader from '../../components/Loader';
 import DataInfo from '../../components/DataInfo';
 import ScriptInfo from '../../components/ScriptInfo';
 
-import {RoutedTransactionListContainer} from './TransactionList.container';
+import {TransactionListContainer} from './TransactionList.container';
 import {AssetList} from './AssetList.view';
 import {NonFungibleTokenList} from './NonFungibleTokenList.view';
 import {GroupedAliasList} from './GroupedAliasList.view';
@@ -19,19 +19,25 @@ import transactionMapper from './TransactionMapper';
 const TX_PAGE_SIZE = 100;
 
 export class SingleAddressPage extends React.Component {
-    state = {
-        balance: {},
-        assets: [],
-        nfts: [],
-        aliases: [],
-        transactions: {
-            list: [],
-            invertedAliases: undefined
-        },
-        data: [],
-        script: {},
-        selectedTabIndex: 0
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            balance: {},
+            assets: [],
+            nfts: [],
+            aliases: [],
+            transactions: {
+                list: [],
+                invertedAliases: undefined
+            },
+            data: [],
+            script: {},
+            selectedTabIndex: 0
+        };
+
+        this.cardRef = React.createRef();
+    }
 
     componentDidUpdate(prevProps) {
         const {networkId, address} = this.props.match.params;
@@ -120,13 +126,6 @@ export class SingleAddressPage extends React.Component {
             };
 
             return transactionMapper(transactions, currentUser);
-        }).then(transactions => {
-            this.setState((prevState) => ({
-                transactions: {
-                    ...prevState.transactions,
-                    list: transactions
-                }
-            }));
         });
     };
 
@@ -170,16 +169,17 @@ export class SingleAddressPage extends React.Component {
     render() {
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
-                <div className="content card">
+                <div id="yyyyy" className="content card" ref={this.cardRef}>
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
                     <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
                         <Pane title="Last 100 transactions">
-                            <RoutedTransactionListContainer
+                            <TransactionListContainer
+                                cardElement={this.cardRef.current}
                                 transactions={this.state.transactions.list}
                                 pageSize={TX_PAGE_SIZE}
-                                loadAfter={this._loadMoreTransactions}
+                                loadMore={this._loadMoreTransactions}
                             />
                         </Pane>
                         <Pane title="Aliases">
