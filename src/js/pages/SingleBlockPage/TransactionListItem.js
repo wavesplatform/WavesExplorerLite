@@ -202,8 +202,8 @@ class ExchangeTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <td data-label="Seller / Buyer">
                     <div className="arrow exchange"></div>
-                    <div className="line no-wrap"><EndpointRef endpoint={tx.sender} appearance="regular"/></div>
-                    <div className="line no-wrap"><EndpointRef endpoint={tx.recipient} appearance="regular"/></div>
+                    <div className="line no-wrap"><EndpointRef endpoint={tx.seller} appearance="regular"/></div>
+                    <div className="line no-wrap"><EndpointRef endpoint={tx.buyer} appearance="regular"/></div>
                 </td>
                 <td data-label="Amount / Total">
                     <div className="line">{tx.amount.toString()}</div>

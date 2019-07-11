@@ -132,8 +132,8 @@ const mapLeaseCancel = (tx, currentAddress) => {
 
 const mapExchange = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), {
-        sender: tx.sender,
-        recipient: tx.recipient,
+        sender: tx.seller,
+        recipient: tx.buyer,
         in: moneyToObject(tx.total),
         out: moneyToObject(tx.amount),
         price: {
