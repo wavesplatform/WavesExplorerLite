@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
+import {Loading} from '../../components/Loader/Loading.view';
 
 import {TransactionListItem} from './TransactionListItem.view';
 
 export class TransactionListView extends React.Component {
     static propTypes = {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
-        pageSize: PropTypes.number.isRequired,
         hasMore: PropTypes.bool.isRequired,
         loadMore: PropTypes.func.isRequired,
-        cardElement: PropTypes.instanceOf(Element)
     };
 
     render() {
         return (
             <InfiniteScroll
-                dataLength={this.props.pageSize}
-                next={this.props.loadMore}
+                initialLoad={false}
+                loadMore={this.props.loadMore}
                 hasMore={this.props.hasMore}
-                endMessage="No more transactions">
+                loader={<Loading key="tx-loader"/>}>
                 <table className="address-tr-list table-sm-transform">
                     <thead>
                     <tr>
@@ -31,7 +30,7 @@ export class TransactionListView extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.transactions.map((tx, index) => {
+                    {this.props.transactions.map(tx => {
                         return (<TransactionListItem key={tx.id} tx={tx} />);
                     })}
                     </tbody>
