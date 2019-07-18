@@ -9,7 +9,7 @@ import ScriptInfo from '../../components/ScriptInfo';
 
 import {TransactionListContainer} from './TransactionList.container';
 import {AssetList} from './AssetList.view';
-import {NonFungibleTokenList} from './NonFungibleTokenList.view';
+import {NonFungibleTokenListContainer} from './NonFungibleTokenList.container';
 import {GroupedAliasList} from './GroupedAliasList.view';
 import {Tabs} from './Tabs.container';
 import {Pane} from './Pane.view';
@@ -35,8 +35,6 @@ export class SingleAddressPage extends React.Component {
             script: {},
             selectedTabIndex: 0
         };
-
-        this.cardRef = React.createRef();
     }
 
     componentDidUpdate(prevProps) {
@@ -129,6 +127,13 @@ export class SingleAddressPage extends React.Component {
         });
     };
 
+    _loadMoreNfts = (after) => {
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
+
+        return addressService.loadNftTokens(address, TX_PAGE_SIZE, after);
+    };
+
     _loadAliases = (addressService, address, forceUpdate) => {
         if (!forceUpdate && this.state.aliases.length > 0)
             return Promise.resolve();
@@ -169,14 +174,13 @@ export class SingleAddressPage extends React.Component {
     render() {
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
-                <div id="yyyyy" className="content card" ref={this.cardRef}>
+                <div className="content card">
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
                     <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
                         <Pane title="Last 100 transactions">
                             <TransactionListContainer
-                                cardElement={this.cardRef.current}
                                 transactions={this.state.transactions.list}
                                 pageSize={TX_PAGE_SIZE}
                                 loadMore={this._loadMoreTransactions}
@@ -189,7 +193,11 @@ export class SingleAddressPage extends React.Component {
                             <AssetList assets={this.state.assets} />
                         </Pane>
                         <Pane title="Non-fungible tokens">
-                            <NonFungibleTokenList tokens={this.state.nfts} />
+                            <NonFungibleTokenListContainer
+                                tokens={this.state.nfts}
+                                pageSize={TX_PAGE_SIZE}
+                                loadMore={this._loadMoreNfts}
+                            />
                         </Pane>
                         <Pane title="Data">
                             <DataInfo data={this.state.data} />

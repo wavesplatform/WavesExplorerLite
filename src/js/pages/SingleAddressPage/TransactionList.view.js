@@ -9,7 +9,7 @@ export class TransactionListView extends React.Component {
     static propTypes = {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
         hasMore: PropTypes.bool.isRequired,
-        loadMore: PropTypes.func.isRequired,
+        loadMore: PropTypes.func.isRequired
     };
 
     render() {
