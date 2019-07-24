@@ -179,7 +179,7 @@ export class SingleAddressPage extends React.Component {
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
                     <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
-                        <Pane title="Last 100 transactions">
+                        <Pane title="Transactions">
                             <TransactionListContainer
                                 transactions={this.state.transactions.list}
                                 pageSize={TX_PAGE_SIZE}
