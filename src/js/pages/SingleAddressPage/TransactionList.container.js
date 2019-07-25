@@ -1,88 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import {TransactionListView} from './TransactionList.view';
 
-const INITIAL_NAV_STATE = {
-    history: [],
-    after: null,
-    loading: false
-};
-
-class TransactionListContainer extends React.Component {
+export class TransactionListContainer extends React.Component {
     static propTypes = {
         transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
         pageSize: PropTypes.number.isRequired,
-        loadAfter: PropTypes.func.isRequired
+        loadMore: PropTypes.func.isRequired
     };
 
-    state = INITIAL_NAV_STATE;
+    state = {
+        transactions: this.props.transactions,
+        loading: false,
+        hasMore: this.props.transactions.length === this.props.pageSize
+    };
 
     componentDidUpdate(prevProps) {
-        const {networkId, address} = this.props.match.params;
-        const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
-
-        if (networkId !== prevNetworkId || address !== prevAddress) {
-            this.setState(INITIAL_NAV_STATE);
+        if (prevProps.transactions.length !== this.props.transactions.length) {
+            this.setState({
+                transactions: this.props.transactions,
+                hasMore: this.props.transactions.length === this.props.pageSize
+            });
         }
     }
 
-    handleNext = () => {
-        if (this.props.transactions.length < 1)
+    handleMore = () => {
+        if (this.state.transactions.length < 1)
+            return;
+
+        if (this.state.loading)
             return;
 
         this.setState({loading: true});
-        const nextAfter = this.props.transactions[this.props.transactions.length - 1].id;
+        const next = this.state.transactions[this.state.transactions.length - 1].id;
 
-        this.props.loadAfter(nextAfter).then(() => {
-            this.setState((prevState) => {
-                const history = prevState.history.slice();
-                history.push(prevState.after);
-
-                return {
-                    history,
-                    loading: false,
-                    after: nextAfter
-                };
-            });
-        });
-    };
-
-    handlePrev = () => {
-        if (this.state.history.length < 1)
-            return;
-
-        this.setState({loading: true});
-        const prevAfter = this.state.history[this.state.history.length - 1];
-
-        this.props.loadAfter(prevAfter).then(() => {
-            this.setState((prevState) => ({
-                history: prevState.history.slice(0, -1),
+        this.props.loadMore(next).then(transactions => {
+            this.setState(prevState => ({
+                transactions: prevState.transactions.concat(transactions),
                 loading: false,
-                after: prevAfter
-            }));
+                hasMore: transactions.length === this.props.pageSize
+            }))
         });
     };
 
     render() {
-        const x = this.state.history.length * this.props.pageSize;
-        const from = x + 1;
-        const to = this.props.transactions.length + x;
-
-        const nav = {
-            label: `${from}-${to}`,
-            hasPrev: this.state.history.length > 0,
-            hasNext: this.props.transactions.length === this.props.pageSize,
-            disabled: this.state.loading,
-            onNext: this.handleNext,
-            onPrev: this.handlePrev
-        };
-
         return (
-            <TransactionListView transactions={this.props.transactions} navigation={nav} />
+            <TransactionListView
+                transactions={this.state.transactions}
+                hasMore={this.state.hasMore}
+                loadMore={this.handleMore}
+            />
         );
     }
 }
-
-export const RoutedTransactionListContainer = withRouter(TransactionListContainer);
