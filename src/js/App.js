@@ -68,7 +68,7 @@ class App extends React.Component {
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
                         <Search />
                     </Header>
-                    <div className="container grid">
+                    <div id="xxxxx" className="container grid">
                         <NavBar />
                         <Switch>
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />

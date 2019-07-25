@@ -7,9 +7,9 @@ import Loader from '../../components/Loader';
 import DataInfo from '../../components/DataInfo';
 import ScriptInfo from '../../components/ScriptInfo';
 
-import {RoutedTransactionListContainer} from './TransactionList.container';
+import {TransactionListContainer} from './TransactionList.container';
 import {AssetList} from './AssetList.view';
-import {NonFungibleTokenList} from './NonFungibleTokenList.view';
+import {NonFungibleTokenListContainer} from './NonFungibleTokenList.container';
 import {GroupedAliasList} from './GroupedAliasList.view';
 import {Tabs} from './Tabs.container';
 import {Pane} from './Pane.view';
@@ -19,19 +19,23 @@ import transactionMapper from './TransactionMapper';
 const TX_PAGE_SIZE = 100;
 
 export class SingleAddressPage extends React.Component {
-    state = {
-        balance: {},
-        assets: [],
-        nfts: [],
-        aliases: [],
-        transactions: {
-            list: [],
-            invertedAliases: undefined
-        },
-        data: [],
-        script: {},
-        selectedTabIndex: 0
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            balance: {},
+            assets: [],
+            nfts: [],
+            aliases: [],
+            transactions: {
+                list: [],
+                invertedAliases: undefined
+            },
+            data: [],
+            script: {},
+            selectedTabIndex: 0
+        };
+    }
 
     componentDidUpdate(prevProps) {
         const {networkId, address} = this.props.match.params;
@@ -120,14 +124,14 @@ export class SingleAddressPage extends React.Component {
             };
 
             return transactionMapper(transactions, currentUser);
-        }).then(transactions => {
-            this.setState((prevState) => ({
-                transactions: {
-                    ...prevState.transactions,
-                    list: transactions
-                }
-            }));
         });
+    };
+
+    _loadMoreNfts = (after) => {
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
+
+        return addressService.loadNftTokens(address, TX_PAGE_SIZE, after);
     };
 
     _loadAliases = (addressService, address, forceUpdate) => {
@@ -175,11 +179,11 @@ export class SingleAddressPage extends React.Component {
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
                     <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
-                        <Pane title="Last 100 transactions">
-                            <RoutedTransactionListContainer
+                        <Pane title="Transactions">
+                            <TransactionListContainer
                                 transactions={this.state.transactions.list}
                                 pageSize={TX_PAGE_SIZE}
-                                loadAfter={this._loadMoreTransactions}
+                                loadMore={this._loadMoreTransactions}
                             />
                         </Pane>
                         <Pane title="Aliases">
@@ -189,7 +193,11 @@ export class SingleAddressPage extends React.Component {
                             <AssetList assets={this.state.assets} />
                         </Pane>
                         <Pane title="Non-fungible tokens">
-                            <NonFungibleTokenList tokens={this.state.nfts} />
+                            <NonFungibleTokenListContainer
+                                tokens={this.state.nfts}
+                                pageSize={TX_PAGE_SIZE}
+                                loadMore={this._loadMoreNfts}
+                            />
                         </Pane>
                         <Pane title="Data">
                             <DataInfo data={this.state.data} />
