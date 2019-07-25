@@ -18,30 +18,29 @@ import transactionMapper from './TransactionMapper';
 
 const TX_PAGE_SIZE = 100;
 
-export class SingleAddressPage extends React.Component {
-    constructor(props) {
-        super(props);
+const INITIAL_STATE = {
+    balance: {},
+    assets: [],
+    nfts: [],
+    aliases: [],
+    transactions: {
+        list: [],
+        invertedAliases: undefined
+    },
+    data: [],
+    script: {},
+    selectedTabIndex: 0
+};
 
-        this.state = {
-            balance: {},
-            assets: [],
-            nfts: [],
-            aliases: [],
-            transactions: {
-                list: [],
-                invertedAliases: undefined
-            },
-            data: [],
-            script: {},
-            selectedTabIndex: 0
-        };
-    }
+export class SingleAddressPage extends React.Component {
+    state = Object.assign({}, INITIAL_STATE);
 
     componentDidUpdate(prevProps) {
         const {networkId, address} = this.props.match.params;
         const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
 
         if (networkId !== prevNetworkId || address !== prevAddress) {
+            this.setState(INITIAL_STATE);
             this.fetchData();
         }
     }
@@ -124,6 +123,13 @@ export class SingleAddressPage extends React.Component {
             };
 
             return transactionMapper(transactions, currentUser);
+        }).then(transactions => {
+            this.setState((prevState) => ({
+                transactions: {
+                    ...prevState.transactions,
+                    list: transactions
+                }
+            }));
         });
     };
 
