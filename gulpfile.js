@@ -97,10 +97,6 @@ gulp.task('invalidate-devnet', ['upload-devnet'], function() {
     return invalidateCache('ECH0R3VC2E1B');
 });
 
-gulp.task('invalidate-stagenet', ['upload-stagenet'], function() {
-    return invalidateCache('UPDATE ME!!');
-});
-
 gulp.task('upload-official-staging', ['build-official-staging'], function () {
     var credentials = awsCredentials('eu-central-1', 'it-1166.wavesexplorer.com');
 
@@ -119,15 +115,8 @@ gulp.task('upload-devnet', ['build-devnet'], function () {
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
 
-gulp.task('upload-stagenet', ['build-stagenet'], function () {
-    var credentials = awsCredentials('eu-west-1', 'stagenet.wavesexplorer.com');
-
-    return publishToS3(credentials, config.releaseDirectory + '/**');
-});
-
 gulp.task('publish-official-staging', ['build-official-staging', 'upload-official-staging', 'invalidate-official-staging']);
 gulp.task('publish-official-prod', ['build-official-prod', 'upload-official-prod']);
 gulp.task('publish-devnet', ['build-devnet', 'upload-devnet', 'invalidate-devnet']);
-gulp.task('publish-stagenet', ['build-stagenet', 'upload-stagenet', 'invalidate-stagenet']);
 
 gulp.task('publish', ['publish-official-staging']);
