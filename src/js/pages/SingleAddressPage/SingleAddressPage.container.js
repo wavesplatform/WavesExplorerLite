@@ -123,13 +123,6 @@ export class SingleAddressPage extends React.Component {
             };
 
             return transactionMapper(transactions, currentUser);
-        }).then(transactions => {
-            this.setState((prevState) => ({
-                transactions: {
-                    ...prevState.transactions,
-                    list: transactions
-                }
-            }));
         });
     };
 
