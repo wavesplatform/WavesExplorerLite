@@ -170,7 +170,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return retryableGet(`/transactions/address/${address}/limit/${top}`, config);
             },
-            stateChanges: id => get(`/debug/stateChanges/info/${id}`)
+            stateChanges: id => retryableGet(`/debug/stateChanges/info/${id}`)
         },
         aliases: {
             address: (alias) => retryableGet(`/alias/by-alias/${alias}`)
