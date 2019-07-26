@@ -48,7 +48,6 @@ var config = {
                         modules: false
                     }
                 },
-                //'postcss-loader',
                 'sass-loader'
             ]
         },
