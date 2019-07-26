@@ -1,4 +1,7 @@
 FROM node:8 AS build
+
+ARG CONF_SWITCH
+ENV CONF_SWITCH ${CONF_SWITCH:-default}
 WORKDIR /app
 COPY . ./
 RUN yarn install
