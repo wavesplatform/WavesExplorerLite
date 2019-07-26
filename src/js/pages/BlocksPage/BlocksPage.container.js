@@ -56,7 +56,7 @@ export class BlocksPage extends React.Component {
                 <Loader fetchData={this.initialFetch} errorTitle="Failed to load blocks">
                     <div className="content card">
                         <div className="headline">
-                            <span className="title">Blocks</span>
+                            <span className="title large">Blocks</span>
                             <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
                                         onPageChange={this.handlePageChange} />
                         </div>
