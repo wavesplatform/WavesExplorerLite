@@ -5,7 +5,7 @@ ENV CONF_SWITCH ${CONF_SWITCH:-default}
 WORKDIR /app
 COPY . ./
 RUN yarn install
-RUN ./node_modules/.bin/gulp build-official-prod
+RUN ./node_modules/.bin/gulp ${CONF_SWITCH}
 
 FROM nginx:stable-alpine
 RUN rm -rf /etc/nginx/conf.d/*
