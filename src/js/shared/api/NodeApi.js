@@ -151,6 +151,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 last: () => get('/blocks/headers/last', {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
                 }),
+                at: (height) => get(`/blocks/headers/at/${height}`, {
+                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
+                }),
                 sequence: (from, to) => get(`/blocks/headers/seq/${from}/${to}`, {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
                 })

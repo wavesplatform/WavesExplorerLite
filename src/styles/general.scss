@@ -16,6 +16,17 @@
     }
 }
 
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+
+    >:last-child {
+        margin-left: 4px;
+    }
+}
+
 .line {
     @include font(body);
     padding-bottom: 8px;
