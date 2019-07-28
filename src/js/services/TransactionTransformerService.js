@@ -88,15 +88,24 @@ const attachmentToString = (attachment) => {
     return result;
 };
 
-const copyMandatoryAttributes = tx => ({
-    id: tx.id,
-    type: tx.type,
-    version: tx.version,
-    timestamp: new DateTime(tx.timestamp),
-    sender: tx.sender,
-    senderPublicKey: tx.senderPublicKey,
-    height: tx.height
-});
+const copyMandatoryAttributes = tx => {
+    let proofs = tx.proofs;
+
+    if (!proofs || proofs.length === 0) {
+        proofs = [tx.signature];
+    }
+
+    return {
+        id: tx.id,
+        type: tx.type,
+        version: tx.version,
+        timestamp: new DateTime(tx.timestamp),
+        sender: tx.sender,
+        senderPublicKey: tx.senderPublicKey,
+        height: tx.height,
+        proofs
+    };
+};
 
 const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) => {
     return Promise.all([
