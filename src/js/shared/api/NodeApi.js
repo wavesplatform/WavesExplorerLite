@@ -182,7 +182,16 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                     full: !!full
                 }
             }),
-            nft: (address) => get(`/assets/nft/${address}/limit/${ASSETS_PER_PAGE}`)
+            nft: (address, limit, after) => {
+                const top = limit || ASSETS_PER_PAGE;
+                const config = after ? {
+                    params: {
+                        after
+                    }
+                } : undefined;
+
+                return get(`/assets/nft/${address}/limit/${top}`, config);
+            }
         },
         peers: () => get('/peers/connected'),
     };

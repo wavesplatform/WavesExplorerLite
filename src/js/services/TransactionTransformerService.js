@@ -5,13 +5,17 @@ import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
-    const promises = transactions.map(item => transformSingle(currencyService,
-        spamDetectionService, stateChangeService, item));
+    const promises = transactions.map(item => transform(currencyService,
+        spamDetectionService, stateChangeService, item, false));
 
     return Promise.all(promises);
 };
 
 const transformSingle = (currencyService, spamDetectionService, stateChangeService, tx) => {
+    return transform(currencyService, spamDetectionService, stateChangeService, tx, true);
+};
+
+const transform = (currencyService, spamDetectionService, stateChangeService, tx, shouldLoadDetails) => {
     switch (tx.type) {
         case 1:
             return transformGenesis(currencyService, tx);
@@ -57,7 +61,7 @@ const transformSingle = (currencyService, spamDetectionService, stateChangeServi
             return transformAssetScript(currencyService, tx);
 
         case 16:
-            return transformScriptInvocation(currencyService, stateChangeService, tx);
+            return transformScriptInvocation(currencyService, stateChangeService, tx, shouldLoadDetails);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -101,7 +105,7 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
-const transformScriptInvocation = (currencyService, stateChangeService, tx) => {
+const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
     return currencyService.get(tx.feeAssetId).then(feeCurrency => {
         const promise = tx.payment && tx.payment.length > 0
             ? currencyService.get(tx.payment[0].assetId)
@@ -115,6 +119,9 @@ const transformScriptInvocation = (currencyService, stateChangeService, tx) => {
                 payment,
                 fee: Money.fromCoins(tx.fee, feeCurrency)
             });
+
+            if (!shouldLoadDetails)
+                return result;
 
             return stateChangeService.loadStateChanges(tx.id).then(changes => {
                 result.stateChanges = changes.stateChanges;
