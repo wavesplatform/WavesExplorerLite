@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Question from '../../../images/question-14.svg';
 import {CAPTIONS} from '../../services/InfoService';
+import Tooltip from '../../components/Tooltip';
 
 const Caption = ({caption}) => {
     if (caption !== CAPTIONS.BLOCK_DELAY)
         return <label>{caption}:</label>;
 
     return (<div className="label-with-icon">
-        <label>{caption}:</label><img src={Question} height="14" width="14" title="Per last 10k blocks" />
+        <label>{caption}:</label>
+        <img src={Question} height="14" width="14" data-for="avg-time-tooltip" data-tip="Per last 10k blocks" />
+        <Tooltip id="avg-time-tooltip"/>
     </div>);
 };
 

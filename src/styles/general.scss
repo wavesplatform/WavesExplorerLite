@@ -22,8 +22,17 @@
     flex-wrap: nowrap;
     flex-direction: row;
 
-    >:last-child {
+    > img {
         margin-left: 4px;
+    }
+}
+
+.tooltip {
+    background-color: map-get($colors, basic500) !important;
+    &.place-top {
+        &:after {
+            border-top-color: map-get($colors, basic500) !important;
+        }
     }
 }
 
