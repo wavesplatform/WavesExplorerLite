@@ -372,7 +372,7 @@ const buildTransactionHeaderItems = tx => {
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height} />
-    }];
+    }, buildProofsItem(tx)];
 };
 
 const buildVersionItem = tx => ({
@@ -388,6 +388,11 @@ const buildSenderAddressAndKeyItems = tx => ([
 const buildQuantityItem = tx => ({
     label: 'Quantity',
     value: tx.amount.toString()
+});
+
+const buildProofsItem = tx => ({
+    label: 'Proofs',
+    value: tx.proofs.join(' ')
 });
 
 const buildReissuableItem = tx => ({
