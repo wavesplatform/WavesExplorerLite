@@ -85,6 +85,10 @@ gulp.task('build-devnet', ['clean'], function (done) {
     buildApp('devnet', 'prod', done);
 });
 
+gulp.task('build-stagenet', ['clean'], function (done) {
+    buildApp('stagenet', 'prod', done);
+});
+
 gulp.task('invalidate-official-staging', ['upload-official-staging'], function() {
     return invalidateCache('EJSIVKMWKE29F');
 });
@@ -110,7 +114,6 @@ gulp.task('upload-devnet', ['build-devnet'], function () {
 
     return publishToS3(credentials, config.releaseDirectory + '/**');
 });
-
 
 gulp.task('publish-official-staging', ['build-official-staging', 'upload-official-staging', 'invalidate-official-staging']);
 gulp.task('publish-official-prod', ['build-official-prod', 'upload-official-prod']);
