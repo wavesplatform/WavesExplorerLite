@@ -134,34 +134,34 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         version: () => get('/node/version'),
         baseTarget: () => get('/consensus/basetarget'),
         addresses: {
-            details: (address) => get(`/addresses/balance/details/${address}`),
-            aliases: (address) => get(`/alias/by-address/${address}`),
-            validate: (address) => get(`/addresses/validate/${address}`),
-            data: (address) => get(`/addresses/data/${address}`),
-            script: (address) => get(`/addresses/scriptInfo/${address}`)
+            details: (address) => retryableGet(`/addresses/balance/details/${address}`),
+            aliases: (address) => retryableGet(`/alias/by-address/${address}`),
+            validate: (address) => retryableGet(`/addresses/validate/${address}`),
+            data: (address) => retryableGet(`/addresses/data/${address}`),
+            script: (address) => retryableGet(`/addresses/scriptInfo/${address}`)
         },
         blocks: {
             height: () => get('/blocks/height'),
             heightBySignature: (signature) => get(`/blocks/height/${signature}`),
             delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
-            at: (height) => get(`/blocks/at/${height}`, {
+            at: (height) => retryableGet(`/blocks/at/${height}`, {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             }),
             headers: {
-                last: () => get('/blocks/headers/last', {
+                last: () => retryableGet('/blocks/headers/last', {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
                 }),
-                at: (height) => get(`/blocks/headers/at/${height}`, {
+                at: (height) => retryableGet(`/blocks/headers/at/${height}`, {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
                 }),
-                sequence: (from, to) => get(`/blocks/headers/seq/${from}/${to}`, {
+                sequence: (from, to) => retryableGet(`/blocks/headers/seq/${from}/${to}`, {
                     transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
                 })
             }
         },
         transactions: {
-            unconfirmed: () => get('/transactions/unconfirmed'),
-            utxSize: () => get('/transactions/unconfirmed/size'),
+            unconfirmed: () => retryableGet('/transactions/unconfirmed'),
+            utxSize: () => retryableGet('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
             address: (address, limit, after) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
@@ -171,16 +171,16 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                     }
                 } : undefined;
 
-                return get(`/transactions/address/${address}/limit/${top}`, config);
+                return retryableGet(`/transactions/address/${address}/limit/${top}`, config);
             },
-            stateChanges: id => get(`/debug/stateChanges/info/${id}`)
+            stateChanges: id => retryableGet(`/debug/stateChanges/info/${id}`)
         },
         aliases: {
-            address: (alias) => get(`/alias/by-alias/${alias}`)
+            address: (alias) => retryableGet(`/alias/by-alias/${alias}`)
         },
         assets: {
-            balance: (address) => get(`/assets/balance/${address}`),
-            details: (assetId, full) => get(`/assets/details/${assetId}`, {
+            balance: (address) => retryableGet(`/assets/balance/${address}`),
+            details: (assetId, full) => retryableGet(`/assets/details/${assetId}`, {
                 params: {
                     full: !!full
                 }
@@ -193,9 +193,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                     }
                 } : undefined;
 
-                return get(`/assets/nft/${address}/limit/${top}`, config);
+                return retryableGet(`/assets/nft/${address}/limit/${top}`, config);
             }
         },
-        peers: () => get('/peers/connected'),
+        peers: () => retryableGet('/peers/connected'),
     };
 };
