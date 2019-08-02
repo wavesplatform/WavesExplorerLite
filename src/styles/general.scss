@@ -28,6 +28,7 @@
 }
 
 .tooltip {
+    position: absolute !important;
     background-color: map-get($colors, basic500) !important;
     &.place-top {
         &:after {
