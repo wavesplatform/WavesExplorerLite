@@ -9,7 +9,7 @@
     },
     "license": "Apache-2.0",
     "scripts": {
-        "start": "webpack-dev-server --hot --open --mode development --history-api-fallback --env.network=stagenet",
+        "start": "webpack-dev-server --hot --open --mode development --history-api-fallback --env.network=mainnet",
         "app:dev": "webpack --mode development --config=webpack.config.js",
         "app:prod": "webpack --mode production --config=webpack.config.js",
         "test": "jest",
