@@ -9,7 +9,7 @@ export default {
     nodes: [{url: nodeUrl, maintainer: 'Waves', showAsLink: true}],
     faucet: {
         url: 'https://faucet-stagenet.wavesplatform.com',
-        captchaKey: '6Lfir7MUAAAAAAWip4okLvtW8de3fvZaZbGVN-bn',
+        captchaKey: '6LdT8pAUAAAAAOhIIJGKA6HAOo7O98gdIoUgznKL',
         address: '3Mi63XiwniEj6mTC557pxdRDddtpj7fZMMw'
     }
 };

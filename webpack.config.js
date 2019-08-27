@@ -103,9 +103,8 @@ var config = {
 };
 
 const networks = {
-    mainnet: ['mainnet', 'testnet'],
-    devnet: ['devnet'],
-    stagenet: ['stagenet']
+    mainnet: ['mainnet', 'testnet', 'stagenet'],
+    devnet: ['devnet']
 };
 
 module.exports = (env, argv) => {
