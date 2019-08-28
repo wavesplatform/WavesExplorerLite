@@ -10,6 +10,6 @@ export default {
     faucet: {
         url: 'https://faucet-stagenet.wavesplatform.com',
         captchaKey: '6LdT8pAUAAAAAOhIIJGKA6HAOo7O98gdIoUgznKL',
-        address: '3Mi63XiwniEj6mTC557pxdRDddtpj7fZMMw'
+        address: '3MgSuT5FfeMrwwZCbztqLhQpcJNxySaFEiT'
     }
 };
