@@ -15,6 +15,6 @@ export default {
     faucet: {
         url: 'https://testnode1.wavesnodes.com/faucet',
         captchaKey: '6LdT8pAUAAAAAOhIIJGKA6HAOo7O98gdIoUgznKL',
-        address: '3MxyKNmnQkVuDCG9AzMpixKCdUWXfMUsxdg'
+        address: '3Myqjf1D44wR8Vko4Tr5CwSzRNo2Vg9S7u7'
     }
 };

@@ -85,10 +85,6 @@ gulp.task('build-devnet', ['clean'], function (done) {
     buildApp('devnet', 'prod', done);
 });
 
-gulp.task('build-stagenet', ['clean'], function (done) {
-    buildApp('stagenet', 'prod', done);
-});
-
 gulp.task('invalidate-official-staging', ['upload-official-staging'], function() {
     return invalidateCache('EJSIVKMWKE29F');
 });
