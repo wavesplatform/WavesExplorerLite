@@ -25,6 +25,8 @@ export class TransactionListContainer extends React.Component {
         }
     }
 
+    fetchData
+
     handleMore = () => {
         if (this.state.transactions.length < 1)
             return;

@@ -1,30 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 export class TabHeader extends React.PureComponent {
     static propTypes = {
         isActive: PropTypes.bool.isRequired,
-        title: PropTypes.string.isRequired,
-        index: PropTypes.number.isRequired,
-        onActivate: PropTypes.func.isRequired
-    };
-
-    handleClick = (e) => {
-        e.preventDefault();
-
-        this.props.onActivate(this.props.index);
+        id: PropTypes.string.isRequired,
+        basePath: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired
     };
 
     render() {
+        const {basePath, isActive, title, id} = this.props;
+
         let className = 'page-link bold';
-        if (this.props.isActive)
+        if (isActive)
             className += ' disabled';
 
         return (
             <span className={className}>
-            {this.props.isActive ?
-                this.props.title :
-                <a className="no-style" href="#" onClick={this.handleClick}>{this.props.title}</a>}
+            {isActive ?
+                title :
+                <Link to={`${basePath}/${id}`} className="no-style">{title}</Link>}
             </span>
         );
     }

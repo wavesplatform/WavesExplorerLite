@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import ServiceFactory from '../../services/ServiceFactory';
 import GoBack from '../../components/GoBack';
 import Headline from '../../components/Headline';
@@ -7,11 +8,12 @@ import Loader from '../../components/Loader';
 import DataInfo from '../../components/DataInfo';
 import ScriptInfo from '../../components/ScriptInfo';
 
+import {routeBuilder} from '../../shared/Routing';
 import {TransactionListContainer} from './TransactionList.container';
 import {AssetList} from './AssetList.view';
 import {NonFungibleTokenListContainer} from './NonFungibleTokenList.container';
 import {GroupedAliasList} from './GroupedAliasList.view';
-import {Tabs} from './Tabs.container';
+import {RoutedTabs} from './Tabs.container';
 import {Pane} from './Pane.view';
 import {BalanceDetails} from './BalanceDetails.view';
 import transactionMapper from './TransactionMapper';
@@ -171,40 +173,43 @@ export class SingleAddressPage extends React.Component {
     };
 
     render() {
+        const {address, networkId} = this.props.match.params;
+        const basePath = routeBuilder(networkId).addresses.one(address);
+
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
                 <div className="content card">
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
-                    <Tabs onTabActivate={this.handleTabActivate} selectedIndex={this.state.selectedTabIndex}>
-                        <Pane title="Transactions">
+                    <RoutedTabs defaultTab="lasttx" basePath={basePath}>
+                        <Pane id="lasttx" title="Transactions" render={() =>
                             <TransactionListContainer
                                 transactions={this.state.transactions.list}
                                 pageSize={TX_PAGE_SIZE}
                                 loadMore={this._loadMoreTransactions}
                             />
-                        </Pane>
-                        <Pane title="Aliases">
+                        } />
+                        <Pane id="aliases" title="Aliases" render={() =>
                             <GroupedAliasList aliases={this.state.aliases} />
-                        </Pane>
-                        <Pane title="Assets">
+                        } />
+                        <Pane id="assets" title="Assets" render={() =>
                             <AssetList assets={this.state.assets} />
-                        </Pane>
-                        <Pane title="Non-fungible tokens">
+                        } />
+                        <Pane id="nft" title="Non-fungible tokens" render={() =>
                             <NonFungibleTokenListContainer
                                 tokens={this.state.nfts}
                                 pageSize={TX_PAGE_SIZE}
                                 loadMore={this._loadMoreNfts}
                             />
-                        </Pane>
-                        <Pane title="Data">
+                        } />
+                        <Pane id="data" title="Data" render={() =>
                             <DataInfo data={this.state.data} />
-                        </Pane>
-                        <Pane title="Script">
+                        } />
+                        <Pane id="script" title="Script" render={() =>
                             <ScriptInfo script={this.state.script.script} />
-                        </Pane>
-                    </Tabs>
+                        } />
+                    </RoutedTabs>
                 </div>
             </Loader>
         );

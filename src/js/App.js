@@ -75,6 +75,7 @@ class App extends React.Component {
                             <Route exact path={routes.blocks.list} component={BlocksPage} />
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
+                            <Route exact path={routes.addresses.one(routeParams.address, routeParams.tab)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
                             <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
                             <Route path={routes.nodes.list} component={NodesPage} />

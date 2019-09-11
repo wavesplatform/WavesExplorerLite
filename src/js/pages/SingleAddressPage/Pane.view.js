@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Pane = props => {
-    return props.children;
+export const Pane = () => {
+    return null;
 };
 
 Pane.propTypes = {
-    title: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    render: PropTypes.func.isRequired
 };
