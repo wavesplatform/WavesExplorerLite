@@ -2,16 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Switch, Redirect, withRouter} from 'react-router';
 
+import {routeBuilder} from '../../shared/Routing';
 import {TabHeader} from './TabHeader.view';
 
 class TabsView extends React.Component {
     static propTypes = {
-        activeTab: PropTypes.string.isRequired,
+        activeTab: PropTypes.string,
         basePath: PropTypes.string.isRequired
+    };
+
+    static defaultProps = {
+        activeTab: undefined
     };
 
     render() {
         const {activeTab, basePath} = this.props;
+
+        if (!activeTab)
+            return null;
+
+        const Component = this.props.children.find(child => child.props.id === activeTab).props.component;
 
         return (
             <React.Fragment>
@@ -25,69 +35,47 @@ class TabsView extends React.Component {
                         />
                     })}
                 </div>
-                <Switch>
-                    {this.props.children.map(child => {
-                        return <Route key={child.props.id}
-                                      path={`${basePath}/${child.props.id}`}
-                                      component={child.props.component} />
-                    })}
-                </Switch>
+                <Component />
             </React.Fragment>
         );
     }
 }
 
-export class Tabs extends React.Component {
+class Tabs extends React.Component {
     static propTypes = {
         defaultTab: PropTypes.string.isRequired,
-        basePath: PropTypes.string.isRequired
+        basePath: PropTypes.string.isRequired,
+        activeTab: PropTypes.string
     };
 
-    state = {
-        activeTabFound: true
+    static defaultProps = {
+        activeTab: undefined
     };
 
     componentDidMount() {
         const availableTabIds = this.props.children.map(child => child.props.id);
 
         const activeTab = this.props.match.params.tab;
+
         if (!activeTab || !availableTabIds.includes(activeTab)) {
             this.setState({activeTabFound: false});
         }
     }
 
     render() {
-        const {defaultTab, basePath} = this.props;
+        const {defaultTab, basePath, activeTab} = this.props;
+        const availableTabIds = this.props.children.map(child => child.props.id);
 
-        if (!this.state.activeTabFound) {
-            //TODO: redirect if current tab is not set
+        if (!activeTab || !availableTabIds.includes(activeTab)) {
             console.log('Active tab has not been found');
 
-            return null;
+            return <Redirect to={`${basePath}/${defaultTab}`} />;
         }
 
-        const activeTab = this.props.match.params.tab;
-
         return (
-            <React.Fragment>
-                <div className="page-navigation">
-                    {this.props.children.map(child => {
-                        return <TabHeader key={child.props.id}
-                                          id={child.props.id}
-                                          basePath={basePath}
-                                          isActive={activeTab === child.props.id}
-                                          title={child.props.title}
-                                          />
-                    })}
-                </div>
-                <Switch>
-                    {this.props.children.map(child => {
-                        return <Route key={child.props.id}
-                                      path={`${basePath}/${child.props.id}`}
-                                      render={child.props.render} />
-                    })}
-                </Switch>
-            </React.Fragment>
+            <TabsView basePath={basePath} activeTab={activeTab}>
+                {this.props.children}
+            </TabsView>
         );
     }
 }

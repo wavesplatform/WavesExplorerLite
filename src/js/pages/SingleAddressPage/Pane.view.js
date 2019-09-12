@@ -8,5 +8,5 @@ export const Pane = () => {
 Pane.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    render: PropTypes.func.isRequired
+    component: PropTypes.func.isRequired
 };
