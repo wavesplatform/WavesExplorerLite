@@ -10,6 +10,7 @@ import CopyButton from '../../components/CopyButton';
 import Dictionary from '../../components/Dictionary';
 import Loader from '../../components/Loader';
 import Enumerator from '../../components/Enumerator';
+import MoneyInfo from '../../components/MoneyInfo';
 import {TransactionList} from './TransactionList.container';
 
 const typeToHeader = type => {
@@ -54,6 +55,14 @@ const typeToHeader = type => {
     }
 
     return result;
+};
+
+const MaybeMoney = ({value}) => {
+    if (!value) {
+        return 'N/A';
+    }
+
+    return <MoneyInfo value={value} />;
 };
 
 export class SingleBlockPage extends React.Component {
@@ -160,6 +169,15 @@ export class SingleBlockPage extends React.Component {
             }, {
                 label: 'Size',
                 value: <React.Fragment>{this.state.block.blocksize} bytes</React.Fragment>
+            }, {
+                label: 'Total Fee',
+                value: <MaybeMoney value={this.state.block.totalFee}/>
+            }, {
+                label: 'Reward',
+                value: <MaybeMoney value={this.state.block.reward}/>
+            }, {
+                label: 'Desired reward',
+                value: <MaybeMoney value={this.state.block.desiredReward}/>
             }]
         };
 
