@@ -41,7 +41,7 @@ class TabsView extends React.Component {
     }
 }
 
-class Tabs extends React.Component {
+class TabsContainer extends React.Component {
     static propTypes = {
         defaultTab: PropTypes.string.isRequired,
         basePath: PropTypes.string.isRequired,
@@ -67,8 +67,6 @@ class Tabs extends React.Component {
         const availableTabIds = this.props.children.map(child => child.props.id);
 
         if (!activeTab || !availableTabIds.includes(activeTab)) {
-            console.log('Active tab has not been found');
-
             return <Redirect to={`${basePath}/${defaultTab}`} />;
         }
 
@@ -80,4 +78,4 @@ class Tabs extends React.Component {
     }
 }
 
-export const RoutedTabs = withRouter(Tabs);
+export const RoutedTabsContainer = withRouter(TabsContainer);

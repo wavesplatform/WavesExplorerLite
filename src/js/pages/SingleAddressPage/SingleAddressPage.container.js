@@ -5,19 +5,16 @@ import GoBack from '../../components/GoBack';
 import Headline from '../../components/Headline';
 import Loader from '../../components/Loader';
 
-import {routeBuilder, routeParamsBuilder} from '../../shared/Routing';
+import {routeBuilder} from '../../shared/Routing';
 import TransactionList from './TransactionList.container';
 import AssetList from './AssetList.container';
 import NonFungibleTokenList from './NonFungibleTokenList.container';
 import GroupedAliasList from './GroupedAliasList.container';
 import DataTab from './DataTab.container';
 import ScriptTab from './ScriptTab.container';
-import {RoutedTabs} from './Tabs.container';
-import {Pane} from './Pane.view';
+import {RoutedTabsContainer} from './Tabs.container';
+import {Tab} from './Tab.view';
 import {BalanceDetails} from './BalanceDetails.view';
-import transactionMapper from './TransactionMapper';
-
-const TX_PAGE_SIZE = 100;
 
 const INITIAL_STATE = {
     balance: {}
@@ -54,14 +51,14 @@ export class SingleAddressPage extends React.Component {
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
-                    <RoutedTabs defaultTab="lasttx" basePath={basePath} activeTab={tab}>
-                        <Pane id="lasttx" title="Transactions" component={TransactionList} />
-                        <Pane id="aliases" title="Aliases" component={GroupedAliasList} />
-                        <Pane id="assets" title="Assets" component={AssetList} />
-                        <Pane id="nft" title="Non-fungible tokens" component={NonFungibleTokenList} />
-                        <Pane id="data" title="Data" component={DataTab} />
-                        <Pane id="script" title="Script" component={ScriptTab} />
-                    </RoutedTabs>
+                    <RoutedTabsContainer defaultTab="lasttx" basePath={basePath} activeTab={tab}>
+                        <Tab id="lasttx" title="Transactions" component={TransactionList} />
+                        <Tab id="aliases" title="Aliases" component={GroupedAliasList} />
+                        <Tab id="assets" title="Assets" component={AssetList} />
+                        <Tab id="nft" title="Non-fungible tokens" component={NonFungibleTokenList} />
+                        <Tab id="data" title="Data" component={DataTab} />
+                        <Tab id="script" title="Script" component={ScriptTab} />
+                    </RoutedTabsContainer>
                 </div>
             </Loader>
         );
