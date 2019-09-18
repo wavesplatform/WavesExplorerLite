@@ -40,7 +40,7 @@ class NetworkDependentServices {
         this._globalServices = globalServices;
         this._networkId = networkId;
         this._currencyService = new CurrencyService(globalServices.configurationService(),
-            new SafeCurrencyCache(database, globalServices.errorReportingService()), networkId);
+            new SafeCurrencyCache(database), networkId);
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
         this._stateChangeService = new StateChangeService(globalServices.configurationService(), networkId);
