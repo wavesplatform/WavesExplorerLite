@@ -175,9 +175,6 @@ export class SingleBlockPage extends React.Component {
             }, {
                 label: 'Reward',
                 value: <MaybeMoney value={this.state.block.reward}/>
-            }, {
-                label: 'Desired reward',
-                value: <MaybeMoney value={this.state.block.desiredReward}/>
             }]
         };
 
