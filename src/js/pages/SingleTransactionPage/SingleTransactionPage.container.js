@@ -44,7 +44,7 @@ export class SingleTransactionPage extends React.Component {
 
         return (
             <div className="loaderWrapper">
-                <Loader fetchData={this.fetchData} errorTitles={LOADER_ERROR_CAPTIONS}>
+                <Loader fetchData={this.fetchData} errorTitles={LOADER_ERROR_CAPTIONS} shouldRetry={true}>
                     <div className="content card">
                         <GoBack />
                         <Headline title="Transaction" subtitle={this.state.tx.id} />
