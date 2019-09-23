@@ -18,7 +18,12 @@ class NonFungibleTokenListContainer extends React.Component {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
-        return addressService.loadNftTokens(address).then(tokens => this.setState({tokens}));
+        return addressService
+            .loadNftTokens(address)
+            .then(tokens => this.setState({
+                tokens,
+                hasMore: tokens.length === TX_PAGE_SIZE
+            }));
     };
 
     loadMore = (after) => {

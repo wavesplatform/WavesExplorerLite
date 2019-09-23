@@ -20,8 +20,6 @@ class TransactionListContainer extends React.Component {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
-        console.log('params', this.props.match);
-
         return addressService.loadRawAliases(address).then(rawAliases => {
             const currentUser = {
                 address,
@@ -38,7 +36,8 @@ class TransactionListContainer extends React.Component {
             .then(transactions => {
                 this.setState({
                     transactions,
-                    invertedAliases: currentUser.aliases
+                    invertedAliases: currentUser.aliases,
+                    hasMore: transactions.length === TX_PAGE_SIZE
                 });
             });
         });
@@ -59,7 +58,7 @@ class TransactionListContainer extends React.Component {
     };
 
     handleMore = () => {
-        if (this.transactions.length < 1)
+        if (this.state.transactions.length < 1)
             return;
 
         if (this.state.loading)
