@@ -35,7 +35,7 @@ export class Loader extends React.Component {
         this.setState({loading: true});
         this.props.fetchData()
             .then(value => {
-                this.setState({loading: false});
+                this.setState({loading: false, hasError: false});
 
                 return value;
             })
