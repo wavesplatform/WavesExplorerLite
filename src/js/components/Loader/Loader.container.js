@@ -5,7 +5,7 @@ import ServiceFactory from '../../services/ServiceFactory';
 import Error, {ERROR_TYPES} from '../Error';
 import {Loading} from './Loading.view';
 
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
 const RETRY_DELAY_MILLISECONDS = 5000;
 
 export class Loader extends React.Component {
@@ -66,7 +66,7 @@ export class Loader extends React.Component {
                     this.removeInterval();
                     const nextRetries = this.state.retries + 1;
                     this.timeoutId = setTimeout(this.doFetch,
-                        nextRetries * RETRY_DELAY_MILLISECONDS);
+                        RETRY_DELAY_MILLISECONDS);
                     this.setState({retries: nextRetries});
                 }
             });
