@@ -51,8 +51,8 @@ export class SingleAddressPage extends React.Component {
                     <GoBack />
                     <Headline title="Address" subtitle={this.props.match.params.address} />
                     <BalanceDetails balance={this.state.balance} />
-                    <RoutedTabsContainer defaultTab="lasttx" basePath={basePath} activeTab={tab}>
-                        <Tab id="lasttx" title="Transactions" component={TransactionList} />
+                    <RoutedTabsContainer defaultTab="tx" basePath={basePath} activeTab={tab}>
+                        <Tab id="tx" title="Transactions" component={TransactionList} />
                         <Tab id="aliases" title="Aliases" component={GroupedAliasList} />
                         <Tab id="assets" title="Assets" component={AssetList} />
                         <Tab id="nft" title="Non-fungible tokens" component={NonFungibleTokenList} />
