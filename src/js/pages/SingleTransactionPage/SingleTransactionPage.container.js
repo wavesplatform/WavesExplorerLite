@@ -7,6 +7,7 @@ import Headline from '../../components/Headline';
 import Dictionary from '../../components/Dictionary';
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import {MassPaymentDetails} from './MassPaymentDetails.view';
+import {RoutedRawTransactionContainer} from './RawTransaction.container';
 
 export class SingleTransactionPage extends React.Component {
     state = {
@@ -35,6 +36,12 @@ export class SingleTransactionPage extends React.Component {
 
     render() {
         const transactionItems = transactionToDictionary(this.state.tx);
+        if (transactionItems.default.length > 0) {
+            transactionItems.default.push({
+                label: 'Raw JSON',
+                value: <RoutedRawTransactionContainer/>
+            });
+        }
 
         return (
             <div className="loaderWrapper">
