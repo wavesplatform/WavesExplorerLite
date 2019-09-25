@@ -197,6 +197,13 @@ a {
         background: none;
         color: map-get($colors, submit400);
     }
+
+    &.btn-toggle {
+        min-width: 50px;
+        height: 28px;
+        padding-top: 6px;
+        text-align: center;
+    }
 }
 
 .copied {

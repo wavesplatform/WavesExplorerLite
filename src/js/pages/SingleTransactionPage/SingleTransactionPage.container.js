@@ -8,6 +8,7 @@ import Headline from '../../components/Headline';
 import Dictionary from '../../components/Dictionary';
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import {MassPaymentDetails} from './MassPaymentDetails.view';
+import {RoutedRawTransactionContainer} from './RawTransaction.container';
 
 const LOADER_ERROR_CAPTIONS = {
     [ERROR_TYPES.GENERIC]: 'Failed to load transaction',
@@ -41,6 +42,12 @@ export class SingleTransactionPage extends React.Component {
 
     render() {
         const transactionItems = transactionToDictionary(this.state.tx);
+        if (transactionItems.default.length > 0) {
+            transactionItems.default.push({
+                label: 'JSON',
+                value: <RoutedRawTransactionContainer/>
+            });
+        }
 
         return (
             <div className="loaderWrapper">
