@@ -91,7 +91,7 @@
     }
 
     &.panel-empty {
-        >.panel-empty-icon {
+        >.icon {
             width: 88px;
             height: 88px;
             margin: 0 auto;
@@ -105,7 +105,7 @@
         &.confirmed {
             margin-top: 20vh;
 
-            >.panel-empty-icon {
+            >.icon {
                 background: url('../images/confirmed-88.svg') no-repeat center center;
             }
         }
@@ -117,8 +117,12 @@
             height: calc(100vh - 140px);
             box-sizing: border-box;
 
-            >.panel-empty-icon {
+            >.icon {
                 background: url('../images/erroring-88.svg') no-repeat center center;
+
+                &.not-found-icon {
+                    background: url('../images/error-not-found-88.svg') no-repeat center center;
+                }
             }
 
             @media screen and (min-width: 1366px) {
@@ -129,7 +133,7 @@
         &.no-data {
             @include responsive_styles($panel_empty);
 
-            >.panel-empty-icon {
+            >.icon {
                 background: url('../images/empty-88.svg') no-repeat center center;
             }
         }

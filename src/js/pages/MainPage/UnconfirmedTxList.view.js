@@ -29,7 +29,7 @@ export class UnconfirmedTxList extends React.Component {
     renderEmpty() {
         return (
             <React.Fragment>
-                <div className="panel-empty-icon"></div>
+                <div className="icon"></div>
                 <div className="line wide panel-empty-label"><label>All transactions are confirmed</label></div>
             </React.Fragment>
         );

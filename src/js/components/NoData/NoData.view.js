@@ -15,7 +15,7 @@ export class NoData extends React.PureComponent {
 
         return (
             <div className="panel panel-empty no-data">
-                <div className="panel-empty-icon"></div>
+                <div className="icon"></div>
                 <div className="line wide panel-empty-label"><label>{title}</label></div>
             </div>
         );
