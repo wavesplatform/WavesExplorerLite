@@ -89,7 +89,8 @@ export class Loader extends React.Component {
         }
 
         if (this.state.hasError) {
-            const title = this.props.errorTitles[this.state.errorType] || this.props.errorTitle;
+            const {errorTitles, errorTitle} = this.props;
+            const title = (errorTitles && errorTitles[this.state.errorType]) || errorTitle;
             return <Error title={title} type={this.state.errorType} />;
         }
 
