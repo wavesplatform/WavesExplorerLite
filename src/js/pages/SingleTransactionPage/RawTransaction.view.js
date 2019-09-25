@@ -3,30 +3,28 @@ import PropTypes from 'prop-types';
 
 import Loader from '../../components/Loader';
 
-const Button = ({caption, clickHandler, className}) => (
-    <div className={`btn btn-copy ${className}`} onClick={clickHandler}>{caption}</div>
+const Button = ({caption, clickHandler}) => (
+    <div className="btn btn-toggle" onClick={clickHandler}>{caption}</div>
 );
 
 Button.propTypes = {
     caption: PropTypes.string.isRequired,
-    clickHandler: PropTypes.func.isRequired,
-    className: PropTypes.string
+    clickHandler: PropTypes.func.isRequired
 };
 
 export const RawTransactionView = ({open, clickHandler, json, fetchData}) => {
     const caption = open ? 'Hide' : 'Show';
-    const buttonClass = open ? 'margin6' : '';
 
     return (
         <div>
-            <Button caption={caption} clickHandler={clickHandler} className={buttonClass} />
             {open && (
                 <Loader fetchData={fetchData} errorTitle="Failed to load transaction JSON">
-                    <div className="data-container">
+                    <div className="data-container margin6">
                         <pre>{JSON.stringify(json, null, 2)}</pre>
                     </div>
                 </Loader>
             )}
+            <Button caption={caption} clickHandler={clickHandler} />
         </div>
     );
 };
