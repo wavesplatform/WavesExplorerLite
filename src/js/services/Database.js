@@ -12,7 +12,7 @@ export class Database {
 
     ensureSupported = () => {
         const id = -1;
-        this.currencyCache().put({
+        return this.currencyCache().put({
             id,
             lastAccess: Date.now()
         }).then(() => {
