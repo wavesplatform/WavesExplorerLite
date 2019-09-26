@@ -10,9 +10,13 @@ export class TransactionService extends ApiClientService {
     }
 
     loadTransaction = (id) => {
-        return this.getApi().transactions.info(id).then(infoResponse => {
-            return this.transformer.transform(infoResponse.data);
+        return this.loadRawTransaction(id).then(tx => {
+            return this.transformer.transform(tx);
         });
+    };
+
+    loadRawTransaction = (id) => {
+        return this.getApi().transactions.info(id).then(response => response.data);
     };
 
     loadUnconfirmed = () => {

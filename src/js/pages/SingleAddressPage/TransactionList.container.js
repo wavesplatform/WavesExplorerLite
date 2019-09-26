@@ -1,29 +1,61 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {withRouter} from 'react-router';
 
+import ServiceFactory from '../../services/ServiceFactory';
+import Loader from '../../components/Loader';
 import {TransactionListView} from './TransactionList.view';
+import transactionMapper from './TransactionMapper';
 
-export class TransactionListContainer extends React.Component {
-    static propTypes = {
-        transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
-        pageSize: PropTypes.number.isRequired,
-        loadMore: PropTypes.func.isRequired
-    };
+const TX_PAGE_SIZE = 100;
 
+class TransactionListContainer extends React.Component {
     state = {
-        transactions: this.props.transactions,
+        transactions: [],
+        invertedAliases: [],
         loading: false,
-        hasMore: this.props.transactions.length === this.props.pageSize
+        hasMore: true
     };
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.transactions.length !== this.props.transactions.length) {
-            this.setState({
-                transactions: this.props.transactions,
-                hasMore: this.props.transactions.length === this.props.pageSize
+    fetchData = () => {
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
+
+        return addressService.loadRawAliases(address).then(rawAliases => {
+            const currentUser = {
+                address,
+                aliases: {}
+            };
+
+            return addressService.loadTransactions(address, TX_PAGE_SIZE).then(transactions => {
+                rawAliases.forEach(item => {
+                    currentUser.aliases[item] = true;
+                });
+
+                return transactionMapper(transactions, currentUser);
+            })
+            .then(transactions => {
+                this.setState({
+                    transactions,
+                    invertedAliases: currentUser.aliases,
+                    hasMore: transactions.length === TX_PAGE_SIZE
+                });
             });
-        }
-    }
+        });
+    };
+
+    loadMore = (after) => {
+        const {address, networkId} = this.props.match.params;
+        const addressService = ServiceFactory.forNetwork(networkId).addressService();
+
+        return addressService.loadTransactions(address, TX_PAGE_SIZE, after).then(transactions => {
+            const currentUser = {
+                address,
+                aliases: this.state.invertedAliases
+            };
+
+            return transactionMapper(transactions, currentUser);
+        });
+    };
 
     handleMore = () => {
         if (this.state.transactions.length < 1)
@@ -35,22 +67,28 @@ export class TransactionListContainer extends React.Component {
         this.setState({loading: true});
         const next = this.state.transactions[this.state.transactions.length - 1].id;
 
-        this.props.loadMore(next).then(transactions => {
+        this.loadMore(next).then(transactions => {
             this.setState(prevState => ({
                 transactions: prevState.transactions.concat(transactions),
                 loading: false,
-                hasMore: transactions.length === this.props.pageSize
+                hasMore: transactions.length === TX_PAGE_SIZE
             }))
         });
     };
 
     render() {
         return (
-            <TransactionListView
-                transactions={this.state.transactions}
-                hasMore={this.state.hasMore}
-                loadMore={this.handleMore}
-            />
+            <Loader fetchData={this.fetchData} errorTitle="Failed to load transactions for address">
+                <TransactionListView
+                    transactions={this.state.transactions}
+                    hasMore={this.state.hasMore}
+                    loadMore={this.handleMore}
+                />
+            </Loader>
         );
     }
 }
+
+const RoutedTransactionListContainer = withRouter(TransactionListContainer);
+
+export default RoutedTransactionListContainer;
