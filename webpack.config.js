@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const buildPath = path.join(__dirname, 'dist');
 const sourcesPath = path.join(__dirname, 'src');
@@ -88,7 +89,8 @@ var config = {
         }, {
             from: 'manifest.json',
             to: buildPath
-        }], { debug: true })
+        }], { debug: true }),
+        new MomentLocalesPlugin()
     ],
     optimization: {
         splitChunks: {

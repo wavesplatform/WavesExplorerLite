@@ -1,3 +1,5 @@
+import moment from 'moment-timezone';
+
 const DEFAULT_LOCALE = 'ru-Ru';
 
 export default class DateTime {
@@ -6,12 +8,25 @@ export default class DateTime {
     time;
 
     constructor(timestamp) {
-        this.instant = new Date(timestamp);
-        this.date = this.instant.toLocaleDateString(DEFAULT_LOCALE);
-        this.time = this.instant.toLocaleTimeString(DEFAULT_LOCALE);
+        const nativeDate = new Date(timestamp);
+        this.instant = moment(nativeDate);
+        this.date = nativeDate.toLocaleDateString(DEFAULT_LOCALE);
+        this.time = nativeDate.toLocaleTimeString(DEFAULT_LOCALE);
     }
 
-    toLongString() {
-        return this.time + ', ' + this.date;
+    toString() {
+        return this.instant.format('H:mm:ss, DD.MM.YYYY');
+    }
+
+    toStringWithTimeZone() {
+        const date = this.toString();
+        const timeZone = moment.tz.guess();
+
+        if (timeZone) {
+            const zone = moment.tz.zone(timeZone).abbr(this.instant.toDate());
+            return `${date} ${zone}`;
+        }
+
+        return date;
     }
 }

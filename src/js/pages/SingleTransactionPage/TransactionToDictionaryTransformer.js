@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Money from '../../shared/Money';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -8,6 +7,7 @@ import TransactionRef from '../../components/TransactionRef';
 import BlockRef from '../../components/BlockRef';
 import Spacer from '../../components/Spacer';
 import ScriptInfo from '../../components/ScriptInfo';
+import Timestamp from '../../components/Timestamp';
 import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
@@ -362,7 +362,7 @@ const buildAttachmentItem = tx => ({
 
 const buildTimestampItem = timestamp => ({
     label: 'Timestamp',
-    value: timestamp.toLongString(),
+    value: <Timestamp value={timestamp}/>
 });
 
 const buildTransactionHeaderItems = tx => {
