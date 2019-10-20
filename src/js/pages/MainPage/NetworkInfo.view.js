@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Question from '../../../images/question-14.svg';
+import {TOOLTIP_ID} from '../../shared/constants';
 import {CAPTIONS} from '../../services/InfoService';
 import Tooltip from '../../components/Tooltip';
 
@@ -10,8 +11,7 @@ const Caption = ({caption}) => {
 
     return (<div className="label-with-icon">
         <label>{caption}:</label>
-        <img src={Question} height="14" width="14" data-for="avg-time-tooltip" data-tip="Per last 10k blocks" />
-        <Tooltip id="avg-time-tooltip"/>
+        <img src={Question} height="14" width="14" data-for={TOOLTIP_ID} data-tip="Per last 10k blocks" />
     </div>);
 };
 
@@ -19,6 +19,12 @@ export class NetworkInfo extends React.PureComponent {
     static propTypes = {
         info: PropTypes.object.isRequired
     };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.info !== prevProps.info) {
+            Tooltip.rebind();
+        }
+    }
 
     render() {
         return (

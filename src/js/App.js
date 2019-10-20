@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
+import {hot} from 'react-hot-loader';
 import '../styles/main.scss';
 import {Route, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
@@ -7,6 +7,8 @@ import ScrollToTop from 'react-scroll-up';
 
 import {routeParamsBuilder, routeBuilder} from './shared/Routing';
 import ServiceFactory from './services/ServiceFactory';
+import {TOOLTIP_ID} from './shared/constants';
+import Tooltip from './components/Tooltip';
 import Search from './Search';
 import Header from './Header';
 import NavBar from './NavBar';
@@ -68,7 +70,7 @@ class App extends React.Component {
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
                         <Search />
                     </Header>
-                    <div id="xxxxx" className="container grid">
+                    <div className="container grid">
                         <NavBar />
                         <Switch>
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
@@ -90,6 +92,7 @@ class App extends React.Component {
                     <Header onMenuToggle={this.handleMobileMenuToggle} />
                     <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle} />
                 </div>
+                <Tooltip id={TOOLTIP_ID}/>
                 <ScrollToTop showUnder={100}>
                     <div className="scroll-button"></div>
                 </ScrollToTop>

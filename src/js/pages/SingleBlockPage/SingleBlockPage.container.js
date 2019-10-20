@@ -12,6 +12,7 @@ import Loader from '../../components/Loader';
 import Enumerator from '../../components/Enumerator';
 import MoneyInfo from '../../components/MoneyInfo';
 import Timestamp from '../../components/Timestamp';
+import Tooltip from '../../components/Tooltip';
 import {TransactionList} from './TransactionList.container';
 
 const typeToHeader = type => {
@@ -88,6 +89,8 @@ export class SingleBlockPage extends React.Component {
                     ServiceFactory.global().errorReportingService().captureException(error);
                 });
         }
+
+        Tooltip.rebind();
     }
 
     initialFetch = () => {
@@ -150,7 +153,7 @@ export class SingleBlockPage extends React.Component {
                 value: this.state.block.version
             }, {
                 label: 'Timestamp',
-                value: <Timestamp value={this.state.block.timestamp} withZone={true} />
+                value: <Timestamp value={this.state.block.timestamp} />
             }, {
                 label: 'Transactions',
                 value: this.state.block.transactionCount
