@@ -81,10 +81,7 @@ class FaucetCategoryBuilder extends AbstractCategoryBuilder {
 
     events() {
         return {
-            request: () => new EventBuilder(this, 'Waves Requested'),
-            failure: (errorType) => new EventBuilder(this, 'Request Failed', {
-                ['Reason']: errorType
-            })
+            request: () => new EventBuilder(this, 'Waves Requested')
         }
     }
 }

@@ -36,23 +36,13 @@ class FaucetCardContainer extends React.Component {
                 let message = error.message;
                 if (error.response && error.response.data && error.response.data.message) {
                     message = error.response.data.message;
-
-                    let errorType = null;
-                    if (message.startsWith('Try again after')) {
-                        errorType = 'Too many requests';
-                    } else if (message.startsWith('Invalid captcha')) {
-                        errorType = 'Bad captcha';
-                    }
-
-                    if (errorType) {
-                        const event = new EventBuilder().faucet().events().failure(errorType);
-                        ServiceFactory.global().analyticsService().sendEvent(event);
-                    }
                 }
                 this.setState({status: {
                     successful: false,
                     message
                 }});
+
+                ServiceFactory.global().errorReportingService().captureException(error);
             });
     };
 
