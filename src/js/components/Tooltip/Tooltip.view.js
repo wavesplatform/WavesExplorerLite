@@ -16,4 +16,9 @@ TooltipView.propTypes = {
     id: PropTypes.string.isRequired
 };
 
-TooltipView.rebind = ReactTooltip.rebuild;
+TooltipView.rebind = () => {
+    // hackish way to call rebuild after DOM has been rendered
+    setTimeout(() => requestAnimationFrame(() => {
+        ReactTooltip.rebuild();
+    }), 0);
+};
