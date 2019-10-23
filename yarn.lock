@@ -5572,11 +5572,6 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
-lodash.difference@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
-  integrity sha1-nMtOUF1Ia5FlE0V3KIWi3yf9AXw=
-
 lodash.escape@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
@@ -6000,25 +5995,6 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
-
-moment-locales-webpack-plugin@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/moment-locales-webpack-plugin/-/moment-locales-webpack-plugin-1.1.0.tgz#df2f084b1ab9cb093322186b651bbed167a3a882"
-  integrity sha512-0Hn+xdNmQt+XZgsWOlwXJcQ881nURSoDJY1o4hOLiyGaUVZbY475GrvyBXUOMc5mgjvPiQz/KU8ht/IoRnadMg==
-  dependencies:
-    lodash.difference "^4.5.0"
-
-moment-timezone@^0.5.26:
-  version "0.5.26"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.26.tgz#c0267ca09ae84631aa3dc33f65bedbe6e8e0d772"
-  integrity sha512-sFP4cgEKTCymBBKgoxZjYzlSovC20Y6J7y3nanDc5RoBIXKlZhoYwBoZGe3flwU6A372AcRwScH8KiwV6zjy1g==
-  dependencies:
-    moment ">= 2.9.0"
-
-"moment@>= 2.9.0":
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 moo@^0.4.3:
   version "0.4.3"
