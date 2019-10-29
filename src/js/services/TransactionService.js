@@ -12,20 +12,18 @@ export class TransactionService extends ApiClientService {
 
     loadTransaction = (id) => {
         return this.loadRawTransaction(id).then(tx => {
+            // TODO: remove when token is renamed
+            if (tx.id === VostokToWavesEnterprise.id) {
+                tx.name = VostokToWavesEnterprise.name;
+                tx.description = VostokToWavesEnterprise.description;
+            }
+
             return this.transformer.transform(tx);
         });
     };
 
     loadRawTransaction = (id) => {
-        return this.getApi().transactions.info(id).then(response => response.data).then(transaction => {
-            // TODO: remove when token is renamed
-            if (transaction.id === VostokToWavesEnterprise.id) {
-                transaction.name = VostokToWavesEnterprise.name;
-                transaction.description = VostokToWavesEnterprise.description;
-            }
-
-            return transaction;
-        });
+        return this.getApi().transactions.info(id).then(response => response.data);
     };
 
     loadUnconfirmed = () => {
