@@ -21,7 +21,8 @@ import SingleTransactionPage from './pages/SingleTransactionPage';
 import SingleAddressPage from './pages/SingleAddressPage';
 import SingleAliasPage from './pages/SingleAliasPage';
 import SingleAssetPage from './pages/SingleAssetPage';
-import FaucetPage from './pages/FaucetPage';
+import FaucetPage from './pages/FaucetPage'
+import UnsupportedPage from './pages/UnsupportedPage';
 
 const routeParams = routeParamsBuilder(ServiceFactory.global().configurationService().all());
 const routes = routeBuilder(routeParams.networkId);
@@ -63,6 +64,8 @@ class App extends React.Component {
         const isVisible = this.state.mobileMenuVisible;
         const isAnimated = isVisible != null;
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
+
+        return <UnsupportedPage/>;
 
         return (
             <React.Fragment>
