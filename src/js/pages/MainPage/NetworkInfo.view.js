@@ -11,7 +11,7 @@ const Caption = ({caption}) => {
 
     return (<div className="label-with-icon">
         <label>{caption}:</label>
-        <img src={Question} height="14" width="14" data-for={TOOLTIP_ID} data-tip="Per last 10k blocks" />
+        <div className="icon question" data-for={TOOLTIP_ID} data-tip="Per last 10k blocks"></div>
     </div>);
 };
 

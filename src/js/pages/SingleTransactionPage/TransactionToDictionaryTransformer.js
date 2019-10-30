@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {TOOLTIP_ID, VostokToWavesEnterprise} from '../../shared/constants';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -12,6 +13,7 @@ import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
 import StateChangesInfo from '../../components/StateChangesInfo';
+import Tooltip from '../../components/Tooltip';
 import {Description} from './Description.view';
 
 const transactionToDictionary = (tx) => {
@@ -68,6 +70,13 @@ const transactionToDictionary = (tx) => {
             };
     }
 };
+
+const InfoWrapper = ({children}) => (
+    <div className="label-with-icon">
+        {children}
+        <div className="icon info" data-for={TOOLTIP_ID} data-tip="Token information has been changed due to the copyright owner request"></div>
+    </div>
+);
 
 const scriptInvocationTransactionToItems = tx => {
     const paymentItems = [{
@@ -350,10 +359,17 @@ const buildScriptItem = tx => ({
     value: <ScriptInfo script={tx.script} />
 });
 
-const buildDescriptionItem = tx => ({
-    label: 'Description',
-    value: <Description text={tx.description}/>
-});
+const buildDescriptionItem = tx => {
+    let value = <Description text={tx.description}/>;
+    if (tx.id === VostokToWavesEnterprise.id) {
+        value = <InfoWrapper>{value}</InfoWrapper>;
+    }
+
+    return {
+        label: 'Description',
+        value
+    };
+};
 
 const buildAttachmentItem = tx => ({
     label: 'Attachment',
@@ -385,10 +401,17 @@ const buildSenderAddressAndKeyItems = tx => ([
     buildSenderPublicKeyItem(tx)
 ]);
 
-const buildQuantityItem = tx => ({
-    label: 'Quantity',
-    value: tx.amount.toString()
-});
+const buildQuantityItem = tx => {
+    let value = tx.amount.toString();
+    if (tx.id === VostokToWavesEnterprise.id) {
+        value = <InfoWrapper>{value}</InfoWrapper>
+    }
+
+    return {
+        label: 'Quantity',
+        value
+    };
+};
 
 const buildProofsItem = tx => ({
     label: 'Proofs',
