@@ -10,7 +10,7 @@ const Caption = ({caption}) => {
 
     return (<div className="label-with-icon">
         <label>{caption}:</label>
-        <img src={Question} height="14" width="14" data-for="avg-time-tooltip" data-tip="Per last 10k blocks" />
+        <div className="icon question" data-for="avg-time-tooltip" data-tip="Per last 10k blocks"></div>
         <Tooltip id="avg-time-tooltip"/>
     </div>);
 };
