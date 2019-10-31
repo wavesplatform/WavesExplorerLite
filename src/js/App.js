@@ -46,8 +46,14 @@ const withNetworkRouter = (RootComponent) => {
 
 class App extends React.Component {
     state = {
-        mobileMenuVisible: null
+        mobileMenuVisible: null,
+        isBrowserSupported: true
     };
+
+    componentDidMount() {
+        const isBrowserSupported = ServiceFactory.global().browserService().isCurrentBrowserSupported();
+        this.setState({isBrowserSupported});
+    }
 
     componentDidCatch(error, errorInfo) {
         ServiceFactory
@@ -65,7 +71,9 @@ class App extends React.Component {
         const isAnimated = isVisible != null;
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
-        return <UnsupportedPage/>;
+        if (!this.state.isBrowserSupported) {
+            return <UnsupportedPage />;
+        }
 
         return (
             <React.Fragment>

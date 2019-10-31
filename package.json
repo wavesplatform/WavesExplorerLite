@@ -23,6 +23,7 @@
         "amplitude-js": "^4.6.0-beta.2",
         "axios": "0.19.0",
         "decimal.js": "10.0.1",
+        "detect-browser": "^4.8.0",
         "dexie": "^2.0.4",
         "formik": "^1.4.1",
         "json-bigint": "^0.3.0",
@@ -41,6 +42,7 @@
         "react-scroll-up": "^1.3.3",
         "react-tooltip": "^3.11.1",
         "retry-axios": "^0.3.2",
+        "semver": "^6.3.0",
         "valid-url": "^1.0.9"
     },
     "devDependencies": {
