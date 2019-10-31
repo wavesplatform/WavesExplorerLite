@@ -1,1 +1,1 @@
-export {UnsupportedPageView as default} from './UnsupportedPage.view';
+export {UnsupportedPageContainer as default} from './UnsupportedPage.container';

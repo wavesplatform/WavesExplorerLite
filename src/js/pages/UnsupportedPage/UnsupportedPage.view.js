@@ -1,51 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import Icon from '../../../images/unsupported-80.svg';
-import Firefox from '../../../images/firefox-42.svg';
-import Safari from '../../../images/safari-42.svg';
-import Opera from '../../../images/opera-42.svg';
-import Chrome from '../../../images/chrome-42.svg';
 
-const Browser = ({icon, name, className}) => (
-    <div className={`grid-item-fixed ${className}`}>
+const Browser = ({icon, name, link}) => (
+    <div className="grid-item-fixed column-6">
         <div className="line wide no-wrap">
             <div className="browser-icon">
                 <img src={icon} height={42} width={42}/>
             </div>
             <div className="line bold">{name}</div>
-            <div className="line btn btn-link">Install or update</div>
+            <div className="line btn btn-link">
+                <a href={link} className="no-style" target="_blank">Install or update</a>
+            </div>
         </div>
     </div>
 );
 
-const BROWSERS = [{
-    icon: Chrome,
-    name: 'Chrome',
-    className: 'column-8'
-}, {
-    icon: Firefox,
-    name: 'Firefox',
-    className: 'column-4'
-}, {
-    icon: Safari,
-    name: 'Safari',
-    className: 'column-8'
-}, {
-    icon: Opera,
-    name: 'Opera',
-    className: 'column-4'
-}];
-
-export const UnsupportedPageView = () => (
+export const UnsupportedPageView = ({isOpen, browsers, onClose}) => (
     <Modal className="modal-content"
-           isOpen={true}
-           contentLabel="Modal example"
+           isOpen={isOpen}
            overlayClassName="modal-overlay"
     >
         <div className="header">
             &nbsp;
-            <div className="close-btn"></div>
+            <div className="close-btn" onClick={onClose}></div>
         </div>
         <div className="row">
             <img className="icon" src={Icon} height={80} width={80}/>
@@ -58,10 +38,20 @@ export const UnsupportedPageView = () => (
         </div>
         <div className="row">
             <div className="grid grid-wrap browser-list">
-                {BROWSERS.map(browser => (
+                {browsers.map(browser => (
                     <Browser key={browser.name} {...browser} />
                 ))}
             </div>
         </div>
     </Modal>
 );
+
+UnsupportedPageView.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    browsers: PropTypes.arrayOf(PropTypes.shape({
+        icon: PropTypes.node,
+        name: PropTypes.string,
+        link: PropTypes.string
+    })).isRequired
+};
