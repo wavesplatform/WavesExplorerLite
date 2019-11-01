@@ -7,6 +7,7 @@ import Dictionary from '../../components/Dictionary';
 import TransactionRef from '../../components/TransactionRef';
 import EndpointRef from '../../components/EndpointRef';
 import ScriptInfo from '../../components/ScriptInfo';
+import Timestamp from '../../components/Timestamp';
 import ServiceFactory from '../../services/ServiceFactory';
 
 export class SingleAssetPage extends React.Component {
@@ -66,7 +67,7 @@ export class SingleAssetPage extends React.Component {
                 value: details.issued.height
             }, {
                 label: 'Issued at',
-                value: details.issued.timestamp.toLongString()
+                value: <Timestamp value={details.issued.timestamp}/>
             }, {
                 label: 'Issuer',
                 value: <EndpointRef endpoint={details.issuer}/>

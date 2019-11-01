@@ -22,13 +22,27 @@
     flex-wrap: nowrap;
     flex-direction: row;
 
-    > img {
+    > .icon {
         margin-left: 4px;
+        height: 14px;
+        width: 14px;
+
+        &.question {
+            background: url('../images/question-14.svg') no-repeat center center;
+        }
+
+        &.info {
+            background: url('../images/info-normal-14.svg') no-repeat center center;
+
+            &:hover {
+                background: url('../images/info-active-14.svg') no-repeat center center;
+            }
+        }
     }
 }
 
 .tooltip {
-    position: absolute !important;
+    @include font(body);
     background-color: map-get($colors, basic500) !important;
     &.place-top {
         &:after {

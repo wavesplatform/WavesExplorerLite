@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router';
 
+import EventBuilder from '../../shared/analytics/EventBuilder';
 import ServiceFactory from '../../services/ServiceFactory';
 import {RequestForm} from './RequestForm.container';
 
@@ -17,6 +18,9 @@ class FaucetCardContainer extends React.Component {
     };
 
     requestMoney = (values) => {
+        const event = new EventBuilder().faucet().events().request();
+        ServiceFactory.global().analyticsService().sendEvent(event);
+
         const {networkId} = this.props.match.params;
 
         return ServiceFactory
@@ -37,6 +41,8 @@ class FaucetCardContainer extends React.Component {
                     successful: false,
                     message
                 }});
+
+                ServiceFactory.global().errorReportingService().captureException(error);
             });
     };
 

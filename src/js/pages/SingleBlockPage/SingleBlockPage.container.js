@@ -11,6 +11,8 @@ import Dictionary from '../../components/Dictionary';
 import Loader from '../../components/Loader';
 import Enumerator from '../../components/Enumerator';
 import MoneyInfo from '../../components/MoneyInfo';
+import Timestamp from '../../components/Timestamp';
+import Tooltip from '../../components/Tooltip';
 import {TransactionList} from './TransactionList.container';
 
 const typeToHeader = type => {
@@ -70,7 +72,6 @@ export class SingleBlockPage extends React.Component {
         currentHeight: parseInt(this.props.match.params.height),
         maxHeight: parseInt(this.props.match.params.height) + 1,
         block: {
-            timestamp: {},
             generator: ''
         },
         groupedTransactions: {},
@@ -88,6 +89,8 @@ export class SingleBlockPage extends React.Component {
                     ServiceFactory.global().errorReportingService().captureException(error);
                 });
         }
+
+        Tooltip.rebind();
     }
 
     initialFetch = () => {
@@ -150,8 +153,7 @@ export class SingleBlockPage extends React.Component {
                 value: this.state.block.version
             }, {
                 label: 'Timestamp',
-                value:
-                    <React.Fragment>{this.state.block.timestamp.time}, {this.state.block.timestamp.date}</React.Fragment>
+                value: <Timestamp value={this.state.block.timestamp} />
             }, {
                 label: 'Transactions',
                 value: this.state.block.transactionCount

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DateTime from '../../shared/DateTime';
+import Timestamp from '../../components/Timestamp';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
@@ -90,7 +91,7 @@ class IdAndTimestamp extends React.PureComponent {
         return (
             <td data-label="ID / Timestamp">
                 <Line wrap={false}><TransactionRef txId={this.props.id}/></Line>
-                <Line><label>{this.props.timestamp.toLongString()}</label></Line>
+                <Line><label><Timestamp value={this.props.timestamp} /></label></Line>
             </td>
         );
     }

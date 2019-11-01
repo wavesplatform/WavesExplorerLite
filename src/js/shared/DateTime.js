@@ -2,8 +2,6 @@ const DEFAULT_LOCALE = 'ru-Ru';
 
 export default class DateTime {
     instant;
-    date;
-    time;
 
     constructor(timestamp) {
         this.instant = new Date(timestamp);
@@ -11,7 +9,11 @@ export default class DateTime {
         this.time = this.instant.toLocaleTimeString(DEFAULT_LOCALE);
     }
 
-    toLongString() {
-        return this.time + ', ' + this.date;
+    toString() {
+        return this.instant.toLocaleString(DEFAULT_LOCALE);
+    }
+
+    toUtcString() {
+        return this.instant.toLocaleString(DEFAULT_LOCALE, { timeZone: 'UTC' });
     }
 }
