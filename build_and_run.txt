@@ -1,0 +1,16 @@
+﻿Old wavesblockexplorer:
+
+1. Download as zip. Unzip zip-file to folder.
+
+2. Start the node.
+
+3. Win+R -> cmd.exe
+>disk:
+>cd disk:\folder\WavesExplorerLite-old-explorer
+>yarn install
+...many links...
+...done
+>yarn start
+...done. listening port and opening...
+
+You can use .bat-files to run build and start old-wavesblockexplorer.

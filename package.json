@@ -21,7 +21,8 @@
     "ngclipboard": "^2.0.0",
     "restangular": "^1.6.1",
     "underscore": "^1.8.3",
-    "wavesplatform-core-js": "git://github.com/wavesplatform/wavesplatform.core.js.git#master"
+    "wavesplatform-core-js": "git://github.com/wavesplatform/wavesplatform.core.js.git#master",
+    "opn": "^6.0.0"
   },
   "devDependencies": {
     "del": "^3.0.0",

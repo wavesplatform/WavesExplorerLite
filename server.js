@@ -8,7 +8,7 @@ var morgan = require('morgan'); // formerly express.logger
 var errorhandler = require('errorhandler');
 var app = express();
 
-var basedir = __dirname + '/build';
+var basedir = __dirname + '/src';
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -30,6 +30,16 @@ if ('development' === app.get('env')) {
   app.use(errorhandler());
 }
 
+var opn = require('opn');	//to open the url
+// opens the url in the default browser
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
+	
+	setTimeout(
+		function(){
+			opn('http://'+'localhost:'+(process.env.PORT || 3000)+'/');			//open the url, after running server
+		},
+		1000
+	);
+
 });
