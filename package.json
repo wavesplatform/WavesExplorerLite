@@ -1,6 +1,6 @@
 {
     "name": "waves-blockchain-explorer",
-    "version": "2.12",
+    "version": "2.13",
     "private": true,
     "description": "Waves blockchain information tool",
     "repository": {
