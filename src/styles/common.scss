@@ -169,6 +169,16 @@ a {
         padding-top: 6px;
     }
 
+    &.btn-open {
+        min-width: 107px;
+        width: 107px;
+        height: 28px;
+        background-image: url('../images/open-14-white.svg');
+        background-position: 93% center;
+        padding-left: 8px;
+        padding-top: 6px;
+    }
+
     &.btn-prev {
         width: 18px;
         height: 24px;
