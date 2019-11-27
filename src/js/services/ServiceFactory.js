@@ -18,6 +18,7 @@ import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
 import {StateChangeService} from './StateChangeService';
+import {BrowserService} from './BrowserService';
 
 const database = new Database();
 
@@ -27,12 +28,14 @@ class GlobalServices {
         this._configurationService = new ConfigurationService(this._storageService);
         this._analyticsService = new AnalyticsService(__GOOGLE_TRACKING_ID__, __AMPLITUDE_API_KEY__);
         this._errorReportingService = new ErrorReportingService(__SENTRY_DSN__);
+        this._browserService = new BrowserService();
     }
 
     configurationService = () => this._configurationService;
     storageService = () => this._storageService;
     analyticsService = () => this._analyticsService;
     errorReportingService = () => this._errorReportingService;
+    browserService = () => this._browserService;
 }
 
 class NetworkDependentServices {
@@ -92,7 +95,8 @@ class ServiceFactory {
     global = () => ({
         configurationService: this._globalServices.configurationService,
         analyticsService: this._globalServices.analyticsService,
-        errorReportingService: this._globalServices.errorReportingService
+        errorReportingService: this._globalServices.errorReportingService,
+        browserService: this._globalServices.browserService
     });
 
     forNetwork = networkId => {
