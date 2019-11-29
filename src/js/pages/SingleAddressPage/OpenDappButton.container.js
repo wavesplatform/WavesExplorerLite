@@ -27,7 +27,12 @@ class OpenDappButtonContainer extends React.Component {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
-        return addressService.loadScript(address).then(script => this.setState({visible: !!script.script}));
+        return addressService.loadScriptMeta(address).then(response => {
+            const meta = response.meta || {};
+            const version = parseInt(meta.version);
+
+            this.setState({visible: version > 0});
+        });
     };
 
     handleClick = () => {

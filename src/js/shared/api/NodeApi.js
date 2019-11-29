@@ -138,7 +138,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             aliases: (address) => retryableGet(`/alias/by-address/${address}`),
             validate: (address) => retryableGet(`/addresses/validate/${address}`),
             data: (address) => retryableGet(`/addresses/data/${address}`),
-            script: (address) => retryableGet(`/addresses/scriptInfo/${address}`)
+            scriptInfo: (address) => retryableGet(`/addresses/scriptInfo/${address}`),
+            scriptMeta: (address) => retryableGet(`/addresses/scriptInfo/${address}/meta`)
         },
         blocks: {
             height: () => get('/blocks/height'),
