@@ -7,8 +7,8 @@ const SUPPORTED_BROWSER_MIN_VERSIONS = {
     chrome: "54.0.0",
     firefox: "64.0.0",
     opera: "58.0.0",
-    safari: "10.0",
-    edge: "15.0"
+    safari: "10.0.0",
+    edge: "15.0.0"
 };
 
 const isBrowserSupported = () => {
