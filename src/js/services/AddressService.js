@@ -93,7 +93,11 @@ export class AddressService extends ApiClientService {
     };
 
     loadScript = (address) => {
-        return this.getApi().addresses.script(address).then(scriptResponse => scriptResponse.data);
+        return this.getApi().addresses.scriptInfo(address).then(scriptResponse => scriptResponse.data);
+    };
+
+    loadScriptMeta = (address) => {
+        return this.getApi().addresses.scriptMeta(address).then(metaResponse => metaResponse.data);
     };
 
     validate = (address) => {
