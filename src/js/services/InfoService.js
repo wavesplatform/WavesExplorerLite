@@ -50,8 +50,9 @@ export class InfoService extends ApiClientService {
             return api.blocks.delay(headerResponse.data.signature, headerResponse.data.height - BLOCK_DELAY_INTERVAL);
         }).then(delayResponse => {
             const delay = (parseInt(delayResponse.data.delay) / 1000 / 60.0).toFixed(1);
+            const seconds = parseInt(delayResponse.data.delay)/1000
 
-            return addBlockDelay(info, `${delay} minutes`);
+            return addBlockDelay(info, `${seconds} seconds`);
         });
     };
 }
