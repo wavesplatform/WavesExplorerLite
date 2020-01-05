@@ -34,11 +34,6 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).nodes.list,
         visible: alwaysVisible,
         icon: 'icon-nodes'
-    }, {
-        title: 'Faucet',
-        route: networkId => routeBuilder(networkId).faucet,
-        visible: visibleIfConfigured,
-        icon: 'icon-faucet'
     }];
 };
 

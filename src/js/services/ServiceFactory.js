@@ -13,7 +13,6 @@ import {AddressService} from './AddressService';
 import {InfoService} from './InfoService';
 import {AliasService} from './AliasService';
 import {AssetService} from './AssetService';
-import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
@@ -74,9 +73,6 @@ class NetworkDependentServices {
 
     infoService = () => this._infoService;
 
-    faucetService = () => new FaucetService(this._transactionTransformerService,
-        this._globalServices.configurationService(),
-        this._networkId);
 
     aliasService = () => this._aliasService;
 

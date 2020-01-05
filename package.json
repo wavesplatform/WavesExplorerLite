@@ -1,11 +1,11 @@
 {
-    "name": "waves-blockchain-explorer",
+    "name": "TN-blockchain-explorer",
     "version": "2.12.0",
     "private": true,
-    "description": "Waves blockchain information tool",
+    "description": "Turtle Network blockchain information tool",
     "repository": {
         "type": "git",
-        "url": "https://github.com/wavesplatform/WavesExplorerLite.git"
+        "url": "https://github.com/TurtleNetwork/ExplorerLite.git"
     },
     "license": "Apache-2.0",
     "scripts": {
@@ -19,7 +19,7 @@
     "dependencies": {
         "@babel/runtime": "^7.3.4",
         "@sentry/browser": "^4.6.4",
-        "@waves/signature-generator": "^5.0.0",
+        "@turtlenetwork/signature-generator": "^5.0.0",
         "amplitude-js": "^4.6.0-beta.2",
         "axios": "0.19.0",
         "decimal.js": "10.0.1",

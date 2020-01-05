@@ -74,17 +74,6 @@ class SearchCategoryBuilder extends AbstractCategoryBuilder {
     }
 }
 
-class FaucetCategoryBuilder extends AbstractCategoryBuilder {
-    constructor() {
-        super('Faucet');
-    }
-
-    events() {
-        return {
-            request: () => new EventBuilder(this, 'Waves Requested')
-        }
-    }
-}
 
 class AnalyticsEventBuilder {
     main() {
@@ -111,9 +100,6 @@ class AnalyticsEventBuilder {
         return new SearchCategoryBuilder();
     }
 
-    faucet() {
-        return new FaucetCategoryBuilder();
-    }
 }
 
 export default AnalyticsEventBuilder;

@@ -2,7 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import {libs} from '@waves/signature-generator';
+import {libs} from '@turtlenetwork/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
     const promises = transactions.map(item => transform(currencyService,

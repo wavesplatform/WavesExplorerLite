@@ -1,11 +1,11 @@
-const nodeUrl = 'https://nodes.wavesnodes.com';
+const nodeUrl = 'https://privatenode.blackturtle.eu';
 
 export default {
     networkId: 'mainnet',
     displayName: 'Mainnet',
     apiBaseUrl: nodeUrl,
     useCustomRequestConfig: true,
-    dataServicesBaseUrl: 'https://api.wavesplatform.com/v0',
-    spamListUrl: 'https://raw.githubusercontent.com/wavesplatform/waves-community/master/Scam%20tokens%20according%20to%20the%20opinion%20of%20Waves%20Community.csv',
-    nodes: [{url: nodeUrl, maintainer: 'Waves'}]
+    dataServicesBaseUrl: 'https://marketdata.turtlenetwork.eu',
+    spamListUrl: 'UNDEFINED',
+    nodes: [{url: nodeUrl, maintainer: 'Turtle Network'}]
 };
