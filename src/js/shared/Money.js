@@ -123,5 +123,5 @@ export default class Money {
 }
 
 // set up decimal to format 0.00000001 as is instead of 1e-8
-Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
+Decimal.config({toExpNeg: -(Currency.TN.precision + 1)});
 

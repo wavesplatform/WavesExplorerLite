@@ -25,10 +25,10 @@ const DEFAULT_AXIOS_CONFIG = {
 };
 
 const CUSTOM_AXIOS_CONFIG = {
-    withCredentials: true,
+    withCredentials: false,
     headers: {
         common: {
-            ['Cache-Control']: 'no-cache'
+            //['Cache-Control']: 'no-cache'
         }
     }
 };

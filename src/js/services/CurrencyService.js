@@ -1,16 +1,9 @@
 import Currency from '../shared/Currency';
 import {ApiClientService} from './ApiClientService';
-import {VostokToWavesEnterprise} from '../shared/constants';
 
 const FAILURE = new Currency({
     id: 'failure',
     displayName: 'Failed to load',
-    precision: 8
-});
-
-const WavesEnterprise = new Currency({
-    id: VostokToWavesEnterprise.id,
-    displayName: VostokToWavesEnterprise.name,
     precision: 8
 });
 
@@ -27,13 +20,9 @@ export class CurrencyService extends ApiClientService {
 
     get = assetId => {
         if (!assetId) {
-            return Promise.resolve(Currency.WAVES);
+            return Promise.resolve(Currency.TN);
         }
 
-        // TODO: remove after token is renamed
-        if (assetId === VostokToWavesEnterprise.id) {
-            return Promise.resolve(WavesEnterprise);
-        }
 
         return this.currencyCache.get(assetId)
             .then(currency => {

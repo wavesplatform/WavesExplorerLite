@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TOOLTIP_ID, VostokToWavesEnterprise} from '../../shared/constants';
+import {TOOLTIP_ID} from '../../shared/constants';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -361,9 +361,6 @@ const buildScriptItem = tx => ({
 
 const buildDescriptionItem = tx => {
     let value = <Description text={tx.description}/>;
-    if (tx.id === VostokToWavesEnterprise.id) {
-        value = <InfoWrapper>{value}</InfoWrapper>;
-    }
 
     return {
         label: 'Description',
@@ -403,9 +400,6 @@ const buildSenderAddressAndKeyItems = tx => ([
 
 const buildQuantityItem = tx => {
     let value = tx.amount.toString();
-    if (tx.id === VostokToWavesEnterprise.id) {
-        value = <InfoWrapper>{value}</InfoWrapper>
-    }
 
     return {
         label: 'Quantity',
