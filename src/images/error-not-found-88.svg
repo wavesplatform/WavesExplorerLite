@@ -1,65 +1,225 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="83px" height="83px" viewBox="0 0 83 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
-    <title>Artboard</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <polygon id="path-1" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-        <polygon id="path-3" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-        <polygon id="path-5" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-    </defs>
-    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-2">
-            <g id="decentralized">
-                <path d="M28.4444444,14.2222222 L46.2222222,14.2222222 L46.2222222,19.5555556 L28.4444444,19.5555556 L28.4444444,14.2222222 Z M17.7777778,26.6666667 L17.7777778,49.7777778 L12.4444444,49.7777778 L12.4444444,26.6666667 L17.7777778,26.6666667 Z M43,57 C43,58.1780902 43.1131776,59.3297464 43.329253,60.4446888 L28.4444444,60.4444444 L28.4444444,55.1111111 L43.0979823,55.110541 C43.0332053,55.7315161 43,56.3618803 43,57 Z M62.2222222,26.6666667 L62.2218966,39.04082 C61.8180999,39.0137518 61.4106559,39 61,39 C59.5854384,39 58.2089878,39.1631725 56.8884437,39.471722 L56.8888889,26.6666667 L62.2222222,26.6666667 Z" id="Shape" fill="#E6E9ED" fill-rule="nonzero"></path>
-                <g id="Group">
-                    <g id="a-link" fill="#CAD9FF" fill-rule="nonzero">
-                        <polygon id="a" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-                    </g>
-                    <g id="Clipped">
-                        <mask id="mask-2" fill="white">
-                            <use xlink:href="#path-1"></use>
-                        </mask>
-                        <use id="a" fill="#9BA6B2" xlink:href="#path-1"></use>
-                        <polygon id="Path" fill="#CDD2D9" fill-rule="nonzero" mask="url(#mask-2)" points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"></polygon>
-                    </g>
-                    <g id="c-link" opacity="0.4" transform="translate(0.000000, 8.111111)" fill="#FFFFFF" fill-rule="nonzero">
-                        <polygon id="c" points="15.1111111 8.77777778 15.1111111 25.6666667 0.485333333 17.2222222 0.485333333 0.333333333"></polygon>
-                    </g>
-                </g>
-                <g id="Group" transform="translate(44.444444, 0.000000)">
-                    <g id="d-link" fill="#CAD9FF" fill-rule="nonzero">
-                        <polygon id="d" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-                    </g>
-                    <g id="Clipped">
-                        <mask id="mask-4" fill="white">
-                            <use xlink:href="#path-3"></use>
-                        </mask>
-                        <use id="d" fill="#9BA6B2" xlink:href="#path-3"></use>
-                        <polygon id="Path" fill="#CDD2D9" fill-rule="nonzero" mask="url(#mask-4)" points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"></polygon>
-                    </g>
-                    <g id="f-link" opacity="0.4" transform="translate(0.000000, 7.111111)" fill="#FFFFFF" fill-rule="nonzero">
-                        <polygon id="f" points="15.1111111 9.77777778 15.1111111 26.6666667 0.485333333 18.2222222 0.485333333 1.33333333"></polygon>
-                    </g>
-                </g>
-                <g id="Group" transform="translate(0.000000, 40.888889)">
-                    <g id="g-link" fill="#CAD9FF" fill-rule="nonzero">
-                        <polygon id="g" points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444"></polygon>
-                    </g>
-                    <g id="Clipped">
-                        <mask id="mask-6" fill="white">
-                            <use xlink:href="#path-5"></use>
-                        </mask>
-                        <use id="g" fill="#9BA6B2" xlink:href="#path-5"></use>
-                        <polygon id="Path" fill="#CDD2D9" fill-rule="nonzero" mask="url(#mask-6)" points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"></polygon>
-                    </g>
-                    <g id="i-link" opacity="0.4" transform="translate(0.000000, 7.111111)" fill="#FFFFFF" fill-rule="nonzero">
-                        <polygon id="i" points="15.1111111 9.77777778 15.1111111 26.6666667 0.485333333 18.2222222 0.485333333 1.33333333"></polygon>
-                    </g>
-                </g>
-            </g>
-            <path d="M61.5,72 C70.0604136,72 77,65.0604136 77,56.5 C77,47.9395864 70.0604136,41 61.5,41 C52.9395864,41 46,47.9395864 46,56.5 C46,65.0604136 52.9395864,72 61.5,72 Z M61.5,68 C55.1487254,68 50,62.8512746 50,56.5 C50,50.1487254 55.1487254,45 61.5,45 C67.8512746,45 73,50.1487254 73,56.5 C73,62.8512746 67.8512746,68 61.5,68 Z" id="Oval" fill="#1F5AF6" fill-rule="nonzero"></path>
-            <rect id="Rectangle" fill="#1F5AF6" transform="translate(75.000000, 74.000000) rotate(50.000000) translate(-75.000000, -74.000000) " x="65" y="72" width="20" height="4" rx="2"></rect>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="83px"
+   height="83px"
+   viewBox="0 0 83 83"
+   version="1.1"
+   id="svg15022"
+   sodipodi:docname="error-not-found-88.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata15026">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     id="namedview15024"
+     showgrid="false"
+     inkscape:zoom="2.8433735"
+     inkscape:cx="41.5"
+     inkscape:cy="-56.974576"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Artboard" />
+  <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+  <title
+     id="title14965">Artboard</title>
+  <desc
+     id="desc14967">Created with Sketch.</desc>
+  <defs
+     id="defs14972">
+    <polygon
+       id="path-1"
+       points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+    <polygon
+       id="path-3"
+       points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+    <polygon
+       id="path-5"
+       points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+  </defs>
+  <g
+     id="Artboard"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="Group-2">
+      <g
+         id="decentralized">
+        <path
+           d="M28.4444444,14.2222222 L46.2222222,14.2222222 L46.2222222,19.5555556 L28.4444444,19.5555556 L28.4444444,14.2222222 Z M17.7777778,26.6666667 L17.7777778,49.7777778 L12.4444444,49.7777778 L12.4444444,26.6666667 L17.7777778,26.6666667 Z M43,57 C43,58.1780902 43.1131776,59.3297464 43.329253,60.4446888 L28.4444444,60.4444444 L28.4444444,55.1111111 L43.0979823,55.110541 C43.0332053,55.7315161 43,56.3618803 43,57 Z M62.2222222,26.6666667 L62.2218966,39.04082 C61.8180999,39.0137518 61.4106559,39 61,39 C59.5854384,39 58.2089878,39.1631725 56.8884437,39.471722 L56.8888889,26.6666667 L62.2222222,26.6666667 Z"
+           id="Shape"
+           fill-rule="nonzero"
+           fill="#E6E9ED" />
+        <g
+           id="Group">
+          <g
+             id="a-link"
+             fill-rule="nonzero"
+             fill="#CAD9FF">
+            <polygon
+               id="a"
+               points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+          </g>
+          <g
+             id="Clipped">
+            <mask
+               id="mask-2"
+               fill="white">
+              <use
+                 xlink:href="#path-1"
+                 id="use14977" />
+            </mask>
+            <use
+               id="use14980"
+               xlink:href="#path-1"
+               fill="#9BA6B2" />
+            <polygon
+               id="Path"
+               mask="url(#mask-2)"
+               points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"
+               fill-rule="nonzero"
+               fill="#CDD2D9" />
+          </g>
+          <g
+             id="c-link"
+             transform="translate(0.000000, 8.111111)"
+             fill-rule="nonzero"
+             fill="#FFFFFF"
+             opacity="0.4">
+            <polygon
+               id="c"
+               points="15.1111111 8.77777778 15.1111111 25.6666667 0.485333333 17.2222222 0.485333333 0.333333333" />
+          </g>
         </g>
+        <g
+           id="g15000"
+           transform="translate(44.444444, 0.000000)">
+          <g
+             id="d-link"
+             fill-rule="nonzero"
+             fill="#CAD9FF">
+            <polygon
+               id="d"
+               points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+          </g>
+          <g
+             id="g14996">
+            <mask
+               id="mask-4"
+               fill="white">
+              <use
+                 xlink:href="#path-3"
+                 id="use14989" />
+            </mask>
+            <use
+               id="use14992"
+               xlink:href="#path-3"
+               fill="#9BA6B2" />
+            <polygon
+               id="polygon14994"
+               mask="url(#mask-4)"
+               points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"
+               fill-rule="nonzero"
+               fill="#CDD2D9" />
+          </g>
+          <g
+             id="f-link"
+             transform="translate(0.000000, 7.111111)"
+             fill-rule="nonzero"
+             fill="#FFFFFF"
+             opacity="0.4">
+            <polygon
+               id="f"
+               points="15.1111111 9.77777778 15.1111111 26.6666667 0.485333333 18.2222222 0.485333333 1.33333333" />
+          </g>
+        </g>
+        <g
+           id="g15015"
+           transform="translate(0.000000, 40.888889)">
+          <g
+             id="g-link"
+             fill-rule="nonzero"
+             fill="#CAD9FF">
+            <polygon
+               id="g"
+               points="15.1111111 0 29.7368889 8.44444444 29.7368889 25.3333333 15.1111111 33.7777778 0.485333333 25.3333333 0.485333333 8.44444444" />
+          </g>
+          <g
+             id="g15011">
+            <mask
+               id="mask-6"
+               fill="white">
+              <use
+                 xlink:href="#path-5"
+                 id="use15004" />
+            </mask>
+            <use
+               id="use15007"
+               xlink:href="#path-5"
+               fill="#9BA6B2" />
+            <polygon
+               id="polygon15009"
+               mask="url(#mask-6)"
+               points="15.1111111 -16.8888889 29.7368889 -8.44444444 29.7368889 8.44444444 15.1111111 16.8888889 0.485333333 8.44444444 0.485333333 -8.44444444"
+               fill-rule="nonzero"
+               fill="#CDD2D9" />
+          </g>
+          <g
+             id="i-link"
+             transform="translate(0.000000, 7.111111)"
+             fill-rule="nonzero"
+             fill="#FFFFFF"
+             opacity="0.4">
+            <polygon
+               id="i"
+               points="15.1111111 9.77777778 15.1111111 26.6666667 0.485333333 18.2222222 0.485333333 1.33333333" />
+          </g>
+        </g>
+      </g>
+      <path
+         d="M61.5,72 C70.0604136,72 77,65.0604136 77,56.5 C77,47.9395864 70.0604136,41 61.5,41 C52.9395864,41 46,47.9395864 46,56.5 C46,65.0604136 52.9395864,72 61.5,72 Z M61.5,68 C55.1487254,68 50,62.8512746 50,56.5 C50,50.1487254 55.1487254,45 61.5,45 C67.8512746,45 73,50.1487254 73,56.5 C73,62.8512746 67.8512746,68 61.5,68 Z"
+         id="Oval"
+         fill-rule="nonzero"
+         fill="#1F5AF6"
+         style="fill:#076600;fill-opacity:1" />
+      <rect
+         id="Rectangle"
+         transform="translate(75.000000, 74.000000) rotate(50.000000) translate(-75.000000, -74.000000) "
+         x="65"
+         y="72"
+         width="20"
+         height="4"
+         rx="2"
+         fill="#1F5AF6"
+         style="fill:#076600;fill-opacity:1" />
     </g>
+  </g>
 </svg>

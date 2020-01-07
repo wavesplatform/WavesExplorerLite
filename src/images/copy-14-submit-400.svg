@@ -1,6 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
-    <g fill="none" fill-rule="evenodd">
-        <path fill="none" d="M0 0h14v14H0z"/>
-        <path fill="#1F5AF6" fill-rule="nonzero" d="M13.025 0H4.876a.976.976 0 0 0-.974.975v8.149c0 .537.437.974.974.974h8.15A.976.976 0 0 0 14 9.124V.974A.976.976 0 0 0 13.025 0zm-.296 8.827H5.173V1.271h7.556v7.556zM8.827 12.73H1.271V5.173h2.136V3.902H.975A.976.976 0 0 0 0 4.876v8.15c0 .537.437.974.975.974h8.149a.976.976 0 0 0 .974-.975v-2.432h-1.27v2.136z"/>
-    </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="14"
+   height="14"
+   viewBox="0 0 14 14"
+   version="1.1"
+   id="svg4232"
+   sodipodi:docname="copy-14-submit-400.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata4238">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4236" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1368"
+     inkscape:window-height="658"
+     id="namedview4234"
+     showgrid="false"
+     inkscape:zoom="16.857143"
+     inkscape:cx="7"
+     inkscape:cy="7"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4232" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g4230">
+    <path
+       fill="none"
+       d="M0 0h14v14H0z"
+       id="path4226" />
+    <path
+       fill="#1F5AF6"
+       fill-rule="nonzero"
+       d="M13.025 0H4.876a.976.976 0 0 0-.974.975v8.149c0 .537.437.974.974.974h8.15A.976.976 0 0 0 14 9.124V.974A.976.976 0 0 0 13.025 0zm-.296 8.827H5.173V1.271h7.556v7.556zM8.827 12.73H1.271V5.173h2.136V3.902H.975A.976.976 0 0 0 0 4.876v8.15c0 .537.437.974.975.974h8.149a.976.976 0 0 0 .974-.975v-2.432h-1.27v2.136z"
+       id="path4228"
+       style="fill:#076600;fill-opacity:1" />
+  </g>
 </svg>
