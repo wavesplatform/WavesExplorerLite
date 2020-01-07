@@ -24,8 +24,8 @@ const Footer = ({version}) => {
     return (
         <div className="menu-footer">
             <div>Version: {version}</div>
-            <div>Brought to you by Turtle Network Team, <br/>
-                based on Waves Team</div>
+            <div>Brought to you by Turtle Network, <br/>
+                based on Waves technology</div>
             <div>
                 {socialLinks.map(item =>
                     (<a key={item.id} className={`social ${item.id}`} href={item.url} target="_blank"></a>))}
