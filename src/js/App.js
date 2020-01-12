@@ -21,6 +21,8 @@ import SingleTransactionPage from './pages/SingleTransactionPage';
 import SingleAddressPage from './pages/SingleAddressPage';
 import SingleAliasPage from './pages/SingleAliasPage';
 import SingleAssetPage from './pages/SingleAssetPage';
+import {GatewayPage} from "./pages/GatewayPage/GatewayPage.container";
+import {ToolPage} from "./pages/ToolPage/ToolPage.container";
 
 const routeParams = routeParamsBuilder(ServiceFactory.global().configurationService().all());
 const routes = routeBuilder(routeParams.networkId);
@@ -80,8 +82,10 @@ class App extends React.Component {
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
                             <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
                             <Route path={routes.nodes.list} component={NodesPage} />
+                            <Route path={routes.gateways.list} component={GatewayPage} />
+                            <Route path={routes.tools.list} component={ToolPage} />
                             <Route path={routes.peers.list} component={PeersPage} />
-\                            <Route path={routes.root} component={MainPage} />
+                            <Route path={routes.root} component={MainPage} />
                         </Switch>
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
