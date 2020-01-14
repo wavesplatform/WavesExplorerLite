@@ -44,6 +44,11 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).tools.list,
         visible: alwaysVisible,
         icon: 'icon-nodes'
+    }, {
+        title: 'TurtleCap',
+        route: networkId => routeBuilder(networkId).tickers.list,
+        visible: alwaysVisible,
+        icon: 'icon-nodes'
     }];
 };
 

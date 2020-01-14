@@ -6,6 +6,7 @@ export default {
     apiBaseUrl: nodeUrl,
     useCustomRequestConfig: true,
     dataServicesBaseUrl: '',
+    dataFeedBaseUrl: '',
     nodes: [
         {url: nodeUrl, maintainer: 'Turtle Network', showAsLink: true},
     ],
@@ -18,6 +19,9 @@ export default {
         {name: 'TurtleShell tool', url: 'https://turtleshell.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: 'Android Wallet', url: 'https://play.google.com/store/apps/details?id=com.tn.wallet&hl=nl',maintainer: 'https://turtlenetwork.eu'},
         {name: 'Statistics', url: 'http://statistics.turtlenetwork.eu/testnet/'}
+
+    ],
+    tickers: [
 
     ]
 };

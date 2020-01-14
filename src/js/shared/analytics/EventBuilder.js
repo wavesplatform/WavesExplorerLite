@@ -97,6 +97,9 @@ class AnalyticsEventBuilder {
     tools() {
         return new SimpleCategoryBuilder('Tools');
     }
+    tickers() {
+        return new SimpleCategoryBuilder('Tickers');
+    }
     settings() {
         return new SettingsCategoryBuilder();
     }

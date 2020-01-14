@@ -24,6 +24,9 @@ export const routeBuilder = (networkId) => {
         tools: {
             list:   `${root}/tools`
         },
+        tickers: {
+            list:   `${root}/tickers`
+        },
         nodes: {
             list: `${root}/nodes`
         },

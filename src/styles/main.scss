@@ -183,7 +183,9 @@ body {
         }
     }
 }
-
+.logo {
+    height: 22px;
+}
 .container {
     @include responsive_styles($layout, padding-top);
     @media screen and (min-width: 1367px) {
