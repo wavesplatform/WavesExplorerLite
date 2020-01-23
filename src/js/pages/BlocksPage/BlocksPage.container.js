@@ -61,6 +61,10 @@ export class BlocksPage extends React.Component {
                                         onPageChange={this.handlePageChange} />
                         </div>
                         <BlockList blocks={this.state.blocks} />
+                        <div className="headline">
+                            <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
+                                        onPageChange={this.handlePageChange} />
+                        </div>
                     </div>
                 </Loader>
             </div>
