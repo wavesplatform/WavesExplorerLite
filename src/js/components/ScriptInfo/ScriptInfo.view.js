@@ -47,7 +47,7 @@ export class ScriptInfoView extends React.PureComponent {
                 <div className="data-container-tools">
                     <SelectList
                         items={options}
-                        selectedItem={options[1]}
+                        selectedItem={options[0]}
                         onSelectedItemChanged={this.handleSelectedItemChanged} />
 
                     <CopyButton className={'btn-link'} text={script} />
