@@ -11,8 +11,7 @@ export const CAPTIONS = {
 
 const BLOCK_DELAY_INTERVAL = 10000;
 
-const addBlockDelay = (info, formattedDelay, seconds) =>
-    Object.assign({}, info, {[CAPTIONS.BLOCK_DELAY]: formattedDelay});
+const addBlockDelay = (info, formattedDelay) => Object.assign({}, info, {[CAPTIONS.BLOCK_DELAY]: formattedDelay});
 
 export class InfoService extends ApiClientService {
     constructor(configurationService, networkId) {
@@ -48,15 +47,10 @@ export class InfoService extends ApiClientService {
             return Promise.resolve(addBlockDelay(info, 'N/A'));
 
         return api.blocks.headers.at(height - 1).then(headerResponse => {
-            return api.blocks.delay(headerResponse.data.signature, headerResponse.data.height - BLOCK_DELAY_INTERVAL);
+            return api.blocks.delay(headerResponse.data.signature, BLOCK_DELAY_INTERVAL);
         }).then(delayResponse => {
-            const seconds = parseInt(delayResponse.data.delay)/1000;
-            const min = Math.floor(seconds / 60).toFixed(0);
-            const sec = (seconds % 60).toFixed(0);
-            let delay = '~';
-            if(+min !== 0) delay +=`${min} min`;
-            if(+sec !== 0) delay +=` ${sec} sec`;
-            return addBlockDelay(info, {delay, seconds});
+            const delay = parseInt(delayResponse.data.delay)/1000 + ' sec';
+            return addBlockDelay(info, delay);
         });
     };
 }
