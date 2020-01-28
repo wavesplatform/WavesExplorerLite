@@ -58,7 +58,8 @@ export class BlocksPage extends React.Component {
 
     handlePageChange = currentPage => {
         this.loadCurrentPage(currentPage);
-        this.setState({currentPage})
+        this.setState({currentPage});
+        window.scrollTo(0,0)
     };
 
     render() {
