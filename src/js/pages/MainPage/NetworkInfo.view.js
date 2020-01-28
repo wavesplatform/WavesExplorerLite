@@ -4,14 +4,13 @@ import { TOOLTIP_ID } from '../../shared/constants';
 import { CAPTIONS } from '../../services/InfoService';
 import Tooltip from '../../components/Tooltip';
 
-const Caption = ({caption, seconds}) => {
+const Caption = ({caption}) => {
     if (caption !== CAPTIONS.BLOCK_DELAY)
         return <label>{caption}:</label>;
 
     return (<div className="label-with-icon">
         <label>{caption}:</label>
-        <div className="icon question" data-for={TOOLTIP_ID}
-             data-tip={`${seconds ? seconds + ' seconds p' : 'P'}er last 10k blocks`}/>
+        <div className="icon question" data-for={TOOLTIP_ID} data-tip="Per last 10k blocks"></div>
     </div>);
 };
 
@@ -30,11 +29,9 @@ export class NetworkInfo extends React.PureComponent {
         return (
             <div className="grid grid-wrap">
                 {Object.entries(this.props.info).map(entry => {
-                    const data = typeof entry[1] == 'object' && entry[1].delay ? entry[1].delay : entry[1];
-                    const caption = entry[0];
                     return (<div key={entry[0]} className="column-sm-6">
-                        <div className="line"><Caption caption={caption} seconds={entry[1].seconds}/></div>
-                        <div className="line">{data}</div>
+                        <div className="line"><Caption caption={entry[0]} /></div>
+                        <div className="line">{entry[1]}</div>
                     </div>);
                 })}
             </div>
