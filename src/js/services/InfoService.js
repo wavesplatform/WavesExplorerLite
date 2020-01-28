@@ -54,8 +54,8 @@ export class InfoService extends ApiClientService {
             const min = Math.floor(seconds / 60).toFixed(0);
             const sec = (seconds % 60).toFixed(0);
             let delay = '~';
-            if(+min !== 0) delay +=`${min} minutes`;
-            if(+sec !== 0) delay +=` ${sec} seconds`;
+            if(+min !== 0) delay +=`${min} min`;
+            if(+sec !== 0) delay +=` ${sec} sec`;
             return addBlockDelay(info, {delay, seconds});
         });
     };
