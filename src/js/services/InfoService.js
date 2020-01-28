@@ -33,7 +33,7 @@ export class InfoService extends ApiClientService {
             api.baseTarget()
         ]).then(axios.spread((version, height, baseTarget) => {
             return {
-                [CAPTIONS.VERSION]: version.data.version,
+                [CAPTIONS.VERSION]: version.data.version.split('-')[0],
                 [CAPTIONS.CURRENT_HEIGHT]: height,
                 [CAPTIONS.BASE_TARGET]: baseTarget.data.baseTarget
             };
