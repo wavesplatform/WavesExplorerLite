@@ -10,9 +10,15 @@ class ScriptInfoContainer extends React.Component {
         script: PropTypes.string
     };
 
-    state = {
-        value: this.props.script
-    };
+    constructor(props){
+        super(props)
+        this.state = {
+            value: ''
+        };
+        this.setDecompiledScript();
+    }
+
+
 
     componentDidUpdate(prevProps) {
         if (this.props.script !== prevProps.script) {
@@ -22,18 +28,20 @@ class ScriptInfoContainer extends React.Component {
 
     handleDisplayFormatChanged = (format) => {
         if (format === BASE64_FORMAT) {
-            this.setState({
-                value: this.props.script
-            });
+            this.setState({value: this.props.script});
         } else if (format === DECOMPILED_FORMAT) {
-            const {networkId} = this.props.match.params;
-
-            ServiceFactory
-                .forNetwork(networkId)
-                .addressService()
-                .decompileScript(this.props.script)
-                .then(decompiledScript => this.setState({value: decompiledScript}));
+           this.setDecompiledScript()
         }
+    };
+
+    setDecompiledScript = () => {
+        const {networkId} = this.props.match.params;
+
+        ServiceFactory
+            .forNetwork(networkId)
+            .addressService()
+            .decompileScript(this.props.script)
+            .then(decompiledScript => this.setState({value: decompiledScript}));
     };
 
     render() {

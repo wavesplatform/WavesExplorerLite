@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
-import {NetworkInfo} from './NetworkInfo.view';
+import { NetworkInfo } from './NetworkInfo.view';
 
 class NetworkInfoContainer extends React.Component {
     state = {
@@ -43,7 +43,7 @@ class NetworkInfoContainer extends React.Component {
     render() {
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load blockchain info">
-                <NetworkInfo info={this.state.info} />
+                <NetworkInfo info={this.state.info}/>
             </Loader>
         );
     }
