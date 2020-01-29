@@ -10,11 +10,21 @@ class DataTabContainer extends React.Component {
         data: []
     };
 
+    _isMounted = false;
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     fetchData = () => {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
-        return addressService.loadData(address).then(data => this.setState({data}));
+        return addressService.loadData(address).then(data => this._isMounted && this.setState({data}));
     };
 
     render() {
