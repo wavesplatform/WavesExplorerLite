@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 
-import {ScriptInfoView, BASE64_FORMAT, DECOMPILED_FORMAT} from './ScriptInfo.view';
+import { BASE64_FORMAT, DECOMPILED_FORMAT, ScriptInfoView } from './ScriptInfo.view';
 import ServiceFactory from '../../services/ServiceFactory';
 
 class ScriptInfoContainer extends React.Component {
@@ -10,14 +10,13 @@ class ScriptInfoContainer extends React.Component {
         script: PropTypes.string
     };
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             value: ''
         };
         this.setDecompiledScript();
     }
-
 
 
     componentDidUpdate(prevProps) {
@@ -30,14 +29,13 @@ class ScriptInfoContainer extends React.Component {
         if (format === BASE64_FORMAT) {
             this.setState({value: this.props.script});
         } else if (format === DECOMPILED_FORMAT) {
-           this.setDecompiledScript()
+            this.setDecompiledScript()
         }
     };
 
     setDecompiledScript = () => {
         const {networkId} = this.props.match.params;
-
-        ServiceFactory
+        this.props.script && ServiceFactory
             .forNetwork(networkId)
             .addressService()
             .decompileScript(this.props.script)
@@ -45,7 +43,7 @@ class ScriptInfoContainer extends React.Component {
     };
 
     render() {
-        return <ScriptInfoView script={this.state.value} onDisplayFormatChanged={this.handleDisplayFormatChanged} />;
+        return <ScriptInfoView script={this.state.value} onDisplayFormatChanged={this.handleDisplayFormatChanged}/>;
     }
 }
 

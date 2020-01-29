@@ -6,6 +6,16 @@ import Loader from '../../components/Loader';
 import ScriptInfo from '../../components/ScriptInfo';
 
 class ScriptTabContainer extends React.Component {
+    _isMounted = false;
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     state = {
         script: {}
     };
@@ -14,7 +24,9 @@ class ScriptTabContainer extends React.Component {
         const {address, networkId} = this.props.match.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
-        return addressService.loadScript(address).then(script => this.setState({script}));
+        return addressService.loadScript(address).then(script =>
+            this._isMounted && this.setState({script})
+        );
     };
 
     render() {

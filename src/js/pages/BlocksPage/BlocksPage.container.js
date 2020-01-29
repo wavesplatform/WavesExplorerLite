@@ -28,7 +28,15 @@ export class BlocksPage extends React.Component {
         hasError: false
     };
 
+    _isMounted = false;
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     componentDidMount() {
+        this._isMounted = true;
+
         const event = new EventBuilder().blocks().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);
     }
@@ -38,7 +46,7 @@ export class BlocksPage extends React.Component {
         return ServiceFactory.forNetwork(networkId).infoService().loadHeight().then(height => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
-            this.setState({height, lastPage});
+            this._isMounted && this.setState({height, lastPage});
 
             return this.loadCurrentPage(1);
         })
@@ -53,7 +61,7 @@ export class BlocksPage extends React.Component {
             .forNetwork(networkId)
             .blockService()
             .loadSequence(from, to)
-            .then(blocks => this.setState({blocks}));
+            .then(blocks => this._isMounted && this.setState({blocks}));
     };
 
     handlePageChange = currentPage => {

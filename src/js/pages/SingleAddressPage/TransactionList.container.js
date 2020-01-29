@@ -9,6 +9,16 @@ import transactionMapper from './TransactionMapper';
 const TX_PAGE_SIZE = 100;
 
 class TransactionListContainer extends React.Component {
+    _isMounted = false;
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     state = {
         transactions: [],
         invertedAliases: [],
@@ -34,7 +44,7 @@ class TransactionListContainer extends React.Component {
                 return transactionMapper(transactions, currentUser);
             })
             .then(transactions => {
-                this.setState({
+                this._isMounted && this.setState({
                     transactions,
                     invertedAliases: currentUser.aliases,
                     hasMore: transactions.length === TX_PAGE_SIZE

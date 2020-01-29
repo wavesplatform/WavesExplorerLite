@@ -5,12 +5,18 @@ import ServiceFactory from '../../services/ServiceFactory';
 import {OpenDappButtonView} from './OpenDappButton.view';
 
 class OpenDappButtonContainer extends React.Component {
+    _isMounted = false;
     state = {
         visible: false
     };
 
     componentDidMount() {
+        this._isMounted = true;
         this.fetchData();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     componentDidUpdate(prevProps) {
@@ -31,7 +37,7 @@ class OpenDappButtonContainer extends React.Component {
             const meta = response.meta || {};
             const version = parseInt(meta.version);
 
-            this.setState({visible: version > 0});
+            this._isMounted && this.setState({visible: version > 0});
         });
     };
 
