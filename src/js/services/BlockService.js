@@ -34,7 +34,7 @@ export class BlockService extends ApiClientService {
                 return {
                     height: block.height,
                     timestamp: block.timestamp,
-                    baseTarget: block.version < 5 ? block['nxt-consensus']['base-target'] : block.baseTarget,
+                    baseTarget: block['nxt-consensus']['base-target'],
                     generator: block.generator,
                     signature: block.signature,
                     transactions: block.transactionCount
