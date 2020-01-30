@@ -18,15 +18,15 @@
     display: flex;
     flex-wrap: nowrap;
 
-    & .grid-wrap {
+    &.grid-wrap {
         flex-wrap: wrap;
     }
 
-    & .grid-baseline {
+    &.grid-baseline {
         align-items: baseline;
     }
 
-    & .grid-center {
+    &.grid-center {
         align-items: center;
     }
 

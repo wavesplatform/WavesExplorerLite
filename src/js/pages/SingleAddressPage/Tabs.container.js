@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Route, Switch, Redirect, withRouter} from 'react-router';
+import {Redirect, withRouter} from 'react-router';
 
-import {routeBuilder} from '../../shared/Routing';
 import {TabHeader} from './TabHeader.view';
+import {RoutedOpenDappButtonContainer} from './OpenDappButton.container';
 
 class TabsView extends React.Component {
     static propTypes = {
@@ -34,6 +34,7 @@ class TabsView extends React.Component {
                                           title={child.props.title}
                         />
                     })}
+                    <RoutedOpenDappButtonContainer />
                 </div>
                 <Component />
             </React.Fragment>

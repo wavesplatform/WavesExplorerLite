@@ -8,6 +8,18 @@
 }
 
 .page-navigation {
+
+    @media (max-width: 800px) {
+        margin:  -8px 0;
+        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        & > * {
+            white-space: nowrap;
+            margin: 8px 0;
+        }
+    }
+
     @include responsive_styles($card_inner);
 
     .page-link {
@@ -27,6 +39,7 @@
         &.first {
             margin-right: 18px;
         }
+
         &.last {
             margin-left: 18px;
         }
