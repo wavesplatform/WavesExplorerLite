@@ -91,7 +91,15 @@ class AnalyticsEventBuilder {
     nodes() {
         return new SimpleCategoryBuilder('Nodes');
     }
-
+    gateways() {
+        return new SimpleCategoryBuilder('Gateways');
+    }
+    tools() {
+        return new SimpleCategoryBuilder('Tools');
+    }
+    tickers() {
+        return new SimpleCategoryBuilder('Tickers');
+    }
     settings() {
         return new SettingsCategoryBuilder();
     }
