@@ -5,7 +5,7 @@ export default {
     displayName: 'Testnet',
     apiBaseUrl: nodeUrl,
     useCustomRequestConfig: true,
-    dataServicesBaseUrl: '',
+    dataServicesBaseUrl: 'https://testnet.data-service.turtlenetwork.eu/v0',
     dataFeedBaseUrl: '',
     nodes: [
         {url: nodeUrl, maintainer: 'Turtle Network', showAsLink: true},

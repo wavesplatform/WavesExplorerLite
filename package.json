@@ -1,6 +1,6 @@
 {
     "name": "TN-blockchain-explorer",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "private": true,
     "description": "Turtle Network blockchain information tool",
     "repository": {

@@ -5,8 +5,8 @@ export default {
     displayName: 'Mainnet',
     apiBaseUrl: nodeUrl,
     useCustomRequestConfig: true,
-    dataServicesBaseUrl: 'https://marketdata.turtlenetwork.eu',
-    dataFeedBaseUrl: 'https://data-service.turtlenetwork.eu/v0',
+    dataServicesBaseUrl: 'https://data-service.turtlenetwork.eu/v0',
+    dataFeedBaseUrl: 'https://api.marketdata.turtlenetwork.eu',
     spamListUrl: 'https://raw.githubusercontent.com/BlackTurtle123/TN-community/master/scam-v2.csv',
     nodes: [
         {url: 'https://privatenode.blackturtle.eu',maintainer: 'https://t.me/blackturtle'},
