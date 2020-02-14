@@ -57,7 +57,7 @@ export default {
         {url:'https://ethereum.org/',asset:'ETH',assetId:'6Mh41byVWPg8JVCfuwG5CAPCh9Q7gnuaAVxjDfVNDmcD',priceAsset:'TN',priceAssetId:'TN', logo:'eth.svg'},
         {url:'https://dogecoin.com/',asset:'DOGE',assetId:'HDeemVktm2Z68RMkyA7AexhpaCqot1By7adBzaN9j5Xg',priceAsset:'TN',priceAssetId:'TN', logo:'doge.svg'},
         {url:'https://www.dash.org/',asset:'DASH',assetId:'A62sRG58HFbWUNvFoEEjX4U3txXKcLm11MXWWS429qpN',priceAsset:'TN',priceAssetId:'TN', logo:'dash.svg'},
-
+        {url:'https://ether1.org/',asset:'ETHO',assetId:'GzHRyYtdwvaGSkUC4i8d3Xzmsz9aXBWdrpMNszi6bcvR',priceAsset:'TN',priceAssetId:'TN', logo:'ETHO.png'},
 
         //TN asset markets
         {url:'https://www.turtlenetwork.eu/#home',asset:'TN',assetId:'TN',priceAsset:'WAVES',priceAssetId:'EzwaF58ssALcUCZ9FbyeD1GTSteoZAQZEDTqBAXHfq8y', logo:'tn.svg'},
