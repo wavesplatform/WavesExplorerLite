@@ -47,7 +47,7 @@ export default {
     tickers: [
         //BTC markets
         {url:'https://www.trusttoken.com/trueusd',asset:'WAVES',assetId:'EzwaF58ssALcUCZ9FbyeD1GTSteoZAQZEDTqBAXHfq8y',priceAsset:'BTC',priceAssetId:'5Asy9P3xjcvBAgbeyiitZhBRJZJ2TPGSZJz9ihDTnB3d', logo: 'waves-dex.svg'},
-        {url:'https://www.trusttoken.com/trueusd',asset:'TUSD',assetId:'2R7raH74LuuiCbJbcv3Aa7g14WY1vYPUGushCUJFwW1f',priceAsset:'BTC',priceAssetId:'5Asy9P3xjcvBAgbeyiitZhBRJZJ2TPGSZJz9ihDTnB3d', logo:'tusd.svg'},
+        //{url:'https://www.trusttoken.com/trueusd',asset:'TUSD',assetId:'2R7raH74LuuiCbJbcv3Aa7g14WY1vYPUGushCUJFwW1f',priceAsset:'BTC',priceAssetId:'5Asy9P3xjcvBAgbeyiitZhBRJZJ2TPGSZJz9ihDTnB3d', logo:'tusd.svg'},
         {url:'https://www.turtlenetwork.eu/#home',asset:'TN',assetId:'TN',priceAsset:'BTC',priceAssetId:'5Asy9P3xjcvBAgbeyiitZhBRJZJ2TPGSZJz9ihDTnB3d', logo:'waves-dex.svg'},
 
         //TN markets
@@ -62,5 +62,9 @@ export default {
         //TN asset markets
         {url:'https://www.turtlenetwork.eu/#home',asset:'TN',assetId:'TN',priceAsset:'WAVES',priceAssetId:'EzwaF58ssALcUCZ9FbyeD1GTSteoZAQZEDTqBAXHfq8y', logo:'tn.svg'},
         {url:'https://www.turtlenetwork.eu/#home',asset:'TN',assetId:'TN',priceAsset:'LTC',priceAssetId:'3vB9hXHTCYbPiQNuyxCQgXF6AvFg51ozGKL9QkwoCwaS', logo:'tn.svg'},
+
+        //LTC markets
+        {url:'https://rcanelabs.com',asset:'ACL',assetId:'3HFgaMssup9ssSL139sptsxc2EXLY3Qx5ykY7hf5LD2B',priceAsset:'LTC',priceAssetId:'3vB9hXHTCYbPiQNuyxCQgXF6AvFg51ozGKL9QkwoCwaS', logo:'ACL.svg'},
     ]
+
 };
