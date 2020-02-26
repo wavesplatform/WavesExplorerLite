@@ -63,6 +63,9 @@ const transform = (currencyService, spamDetectionService, stateChangeService, tx
         case 16:
             return transformScriptInvocation(currencyService, stateChangeService, tx, shouldLoadDetails);
 
+        case 17:
+            return transformUpdateAssetInfo(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -113,6 +116,19 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
         currencyService.get(feeAssetId)
     ]);
 };
+
+const transformUpdateAssetInfo = (currencyService, tx) => {
+    return currencyService.get(tx.assetId).then(asset => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            timestamp: new DateTime(tx.timestamp),
+            assetName: tx.name,
+            description: tx.description,
+            assetId: tx.assetId,
+        })
+    });
+}
 
 const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
     return currencyService.get(tx.feeAssetId).then(feeCurrency => {

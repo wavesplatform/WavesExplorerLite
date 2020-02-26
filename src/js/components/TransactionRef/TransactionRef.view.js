@@ -8,7 +8,7 @@ import {routeBuilder} from '../../shared/Routing';
 class TransactionRef extends React.PureComponent {
     static propTypes = {
         txId: PropTypes.string.isRequired,
-        text: PropTypes.string
+        text: PropTypes.string,
     };
 
     render() {
@@ -16,7 +16,7 @@ class TransactionRef extends React.PureComponent {
         const {networkId} = this.props.match.params;
         const routes = routeBuilder(networkId);
 
-        return (<Link to={routes.transactions.one(this.props.txId)}>{text}</Link>);
+        return (<Link to={routes.transactions.one(this.props.txId)} className={this.props.className}>{text}</Link>);
     }
 }
 
