@@ -180,6 +180,11 @@ export class SingleBlockPage extends React.Component {
             }]
         };
 
+        if(this.state.block.version === 5){
+            items.default.push( {label: 'VRF', value: this.state.block.VRF})
+            items.default.push( {label: 'transactionsRoot', value: this.state.block.transactionsRoot})
+        }
+
         return items;
     }
 }

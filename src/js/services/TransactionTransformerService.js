@@ -2,7 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import {libs} from '@waves/signature-generator';
+import { libs } from '@waves/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
     const promises = transactions.map(item => transform(currencyService,
@@ -74,9 +74,8 @@ const DEFAULT_FUNCTION_CALL = {
 };
 
 const attachmentToString = (attachment) => {
-    if (!attachment)
-        return '';
-
+    if (!attachment) return '';
+    if (attachment.value) return attachment.value;
     const bytes = libs.base58.decode(attachment);
     let result = '';
     try {
