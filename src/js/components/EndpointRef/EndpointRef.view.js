@@ -30,7 +30,7 @@ const EndpointRef = ({endpoint, title, appearance, match, type}) => {
     }
 
     if (type === 'asset') {
-        return <RoutedTransactionRef txId={endpoint}  className={className}/>;
+        return <RoutedAssetRef assetId={endpoint}  className={className}/>;
     }
 
     return <AddressRef networkId={networkId} address={endpoint} title={title} className={className}/>;

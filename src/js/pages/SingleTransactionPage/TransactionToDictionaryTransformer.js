@@ -14,6 +14,7 @@ import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
 import StateChangesInfo from '../../components/StateChangesInfo';
 import { Description } from './Description.view';
+import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -113,7 +114,7 @@ const scriptInvocationTransactionToItems = tx => {
 const updateAssetInfoTransactionToItems = tx => ({
     default: [
         ...buildTransactionHeaderItems(tx),
-        {label: 'Asset', value: <TransactionRef txId={tx.assetId}/>},
+        {label: 'Asset', value: <RoutedAssetRef assetId={tx.assetId}/>},
         {label: 'Name', value: tx.assetName},
         {label: 'Description', value: tx.description},
         buildFeeItem(tx),

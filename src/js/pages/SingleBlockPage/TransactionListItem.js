@@ -445,7 +445,6 @@ class UpdateAssetInfoTransactionListItem extends React.Component {
 
     render() {
         const {tx} = this.props;
-        console.log(tx)
         return (
             <tr>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
