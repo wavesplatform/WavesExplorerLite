@@ -240,6 +240,7 @@ const issueTransactionToItems = tx => {
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
+            {label: 'AssetId', value: <RoutedAssetRef assetId={tx.assetId}/>},
             buildQuantityItem(tx),
             {
                 label: 'Decimals',

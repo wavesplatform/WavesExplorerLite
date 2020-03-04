@@ -7,6 +7,7 @@ import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
+import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
 
 export const createListItem = (transaction) => {
     switch (transaction.type) {
@@ -272,12 +273,14 @@ class IssueTransactionListItem extends React.PureComponent {
                     <TransactionArrow type={tx.type}/>
                     <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line wrap={false}>
-                        <TransactionRef txId={tx.id}/>
+                        <RoutedAssetRef assetId={tx.assetId}/>
                     </Line>
                 </td>
                 <AmountAndFee amount={tx.amount} fee={tx.fee}/>
                 <td>
-                    <Line bold={true}>{tx.name}</Line>
+                    <Line bold={true}>
+                        <RoutedAssetRef text={tx.name} assetId={tx.assetId}/>
+                    </Line>
                 </td>
             </tr>
         );
