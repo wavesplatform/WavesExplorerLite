@@ -77,7 +77,9 @@ const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
         recipient: tx.dappAddress
     };
-    const payment = tx.payment ? moneyToObject(tx.payment) : null;
+    const payment = tx.payment ?
+        Array.isArray(tx.payment) ? tx.payment.map(v => moneyToObject(v)) :  [moneyToObject(tx.payment)]
+        : null;
     if (tx.sender === currentAddress) {
         tail.direction = OUTGOING;
         tail.out = payment;

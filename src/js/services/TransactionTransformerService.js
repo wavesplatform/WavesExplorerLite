@@ -113,32 +113,60 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
+// const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
+//     return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+//         const promise = tx.payment && tx.payment.length > 0
+//             ? currencyService.get(tx.payment[0].assetId)
+//                 .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
+//             : Promise.resolve(null);
+//
+//         return promise.then(payment => {
+//             const result = Object.assign(copyMandatoryAttributes(tx), {
+//                 dappAddress: tx.dApp,
+//                 call: tx.call || DEFAULT_FUNCTION_CALL,
+//                 payment,
+//                 fee: Money.fromCoins(tx.fee, feeCurrency)
+//             });
+//
+//             if (!shouldLoadDetails)
+//                 return result;
+//
+//             return stateChangeService.loadStateChanges(tx.id).then(changes => {
+//                 result.stateChanges = changes.stateChanges;
+//
+//                 return result;
+//             }).catch(() => result);
+//         });
+//     });
+// };
+
 const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
-    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
-        const promise = tx.payment && tx.payment.length > 0
-            ? currencyService.get(tx.payment[0].assetId)
-                .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
-            : Promise.resolve(null);
-
-        return promise.then(payment => {
-            const result = Object.assign(copyMandatoryAttributes(tx), {
-                dappAddress: tx.dApp,
-                call: tx.call || DEFAULT_FUNCTION_CALL,
-                payment,
-                fee: Money.fromCoins(tx.fee, feeCurrency)
-            });
-
-            if (!shouldLoadDetails)
-                return result;
-
-            return stateChangeService.loadStateChanges(tx.id).then(changes => {
-                result.stateChanges = changes.stateChanges;
-
-                return result;
-            }).catch(() => result);
+    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
+        let payment = [];
+        if (tx.payment && tx.payment.length > 0) {
+            payment = (await Promise.all(tx.payment.map(async ({amount, assetId}) => {
+                const currency = await currencyService.get(assetId)
+                return Money.fromCoins(amount, currency)
+            })))
+        }
+        const result = Object.assign(copyMandatoryAttributes(tx), {
+            dappAddress: tx.dApp,
+            call: tx.call || DEFAULT_FUNCTION_CALL,
+            payment,
+            fee: Money.fromCoins(tx.fee, feeCurrency)
         });
+
+        if (!shouldLoadDetails)
+            return result;
+
+        return stateChangeService.loadStateChanges(tx.id).then(changes => {
+            result.stateChanges = changes.stateChanges;
+
+            return result;
+        }).catch(() => result);
     });
 };
+
 
 const transformAssetScript = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {

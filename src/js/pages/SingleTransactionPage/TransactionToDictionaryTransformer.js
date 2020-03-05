@@ -74,14 +74,18 @@ const transactionToDictionary = (tx) => {
 const InfoWrapper = ({children}) => (
     <div className="label-with-icon">
         {children}
-        <div className="icon info" data-for={TOOLTIP_ID} data-tip="Token information has been changed due to the copyright owner request"></div>
+        <div className="icon info" data-for={TOOLTIP_ID} data-tip="Token information has been changed due to the copyright owner request"/>
     </div>
 );
 
 const scriptInvocationTransactionToItems = tx => {
     const paymentItems = [{
         label: 'Payment',
-        value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
+        value: tx.payment && tx.payment.length > 0
+            ?<div style={{display: 'flex', flexDirection:'column', height: 60, justifyContent:'space-around'}}>
+                {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
+        </div>
+            : ''
     }];
 
     const stateItems = tx.stateChanges ? [{
