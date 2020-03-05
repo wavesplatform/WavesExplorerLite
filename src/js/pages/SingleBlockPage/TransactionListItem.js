@@ -118,10 +118,6 @@ class Subjects extends React.PureComponent {
 }
 
 class AmountAndFee extends React.PureComponent {
-    static propTypes = {
-        amount: PropTypes.object,
-        fee: PropTypes.object
-    };
 
     render() {
         const {fee, amount} = this.props
