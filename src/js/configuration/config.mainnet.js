@@ -16,8 +16,6 @@ export default {
         {url: 'https://node2.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://node3.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
-        {url: 'https://turtlenodeapi.sunchaser.eu',maintainer: 'Sunchaser'},
-       // {url: 'https://mncomm.turtlenodes.club',maintainer: 'Maplenode'},
         {url: 'https://www.globalmarketsource.com',maintainer: '@FriGo_Bar'}
         ],
     gateways: [
@@ -25,12 +23,12 @@ export default {
         {name: '$TN',url: 'https://gateway.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$LTC',url: 'https://litecoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BTC',url: 'https://bitcoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$WAVES',url: 'https://wavesgateway.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$WAVES',url: 'https://wavesgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DASH',url: 'https://dashgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WGR',url: 'https://wagerrgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$SYS',url: 'https://syscoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BCH',url: 'https://bchgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$DOGE',url: 'https://dogegw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         //Partner gateways
         {name: '$TUSD', url: 'https://www.rcanelabs.com/gateways', maintainer:'https://www.rcanelabs.com'}
