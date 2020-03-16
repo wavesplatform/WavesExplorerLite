@@ -27,7 +27,7 @@ export default {
         {name: '$DASH',url: 'https://dashgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WGR',url: 'https://wagerrgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$SYS',url: 'https://syscoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$BCH',url: 'https://bchgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         //Partner gateways
