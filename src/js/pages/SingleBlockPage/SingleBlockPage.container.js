@@ -47,7 +47,7 @@ const typeToHeader = type => {
 
         case 9:
             result.price = undefined;
-            result.amount = 'Fee';
+            result.amount = 'Amount / Fee';
             break;
 
         case 10:
