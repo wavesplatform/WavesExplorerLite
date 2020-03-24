@@ -59,7 +59,7 @@ export const createListItem = (transaction) => {
     }
 };
 
-class Line extends React.PureComponent {
+export class Line extends React.PureComponent {
     static propTypes = {
         wrap: PropTypes.bool,
         bold: PropTypes.bool
