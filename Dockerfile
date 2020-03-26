@@ -11,5 +11,5 @@ FROM nginx:stable-alpine
 RUN rm -rf /etc/nginx/conf.d/*
 COPY --from=build /app/etc/nginx /etc/nginx/conf.d
 COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
