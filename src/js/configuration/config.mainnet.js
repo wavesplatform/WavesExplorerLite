@@ -16,12 +16,13 @@ export default {
         {url: 'https://node2.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://node3.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
-        {url: 'https://www.globalmarketsource.com',maintainer: '@FriGo_Bar'}
+        {url: 'https://node.mortysnode.nl', maintainer: 'Morty'}
+        //{url: 'https://www.globalmarketsource.com',maintainer: '@FriGo_Bar'}
         ],
     gateways: [
         // Team gateways
         {name: '$TN',url: 'https://gateway.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$LTC',url: 'https://litecoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$LTC',url: 'https://ltcgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BTC',url: 'https://bitcoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WAVES',url: 'https://wavesgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DASH',url: 'https://dashgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},

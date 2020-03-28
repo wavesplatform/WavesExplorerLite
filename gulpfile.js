@@ -54,10 +54,10 @@ gulp.task('build-official-staging', gulp.series('clean', function (done) {
     buildApp('mainnet', 'dev', done);
 }));
 
-gulp.task('docker-official-prod', function (done) {
+gulp.task('docker-prod', function (done) {
     dockerImage(done);
 });
-gulp.task('docker-official-prod-push',gulp.series('docker-official-prod', function (done) {
+gulp.task('docker-push',gulp.series('docker-prod', function (done) {
     pushDockerImage(done);
 }));
 
