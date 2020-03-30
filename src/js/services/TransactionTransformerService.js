@@ -2,7 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import {libs} from '@waves/signature-generator';
+import { libs } from '@waves/signature-generator';
 
 const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
     const promises = transactions.map(item => transform(currencyService,
@@ -74,9 +74,8 @@ const DEFAULT_FUNCTION_CALL = {
 };
 
 const attachmentToString = (attachment) => {
-    if (!attachment)
-        return '';
-
+    if (!attachment) return '';
+    if (attachment.value) return attachment.value;
     const bytes = libs.base58.decode(attachment);
     let result = '';
     try {
@@ -114,32 +113,60 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
+// const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
+//     return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+//         const promise = tx.payment && tx.payment.length > 0
+//             ? currencyService.get(tx.payment[0].assetId)
+//                 .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
+//             : Promise.resolve(null);
+//
+//         return promise.then(payment => {
+//             const result = Object.assign(copyMandatoryAttributes(tx), {
+//                 dappAddress: tx.dApp,
+//                 call: tx.call || DEFAULT_FUNCTION_CALL,
+//                 payment,
+//                 fee: Money.fromCoins(tx.fee, feeCurrency)
+//             });
+//
+//             if (!shouldLoadDetails)
+//                 return result;
+//
+//             return stateChangeService.loadStateChanges(tx.id).then(changes => {
+//                 result.stateChanges = changes.stateChanges;
+//
+//                 return result;
+//             }).catch(() => result);
+//         });
+//     });
+// };
+
 const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
-    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
-        const promise = tx.payment && tx.payment.length > 0
-            ? currencyService.get(tx.payment[0].assetId)
-                .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
-            : Promise.resolve(null);
-
-        return promise.then(payment => {
-            const result = Object.assign(copyMandatoryAttributes(tx), {
-                dappAddress: tx.dApp,
-                call: tx.call || DEFAULT_FUNCTION_CALL,
-                payment,
-                fee: Money.fromCoins(tx.fee, feeCurrency)
-            });
-
-            if (!shouldLoadDetails)
-                return result;
-
-            return stateChangeService.loadStateChanges(tx.id).then(changes => {
-                result.stateChanges = changes.stateChanges;
-
-                return result;
-            }).catch(() => result);
+    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
+        let payment = [];
+        if (tx.payment && tx.payment.length > 0) {
+            payment = (await Promise.all(tx.payment.map(async ({amount, assetId}) => {
+                const currency = await currencyService.get(assetId)
+                return Money.fromCoins(amount, currency)
+            })))
+        }
+        const result = Object.assign(copyMandatoryAttributes(tx), {
+            dappAddress: tx.dApp,
+            call: tx.call || DEFAULT_FUNCTION_CALL,
+            payment,
+            fee: Money.fromCoins(tx.fee, feeCurrency)
         });
+
+        if (!shouldLoadDetails)
+            return result;
+
+        return stateChangeService.loadStateChanges(tx.id).then(changes => {
+            result.stateChanges = changes.stateChanges;
+
+            return result;
+        }).catch(() => result);
     });
 };
+
 
 const transformAssetScript = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {

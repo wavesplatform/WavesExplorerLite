@@ -11,6 +11,12 @@ export class TransactionListItem extends React.PureComponent {
         tx: PropTypes.object.isRequired
     };
 
+    conventAmount = (v) => {
+        if(!v) return null
+        if(Array.isArray(v)) return v.map(({amount,currency}, i) => <p key={i} className="line">{amount} {currency}</p>)
+        else return  <div className="line">{v.amount} {v.currency}</div>
+    }
+
     render() {
         const {tx} = this.props;
         const rowClassName = tx.isSpam ? 'spam' : '';
@@ -30,8 +36,8 @@ export class TransactionListItem extends React.PureComponent {
                     <DirectionalEndpoints direction={tx.direction} sender={tx.sender} recipient={tx.recipient} />
                 </td>
                 <td data-label="Amount in / out">
-                    {tx.in && <div className="line">{tx.in.amount} {tx.in.currency}</div>}
-                    {tx.out && <div className="line">{tx.out.amount} {tx.out.currency}</div>}
+                    {this.conventAmount(tx.in)}
+                    {this.conventAmount(tx.out)}
                 </td>
                 <td data-label="Price">
                     {tx.price && <React.Fragment>

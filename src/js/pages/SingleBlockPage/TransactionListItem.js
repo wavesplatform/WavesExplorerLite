@@ -118,15 +118,15 @@ class Subjects extends React.PureComponent {
 }
 
 class AmountAndFee extends React.PureComponent {
-    static propTypes = {
-        amount: PropTypes.object,
-        fee: PropTypes.object
-    };
 
     render() {
+        const {fee, amount} = this.props
         return (
             <td data-label="Amount / Fee">
-                <Line>{this.props.amount.toString()}</Line>
+                <Line>{Array.isArray(amount)
+                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i} >{v.toString()}</p> )
+                    : amount.toString()}
+                </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
             </td>
         );
