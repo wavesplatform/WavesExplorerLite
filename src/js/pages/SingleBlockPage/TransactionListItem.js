@@ -141,7 +141,7 @@ class JustFee extends React.PureComponent {
     render() {
         return (
             <td data-label="Fee">
-                <Line>{this.props.fee.toString()}</Line>
+                <Line><label>{this.props.fee.toString()}</label></Line>
                 <Line />
             </td>
         );
