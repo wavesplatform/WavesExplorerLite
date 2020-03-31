@@ -142,7 +142,7 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && (tx.stateChanges.reissues || [])
                 .map((reissue, i) => <tr key={i}>
                     <td><Line bold>Reissue</Line></td>
-                    <Money amount={reissue.quantity} asset={reissue.assetId} name={reissue.name} description={reissue.description}/>
+                    <Money amount={reissue.quantity} asset={reissue.assetId} name={reissue.name}/>
                     <td><Line>Reissuable:&nbsp;{reissue.isReissuable ? "true" : "false"}</Line></td>
                 </tr>)
             }
