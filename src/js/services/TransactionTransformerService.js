@@ -2,20 +2,20 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import { libs } from '@waves/signature-generator';
+import {libs} from '@waves/signature-generator';
 
-const transformMultiple = (currencyService, spamDetectionService, stateChangeService, transactions) => {
+const transformMultiple = (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
     const promises = transactions.map(item => transform(currencyService,
-        spamDetectionService, stateChangeService, item, false));
+        spamDetectionService, stateChangeService, assetService, item, false));
 
     return Promise.all(promises);
 };
 
-const transformSingle = (currencyService, spamDetectionService, stateChangeService, tx) => {
-    return transform(currencyService, spamDetectionService, stateChangeService, tx, true);
+const transformSingle = (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
+    return transform(currencyService, spamDetectionService, stateChangeService, assetService, tx, true);
 };
 
-const transform = (currencyService, spamDetectionService, stateChangeService, tx, shouldLoadDetails) => {
+const transform = (currencyService, spamDetectionService, stateChangeService, assetService, tx, shouldLoadDetails) => {
     switch (tx.type) {
         case 1:
             return transformGenesis(currencyService, tx);
@@ -61,7 +61,7 @@ const transform = (currencyService, spamDetectionService, stateChangeService, tx
             return transformAssetScript(currencyService, tx);
 
         case 16:
-            return transformScriptInvocation(currencyService, stateChangeService, tx, shouldLoadDetails);
+            return transformScriptInvocation(currencyService, stateChangeService, assetService, tx, shouldLoadDetails);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -113,34 +113,7 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
-// const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
-//     return currencyService.get(tx.feeAssetId).then(feeCurrency => {
-//         const promise = tx.payment && tx.payment.length > 0
-//             ? currencyService.get(tx.payment[0].assetId)
-//                 .then(currency => Money.fromCoins(tx.payment[0].amount, currency))
-//             : Promise.resolve(null);
-//
-//         return promise.then(payment => {
-//             const result = Object.assign(copyMandatoryAttributes(tx), {
-//                 dappAddress: tx.dApp,
-//                 call: tx.call || DEFAULT_FUNCTION_CALL,
-//                 payment,
-//                 fee: Money.fromCoins(tx.fee, feeCurrency)
-//             });
-//
-//             if (!shouldLoadDetails)
-//                 return result;
-//
-//             return stateChangeService.loadStateChanges(tx.id).then(changes => {
-//                 result.stateChanges = changes.stateChanges;
-//
-//                 return result;
-//             }).catch(() => result);
-//         });
-//     });
-// };
-
-const transformScriptInvocation = (currencyService, stateChangeService, tx, shouldLoadDetails) => {
+const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
         if (tx.payment && tx.payment.length > 0) {
@@ -156,14 +129,34 @@ const transformScriptInvocation = (currencyService, stateChangeService, tx, shou
             fee: Money.fromCoins(tx.fee, feeCurrency)
         });
 
+
+        const appendAssetData = async (data, assetKey) => {
+            return data && data.length
+                ? Promise.all(data.map(async (item) => {
+                    const details = item[assetKey]
+                        ? await assetService.loadDetails(item[assetKey])
+                        : {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
+                    return {
+                        ...item,
+                        name: details.name,
+                        decimals: details.decimals,
+                        description: details.description
+                    }
+                }))
+                : []
+        }
+
         if (!shouldLoadDetails)
             return result;
-
-        return stateChangeService.loadStateChanges(tx.id).then(changes => {
+        const changes = await stateChangeService.loadStateChanges(tx.id)
+        if (changes && changes.stateChanges) {
             result.stateChanges = changes.stateChanges;
+            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
+            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
+            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
+        }
 
-            return result;
-        }).catch(() => result);
+        return result;
     });
 };
 
@@ -380,18 +373,19 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 export class TransactionTransformerService {
-    constructor(currencyService, spamDetectionService, stateChangeService) {
+    constructor(currencyService, spamDetectionService, stateChangeService, assetService) {
         this.currencyService = currencyService;
         this.spamDetectionService = spamDetectionService;
         this.stateChangeService = stateChangeService;
+        this.assetService = assetService;
     }
 
     transform = (input) => {
         if (Array.isArray(input))
             return transformMultiple(this.currencyService,
-                this.spamDetectionService, this.stateChangeService, input);
+                this.spamDetectionService, this.stateChangeService, this.assetService, input);
 
         return transformSingle(this.currencyService,
-            this.spamDetectionService, this.stateChangeService, input);
+            this.spamDetectionService, this.stateChangeService, this.assetService, input);
     };
 }

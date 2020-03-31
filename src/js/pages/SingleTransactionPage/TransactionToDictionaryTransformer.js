@@ -15,6 +15,7 @@ import InvocationInfo from '../../components/InvocationInfo';
 import {Description} from './Description.view';
 import RawJsonViewer from "./RawJsonViewer";
 import {createListItem, Line} from "../SingleBlockPage/TransactionListItem";
+import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 
 const transactionToDictionary = (tx) => {
@@ -75,17 +76,19 @@ const transactionToDictionary = (tx) => {
 const InfoWrapper = ({children}) => (
     <div className="label-with-icon">
         {children}
-        <div className="icon info" data-for={TOOLTIP_ID} data-tip="Token information has been changed due to the copyright owner request"/>
+        <div className="icon info" data-for={TOOLTIP_ID}
+             data-tip="Token information has been changed due to the copyright owner request"/>
     </div>
 );
 
 const scriptInvocationTransactionToItems = tx => {
+
     const paymentItems = [{
         label: 'Payment',
         value: tx.payment && tx.payment.length > 0
-            ?<div style={{display: 'flex', flexDirection:'column', height: 60, justifyContent:'space-around'}}>
+            ? <div style={{display: 'flex', flexDirection: 'column', height: 60, justifyContent: 'space-around'}}>
                 {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
-        </div>
+            </div>
             : ''
     }];
 
@@ -93,6 +96,28 @@ const scriptInvocationTransactionToItems = tx => {
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
     }] : [];
+
+    const Money = ({amount, asset, name, description}) => <td>
+        <Line>{amount}&nbsp;{asset ? <RoutedAssetRef assetId={asset} text={name}/> : "WAVES"}</Line>
+        {description && <Line>{description}</Line>}
+    </td>
+
+    const getDataEntryType = (type) => {
+        switch (type) {
+            case "binary":
+                return "BinaryEntry";
+            case "integer":
+                return "IntegerEntry";
+            case "string":
+                return "StringEntry";
+            case "boolean":
+                return "BooleanEntry";
+            default:
+                return "DeleteEntry"
+        }
+    }
+
+
     const results = [{
         label: 'Results',
         value: <table>
@@ -100,48 +125,40 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
                 .map((transfer, i) => <tr key={i}>
                     <td><Line bold>Transfer</Line></td>
-                    <td>{transfer.amount}</td>
+                    <Money amount={transfer.amount} asset={transfer.asset} name={transfer.name}/>
                     <td><AddressRef address={transfer.address}/></td>
                 </tr>)
             }
-            <tr>
-                <td>Issue</td>
-                <td>1231239 WEST</td>
-                <td>Reissuable: FALSE<br/>Scripted: FALSE</td>
-            </tr>
-            <tr>
-                <td>Reissue</td>
-                <td>1231239 WEST</td>
-                <td>Reissuable: FALSE</td>
-            </tr>
-            <tr>
-                <td>Burn</td>
-                <td>1231239 WEST</td>
-            </tr>
-            <tr>
-                <td>BinaryEntry</td>
-                <td>Key: WEST</td>
-                <td>value: EAxe81Xdqtt7mPQkfXuoaQzS1gKK424DUZ11Y7pDwi6b</td>
-            </tr>
-            <tr>
-                <td>BooleanEntry</td>
-                <td>Key: WEST</td>
-                <td>value: TRUE</td>
-            </tr>
-            <tr>
-                <td>IntegerEntry</td>
-                <td>Key: WEST</td>
-                <td>value: 12312333</td>
-            </tr>
-            <tr>
-                <td>StringEntry</td>
-                <td>Key: WEST</td>
-                <td>value: Hello World</td>
-            </tr>
-            <tr>
-                <td>DeleteEntry</td>
-                <td>Key: WEST</td>
-            </tr>
+            {tx.stateChanges && (tx.stateChanges.issues || [])
+                .map((issue, i) => <tr key={i}>
+                    <td><Line bold>Issue</Line></td>
+                    <Money amount={issue.quantity} asset={issue.assetId} name={issue.name} description={issue.description}/>
+                    <td>
+                        <Line>Reissuable:&nbsp;{issue.isReissuable ? "true" : "false"}</Line>
+                        <Line>Scripted:&nbsp;{issue.compiledScript ? "true" : "false"}</Line>
+                    </td>
+                </tr>)
+            }
+            {tx.stateChanges && (tx.stateChanges.reissues || [])
+                .map((reissue, i) => <tr key={i}>
+                    <td><Line bold>Reissue</Line></td>
+                    <Money amount={reissue.quantity} asset={reissue.assetId} name={reissue.name} description={reissue.description}/>
+                    <td><Line>Reissuable:&nbsp;{reissue.isReissuable ? "true" : "false"}</Line></td>
+                </tr>)
+            }
+            {tx.stateChanges && (tx.stateChanges.burns || [])
+                .map((burn, i) => <tr key={i}>
+                    <td><Line bold>Burn</Line></td>
+                    <Money amount={burn.quantity} asset={burn.assetId} name={burn.name} />
+                </tr>)
+            }
+            {tx.stateChanges && (tx.stateChanges.data || [])
+                .map((entry, i) => <tr key={i}>
+                    <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
+                    <td><Line >key: {entry.key}</Line></td>
+                    {entry.value && <td><Line >value: {String(entry.value)}</Line></td>}
+                </tr>)
+            }
             </tbody>
         </table>
     }];
