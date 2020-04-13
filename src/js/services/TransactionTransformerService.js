@@ -122,13 +122,16 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
                 return Money.fromCoins(amount, currency)
             })))
         }
+
+        const info = (await currencyService.getApi().transactions.info(tx.id)).data
+
         const result = Object.assign(copyMandatoryAttributes(tx), {
+            applicationStatus: info.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency)
         });
-
 
         const appendAssetData = async (data, assetKey) => {
             return data && data.length
@@ -266,7 +269,8 @@ const transformExchange = (currencyService, tx) => {
         currencyService.get(assetPair.priceAsset),
         currencyService.get(tx.feeAssetId),
         currencyService.get(buyOrder.matcherFeeAssetId),
-        currencyService.get(sellOrder.matcherFeeAssetId)
+        currencyService.get(sellOrder.matcherFeeAssetId),
+        currencyService.getApi().transactions.info(tx.id)
     ]).then(tuple => {
         const currencyPair = {
             amountAsset: tuple[0],
@@ -276,6 +280,7 @@ const transformExchange = (currencyService, tx) => {
         const feeAsset = tuple[2];
         const buyFeeAsset = tuple[3];
         const sellFeeAsset = tuple[4];
+        const info = tuple[5].data;
         const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
@@ -289,7 +294,8 @@ const transformExchange = (currencyService, tx) => {
             buyOrder: transformOrder(buyOrder, currencyPair, buyFeeAsset),
             sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
             seller: sellOrder.sender,
-            buyer: buyOrder.sender
+            buyer: buyOrder.sender,
+            applicationStatus: info.applicationStatus,
         });
     });
 };

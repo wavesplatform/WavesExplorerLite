@@ -75,7 +75,8 @@ const matchesUser = (currentUser, addressOrAlias) => {
 
 const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
-        recipient: tx.dappAddress
+        recipient: tx.dappAddress,
+        applicationStatus: tx.applicationStatus
     };
     const payment = tx.payment ?
         Array.isArray(tx.payment) ? tx.payment.map(v => moneyToObject(v)) :  [moneyToObject(tx.payment)]
@@ -138,6 +139,7 @@ const mapExchange = (tx, currentAddress) => {
         recipient: tx.buyer,
         in: moneyToObject(tx.total),
         out: moneyToObject(tx.amount),
+        applicationStatus: tx.applicationStatus,
         price: {
             amount: tx.price.toTokens().toFixed(8),
             currency: tx.buyOrder.assetPair.priceAsset.toString()
