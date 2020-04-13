@@ -63,7 +63,7 @@ export const createListItem = (transaction) => {
     }
 };
 
-class Line extends React.PureComponent {
+export class Line extends React.PureComponent {
     static propTypes = {
         wrap: PropTypes.bool,
         bold: PropTypes.bool
@@ -122,15 +122,15 @@ class Subjects extends React.PureComponent {
 }
 
 class AmountAndFee extends React.PureComponent {
-    static propTypes = {
-        amount: PropTypes.object,
-        fee: PropTypes.object
-    };
 
     render() {
+        const {fee, amount} = this.props
         return (
             <td data-label="Amount / Fee">
-                <Line>{this.props.amount.toString()}</Line>
+                <Line>{Array.isArray(amount)
+                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i} >{v.toString()}</p> )
+                    : amount.toString()}
+                </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
             </td>
         );
@@ -145,8 +145,8 @@ class JustFee extends React.PureComponent {
     render() {
         return (
             <td data-label="Fee">
-                <Line>{this.props.fee.toString()}</Line>
-                <Line/>
+                <Line><label>{this.props.fee.toString()}</label></Line>
+                <Line />
             </td>
         );
     }
@@ -251,9 +251,9 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
         const {tx} = this.props;
         return (
             <tr>
-                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
-                <Subjects type={tx.type} sender={tx.sender}/>
-                <JustFee fee={tx.fee}/>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                <AmountAndFee amount={tx.amount} fee={tx.fee} />
             </tr>
         );
     }
