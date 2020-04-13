@@ -12,14 +12,9 @@ import Timestamp from '../../components/Timestamp';
 import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
-
-import StateChangesInfo from '../../components/StateChangesInfo';
-import { Description } from './Description.view';
-import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
-
 import {Description} from './Description.view';
 import RawJsonViewer from "./RawJsonViewer";
-import {createListItem, Line} from "../SingleBlockPage/TransactionListItem";
+import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 
