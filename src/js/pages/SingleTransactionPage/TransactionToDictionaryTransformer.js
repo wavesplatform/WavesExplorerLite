@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TOOLTIP_ID, VostokToWavesEnterprise} from '../../shared/constants';
+import { TOOLTIP_ID, VostokToWavesEnterprise } from '../../shared/constants';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -14,9 +14,10 @@ import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
 import {Description} from './Description.view';
 import RawJsonViewer from "./RawJsonViewer";
-import {createListItem, Line} from "../SingleBlockPage/TransactionListItem";
+import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
+
 
 const transactionToDictionary = (tx) => {
     switch (tx.type) {
@@ -65,6 +66,9 @@ const transactionToDictionary = (tx) => {
 
         case 16:
             return scriptInvocationTransactionToItems(tx);
+
+        case 17:
+            return updateAssetInfoTransactionToItems(tx);
 
         default:
             return {
@@ -181,6 +185,17 @@ const scriptInvocationTransactionToItems = tx => {
         ]
     };
 };
+
+const updateAssetInfoTransactionToItems = tx => ({
+    default: [
+        ...buildTransactionHeaderItems(tx),
+        {label: 'Asset', value: <RoutedAssetRef assetId={tx.assetId}/>},
+        {label: 'Name', value: tx.assetName},
+        {label: 'Description', value: tx.description},
+        buildFeeItem(tx),
+        ...buildSenderAddressAndKeyItems(tx),
+    ]
+});
 
 const dataTransactionToItems = tx => {
     return {
@@ -300,6 +315,7 @@ const issueTransactionToItems = tx => {
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
+            {label: 'AssetId', value: <RoutedAssetRef assetId={tx.assetId}/>},
             buildQuantityItem(tx),
             {
                 label: 'Decimals',

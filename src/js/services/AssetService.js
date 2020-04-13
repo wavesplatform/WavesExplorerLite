@@ -34,7 +34,8 @@ export class AssetService extends ApiClientService {
                 quantity: Money.fromCoins(data.quantity, currency),
                 scripted: data.scripted,
                 scriptDetails: data.scripted ? data.scriptDetails : null,
-                minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null
+                minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
+                originTransactionId: data.originTransactionId
             }
         })
     }

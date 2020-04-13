@@ -63,6 +63,9 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
         case 16:
             return transformScriptInvocation(currencyService, stateChangeService, assetService, tx, shouldLoadDetails);
 
+        case 17:
+            return transformUpdateAssetInfo(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -113,6 +116,21 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
+
+const transformUpdateAssetInfo = (currencyService, tx) => {
+    return currencyService.get(tx.assetId).then(asset => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            timestamp: new DateTime(tx.timestamp),
+            assetName: tx.name,
+            description: tx.description,
+            assetId: tx.assetId,
+        })
+    });
+}
+
+
 const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
@@ -127,6 +145,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency)
+
         });
 
 
@@ -341,7 +360,8 @@ const transformIssue = (currencyService, tx) => {
             reissuable: tx.reissuable,
             decimals: tx.decimals,
             description: tx.description,
-            script: tx.script
+            script: tx.script,
+            assetId: tx.assetId
         });
     });
 };

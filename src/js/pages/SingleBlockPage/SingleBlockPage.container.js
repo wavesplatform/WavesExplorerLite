@@ -54,6 +54,12 @@ const typeToHeader = type => {
             result.amount = 'Fee';
             result.price = 'Alias';
             break;
+
+        case 17:
+            result.subjects = 'Sender / Asset ID';
+            result.amount = 'Fee';
+            result.price = 'Asset name';
+            break;
     }
 
     return result;
