@@ -23,9 +23,9 @@ export class BlockListItem extends React.Component {
                 <td data-label="Base Target">
                     <div className="line bold">{block.baseTarget}</div>
                 </td>
-                <td data-label="Generator / Signature">
+                <td data-label="Block ID / Generator">
+                    <div className="line no-wrap"><label>{block.id || block.signature}</label></div>
                     <div className="line no-wrap"><EndpointRef endpoint={block.generator}/></div>
-                    <div className="line no-wrap"><label>{block.signature}</label></div>
                 </td>
                 <td data-label="TXs">
                     <div className="line">{block.transactions}</div>

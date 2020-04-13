@@ -32,6 +32,7 @@ export class BlockService extends ApiClientService {
         return this.getApi().blocks.headers.sequence(from, to).then(blocksResponse => {
             const blocks = blocksResponse.data.map(block => {
                 return {
+                    id: block.id,
                     height: block.height,
                     timestamp: block.timestamp,
                     baseTarget: block['nxt-consensus']['base-target'],
