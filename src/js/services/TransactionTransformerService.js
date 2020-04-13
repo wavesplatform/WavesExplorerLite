@@ -246,13 +246,14 @@ const transformLease = (currencyService, tx) => {
     });
 };
 
-const transformLeaseCancel = (currencyService, tx) => {
-    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            leaseId: tx.leaseId,
-            recipient: tx.lease ? tx.lease.recipient : null
-        });
+const transformLeaseCancel = async (currencyService, tx) => {
+    const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId)).data;
+    const feeCurrency = await currencyService.get(tx.feeAssetId)
+    return Object.assign(copyMandatoryAttributes(tx), {
+        amount: Money.fromCoins(amount, Currency.WAVES),
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        leaseId: tx.leaseId,
+        recipient: tx.lease ? tx.lease.recipient : null
     });
 };
 

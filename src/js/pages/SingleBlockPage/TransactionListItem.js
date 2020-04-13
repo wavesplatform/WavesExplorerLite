@@ -249,7 +249,7 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
             <tr>
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} />
-                <JustFee fee={tx.fee} />
+                <AmountAndFee amount={tx.amount} fee={tx.fee} />
             </tr>
         );
     }
