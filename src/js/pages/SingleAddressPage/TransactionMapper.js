@@ -77,7 +77,9 @@ const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
         recipient: tx.dappAddress
     };
-    const payment = tx.payment ? moneyToObject(tx.payment) : null;
+    const payment = tx.payment ?
+        Array.isArray(tx.payment) ? tx.payment.map(v => moneyToObject(v)) :  [moneyToObject(tx.payment)]
+        : null;
     if (tx.sender === currentAddress) {
         tail.direction = OUTGOING;
         tail.out = payment;
@@ -126,7 +128,8 @@ const mapLease = (tx, currentAddress) => {
 const mapLeaseCancel = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), {
         direction: defaultDirection(tx, currentAddress),
-        recipient: tx.recipient
+        recipient: tx.recipient,
+        in: moneyToObject(tx.amount)
     });
 };
 

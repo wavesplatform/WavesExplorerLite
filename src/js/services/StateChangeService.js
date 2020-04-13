@@ -7,5 +7,6 @@ export class StateChangeService extends ApiClientService {
 
     loadStateChanges = (id) => {
         return this.getApi().transactions.stateChanges(id).then(response => response.data);
+
     };
 }
