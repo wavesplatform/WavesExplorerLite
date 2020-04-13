@@ -78,7 +78,7 @@ const DEFAULT_FUNCTION_CALL = {
 
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
-    if (attachment.value) return attachment.value;
+    if (attachment.value) return attachment.value.toString();
     const bytes = libs.base58.decode(attachment);
     let result = '';
     try {
