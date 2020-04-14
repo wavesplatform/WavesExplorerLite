@@ -47,7 +47,7 @@ export class InfoService extends ApiClientService {
             return Promise.resolve(addBlockDelay(info, 'N/A'));
 
         return api.blocks.headers.at(height - 1).then(headerResponse => {
-            return api.blocks.delay(headerResponse.data.signature, BLOCK_DELAY_INTERVAL);
+            return api.blocks.delay(headerResponse.data.id || headerResponse.data.signature, BLOCK_DELAY_INTERVAL);
         }).then(delayResponse => {
             const delay = parseInt(delayResponse.data.delay)/1000 + ' sec';
             return addBlockDelay(info, delay);

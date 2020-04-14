@@ -63,6 +63,9 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
         case 16:
             return transformScriptInvocation(currencyService, stateChangeService, assetService, tx, shouldLoadDetails);
 
+        case 17:
+            return transformUpdateAssetInfo(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -75,7 +78,7 @@ const DEFAULT_FUNCTION_CALL = {
 
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
-    if (attachment.value) return attachment.value;
+    if (attachment.value) return attachment.value.toString();
     const bytes = libs.base58.decode(attachment);
     let result = '';
     try {
@@ -113,6 +116,21 @@ const loadAmountAndFeeCurrencies = (currencyService, amountAssetId, feeAssetId) 
     ]);
 };
 
+
+const transformUpdateAssetInfo = (currencyService, tx) => {
+    return currencyService.get(tx.assetId).then(asset => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            timestamp: new DateTime(tx.timestamp),
+            assetName: tx.name,
+            description: tx.description,
+            assetId: tx.assetId,
+        })
+    });
+}
+
+
 const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
@@ -131,6 +149,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency)
+
         });
 
         const appendAssetData = async (data, assetKey) => {
@@ -249,13 +268,14 @@ const transformLease = (currencyService, tx) => {
     });
 };
 
-const transformLeaseCancel = (currencyService, tx) => {
-    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            leaseId: tx.leaseId,
-            recipient: tx.lease ? tx.lease.recipient : null
-        });
+const transformLeaseCancel = async (currencyService, tx) => {
+    const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId)).data;
+    const feeCurrency = await currencyService.get(tx.feeAssetId)
+    return Object.assign(copyMandatoryAttributes(tx), {
+        amount: Money.fromCoins(amount, Currency.WAVES),
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        leaseId: tx.leaseId,
+        recipient: tx.lease ? tx.lease.recipient : null
     });
 };
 
@@ -346,7 +366,8 @@ const transformIssue = (currencyService, tx) => {
             reissuable: tx.reissuable,
             decimals: tx.decimals,
             description: tx.description,
-            script: tx.script
+            script: tx.script,
+            assetId: tx.assetId
         });
     });
 };

@@ -8,6 +8,8 @@ import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
 import brick from '../../../images/brick.svg';
+import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
+
 
 export const createListItem = (transaction) => {
     switch (transaction.type) {
@@ -55,6 +57,9 @@ export const createListItem = (transaction) => {
         case 16:
             return <ScriptInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
 
+        case 17:
+            return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
+
         default:
             return null;
     }
@@ -92,11 +97,13 @@ class IdAndTimestamp extends React.PureComponent {
     render() {
         return (
             <td data-label="ID / Timestamp">
+          
                 <Line wrap={false}>
                     {this.props.applicationStatus === 'scriptExecutionFailed' &&
                     <><img className="icon" src={brick} height={12} width={12}/>&nbsp;</>}
                     <TransactionRef txId={this.props.id}/>
                 </Line>
+
                 <Line><label><Timestamp value={this.props.timestamp}/></label></Line>
             </td>
         );
@@ -253,9 +260,11 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
         const {tx} = this.props;
         return (
             <tr>
-                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
-                <Subjects type={tx.type} sender={tx.sender}/>
-                <JustFee fee={tx.fee}/>
+
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
+                <Subjects type={tx.type} sender={tx.sender} />
+                <AmountAndFee amount={tx.amount} fee={tx.fee} />
+
             </tr>
         );
     }
@@ -275,12 +284,14 @@ class IssueTransactionListItem extends React.PureComponent {
                     <TransactionArrow type={tx.type}/>
                     <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line wrap={false}>
-                        <TransactionRef txId={tx.id}/>
+                        <RoutedAssetRef assetId={tx.assetId}/>
                     </Line>
                 </td>
                 <AmountAndFee amount={tx.amount} fee={tx.fee}/>
                 <td>
-                    <Line bold={true}>{tx.name}</Line>
+                    <Line bold={true}>
+                        <RoutedAssetRef text={tx.name} assetId={tx.assetId}/>
+                    </Line>
                 </td>
             </tr>
         );
@@ -433,9 +444,35 @@ class ScriptInvocationTransactionListItem extends React.Component {
         const {tx} = this.props;
         return (
             <tr>
+
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <Subjects type={tx.type} sender={tx.sender}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+            </tr>
+        );
+    }
+}
+
+class UpdateAssetInfoTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
+                <td data-label="Sender / Asset ID">
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.sender} appearance="regular"/>
+                    </Line>
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.assetId} appearance="regular" type={'asset'}/>
+                    </Line>
+                </td>
+                <JustFee fee={tx.fee}/>
+                <td data-label="Asset name"><Line>{tx.assetName}</Line></td>
             </tr>
         );
     }

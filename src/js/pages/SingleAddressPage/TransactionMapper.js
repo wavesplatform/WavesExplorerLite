@@ -129,7 +129,8 @@ const mapLease = (tx, currentAddress) => {
 const mapLeaseCancel = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), {
         direction: defaultDirection(tx, currentAddress),
-        recipient: tx.recipient
+        recipient: tx.recipient,
+        in: moneyToObject(tx.amount)
     });
 };
 
