@@ -7,7 +7,9 @@ import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
+import brick from '../../../images/brick.svg';
 import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
+
 
 export const createListItem = (transaction) => {
     switch (transaction.type) {
@@ -88,13 +90,20 @@ export class Line extends React.PureComponent {
 class IdAndTimestamp extends React.PureComponent {
     static propTypes = {
         id: PropTypes.string.isRequired,
-        timestamp: PropTypes.instanceOf(DateTime).isRequired
+        timestamp: PropTypes.instanceOf(DateTime).isRequired,
+        applicationStatus: PropTypes.string
     };
 
     render() {
         return (
             <td data-label="ID / Timestamp">
-                <Line wrap={false}><TransactionRef txId={this.props.id}/></Line>
+          
+                <Line wrap={false}>
+                    {this.props.applicationStatus === 'scriptExecutionFailed' &&
+                    <><img className="icon" src={brick} height={12} width={12}/>&nbsp;</>}
+                    <TransactionRef txId={this.props.id}/>
+                </Line>
+
                 <Line><label><Timestamp value={this.props.timestamp}/></label></Line>
             </td>
         );
@@ -128,7 +137,7 @@ class AmountAndFee extends React.PureComponent {
         return (
             <td data-label="Amount / Fee">
                 <Line>{Array.isArray(amount)
-                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i} >{v.toString()}</p> )
+                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i}>{v.toString()}</p>)
                     : amount.toString()}
                 </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
@@ -146,7 +155,7 @@ class JustFee extends React.PureComponent {
         return (
             <td data-label="Fee">
                 <Line><label>{this.props.fee.toString()}</label></Line>
-                <Line />
+                <Line/>
             </td>
         );
     }
@@ -204,7 +213,7 @@ class ExchangeTransactionListItem extends React.PureComponent {
         const {tx} = this.props;
         return (
             <tr>
-                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <td data-label="Seller / Buyer">
                     <div className="arrow exchange"></div>
                     <div className="line no-wrap"><EndpointRef endpoint={tx.seller} appearance="regular"/></div>
@@ -251,9 +260,11 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
         const {tx} = this.props;
         return (
             <tr>
+
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
                 <Subjects type={tx.type} sender={tx.sender} />
                 <AmountAndFee amount={tx.amount} fee={tx.fee} />
+
             </tr>
         );
     }
@@ -433,7 +444,8 @@ class ScriptInvocationTransactionListItem extends React.Component {
         const {tx} = this.props;
         return (
             <tr>
-                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
+
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <Subjects type={tx.type} sender={tx.sender}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
             </tr>
