@@ -128,7 +128,7 @@ const scriptInvocationTransactionToItems = tx => {
             <tbody>
             {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
                 .map((transfer, i) => <tr key={i}>
-                    <td><Line bold>Transfer</Line></td>
+                    <td style={{width: 100}}><Line bold>Transfer</Line></td>
                     <Money amount={transfer.amount} asset={transfer.asset} name={transfer.name}/>
                     <td><AddressRef address={transfer.address}/></td>
                 </tr>)
@@ -159,8 +159,12 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && (tx.stateChanges.data || [])
                 .map((entry, i) => <tr key={i}>
                     <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
-                    <td><Line >key: {entry.key}</Line></td>
-                    {entry.value && <td><Line >value: {String(entry.value)}</Line></td>}
+                    <td style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
+                        <Line>key: {entry.key}</Line>
+                    </td>
+                    {entry.value && <td style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
+                        <Line >value: {String(entry.value)}</Line>
+                    </td>}
                 </tr>)
             }
             </tbody>
@@ -479,7 +483,7 @@ const buildTransactionHeaderItems = tx => {
             type={tx.type}/></React.Fragment>
     }, {
         label: 'Status',
-        value: tx.applicationStatus === 'scriptExecutionFailed' ? 'failed' : 'succeed'
+        value: tx.applicationStatus === 'scriptExecutionFailed' ? 'Failed' : 'Succeed'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height}/>

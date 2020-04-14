@@ -54,7 +54,8 @@
 .line {
     @include font(body);
     padding-bottom: 8px;
-
+    text-overflow: ellipsis;
+    overflow: hidden;
     &.wide {
         padding-top: 18px;
     }
