@@ -7,8 +7,8 @@ import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
-import brick from '../../../images/brick.svg';
 import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
+import FailedBrick from "../../components/FailedBrick";
 
 
 export const createListItem = (transaction) => {
@@ -97,10 +97,9 @@ class IdAndTimestamp extends React.PureComponent {
     render() {
         return (
             <td data-label="ID / Timestamp">
-          
+
                 <Line wrap={false}>
-                    {this.props.applicationStatus === 'scriptExecutionFailed' &&
-                    <><img className="icon" src={brick} height={12} width={12}/>&nbsp;</>}
+                    {this.props.applicationStatus === 'scriptExecutionFailed' && <FailedBrick/>}
                     <TransactionRef txId={this.props.id}/>
                 </Line>
 

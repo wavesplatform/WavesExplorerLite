@@ -5,8 +5,7 @@ import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
 import TransactionBadge from '../../components/TransactionBadge';
 import {DirectionalEndpoints} from './DirectionalEndpoints.view';
-import brick from "../../../images/brick.svg";
-import {Line} from "../SingleBlockPage/TransactionListItem";
+import FailedBrick from "../../components/FailedBrick";
 
 export class TransactionListItem extends React.PureComponent {
     static propTypes = {
@@ -27,8 +26,7 @@ export class TransactionListItem extends React.PureComponent {
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap">
-                        {tx.applicationStatus === "succeed" &&
-                        <><img className="icon" src={brick} height={12} width={12}/>&nbsp;</>}
+                        {tx.applicationStatus === "succeed" && <FailedBrick/>}
                         <TransactionRef txId={tx.id}/>
                     </div>
                     <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>

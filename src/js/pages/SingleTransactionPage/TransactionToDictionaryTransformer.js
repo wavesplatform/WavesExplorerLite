@@ -483,7 +483,7 @@ const buildTransactionHeaderItems = tx => {
             type={tx.type}/></React.Fragment>
     }, {
         label: 'Status',
-        value: tx.applicationStatus === 'scriptExecutionFailed' ? 'Failed' : 'Succeed'
+        value: tx.applicationStatus === 'scriptExecutionFailed' ? 'Failed а не Script execution failed' : 'Succeed'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height}/>
