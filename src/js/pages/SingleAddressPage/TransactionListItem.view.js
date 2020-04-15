@@ -21,12 +21,12 @@ export class TransactionListItem extends React.PureComponent {
     render() {
         const {tx} = this.props;
         const rowClassName = tx.isSpam ? 'spam' : '';
-
+        console.log(tx)
         return (
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap">
-                        {tx.applicationStatus === "succeed" && <FailedBrick/>}
+                        {tx.applicationStatus === "scriptExecutionFailed" && <FailedBrick/>}
                         <TransactionRef txId={tx.id}/>
                     </div>
                     <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
