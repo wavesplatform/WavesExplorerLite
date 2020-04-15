@@ -141,10 +141,16 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             })))
         }
 
-        const info = (await currencyService.getApi().transactions.info(tx.id)).data
+        let applicationStatus
+
+        try{
+            const info =  (await currencyService.getApi().transactions.status(tx.id))
+            applicationStatus =info.data[0].applicationStatus
+        }catch (e) {
+        }
 
         const result = Object.assign(copyMandatoryAttributes(tx), {
-            applicationStatus: info.applicationStatus,
+            applicationStatus: applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
@@ -290,7 +296,7 @@ const transformExchange = (currencyService, tx) => {
         currencyService.get(tx.feeAssetId),
         currencyService.get(buyOrder.matcherFeeAssetId),
         currencyService.get(sellOrder.matcherFeeAssetId),
-        currencyService.getApi().transactions.info(tx.id)
+        currencyService.getApi().transactions.status(tx.id)
     ]).then(tuple => {
         const currencyPair = {
             amountAsset: tuple[0],
@@ -300,7 +306,7 @@ const transformExchange = (currencyService, tx) => {
         const feeAsset = tuple[2];
         const buyFeeAsset = tuple[3];
         const sellFeeAsset = tuple[4];
-        const info = tuple[5].data;
+        const info = tuple[5].data[0];
         const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
@@ -315,7 +321,7 @@ const transformExchange = (currencyService, tx) => {
             sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
             seller: sellOrder.sender,
             buyer: buyOrder.sender,
-            applicationStatus: info.applicationStatus,
+            applicationStatus: info && info.applicationStatus,
         });
     });
 };

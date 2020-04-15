@@ -164,6 +164,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             unconfirmed: () => retryableGet('/transactions/unconfirmed'),
             utxSize: () => retryableGet('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
+            status: id => retryableGet(`/transactions/status?id=${id}`),
             address: (address, limit, after) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
                 const config = after ? {
