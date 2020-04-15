@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TOOLTIP_ID, VostokToWavesEnterprise } from '../../shared/constants';
+import {TOOLTIP_ID, VostokToWavesEnterprise} from '../../shared/constants';
 import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -87,11 +87,16 @@ const InfoWrapper = ({children}) => (
 
 const scriptInvocationTransactionToItems = tx => {
 
+    const payments = tx.payment && tx.payment.length > 0 && Object.values(
+        tx.payment.reduce((acc, value) =>
+            ({...acc, [value.currency.id || 'waves']: [value, ...(acc[value.currency.id || 'waves'] || [])]}), {})
+    ).map(arr => arr.reduce((acc, money) => acc ? acc.plus(money) : money, null))
+
     const paymentItems = [{
-        label: 'Payment',
-        value: tx.payment && tx.payment.length > 0
+        label: 'Payments',
+        value: payments && payments.length > 0
             ? <div style={{display: 'flex', flexDirection: 'column', height: 60, justifyContent: 'space-around'}}>
-                {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
+                {payments.map((v, i) => <MoneyInfo key={i} value={v}/>)}
             </div>
             : ''
     }];
@@ -136,7 +141,8 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && (tx.stateChanges.issues || [])
                 .map((issue, i) => <tr key={i}>
                     <td><Line bold>Issue</Line></td>
-                    <Money amount={issue.quantity} asset={issue.assetId} name={issue.name} description={issue.description}/>
+                    <Money amount={issue.quantity} asset={issue.assetId} name={issue.name}
+                           description={issue.description}/>
                     <td>
                         <Line>Reissuable:&nbsp;{issue.isReissuable ? "true" : "false"}</Line>
                         <Line>Scripted:&nbsp;{issue.compiledScript ? "true" : "false"}</Line>
@@ -153,17 +159,17 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && (tx.stateChanges.burns || [])
                 .map((burn, i) => <tr key={i}>
                     <td><Line bold>Burn</Line></td>
-                    <Money amount={burn.quantity} asset={burn.assetId} name={burn.name} />
+                    <Money amount={burn.quantity} asset={burn.assetId} name={burn.name}/>
                 </tr>)
             }
             {tx.stateChanges && (tx.stateChanges.data || [])
                 .map((entry, i) => <tr key={i}>
                     <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
-                    <td >
+                    <td>
                         <Line wrap={false}>key: {entry.key}</Line>
                     </td>
-                    {entry.value && <td >
-                        <Line  wrap={false}>value: {String(entry.value)}</Line>
+                    {entry.value && <td>
+                        <Line wrap={false}>value: {String(entry.value)}</Line>
                     </td>}
                 </tr>)
             }
