@@ -7,7 +7,7 @@ import EndpointRef from '../../components/EndpointRef';
 import CurrencyRef from '../../components/CurrencyRef';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
-import { RoutedAssetRef } from "../../components/AssetRef/AssetRef.view";
+import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import FailedBrick from "../../components/FailedBrick";
 
 
@@ -260,9 +260,9 @@ class CancelLeasingTransactionListItem extends React.PureComponent {
         return (
             <tr>
 
-                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} />
-                <Subjects type={tx.type} sender={tx.sender} />
-                <AmountAndFee amount={tx.amount} fee={tx.fee} />
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
+                <Subjects type={tx.type} sender={tx.sender}/>
+                <AmountAndFee amount={tx.amount} fee={tx.fee}/>
 
             </tr>
         );
@@ -283,13 +283,13 @@ class IssueTransactionListItem extends React.PureComponent {
                     <TransactionArrow type={tx.type}/>
                     <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
                     <Line wrap={false}>
-                        <RoutedAssetRef assetId={tx.assetId}/>
+                        {tx.assetId && <RoutedAssetRef assetId={tx.assetId}/>}
                     </Line>
                 </td>
                 <AmountAndFee amount={tx.amount} fee={tx.fee}/>
                 <td>
                     <Line bold={true}>
-                        <RoutedAssetRef text={tx.name} assetId={tx.assetId}/>
+                        {tx.assetId ? <RoutedAssetRef text={tx.name} assetId={tx.assetId}/> : tx.name}
                     </Line>
                 </td>
             </tr>

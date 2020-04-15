@@ -343,7 +343,7 @@ const transformOrder = (order, assetPair, feeAsset) => {
 const transformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
         return Object.assign(copyMandatoryAttributes(tx), {
-            amount: Money.fromCoins(tx.amount, currency),
+            amount: Money.fromCoins(tx.amount || tx.quantity, currency),
             fee: Money.fromCoins(tx.fee, Currency.WAVES)
         });
     });
