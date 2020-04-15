@@ -159,11 +159,11 @@ const scriptInvocationTransactionToItems = tx => {
             {tx.stateChanges && (tx.stateChanges.data || [])
                 .map((entry, i) => <tr key={i}>
                     <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
-                    <td style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
-                        <Line>key: {entry.key}</Line>
+                    <td >
+                        <Line wrap={false}>key: {entry.key}</Line>
                     </td>
-                    {entry.value && <td style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
-                        <Line >value: {String(entry.value)}</Line>
+                    {entry.value && <td >
+                        <Line  wrap={false}>value: {String(entry.value)}</Line>
                     </td>}
                 </tr>)
             }
