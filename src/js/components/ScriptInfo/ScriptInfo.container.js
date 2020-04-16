@@ -38,7 +38,7 @@ class ScriptInfoContainer extends React.Component {
         this.props.script && ServiceFactory
             .forNetwork(networkId)
             .addressService()
-            .decompileScript(this.props.script)
+            .decompileScript(this.props.script, networkId)
             .then(decompiledScript => this.setState({value: decompiledScript}));
     };
 

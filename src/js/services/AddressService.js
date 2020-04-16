@@ -102,10 +102,10 @@ export class AddressService extends ApiClientService {
         return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
     };
 
-    decompileScript = (scriptBase64) => {
+    decompileScript = (scriptBase64, networkId) => {
         const config = this.configuration();
-        const api = thirdPartyApi(config.spamListUrl, this.configurationService.getDecompileScriptUrl());
+        const api = thirdPartyApi(config.spamListUrl, this.configurationService.getDecompileScriptUrl(networkId));
 
-        return api.decompileScript(scriptBase64).then(decompileResponse => decompileResponse.data.script);
+        return api.decompileScript(scriptBase64, networkId).then(decompileResponse => decompileResponse.data.script);
     };
 }

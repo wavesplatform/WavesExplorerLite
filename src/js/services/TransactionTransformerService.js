@@ -8,7 +8,7 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
 
     const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
         .reduce((acc, val) => ({...acc, [val.id]: val}), {});
-    console.log(infoMap)
+
     const promises = transactions.map(item =>
         transform(currencyService,
             spamDetectionService,
