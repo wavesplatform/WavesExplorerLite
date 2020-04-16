@@ -51,7 +51,10 @@ export class AddressService extends ApiClientService {
     };
 
     loadAssets = async (address) => {
-        const balanceResponse = await this.getApi().assets.balance(address)
+        const api = this.getApi().assets
+        const balanceResponse = await api.balance(address)
+        const details = (await api.detailsMultiple(balanceResponse.data.balances.map(({assetId}) => assetId)))
+            .reduce((acc, val) => ({...acc, [val.assetId]: val}), {})
         return balanceResponse.data.balances.map(item => {
 
             // TODO: remove when token is renamed
@@ -59,8 +62,13 @@ export class AddressService extends ApiClientService {
                 item.issueTransaction.name = VostokToWavesEnterprise.name;
                 item.issueTransaction.description = VostokToWavesEnterprise.description;
             }
+            const currency = new Currency({
+                id: details[item.assetId].originTransactionId,
+                displayName: details[item.assetId].name,
+                precision: details[item.assetId].decimals
+            });;
 
-            const currency = Currency.fromIssueTransaction(item.issueTransaction);
+            console.log(currency)
             this.currencyService.put(currency);
 
             const amount = Money.fromCoins(item.balance, currency);

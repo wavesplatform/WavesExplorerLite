@@ -43,7 +43,7 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
 
         case 2:
         case 4:
-            return transformTransfer(currencyService, spamDetectionService, tx);
+            return transformTransfer(currencyService, assetService, spamDetectionService, tx);
 
         case 3:
             return transformIssue(currencyService, tx);
@@ -76,7 +76,7 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
             return transformScript(currencyService, tx);
 
         case 14:
-            return transformSponsorship(currencyService, tx);
+            return transformSponsorship(currencyService, assetService, tx);
 
         case 15:
             return transformAssetScript(currencyService, tx);
@@ -230,19 +230,19 @@ const transformScript = (currencyService, tx) => {
     });
 };
 
-const transformSponsorship = (currencyService, tx) => {
-    return loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId).then(pair => {
-        const sponsoredCurrency = pair[0];
-        const feeCurrency = pair[1];
+const transformSponsorship = async (currencyService, assetService, tx) => {
+    const details = tx.assetId && await assetService.loadDetails(tx.assetId)
+    const pair = await loadAmountAndFeeCurrencies(currencyService, details.originTransactionId, tx.feeAssetId)
+    const sponsoredCurrency = pair[0];
+    const feeCurrency = pair[1];
 
-        const sponsoredFee = tx.minSponsoredAssetFee ?
-            Money.fromCoins(tx.minSponsoredAssetFee, sponsoredCurrency) :
-            null;
+    const sponsoredFee = tx.minSponsoredAssetFee ?
+        Money.fromCoins(tx.minSponsoredAssetFee, sponsoredCurrency) :
+        null;
 
-        return Object.assign(copyMandatoryAttributes(tx), {
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            sponsoredFee
-        });
+    return Object.assign(copyMandatoryAttributes(tx), {
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        sponsoredFee
     });
 };
 
@@ -389,18 +389,18 @@ const transformIssue = (currencyService, tx) => {
     });
 };
 
-const transformTransfer = (currencyService, spamDetectionService, tx) => {
-    return loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId).then(pair => {
-        const amountCurrency = pair[0];
-        const feeCurrency = pair[1];
+const transformTransfer = async (currencyService, assetService, spamDetectionService, tx) => {
+    const details = tx.assetId && await assetService.loadDetails(tx.assetId)
+    const pair = await loadAmountAndFeeCurrencies(currencyService, details ? details.originTransactionId : null, tx.feeAssetId)
+    const amountCurrency = pair[0];
+    const feeCurrency = pair[1];
 
-        return Object.assign(copyMandatoryAttributes(tx), {
-            amount: Money.fromCoins(tx.amount, amountCurrency),
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            attachment: attachmentToString(tx.attachment),
-            recipient: tx.recipient,
-            isSpam: spamDetectionService.isSpam(tx.assetId)
-        });
+    return Object.assign(copyMandatoryAttributes(tx), {
+        amount: Money.fromCoins(tx.amount, amountCurrency),
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        attachment: attachmentToString(tx.attachment),
+        recipient: tx.recipient,
+        isSpam: spamDetectionService.isSpam(tx.assetId)
     });
 };
 

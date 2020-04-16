@@ -200,12 +200,20 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                     full: !!full
                 }
             }),
-            detailsMultiple: (assets) => axios.post('/assets/details', {
-                token: captchaToken,
-                recipient: address
-            }, {
-                baseURL: baseUrl
-            }),
+            detailsMultiple: async idsArray => {
+                const limit = 1000;
+                let subarray = [];
+                for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
+                    subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
+                }
+
+                const res = await Promise.all(
+                    subarray.map(async (ids) =>
+                        (await axios.post('/assets/details', {ids}, {baseURL: baseUrl})).data)
+                );
+
+                return [].concat(...res)
+            },
             nft: (address, limit, after) => {
                 const top = limit || ASSETS_PER_PAGE;
                 const config = after ? {
