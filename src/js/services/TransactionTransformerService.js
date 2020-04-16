@@ -4,15 +4,36 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
-const transformMultiple = (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
-    const promises = transactions.map(item => transform(currencyService,
-        spamDetectionService, stateChangeService, assetService, item, false));
+const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
+
+    const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
+        .reduce((acc, val) => ({...acc, [val.id]: val}), {});
+    console.log(infoMap)
+    const promises = transactions.map(item =>
+        transform(currencyService,
+            spamDetectionService,
+            stateChangeService,
+            assetService,
+            {...item, applicationStatus: infoMap[item.id] && infoMap[item.id].applicationStatus},
+            false
+        )
+    );
 
     return Promise.all(promises);
 };
 
-const transformSingle = (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
-    return transform(currencyService, spamDetectionService, stateChangeService, assetService, tx, true);
+const transformSingle = async (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
+
+    const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
+
+    return transform(
+        currencyService,
+        spamDetectionService,
+        stateChangeService,
+        assetService,
+        {...tx, applicationStatus: info && info.applicationStatus},
+        true
+    );
 };
 
 const transform = (currencyService, spamDetectionService, stateChangeService, assetService, tx, shouldLoadDetails) => {
@@ -141,16 +162,8 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             })))
         }
 
-        let applicationStatus
-
-        try{
-            const info =  (await currencyService.getApi().transactions.status(tx.id))
-            applicationStatus =info.data[0].applicationStatus
-        }catch (e) {
-        }
-
         const result = Object.assign(copyMandatoryAttributes(tx), {
-            applicationStatus: applicationStatus,
+            applicationStatus: tx.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
@@ -296,7 +309,6 @@ const transformExchange = (currencyService, tx) => {
         currencyService.get(tx.feeAssetId),
         currencyService.get(buyOrder.matcherFeeAssetId),
         currencyService.get(sellOrder.matcherFeeAssetId),
-        currencyService.getApi().transactions.status(tx.id)
     ]).then(tuple => {
         const currencyPair = {
             amountAsset: tuple[0],
@@ -306,7 +318,6 @@ const transformExchange = (currencyService, tx) => {
         const feeAsset = tuple[2];
         const buyFeeAsset = tuple[3];
         const sellFeeAsset = tuple[4];
-        const info = tuple[5].data[0];
         const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
@@ -321,7 +332,7 @@ const transformExchange = (currencyService, tx) => {
             sellOrder: transformOrder(sellOrder, currencyPair, sellFeeAsset),
             seller: sellOrder.sender,
             buyer: buyOrder.sender,
-            applicationStatus: info && info.applicationStatus,
+            applicationStatus: tx.applicationStatus,
         });
     });
 };

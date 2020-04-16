@@ -21,7 +21,7 @@ export class TransactionListItem extends React.PureComponent {
     render() {
         const {tx} = this.props;
         const rowClassName = tx.isSpam ? 'spam' : '';
-        console.log(tx)
+
         return (
             <tr className={rowClassName}>
                 <td data-label="ID / Type">

@@ -50,28 +50,26 @@ export class AddressService extends ApiClientService {
         return this.loadRawAliases(address).then(rawAliases => this.transformAndGroupAliases(rawAliases));
     };
 
-    loadAssets = (address) => {
-        return this.getApi().assets.balance(address).then(balanceResponse => {
-            const assets = balanceResponse.data.balances.map(item => {
-                // TODO: remove when token is renamed
-                if (item.assetId === VostokToWavesEnterprise.id) {
-                    item.issueTransaction.name = VostokToWavesEnterprise.name;
-                    item.issueTransaction.description = VostokToWavesEnterprise.description;
-                }
+    loadAssets = async (address) => {
+        const balanceResponse = await this.getApi().assets.balance(address)
+        return balanceResponse.data.balances.map(item => {
 
-                const currency = Currency.fromIssueTransaction(item.issueTransaction);
-                this.currencyService.put(currency);
+            // TODO: remove when token is renamed
+            if (item.assetId === VostokToWavesEnterprise.id) {
+                item.issueTransaction.name = VostokToWavesEnterprise.name;
+                item.issueTransaction.description = VostokToWavesEnterprise.description;
+            }
 
-                const amount = Money.fromCoins(item.balance, currency);
+            const currency = Currency.fromIssueTransaction(item.issueTransaction);
+            this.currencyService.put(currency);
 
-                return {
-                    id: item.assetId,
-                    name: currency.toString(),
-                    amount: amount.formatAmount()
-                };
-            });
+            const amount = Money.fromCoins(item.balance, currency);
 
-            return assets;
+            return {
+                id: item.assetId,
+                name: currency.toString(),
+                amount: amount.formatAmount()
+            };
         });
     };
 
