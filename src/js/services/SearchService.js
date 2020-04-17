@@ -18,7 +18,6 @@ export class SearchService extends ApiClientService {
         query = query.trim();
         const routes = routeBuilder(this.networkId);
         const api = this.getApi();
-        console.log(query)
         return api.addresses.validate(query).then(validateResponse => {
             if (validateResponse.data.valid) {
                 const event = this.createEvent(SearchResult.address);

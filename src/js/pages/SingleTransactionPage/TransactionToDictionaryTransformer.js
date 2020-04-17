@@ -19,7 +19,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 
 
-const transactionToDictionary = (tx) => {
+const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
         case 1:
             return genesisTransactionToItems(tx);
@@ -65,7 +65,7 @@ const transactionToDictionary = (tx) => {
             return assetScriptTransactionToItems(tx);
 
         case 16:
-            return scriptInvocationTransactionToItems(tx);
+            return scriptInvocationTransactionToItems(tx, networkId);
 
         case 17:
             return updateAssetInfoTransactionToItems(tx);
@@ -85,7 +85,7 @@ const InfoWrapper = ({children}) => (
     </div>
 );
 
-const scriptInvocationTransactionToItems = tx => {
+const scriptInvocationTransactionToItems = (tx, networkId) => {
     const paymentItems = [{
         label: 'Payments',
         value: tx.payment && tx.payment.length > 0
@@ -122,7 +122,7 @@ const scriptInvocationTransactionToItems = tx => {
                 .map(({address, money}, i) => <tr key={i}>
                     <td style={{width: 100}}><Line bold>Transfer</Line></td>
                     <td><MoneyInfo key={i} value={money}/></td>
-                    <td>{address ? <AddressRef address={address}/> : ''}</td>
+                    <td>{address ? <AddressRef networkId={networkId} address={address}/> : ''}</td>
                 </tr>)
             }
             {tx.stateChanges && (tx.stateChanges.issues || [])
