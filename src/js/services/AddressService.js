@@ -66,7 +66,8 @@ export class AddressService extends ApiClientService {
                 id: details[item.assetId].originTransactionId,
                 displayName: details[item.assetId].name,
                 precision: details[item.assetId].decimals
-            });;
+            });
+            ;
 
             console.log(currency)
             this.currencyService.put(currency);
@@ -81,16 +82,13 @@ export class AddressService extends ApiClientService {
         });
     };
 
-    loadNftTokens = (address, limit, after) => {
-        return this.getApi().assets.nft(address, limit, after).then(balanceResponse => {
-            const tokens = balanceResponse.data.map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                };
-            });
-
-            return tokens;
+    loadNftTokens = async (address, limit, after) => {
+        const balanceResponse = await this.getApi().assets.nft(address, limit, after)
+        return balanceResponse.data.map(item => {
+            return {
+                id: item.id || item.assetId,
+                name: item.name,
+            };
         });
     };
 
