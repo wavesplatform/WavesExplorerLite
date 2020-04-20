@@ -36,10 +36,15 @@ function buildOfficialStaging(done) {
     buildApp('mainnet', 'dev', done);
 }
 
+function buildOfficialStagenet(done) {
+    buildApp('stagenet', 'prod', done);
+}
+
 function buildDevnet(done) {
     buildApp('devnet', 'prod', done);
 }
 
 exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
 exports.buildOfficialStaging = gulp.series(clean, buildOfficialStaging);
+exports.buildOfficialStagenet = gulp.series(clean, buildOfficialStagenet);
 exports.buildDevnet = gulp.series(clean, buildDevnet);
