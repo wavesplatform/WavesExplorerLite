@@ -8,7 +8,7 @@ export default {
     dataServicesBaseUrl: 'https://api-stagenet.wavesplatform.com/v0',
     nodes: [{url: nodeUrl, maintainer: 'Waves', showAsLink: true}],
     faucet: {
-        url: 'https://faucet-stagenet.wavesplatform.com',
+        url: 'https://faucet-stagenet.wavesplatform.com/faucet',
         captchaKey: '6Lfir7MUAAAAAAWip4okLvtW8de3fvZaZbGVN-bn',
         address: '3MgSuT5FfeMrwwZCbztqLhQpcJNxySaFEiT'
     }
