@@ -1,4 +1,4 @@
-const nodeUrl = 'https://nodes-stagenet12.wavesnodes.com';
+const nodeUrl = 'https://nodes-stagenet.wavesnodes.com';
 
 export default {
     networkId: 'stagenet',
