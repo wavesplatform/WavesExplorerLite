@@ -13,26 +13,26 @@ export default {
         {url: nodeUrl,maintainer: 'https://t.me/blackturtle'},
         {url: 'https://ninjastar.ninjaturtle.co.za',maintainer: 'https://twitter.com/gordobsa'},
         {url: 'https://node.maplenode.net',maintainer: 'MapleNode'},
-        {url: 'https://node2.maplenode.net',maintainer: 'MapleNode'},
-        {url: 'https://node3.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
         {url: 'https://node.mortysnode.nl', maintainer: 'Morty'}
         //{url: 'https://www.globalmarketsource.com',maintainer: '@FriGo_Bar'}
         ],
     gateways: [
         // Team gateways
-        {name: '$TN',url: 'https://gateway.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$TN',url: 'https://tngw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$LTC',url: 'https://ltcgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$BTC',url: 'https://bitcoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$BTC',url: 'https://btcgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WAVES',url: 'https://wavesgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$DASH',url: 'https://dashgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$WGR',url: 'https://wagerrgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$SYS',url: 'https://syscoingw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$DASH',url: 'https://dashgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$WGR',url: 'https://wgrgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$SYS',url: 'https://sysgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
         //Partner gateways
-        {name: '$TUSD', url: 'https://www.rcanelabs.com/gateways', maintainer:'https://www.rcanelabs.com'}
+        {name: '$TUSD', url: 'https://tusdgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
+        {name: '$SENT', url: 'https://sentgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
+        {name: '$ARRR', url: 'https://arrrgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
 
     ],
     tools: [
