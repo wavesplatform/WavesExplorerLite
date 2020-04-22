@@ -164,6 +164,20 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             unconfirmed: () => retryableGet('/transactions/unconfirmed'),
             utxSize: () => retryableGet('/transactions/unconfirmed/size'),
             info: id => retryableGet(`/transactions/info/${id}`),
+            status: async idsArray => {
+                const limit = 1000;
+                let subarray = [];
+                for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
+                    subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
+                }
+
+                const res = await Promise.all(
+                    subarray.map(async (ids) =>
+                        (await axios.post('/transactions/status', {ids}, {baseURL: baseUrl})).data)
+                );
+
+                return [].concat(...res)
+            },
             address: (address, limit, after) => {
                 const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
                 const config = after ? {
@@ -186,6 +200,20 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                     full: !!full
                 }
             }),
+            detailsMultiple: async idsArray => {
+                const limit = 1000;
+                let subarray = [];
+                for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
+                    subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
+                }
+
+                const res = await Promise.all(
+                    subarray.map(async (ids) =>
+                        (await axios.post('/assets/details', {ids}, {baseURL: baseUrl})).data)
+                );
+
+                return [].concat(...res)
+            },
             nft: (address, limit, after) => {
                 const top = limit || ASSETS_PER_PAGE;
                 const config = after ? {

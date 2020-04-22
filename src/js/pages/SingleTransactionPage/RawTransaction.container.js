@@ -1,18 +1,10 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-
 import ServiceFactory from '../../services/ServiceFactory';
-import {RawTransactionView} from './RawTransaction.view';
+import RawJsonViewer from "./RawJsonViewer";
 
 class RawTransactionContainer extends React.Component {
-    state = {
-        open: false,
-        json: undefined
-    };
-
-    clickHandler = () => {
-        this.setState(prevState => ({open: !prevState.open}));
-    };
+    state = {json: undefined};
 
     fetchData = () => {
         if (this.state.json)
@@ -27,12 +19,7 @@ class RawTransactionContainer extends React.Component {
     };
 
     render() {
-        return <RawTransactionView
-            open={this.state.open}
-            clickHandler={this.clickHandler}
-            json={this.state.json}
-            fetchData={this.fetchData}
-        />;
+        return <RawJsonViewer json={this.state.json} fetchData={this.fetchData}/>
     }
 }
 

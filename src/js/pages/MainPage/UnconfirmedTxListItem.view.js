@@ -18,14 +18,19 @@ export class UnconfirmedTxListItem extends React.PureComponent {
                 <div>
                     <div className="line no-wrap">{tx.id}</div>
                     <div className="line">
-                        <label>Amount</label> {amount ? amount.toString() : ''}
-                        <div className="link-spacer"></div>
+                        {amount
+                            ? <>
+                                <label>Amount</label>{' ' + amount.toString()}
+                                <div className="link-spacer"></div>
+                            </>
+                            : ''}
+
                         <label className="nowrap">Fee {tx.fee.toString()}</label>
                     </div>
                     <div className="line wide">
-                        <EndpointRef endpoint={tx.sender} appearance="regular" title="Sender" />
+                        <EndpointRef endpoint={tx.sender} appearance="regular" title="Sender"/>
                         <div className="link-spacer"></div>
-                        {tx.recipient && <EndpointRef endpoint={tx.recipient} appearance="regular" title="Recipient" />}
+                        {tx.recipient && <EndpointRef endpoint={tx.recipient} appearance="regular" title="Recipient"/>}
                     </div>
                 </div>
                 <div className="divider divider-dashed md-hide sm-show grid-item-fixed"></div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BigNumber from 'bignumber.js';
 
 const GenericParameter = ({value}) => value.toString();
 
@@ -21,7 +22,7 @@ export class InvocationInfoView extends React.Component {
         function: PropTypes.string.isRequired,
         args: PropTypes.arrayOf(PropTypes.shape({
             type: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool])
+            value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool, PropTypes.instanceOf(BigNumber)])
         })).isRequired
     };
 

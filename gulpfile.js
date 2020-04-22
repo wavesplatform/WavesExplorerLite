@@ -13,8 +13,11 @@ const config = {
 
 config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
-function buildApp(network, env, done) {
-    exec('yarn run build:' + env + ' --env.network=' + network, function (err, stdout, stderr) {
+function buildApp(vars, env, done) {
+
+    const cmd = `yarn run build:${env} ${ Object.entries(vars).map(([k,v]) => `--env.${k}=${v}`).join(' ')}`;
+
+    exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
@@ -29,17 +32,22 @@ function clean() {
 }
 
 function buildOfficialProd(done) {
-    buildApp('mainnet', 'prod', done);
+    buildApp({network: 'mainnet'}, 'prod', done);
 }
 
 function buildOfficialStaging(done) {
-    buildApp('mainnet', 'dev', done);
+    buildApp({network: 'mainnet'}, 'dev', done);
+}
+
+function buildOfficialStagenet(done) {
+    buildApp({network: 'stagenet', decompileUrl: 'https://nodes-stagenet.wavesnodes.com/utils/script/decompile'}, 'prod', done);
 }
 
 function buildDevnet(done) {
-    buildApp('devnet', 'prod', done);
+    buildApp({network: 'devnet'}, 'prod', done);
 }
 
 exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
 exports.buildOfficialStaging = gulp.series(clean, buildOfficialStaging);
+exports.buildOfficialStagenet = gulp.series(clean, buildOfficialStagenet);
 exports.buildDevnet = gulp.series(clean, buildDevnet);
