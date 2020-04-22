@@ -132,7 +132,7 @@ module.exports = (env, argv) => {
         sentryDsn = 'https://9ee88f8e9ec741d5897e64c89a38e4f6@sentry.io/1401739';
     }
 
-    const network = (env && env.network) || 'mainnet';
+    const network = (env && env.network) || 'stagenet';
     const decompileUrl = (env && env.decompileUrl) || 'https://testnode1.wavesnodes.com/utils/script/decompile';
     const networkConfiguration = networks[network];
     config.plugins.push(new webpack.DefinePlugin({
