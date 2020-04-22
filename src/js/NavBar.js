@@ -31,11 +31,7 @@ class NavBar extends React.Component {
 
         const defaultNetwork = ServiceFactory.global().configurationService().default();
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
-        if(route.root === '/stagenet'){
-            window.location.assign('https://stagenet.wavesexplorer.com/');
-        }else {
-            this.props.history.push(route.root);
-        }
+        this.props.history.push(route.root);
     };
 
     applySettings = settings => {
