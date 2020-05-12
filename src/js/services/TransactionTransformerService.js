@@ -185,7 +185,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
                     const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
                     return {
                         ...item,
-                        money: Money.fromCoins(item.amount || item.quantity, currency),
+                        money: Money.fromCoins(item.amount || item.quantity || 0, currency),
                         name,
                         decimals,
                         description
