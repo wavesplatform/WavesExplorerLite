@@ -17,6 +17,7 @@ import RawJsonViewer from "./RawJsonViewer";
 import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
+import brick from "../../../images/brick.svg";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -116,51 +117,58 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     }
     const results = [{
         label: 'Results',
-        value: <table>
-            <tbody>
-            {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
-                .map(({address, money}, i) => <tr key={i}>
-                    <td style={{width: 100}}><Line bold>Transfer</Line></td>
-                    <td><MoneyInfo key={i} value={money}/></td>
-                    <td>{address ? <AddressRef networkId={networkId} address={address}/> : ''}</td>
-                </tr>)
-            }
-            {tx.stateChanges && (tx.stateChanges.issues || [])
-                .map(({money, isReissuable, compiledScript}, i) => <tr key={i}>
-                    <td><Line bold>Issue</Line></td>
-                    <td><MoneyInfo key={i} value={money}/></td>
-                    <td>
-                        <Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line>
-                        <Line>Scripted:&nbsp;{compiledScript ? "true" : "false"}</Line>
-                    </td>
-                </tr>)
-            }
-            {tx.stateChanges && (tx.stateChanges.reissues || [])
-                .map(({money, isReissuable}, i) => <tr key={i}>
-                    <td><Line bold>Reissue</Line></td>
-                    <td><MoneyInfo key={i} value={money}/></td>
-                    <td><Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line></td>
-                </tr>)
-            }
-            {tx.stateChanges && (tx.stateChanges.burns || [])
-                .map(({money}, i) => <tr key={i}>
-                    <td><Line bold>Burn</Line></td>
-                    <td><MoneyInfo key={i} value={money}/></td>
-                </tr>)
-            }
-            {tx.stateChanges && (tx.stateChanges.data || [])
-                .map((entry, i) => <tr key={i}>
-                    <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
-                    <td>
-                        <Line wrap={false}>key: {entry.key}</Line>
-                    </td>
-                    {entry.value && <td>
-                        <Line wrap={false}>value: {String(entry.value)}</Line>
-                    </td>}
-                </tr>)
-            }
-            </tbody>
-        </table>
+        value: <>
+            {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
+            <div className="data-container">
+                {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>
+                {`Cause: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).text}`}
+            </div>}
+            <table>
+                <tbody>
+                {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
+                    .map(({address, money}, i) => <tr key={i}>
+                        <td style={{width: 100}}><Line bold>Transfer</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td>{address ? <AddressRef networkId={networkId} address={address}/> : ''}</td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.issues || [])
+                    .map(({money, isReissuable, compiledScript}, i) => <tr key={i}>
+                        <td><Line bold>Issue</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td>
+                            <Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line>
+                            <Line>Scripted:&nbsp;{compiledScript ? "true" : "false"}</Line>
+                        </td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.reissues || [])
+                    .map(({money, isReissuable}, i) => <tr key={i}>
+                        <td><Line bold>Reissue</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td><Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line></td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.burns || [])
+                    .map(({money}, i) => <tr key={i}>
+                        <td><Line bold>Burn</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.data || [])
+                    .map((entry, i) => <tr key={i}>
+                        <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
+                        <td>
+                            <Line wrap={false}>key: {entry.key}</Line>
+                        </td>
+                        {entry.value && <td>
+                            <Line wrap={false}>value: {String(entry.value)}</Line>
+                        </td>}
+                    </tr>)
+                }
+                </tbody>
+            </table>
+        </>
     }];
 
     return {
@@ -475,7 +483,9 @@ const buildTransactionHeaderItems = tx => {
             type={tx.type}/></React.Fragment>
     }, {
         label: 'Status',
-        value: tx.applicationStatus === 'scriptExecutionFailed' ? 'Script execution failed' : 'Succeed'
+        value: tx.applicationStatus === 'scriptExecutionFailed' ?
+            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+            : 'Succeed'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height}/>
