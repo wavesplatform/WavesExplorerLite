@@ -28,7 +28,7 @@ export default {
         {name: '$SYS',url: 'https://sysgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$ETH',url: 'https://ethgw.blackturtle.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: '$ETH',url: 'https://ethgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         //Partner gateways
         {name: '$TUSD', url: 'https://tusdgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
         {name: '$SENT', url: 'https://sentgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},

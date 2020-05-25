@@ -1,4 +1,4 @@
-const nodeUrl = 'https://apitnetworktest.blackturtle.eu';
+const nodeUrl = 'https://testnet.tnnode.turtlenetwork.eu';
 
 export default {
     networkId: 'testnet',
