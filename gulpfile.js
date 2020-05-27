@@ -15,7 +15,7 @@ config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
 function buildApp(vars, env, done) {
 
-    const cmd = `yarn run build:${env} ${ Object.entries(vars).map(([k,v]) => `--env.${k}=${v}`).join(' ')}`;
+    const cmd = `yarn run build:${env} ${Object.entries(vars).map(([k, v]) => `--env.${k}=${v}`).join(' ')}`;
 
     exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);
@@ -40,14 +40,22 @@ function buildOfficialStaging(done) {
 }
 
 function buildOfficialStagenet(done) {
-    buildApp({network: 'stagenet', decompileUrl: 'https://nodes-stagenet.wavesnodes.com/utils/script/decompile'}, 'prod', done);
+    buildApp({
+        network: 'stagenet',
+        decompileUrl: 'https://nodes-stagenet.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
 }
 
 function buildDevnet(done) {
     buildApp({network: 'devnet'}, 'prod', done);
 }
 
+function buildCustom(done) {
+    buildApp({network: 'custom'}, 'prod', done);
+}
+
 exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
 exports.buildOfficialStaging = gulp.series(clean, buildOfficialStaging);
 exports.buildOfficialStagenet = gulp.series(clean, buildOfficialStagenet);
 exports.buildDevnet = gulp.series(clean, buildDevnet);
+exports.buildCustom = gulp.series(clean, buildCustom);
