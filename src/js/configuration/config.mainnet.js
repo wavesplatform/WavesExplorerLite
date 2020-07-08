@@ -29,11 +29,13 @@ export default {
         {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        //Partner gateways
+        //Partner gateways polarity
         {name: '$TUSD', url: 'https://tusdgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
         {name: '$SENT', url: 'https://sentgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
         {name: '$ARRR', url: 'https://arrrgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
-
+        {name: '$USDT', url: 'https://usdtgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
+        //Parnet gateways kgb
+        {name: '$ETHO', url: 'https://kgbconcepts.network/ether1totn.html', maintainer:'https://kgbconcepts.network/'},
     ],
     tools: [
         {name: 'Online Wallet & DEX', url: 'https://client.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
