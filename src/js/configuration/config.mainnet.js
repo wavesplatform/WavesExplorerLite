@@ -9,8 +9,9 @@ export default {
     dataFeedBaseUrl: 'https://api.marketdata.turtlenetwork.eu',
     spamListUrl: 'https://raw.githubusercontent.com/BlackTurtle123/TN-community/master/scam-v2.csv',
     nodes: [
-        {url: 'https://privatenode.blackturtle.eu',maintainer: 'https://t.me/blackturtle'},
-        {url: nodeUrl,maintainer: 'https://t.me/blackturtle'},
+        {url: 'https://tnnode.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
+        {url: nodeUrl,maintainer: 'https://t.me/TurtleNetwork'},
+        {url: 'https://tnnode3.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://ninjastar.ninjaturtle.co.za',maintainer: 'https://twitter.com/gordobsa'},
         {url: 'https://node.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
