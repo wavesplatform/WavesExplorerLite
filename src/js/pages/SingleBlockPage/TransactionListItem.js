@@ -99,7 +99,7 @@ class IdAndTimestamp extends React.PureComponent {
             <td data-label="ID / Timestamp">
 
                 <Line wrap={false}>
-                    {this.props.applicationStatus === 'scriptExecutionFailed' && <FailedBrick/>}
+                    {this.props.applicationStatus === 'script_execution_failed' && <FailedBrick/>}
                     <TransactionRef txId={this.props.id}/>
                 </Line>
 
