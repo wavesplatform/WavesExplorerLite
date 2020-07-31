@@ -26,7 +26,7 @@ export class TransactionListItem extends React.PureComponent {
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap">
-                        {tx.applicationStatus === "scriptExecutionFailed" && <FailedBrick/>}
+                        {tx.applicationStatus === "script_execution_failed" && <FailedBrick/>}
                         <TransactionRef txId={tx.id}/>
                     </div>
                     <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
