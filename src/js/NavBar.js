@@ -31,7 +31,8 @@ class NavBar extends React.Component {
 
         const defaultNetwork = ServiceFactory.global().configurationService().default();
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
-        this.props.history.push(route.root);
+        // this.props.history.push(route.root);
+        window.location.assign(window.origin + route.root)
     };
 
     applySettings = settings => {
