@@ -109,7 +109,7 @@ var config = {
 const networks = {
     mainnet: ['mainnet', 'testnet', 'stagenet'],
     devnet: ['devnet'],
-    stagenet: ['stagenet'],
+    stagenet: ['stagenet', 'mainnet', 'testnet'],
     custom: [],
 };
 
