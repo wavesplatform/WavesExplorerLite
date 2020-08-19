@@ -3,7 +3,7 @@ import testnet from './config.testnet';
 import devnet from './config.devnet';
 import stagenet from './config.stagenet';
 
-const configuredNetworks = [mainnet, testnet, devnet, stagenet]
+const configuredNetworks = [stagenet, mainnet, testnet, devnet]
     .filter(item => __NETWORKS__.includes(item.networkId));
 
 export default configuredNetworks;
