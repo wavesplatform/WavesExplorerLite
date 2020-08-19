@@ -110,6 +110,7 @@ const networks = {
     mainnet: ['mainnet', 'testnet', 'stagenet'],
     devnet: ['devnet'],
     stagenet: ['stagenet'],
+    testnet: ['mainnet', 'testnet', 'stagenet'],
     custom: [],
 };
 

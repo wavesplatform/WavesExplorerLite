@@ -46,6 +46,13 @@ function buildOfficialStagenet(done) {
     }, 'prod', done);
 }
 
+function buildOfficialTestnet(done) {
+    buildApp({
+        network: 'testnet',
+        decompileUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
+}
+
 function buildDevnet(done) {
     buildApp({network: 'devnet'}, 'prod', done);
 }
@@ -57,5 +64,6 @@ function buildCustom(done) {
 exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
 exports.buildOfficialStaging = gulp.series(clean, buildOfficialStaging);
 exports.buildOfficialStagenet = gulp.series(clean, buildOfficialStagenet);
+exports.buildOfficialTestnet = gulp.series(clean, buildOfficialTestnet);
 exports.buildDevnet = gulp.series(clean, buildDevnet);
 exports.buildCustom = gulp.series(clean, buildCustom);
