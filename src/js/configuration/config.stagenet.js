@@ -1,4 +1,4 @@
-const nodeUrl = 'https://nodes-stagenet12.wavesnodes.com';
+const nodeUrl = 'https://nodes-stagenet.wavesnodes.com';
 
 export default {
     networkId: 'stagenet',
@@ -8,8 +8,8 @@ export default {
     dataServicesBaseUrl: 'https://api-stagenet.wavesplatform.com/v0',
     nodes: [{url: nodeUrl, maintainer: 'Waves', showAsLink: true}],
     faucet: {
-        url: 'https://faucet-stagenet.wavesplatform.com',
-        captchaKey: '6LdT8pAUAAAAAOhIIJGKA6HAOo7O98gdIoUgznKL',
+        url: 'https://faucet-stagenet.wavesplatform.com/faucet',
+        captchaKey: '6Lfir7MUAAAAAAWip4okLvtW8de3fvZaZbGVN-bn',
         address: '3MgSuT5FfeMrwwZCbztqLhQpcJNxySaFEiT'
     }
 };

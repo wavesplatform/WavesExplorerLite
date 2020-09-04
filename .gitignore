@@ -16,3 +16,4 @@ package-lock.json
 /.idea
 *.iml
 *.log
+.DS_Store

@@ -12,11 +12,15 @@ import Timestamp from '../../components/Timestamp';
 import DataInfo from '../../components/DataInfo';
 import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
-import StateChangesInfo from '../../components/StateChangesInfo';
-import Tooltip from '../../components/Tooltip';
 import {Description} from './Description.view';
+import RawJsonViewer from "./RawJsonViewer";
+import {Line} from "../SingleBlockPage/TransactionListItem";
+import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
+import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
+import brick from "../../../images/brick.svg";
 
-const transactionToDictionary = (tx) => {
+
+const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
         case 1:
             return genesisTransactionToItems(tx);
@@ -62,7 +66,10 @@ const transactionToDictionary = (tx) => {
             return assetScriptTransactionToItems(tx);
 
         case 16:
-            return scriptInvocationTransactionToItems(tx);
+            return scriptInvocationTransactionToItems(tx, networkId);
+
+        case 17:
+            return updateAssetInfoTransactionToItems(tx);
 
         default:
             return {
@@ -74,27 +81,102 @@ const transactionToDictionary = (tx) => {
 const InfoWrapper = ({children}) => (
     <div className="label-with-icon">
         {children}
-        <div className="icon info" data-for={TOOLTIP_ID} data-tip="Token information has been changed due to the copyright owner request"></div>
+        <div className="icon info" data-for={TOOLTIP_ID}
+             data-tip="Token information has been changed due to the copyright owner request"/>
     </div>
 );
 
-const scriptInvocationTransactionToItems = tx => {
+const scriptInvocationTransactionToItems = (tx, networkId) => {
     const paymentItems = [{
-        label: 'Payment',
-        value: tx.payment ? <MoneyInfo value={tx.payment}/> : ''
+        label: 'Payments',
+        value: tx.payment && tx.payment.length > 0
+            ? <div style={{display: 'flex', flexDirection: 'column', height: 60, justifyContent: 'space-around'}}>
+                {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
+            </div>
+            : ''
     }];
 
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
-        value: <StateChangesInfo changes={tx.stateChanges} />
+        value: <RawJsonViewer json={tx.stateChanges}/>
     }] : [];
+
+    const getDataEntryType = (type) => {
+        switch (type) {
+            case "binary":
+                return "BinaryEntry";
+            case "integer":
+                return "IntegerEntry";
+            case "string":
+                return "StringEntry";
+            case "boolean":
+                return "BooleanEntry";
+            default:
+                return "DeleteEntry"
+        }
+    }
+    const results = [{
+        label: 'Results',
+        value: <>
+            {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
+            <div className="data-container">
+                {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>
+                {`Cause: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).text}`}
+            </div>}
+            <table>
+                <tbody>
+                {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
+                    .map(({address, money}, i) => <tr key={i}>
+                        <td style={{width: 100}}><Line bold>Transfer</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td>{address ? <AddressRef networkId={networkId} address={address}/> : ''}</td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.issues || [])
+                    .map(({money, isReissuable, compiledScript}, i) => <tr key={i}>
+                        <td><Line bold>Issue</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td>
+                            <Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line>
+                            <Line>Scripted:&nbsp;{compiledScript ? "true" : "false"}</Line>
+                        </td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.reissues || [])
+                    .map(({money, isReissuable}, i) => <tr key={i}>
+                        <td><Line bold>Reissue</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                        <td><Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line></td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.burns || [])
+                    .map(({money}, i) => <tr key={i}>
+                        <td><Line bold>Burn</Line></td>
+                        <td><MoneyInfo key={i} value={money}/></td>
+                    </tr>)
+                }
+                {tx.stateChanges && (tx.stateChanges.data || [])
+                    .map((entry, i) => <tr key={i}>
+                        <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
+                        <td>
+                            <Line wrap={false}>key: {entry.key}</Line>
+                        </td>
+                        {entry.value && <td>
+                            <Line wrap={false}>value: {String(entry.value)}</Line>
+                        </td>}
+                    </tr>)
+                }
+                </tbody>
+            </table>
+        </>
+    }];
 
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'DApp Address',
-                value: <EndpointRef endpoint={tx.dappAddress} />
+                value: <EndpointRef endpoint={tx.dappAddress}/>
             }, {
                 label: 'Call',
                 value: <InvocationInfo {...tx.call} />
@@ -102,10 +184,22 @@ const scriptInvocationTransactionToItems = tx => {
             ...paymentItems,
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx),
-            ...stateItems
+            ...stateItems,
+            ...results
         ]
     };
 };
+
+const updateAssetInfoTransactionToItems = tx => ({
+    default: [
+        ...buildTransactionHeaderItems(tx),
+        {label: 'Asset', value: <RoutedAssetRef assetId={tx.assetId}/>},
+        {label: 'Name', value: tx.assetName},
+        {label: 'Description', value: tx.description},
+        buildFeeItem(tx),
+        ...buildSenderAddressAndKeyItems(tx),
+    ]
+});
 
 const dataTransactionToItems = tx => {
     return {
@@ -113,7 +207,7 @@ const dataTransactionToItems = tx => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Data',
-                value: <DataInfo data={tx.data} />
+                value: <DataInfo data={tx.data}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx)
@@ -123,7 +217,7 @@ const dataTransactionToItems = tx => {
 
 const scriptTransactionToItems = tx => {
     return {
-            default: [
+        default: [
             ...buildTransactionHeaderItems(tx),
             buildScriptItem(tx),
             buildFeeItem(tx),
@@ -154,7 +248,7 @@ const assetScriptTransactionToItems = tx => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Asset',
-                value: <CurrencyRef currency={tx.asset} />
+                value: <CurrencyRef currency={tx.asset}/>
             },
             buildScriptItem(tx),
             buildFeeItem(tx),
@@ -169,7 +263,7 @@ const aliasTransactionToItems = tx => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Alias',
-                value: <Description text={tx.alias} />
+                value: <Description text={tx.alias}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx)
@@ -179,11 +273,11 @@ const aliasTransactionToItems = tx => {
 
 const cancelLeaseTransactionItems = tx => {
     return {
-        default:[
+        default: [
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Lease',
-                value: <TransactionRef txId={tx.leaseId} />
+                value: <TransactionRef txId={tx.leaseId}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx)
@@ -225,6 +319,7 @@ const issueTransactionToItems = tx => {
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
+            {label: 'AssetId', value: <RoutedAssetRef assetId={tx.assetId}/>},
             buildQuantityItem(tx),
             {
                 label: 'Decimals',
@@ -252,7 +347,7 @@ const burnTransactionToItems = tx => {
 
 const genesisTransactionToItems = tx => {
     return {
-        default:[
+        default: [
             ...buildTransactionHeaderItems(tx),
             buildRecipientItem(tx),
             buildAmountItem(tx),
@@ -282,18 +377,18 @@ const exchangeTransactionToItems = tx => {
         value: tx.price.toString()
     }, {
         label: 'Total',
-        value: <MoneyInfo value={tx.total} />
+        value: <MoneyInfo value={tx.total}/>
     }];
 
     const feeItems = [
         buildFeeItem(tx),
-    {
-        label: 'Buy Matcher Fee',
-        value: <MoneyInfo value={tx.buyFee} />
-    }, {
-        label: 'Sell Matcher Fee',
-        value: <MoneyInfo value={tx.sellFee} />
-    }];
+        {
+            label: 'Buy Matcher Fee',
+            value: <MoneyInfo value={tx.buyFee}/>
+        }, {
+            label: 'Sell Matcher Fee',
+            value: <MoneyInfo value={tx.sellFee}/>
+        }];
 
     const headerItems = buildTransactionHeaderItems(tx);
     headerItems.splice(1, 0, {
@@ -318,7 +413,7 @@ const exchangeTransactionToItems = tx => {
 const massPaymentTransactionToItems = tx => {
     const items = [{
         label: 'Total amount',
-        value: <MoneyInfo value={tx.totalAmount} />
+        value: <MoneyInfo value={tx.totalAmount}/>
     }, {
         label: 'Transfers count',
         value: tx.transferCount,
@@ -342,21 +437,21 @@ const buildOrderItems = order => {
     },
         buildTimestampItem(order.timestamp),
         buildAmountItem(order),
-    {
-        label: 'Price',
-        value: order.price.toString()
-    },
+        {
+            label: 'Price',
+            value: order.price.toString()
+        },
         buildSenderItem(order),
-    {
-        label: 'Matcher Fee',
-        value: <MoneyInfo value={order.fee} />
-    }
+        {
+            label: 'Matcher Fee',
+            value: <MoneyInfo value={order.fee}/>
+        }
     ];
 };
 
 const buildScriptItem = tx => ({
     label: 'Script',
-    value: <ScriptInfo script={tx.script} />
+    value: <ScriptInfo script={tx.script}/>
 });
 
 const buildDescriptionItem = tx => {
@@ -373,7 +468,7 @@ const buildDescriptionItem = tx => {
 
 const buildAttachmentItem = tx => ({
     label: 'Attachment',
-    value: <Description text={tx.attachment} />
+    value: <Description text={tx.attachment}/>
 });
 
 const buildTimestampItem = timestamp => ({
@@ -384,10 +479,16 @@ const buildTimestampItem = timestamp => ({
 const buildTransactionHeaderItems = tx => {
     return [{
         label: 'Type',
-        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge type={tx.type} /></React.Fragment>
+        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
+            type={tx.type}/></React.Fragment>
+    }, {
+        label: 'Status',
+        value: tx.applicationStatus === 'script_execution_failed' ?
+            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+            : 'Succeed'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
-        value: <BlockRef height={tx.height} />
+        value: <BlockRef height={tx.height}/>
     }, buildProofsItem(tx)];
 };
 
@@ -425,12 +526,12 @@ const buildReissuableItem = tx => ({
 
 const buildRecipientItem = tx => ({
     label: 'Recipient',
-    value: <EndpointRef endpoint={tx.recipient} />
+    value: <EndpointRef endpoint={tx.recipient}/>
 });
 
 const buildSenderItem = tx => ({
     label: 'Sender',
-    value: <EndpointRef endpoint={tx.sender} />
+    value: <EndpointRef endpoint={tx.sender}/>
 });
 
 const buildSenderPublicKeyItem = tx => ({

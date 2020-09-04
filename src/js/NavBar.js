@@ -33,7 +33,6 @@ class NavBar extends React.Component {
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
         // this.props.history.push(route.root);
         window.location.assign(window.origin + route.root)
-
     };
 
     applySettings = settings => {

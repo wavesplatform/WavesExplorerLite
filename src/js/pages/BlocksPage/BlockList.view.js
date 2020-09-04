@@ -15,7 +15,7 @@ export class BlockList extends React.Component {
                     <tr>
                         <th className="timestamp">№ / Timestamp</th>
                         <th className="target nowrap">Base Target</th>
-                        <th>Generator / Signature</th>
+                        <th>Block ID / Generator</th>
                         <th className="txs">TXs</th>
                     </tr>
                 </thead>

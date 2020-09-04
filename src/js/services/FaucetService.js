@@ -17,7 +17,8 @@ export class FaucetService extends ApiClientService {
         return api.transactions.address(faucet.address, FAUCET_TRANSACTIONS_COUNT)
             .then(transactionResponse => transactionResponse.data[0])
             .then(transactions => transactions.filter(tx => tx.type === 4))
-            .then(transactions => this.transformer.transform(transactions));
+            .then(transactions =>
+                this.transformer.transform(transactions));
     };
 
     requestMoney = (address, captchaToken) => {

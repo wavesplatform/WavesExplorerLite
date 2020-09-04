@@ -47,8 +47,9 @@ class NetworkDependentServices {
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
         this._stateChangeService = new StateChangeService(globalServices.configurationService(), networkId);
+        this._assetService = new AssetService(globalServices.configurationService(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
-            this._spamDetectionService, this._stateChangeService);
+            this._spamDetectionService, this._stateChangeService, this._assetService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
         this._aliasService = new AliasService(globalServices.configurationService(), networkId);
     }
