@@ -32,11 +32,17 @@ function clean() {
 }
 
 function buildOfficialProd(done) {
-    buildApp({network: 'mainnet'}, 'prod', done);
+    buildApp({
+        network: 'mainnet',
+        decompileUrl: 'https://nodes.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
 }
 
-function buildOfficialStaging(done) {
-    buildApp({network: 'mainnet'}, 'dev', done);
+function buildOfficialTestnet(done) {
+    buildApp({
+        network: 'testnet',
+        decompileUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
 }
 
 function buildOfficialStagenet(done) {
@@ -46,11 +52,8 @@ function buildOfficialStagenet(done) {
     }, 'prod', done);
 }
 
-function buildOfficialTestnet(done) {
-    buildApp({
-        network: 'testnet',
-        decompileUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile'
-    }, 'prod', done);
+function buildOfficialStaging(done) {
+    buildApp({network: 'mainnet'}, 'dev', done);
 }
 
 function buildDevnet(done) {
