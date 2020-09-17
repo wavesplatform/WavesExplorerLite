@@ -1,5 +1,5 @@
 import {DatabaseCurrencyCache} from './DatabaseCurrencyCache';
-import {MemoryCurrencyCache} from './MemoryCurrencyCache';
+import {MemoryCache} from './MemoryCache';
 
 export class SafeCurrencyCache {
     constructor(database, errorReportingService) {
@@ -37,14 +37,14 @@ export class SafeCurrencyCache {
                 .catch(error => {
                     this.errorReportingService.captureException(error);
 
-                    this.cache = new MemoryCurrencyCache();
+                    this.cache = new MemoryCache();
 
                     return this.cache;
                 })
         } catch (e) {
             this.errorReportingService.captureException(e);
 
-            this.cache = new MemoryCurrencyCache();
+            this.cache = new MemoryCache();
 
             return Promise.resolve(this.cache);
         }
