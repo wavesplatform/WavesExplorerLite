@@ -9,7 +9,7 @@ const roundToPriceAsset = (price, pair) => {
 };
 
 const normalizePrice = (price, pair) => {
-    if (price instanceof BigNumber)
+    if (price instanceof BigNumber || price._isBigNumber)
         price = price.toString();
 
     return new Decimal(price)

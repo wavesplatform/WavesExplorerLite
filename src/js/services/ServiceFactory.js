@@ -1,5 +1,6 @@
 import {Database} from './Database';
 import {SafeCurrencyCache} from './SafeCurrencyCache';
+import {SafeAssetCache} from './SafeAssetCache';
 import {CurrencyService} from './CurrencyService';
 import {TransactionTransformerService} from './TransactionTransformerService';
 import {SearchService} from './SearchService';
@@ -47,7 +48,8 @@ class NetworkDependentServices {
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
         this._stateChangeService = new StateChangeService(globalServices.configurationService(), networkId);
-        this._assetService = new AssetService(globalServices.configurationService(), networkId);
+        this._assetService = new AssetService(globalServices.configurationService(),
+            new SafeAssetCache(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
             this._spamDetectionService, this._stateChangeService, this._assetService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
@@ -84,7 +86,7 @@ class NetworkDependentServices {
 
     aliasService = () => this._aliasService;
 
-    assetService = () => new AssetService(this._globalServices.configurationService(), this._networkId);
+    assetService = () => this._assetService;
 }
 
 class ServiceFactory {

@@ -1,4 +1,4 @@
-export class MemoryCurrencyCache {
+export class MemoryCache {
     constructor() {
         this.cache = {};
     }
