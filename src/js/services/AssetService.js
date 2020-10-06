@@ -16,8 +16,8 @@ export class AssetService extends ApiClientService {
         this.assetCache.put(asset);
     };
 
-    async loadDetails(assetId) {
-        return this.assetCache.get(assetId)
+    async loadDetailsSingle(assetId) {
+        this.assetCache.get(assetId)
             .then(asset => {
                 if (asset) {
                     return asset;
@@ -54,7 +54,7 @@ export class AssetService extends ApiClientService {
                         scriptDetails: data.scripted ? data.scriptDetails : null,
                         minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
                         originTransactionId: data.originTransactionId
-                    } 
+                    }
 
                     this.put(details);
 
@@ -64,6 +64,16 @@ export class AssetService extends ApiClientService {
                 this.promisesCache[assetId] = promise;
 
                 return promise;
-            });
+            })
+    }
+
+    async loadDetailsArray(assetsId) {
+        return this.getApi().assets.detailsMultiple(assetsId)
+    }
+
+    async loadDetails(assetId) {
+        return Array.isArray(assetId)
+            ? this.loadDetailsArray(assetId)
+            : this.loadDetailsSingle(assetId)
     }
 }
