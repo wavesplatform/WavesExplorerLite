@@ -9,62 +9,47 @@ export class AssetService extends ApiClientService {
         super(configurationService, networkId);
 
         this.promisesCache = {};
-        this.assetCache = assetCache;
     }
 
-    put = asset => {
-        this.assetCache.put(asset);
-    };
-
     async loadAssetDetails(assetId) {
-        this.assetCache.get(assetId)
-            .then(asset => {
-                if (asset) {
-                    return asset;
-                }
+        const promise = this.getApi().assets.details(assetId).then(detailsResponse => {
+            const data = detailsResponse.data;
 
-                if (this.promisesCache[assetId]) {
-                    return this.promisesCache[assetId];
-                }
+            // TODO: remove when token is renamed
+            if (data.assetId === VostokToWavesEnterprise.id) {
+                data.name = VostokToWavesEnterprise.name;
+                data.description = VostokToWavesEnterprise.description;
+            }
 
-                const promise = this.getApi().assets.details(assetId).then(detailsResponse => {
-                    const data = detailsResponse.data;
+            const currency = Currency.fromIssueTransaction(data);
 
-                    // TODO: remove when token is renamed
-                    if (data.assetId === VostokToWavesEnterprise.id) {
-                        data.name = VostokToWavesEnterprise.name;
-                        data.description = VostokToWavesEnterprise.description;
-                    }
+            const details = {
+                id: data.assetId,
+                issued: {
+                    height: data.issueHeight,
+                    timestamp: new DateTime(data.issueTimestamp)
+                },
+                issuer: data.issuer,
+                name: data.name,
+                description: data.description,
+                decimals: data.decimals,
+                reissuable: data.reissuable,
+                quantity: Money.fromCoins(data.quantity, currency),
+                scripted: data.scripted,
+                scriptDetails: data.scripted ? data.scriptDetails : null,
+                minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
+                originTransactionId: data.originTransactionId
+            }
 
-                    const currency = Currency.fromIssueTransaction(data);
+            this.put(details);
 
-                    const details = {
-                        id: data.assetId,
-                        issued: {
-                            height: data.issueHeight,
-                            timestamp: new DateTime(data.issueTimestamp)
-                        },
-                        issuer: data.issuer,
-                        name: data.name,
-                        description: data.description,
-                        decimals: data.decimals,
-                        reissuable: data.reissuable,
-                        quantity: Money.fromCoins(data.quantity, currency),
-                        scripted: data.scripted,
-                        scriptDetails: data.scripted ? data.scriptDetails : null,
-                        minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
-                        originTransactionId: data.originTransactionId
-                    }
+            return details;
+        })
 
-                    this.put(details);
+        this.promisesCache[assetId] = promise;
 
-                    return details;
-                })
-
-                this.promisesCache[assetId] = promise;
-
-                return promise;
-            })
+        return promise;
+        // })
     }
 
     async loadAssetsDetails(assetsId) {
