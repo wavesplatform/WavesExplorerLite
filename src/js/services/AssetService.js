@@ -39,8 +39,6 @@ export class AssetService extends ApiClientService {
                 originTransactionId: data.originTransactionId
             }
 
-            this.put(details);
-
             return details;
         })
 
