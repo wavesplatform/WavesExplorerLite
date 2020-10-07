@@ -33,7 +33,7 @@ export class SingleAssetPage extends React.Component {
         return ServiceFactory
             .forNetwork(networkId)
             .assetService()
-            .loadDetails(assetId)
+            .loadAssetDetails(assetId)
             .then(details => this.setState({
                 loading: false,
                 details
@@ -90,11 +90,11 @@ export class SingleAssetPage extends React.Component {
                 label: 'Scripted',
                 value: (!!details.scripted).toString()
             },
-            ...this.buildScriptItem(details.scriptDetails),
-            {
-                label: 'Sponsored Fee',
-                value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
-            }]
+                ...this.buildScriptItem(details.scriptDetails),
+                {
+                    label: 'Sponsored Fee',
+                    value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
+                }]
         };
     }
 
