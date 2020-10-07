@@ -19,7 +19,7 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
             }, []
         )
 
-    const assetsDetails = (await assetService.loadDetails(assetsIds))
+    const assetsDetails = (await assetService.loadAssetsDetails(assetsIds))
         .reduce((acc, assetDetail) => ({
             ...acc,
             [assetDetail.assetId]: assetDetail
@@ -246,7 +246,6 @@ const transformScript = (currencyService, tx) => {
 };
 
 const transformSponsorship = async (currencyService, assetService, tx) => {
-    // const details = tx.assetId && await assetService.loadDetails(tx.assetId)
     const details = tx.details
     const pair = await loadAmountAndFeeCurrencies(currencyService, details.originTransactionId, tx.feeAssetId)
     const sponsoredCurrency = pair[0];
@@ -406,7 +405,6 @@ const transformIssue = (currencyService, tx) => {
 };
 
 const transformTransfer = async (currencyService, assetService, spamDetectionService, tx) => {
-    // const details = tx.assetId && await assetService.loadDetails(tx.assetId)
     const details = tx.details
 
     const pair = await loadAmountAndFeeCurrencies(currencyService, details ? details.originTransactionId : null, tx.feeAssetId)
