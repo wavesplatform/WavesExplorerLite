@@ -7,12 +7,10 @@ import {VostokToWavesEnterprise} from '../shared/constants';
 export class AssetService extends ApiClientService {
     constructor(configurationService, assetCache, networkId) {
         super(configurationService, networkId);
-
-        this.promisesCache = {};
     }
 
     async loadAssetDetails(assetId) {
-        const promise = this.getApi().assets.details(assetId).then(detailsResponse => {
+        return this.getApi().assets.details(assetId).then(detailsResponse => {
             const data = detailsResponse.data;
 
             // TODO: remove when token is renamed
@@ -23,7 +21,7 @@ export class AssetService extends ApiClientService {
 
             const currency = Currency.fromIssueTransaction(data);
 
-            const details = {
+            return {
                 id: data.assetId,
                 issued: {
                     height: data.issueHeight,
@@ -39,17 +37,8 @@ export class AssetService extends ApiClientService {
                 scriptDetails: data.scripted ? data.scriptDetails : null,
                 minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
                 originTransactionId: data.originTransactionId
-            }
-
-            this.put(details);
-
-            return details;
-        })
-
-        this.promisesCache[assetId] = promise;
-
-        return promise;
-        // })
+            };
+        });
     }
 
     async loadAssetsDetails(assetsId) {
