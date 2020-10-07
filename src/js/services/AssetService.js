@@ -16,7 +16,7 @@ export class AssetService extends ApiClientService {
         this.assetCache.put(asset);
     };
 
-    async loadDetailsSingle(assetId) {
+    async loadAssetDetails(assetId) {
         this.assetCache.get(assetId)
             .then(asset => {
                 if (asset) {
@@ -67,13 +67,29 @@ export class AssetService extends ApiClientService {
             })
     }
 
-    async loadDetailsArray(assetsId) {
-        return this.getApi().assets.detailsMultiple(assetsId)
-    }
-
-    async loadDetails(assetId) {
-        return Array.isArray(assetId)
-            ? this.loadDetailsArray(assetId)
-            : this.loadDetailsSingle(assetId)
+    async loadAssetsDetails(assetsId) {
+        const dataArray = await this.getApi().assets.detailsMultiple(assetsId)
+        return dataArray.reduce((acc, data) => {
+                const currency = Currency.fromIssueTransaction(data);
+                return [...acc, {
+                    id: data.assetId,
+                    issued: {
+                        height: data.issueHeight,
+                        timestamp: new DateTime(data.issueTimestamp)
+                    },
+                    issuer: data.issuer,
+                    name: data.name,
+                    description: data.description,
+                    decimals: data.decimals,
+                    reissuable: data.reissuable,
+                    quantity: Money.fromCoins(data.quantity, currency),
+                    scripted: data.scripted,
+                    scriptDetails: data.scripted ? data.scriptDetails : null,
+                    minSponsoredFee: data.minSponsoredAssetFee ? Money.fromCoins(data.minSponsoredAssetFee, currency) : null,
+                    originTransactionId: data.originTransactionId
+                }]
+            }
+            , [])
     }
 }
+
