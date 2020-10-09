@@ -65,5 +65,11 @@ export class AssetService extends ApiClientService {
             }
             , [])
     }
+
+    async loadDetails(assetId) {
+        return Array.isArray(assetId)
+            ? await this.loadAssetsDetails(assetId)
+            : await this.loadAssetDetails(assetId)
+    }
 }
 

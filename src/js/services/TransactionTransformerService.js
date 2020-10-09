@@ -4,6 +4,20 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
+const transformSingle = async (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
+
+    const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
+
+    return transform(
+        currencyService,
+        spamDetectionService,
+        stateChangeService,
+        assetService,
+        {...tx, applicationStatus: info && info.applicationStatus},
+        true
+    );
+};
+
 const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
 
@@ -19,7 +33,7 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
             }, []
         )
 
-    const assetsDetails = (await assetService.loadAssetsDetails(assetsIds))
+    const assetsDetails = (await assetService.loadDetails(assetsIds))
         .reduce((acc, assetDetail) => ({
             ...acc,
             [assetDetail.assetId]: assetDetail
@@ -441,8 +455,10 @@ export class TransactionTransformerService {
     }
 
     transform = (input) => {
-        input = Array.isArray(input) ? input : [input]
-        if (Array.isArray(input)) return transformMultiple(this.currencyService,
-            this.spamDetectionService, this.stateChangeService, this.assetService, input);
+        return Array.isArray(input)
+            ? transformMultiple(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, this.assetService, input)
+            : transformSingle(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, this.assetService, input)
     };
 }
