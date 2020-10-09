@@ -33,7 +33,7 @@ export class SingleAssetPage extends React.Component {
         return ServiceFactory
             .forNetwork(networkId)
             .assetService()
-            .loadAssetDetails(assetId)
+            .loadDetails(assetId)
             .then(details => this.setState({
                 loading: false,
                 details
