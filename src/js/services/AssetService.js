@@ -5,11 +5,13 @@ import {ApiClientService} from './ApiClientService';
 import {VostokToWavesEnterprise} from '../shared/constants';
 
 export class AssetService extends ApiClientService {
-    constructor(configurationService, assetCache, networkId) {
+    constructor(configurationService, networkId) {
         super(configurationService, networkId);
     }
 
     async loadAssetDetails(assetId) {
+        console.log('loadAssetDetails')
+
         return this.getApi().assets.details(assetId).then(detailsResponse => {
             const data = detailsResponse.data;
 
@@ -67,6 +69,7 @@ export class AssetService extends ApiClientService {
     }
 
     async loadDetails(assetId) {
+        console.log(assetId)
         return Array.isArray(assetId)
             ? await this.loadAssetsDetails(assetId)
             : await this.loadAssetDetails(assetId)

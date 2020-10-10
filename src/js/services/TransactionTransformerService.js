@@ -33,7 +33,7 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
             }, []
         )
 
-    const assetsDetails = (await assetService.loadDetails(assetsIds))
+    const assetsDetails = (await assetService.loadAssetsDetails(assetsIds))
         .reduce((acc, assetDetail) => ({
             ...acc,
             [assetDetail.assetId]: assetDetail
