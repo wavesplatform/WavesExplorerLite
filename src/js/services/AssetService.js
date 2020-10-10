@@ -10,8 +10,6 @@ export class AssetService extends ApiClientService {
     }
 
     async loadAssetDetails(assetId) {
-        console.log('loadAssetDetails')
-
         return this.getApi().assets.details(assetId).then(detailsResponse => {
             const data = detailsResponse.data;
 
@@ -69,7 +67,6 @@ export class AssetService extends ApiClientService {
     }
 
     async loadDetails(assetId) {
-        console.log(assetId)
         return Array.isArray(assetId)
             ? await this.loadAssetsDetails(assetId)
             : await this.loadAssetDetails(assetId)
