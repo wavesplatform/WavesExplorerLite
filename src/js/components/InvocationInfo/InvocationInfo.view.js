@@ -10,10 +10,24 @@ const ParameterMapper = ({type, value}) => {
     switch (type) {
         case "string":
         case "binary":
-            return <StringParameter value={value} />;
-
+            return <StringParameter value={value}/>;
+        case "list": {
+            return <>
+                [
+                {value.map((x, i) => <>
+                    {ParameterMapper(x)}
+                    {
+                        value.length - 1 !== i
+                            ? ', '
+                            : null
+                    }
+                </>)
+                }
+                ]
+            </>
+        }
         default:
-            return <GenericParameter value={value} />;
+            return <GenericParameter value={value}/>;
     }
 };
 
@@ -29,14 +43,14 @@ export class InvocationInfoView extends React.Component {
     render() {
         return (
             <div className="data-container">
-                <pre>{this.props.function}&nbsp;
+                <div style={{display: 'flex', flexWrap: 'wrap'}}>{this.props.function}&nbsp;
                     ({this.props.args.map((item, index) => {
                         return <React.Fragment key={`param${index}`}>
-                                {!!index && ', '}
-                                <ParameterMapper key={index} {...item}/>
-                            </React.Fragment>;
+                            {!!index && ', '}
+                            <ParameterMapper key={index} {...item}/>
+                        </React.Fragment>;
                     })})
-                </pre>
+                </div>
             </div>
         );
     }
