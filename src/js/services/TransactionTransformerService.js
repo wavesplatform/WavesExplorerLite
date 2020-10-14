@@ -4,24 +4,6 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
-const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
-
-    const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
-        .reduce((acc, val) => ({...acc, [val.id]: val}), {});
-
-    const promises = transactions.map(item =>
-        transform(currencyService,
-            spamDetectionService,
-            stateChangeService,
-            assetService,
-            {...item, applicationStatus: infoMap[item.id] && infoMap[item.id].applicationStatus},
-            false
-        )
-    );
-
-    return Promise.all(promises);
-};
-
 const transformSingle = async (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
 
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
@@ -34,6 +16,46 @@ const transformSingle = async (currencyService, spamDetectionService, stateChang
         {...tx, applicationStatus: info && info.applicationStatus},
         true
     );
+};
+
+const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
+    const transactionsWithAssetDetails = [2, 4, 14]
+
+    const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
+        .reduce((acc, val) => ({...acc, [val.id]: val}), {});
+
+    const assetsIds = transactions
+        .filter(tx => transactionsWithAssetDetails.includes(tx.type))
+        .reduce((acc, tx) => {
+                return (tx.assetId !== null && tx.assetId !== undefined && !acc.includes(tx.assetId))
+                    ? [...acc, tx.assetId]
+                    : acc
+            }, []
+        )
+
+    const assetsDetails = (await assetService.loadDetails(assetsIds))
+        .reduce((acc, assetDetail) => ({
+            ...acc,
+            [assetDetail.assetId]: assetDetail
+        }), {});
+
+    const promises = transactions.map(item =>
+        transform(currencyService,
+            spamDetectionService,
+            stateChangeService,
+            assetService,
+            {
+                ...item,
+                applicationStatus: infoMap[item.id] && infoMap[item.id].applicationStatus,
+                details: transactionsWithAssetDetails.includes(item.type)
+                    ? assetsDetails[item.assetId]
+                    : undefined
+            },
+            false
+        )
+    );
+
+    return Promise.all(promises);
 };
 
 const transform = (currencyService, spamDetectionService, stateChangeService, assetService, tx, shouldLoadDetails) => {
@@ -238,7 +260,7 @@ const transformScript = (currencyService, tx) => {
 };
 
 const transformSponsorship = async (currencyService, assetService, tx) => {
-    const details = tx.assetId && await assetService.loadDetails(tx.assetId)
+    const details = tx.details
     const pair = await loadAmountAndFeeCurrencies(currencyService, details.originTransactionId, tx.feeAssetId)
     const sponsoredCurrency = pair[0];
     const feeCurrency = pair[1];
@@ -397,7 +419,8 @@ const transformIssue = (currencyService, tx) => {
 };
 
 const transformTransfer = async (currencyService, assetService, spamDetectionService, tx) => {
-    const details = tx.assetId && await assetService.loadDetails(tx.assetId)
+    const details = tx.details
+
     const pair = await loadAmountAndFeeCurrencies(currencyService, details ? details.originTransactionId : null, tx.feeAssetId)
     const amountCurrency = pair[0];
     const feeCurrency = pair[1];
@@ -432,11 +455,10 @@ export class TransactionTransformerService {
     }
 
     transform = (input) => {
-        if (Array.isArray(input))
-            return transformMultiple(this.currencyService,
-                this.spamDetectionService, this.stateChangeService, this.assetService, input);
-
-        return transformSingle(this.currencyService,
-            this.spamDetectionService, this.stateChangeService, this.assetService, input);
+        return Array.isArray(input)
+            ? transformMultiple(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, this.assetService, input)
+            : transformSingle(this.currencyService,
+                this.spamDetectionService, this.stateChangeService, this.assetService, input)
     };
 }
