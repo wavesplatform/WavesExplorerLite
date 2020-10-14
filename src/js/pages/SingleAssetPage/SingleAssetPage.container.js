@@ -90,11 +90,11 @@ export class SingleAssetPage extends React.Component {
                 label: 'Scripted',
                 value: (!!details.scripted).toString()
             },
-            ...this.buildScriptItem(details.scriptDetails),
-            {
-                label: 'Sponsored Fee',
-                value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
-            }]
+                ...this.buildScriptItem(details.scriptDetails),
+                {
+                    label: 'Sponsored Fee',
+                    value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
+                }]
         };
     }
 
