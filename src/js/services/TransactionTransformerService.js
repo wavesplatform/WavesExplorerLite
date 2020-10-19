@@ -419,7 +419,7 @@ const transformIssue = (currencyService, tx) => {
 };
 
 const transformTransfer = async (currencyService, assetService, spamDetectionService, tx) => {
-    const details = tx.details
+    const details = tx.assetId && await assetService.loadDetails(tx.assetId)
 
     const pair = await loadAmountAndFeeCurrencies(currencyService, details ? details.originTransactionId : null, tx.feeAssetId)
     const amountCurrency = pair[0];
