@@ -60,7 +60,7 @@ export class SingleAssetPage extends React.Component {
         const {details} = this.state;
         return {
             default: [{
-                label: 'Origin tx id',
+                label: 'Origin Tx Id',
                 value: <TransactionRef txId={details.originTransactionId}/>
             }, {
                 label: 'Issue Height',
