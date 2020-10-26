@@ -45,9 +45,9 @@ export class CurrencyService extends ApiClientService {
                     return this.promisesCache[assetId];
                 }
 
-                const promise = this.getApi().transactions.info(assetId)
+                const promise = this.getApi().assets.details(assetId)
                     .then(infoResponse => {
-                        const c = Currency.fromIssueTransaction(infoResponse.data);
+                        const c = Currency.fromAssetDetails(infoResponse.data);
                         this.put(c);
 
                         return c;
