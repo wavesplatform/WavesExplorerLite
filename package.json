@@ -1,6 +1,6 @@
 {
     "name": "waves-blockchain-explorer",
-    "version": "3.2.1-stagenet.1",
+    "version": "3.2.2-stagenet.1",
     "private": true,
     "description": "Waves blockchain information tool",
     "repository": {
