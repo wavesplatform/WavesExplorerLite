@@ -19,7 +19,7 @@ export class AssetService extends ApiClientService {
                 data.description = VostokToWavesEnterprise.description;
             }
 
-            const currency = Currency.fromIssueTransaction(data);
+            const currency = Currency.fromAssetDetails(data);
 
             return {
                 id: data.assetId,
@@ -44,7 +44,7 @@ export class AssetService extends ApiClientService {
     async loadAssetsDetails(assetsId) {
         const dataArray = await this.getApi().assets.detailsMultiple(assetsId)
         return dataArray.reduce((acc, data) => {
-                const currency = Currency.fromIssueTransaction(data);
+                const currency = Currency.fromAssetDetails(data);
                 return [...acc, {
                     id: data.assetId,
                     issued: {
