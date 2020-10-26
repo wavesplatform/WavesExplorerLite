@@ -23,12 +23,20 @@ export default class Currency {
         precision: 8
     });
 
-    static fromIssueTransaction = issueTransaction => {
+    static currencyFromData = data => {
         return new Currency({
-            id: issueTransaction.assetId,
-            displayName: issueTransaction.name,
-            precision: issueTransaction.decimals
+            id: data.assetId,
+            displayName: data.name,
+            precision: data.decimals
         });
+    };
+
+    static fromIssueTransaction = issueTransaction => {
+        return this.currencyFromData(issueTransaction)
+    };
+
+    static fromAssetDetails = assetDetails => {
+        return this.currencyFromData(assetDetails)
     };
 
     toString() {

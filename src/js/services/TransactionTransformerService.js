@@ -260,8 +260,7 @@ const transformScript = (currencyService, tx) => {
 };
 
 const transformSponsorship = async (currencyService, assetService, tx) => {
-    const details = tx.details
-    const pair = await loadAmountAndFeeCurrencies(currencyService, details.originTransactionId, tx.feeAssetId)
+    const pair = await loadAmountAndFeeCurrencies(currencyService, tx.assetId, tx.feeAssetId)
     const sponsoredCurrency = pair[0];
     const feeCurrency = pair[1];
 
