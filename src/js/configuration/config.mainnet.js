@@ -1,4 +1,4 @@
-const nodeUrl = 'https://mainnet-htz-fsn1-1.wavesnodes.com/';
+const nodeUrl = 'https://nodes.wavesexplorer.com/';
 
 export default {
     networkId: 'mainnet',
