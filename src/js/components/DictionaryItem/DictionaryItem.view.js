@@ -9,7 +9,6 @@ export class DictionaryItem extends React.PureComponent {
     };
 
     render() {
-        console.log('this.props', this.props)
         return (
             <div className="dictionary-pair">
                 <div className="dictionary-pair-key">{this.props.label}</div>

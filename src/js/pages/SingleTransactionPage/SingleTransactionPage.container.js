@@ -44,7 +44,10 @@ export class SingleTransactionPage extends React.Component {
     };
 
     render() {
+        console.log('this.state.tx', this.state.tx)
+        console.log('this.props.match.params.networkId', this.props.match.params.networkId)
         const transactionItems = transactionToDictionary(this.state.tx, this.props.match.params.networkId);
+        console.log('transactionItems', transactionItems)
         if (transactionItems.default.length > 0) {
             transactionItems.default.push({
                 label: 'JSON',

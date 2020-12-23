@@ -18,6 +18,8 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
+import pending from "../../../images/pending.svg";
+import ServiceFactory from "../../services/ServiceFactory";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -72,7 +74,7 @@ const transactionToDictionary = (tx, networkId) => {
             return updateAssetInfoTransactionToItems(tx);
 
         case 18:
-            return scriptInvocationTransactionToItems(tx, networkId);
+            return continuationToItems(tx, networkId);
 
         default:
             return {
@@ -98,7 +100,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             </div>
             : ''
     }];
-
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
@@ -173,7 +174,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             </table>
         </>
     }];
-    console.log(tx)
+
     const result = {
         default: [
             ...buildTransactionHeaderItems(tx),
@@ -192,11 +193,31 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         ]
     }
     return tx.version > 2
-        ? result.default = [...result.default,
-            {
-                label: 'ExtraFeePerStep',
-                value: <MoneyInfo value={tx.extraFeePerStep}/>
-            }]
+        ? {
+            default: [
+                ...buildTransactionHeaderItems(tx),
+                {
+                    label: 'DApp Address',
+                    value: <EndpointRef endpoint={tx.dappAddress}/>
+                }, {
+                    label: 'Call',
+                    value: <InvocationInfo {...tx.call} />
+                },
+                ...paymentItems,
+                buildFeeItem(tx),
+                {
+                    label: 'ExtraFeePerStep',
+                    value: <MoneyInfo value={tx.extraFeePerStep}/>
+                },
+                ...buildSenderAddressAndKeyItems(tx),
+                {
+                    label: 'ContinuationsTx',
+                    value: <TransactionRef txId={tx.invokeScriptTransactionId}/> // TODO
+                },
+                ...stateItems,
+                ...results
+            ]
+        }
         : result
 };
 
@@ -210,6 +231,45 @@ const updateAssetInfoTransactionToItems = tx => ({
         ...buildSenderAddressAndKeyItems(tx),
     ]
 });
+
+const continuationToItems = async (tx, networkId) => {
+    await ServiceFactory
+        .forNetwork(networkId)
+        .transactionService()
+        .loadTransaction(tx.invokeScriptTransactionId)
+        .then(senderTx => {
+            console.log('senderTx', senderTx)
+            return {
+                default: [
+                    {
+                        label: 'Type',
+                        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
+                            type={tx.type}/></React.Fragment>
+                    },
+                    {
+                        label: 'Status',
+                        value: tx.applicationStatus === 'script_execution_failed' ?
+                            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+                            : 'Succeed'
+                    },
+                    buildVersionItem(tx),
+                    {
+                        label: 'Block',
+                        value: <BlockRef height={tx.height}/>
+                    },
+                    {
+                        label: 'DApp Address',
+                        value: <TransactionRef txId={senderTx.dappAddress}/>
+                    },
+                    {
+                        label: 'Sender InvokeTx',
+                        value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
+                    },
+                    buildFeeItem(tx),
+                ]
+            }
+        });
+};
 
 const dataTransactionToItems = tx => {
     return {
@@ -493,9 +553,11 @@ const buildTransactionHeaderItems = tx => {
             type={tx.type}/></React.Fragment>
     }, {
         label: 'Status',
-        value: tx.applicationStatus === 'script_execution_failed' ?
-            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-            : 'Succeed'
+        value: tx.applicationStatus === 'script_execution_failed'
+            ? <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+            : tx.applicationStatus === 'script_execution_in_progress'
+                ? <><img src={pending} height={12} width={12}/>&nbsp;Script execution in progress</>
+                : 'Succeeded'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height}/>
