@@ -71,6 +71,9 @@ const transactionToDictionary = (tx, networkId) => {
         case 17:
             return updateAssetInfoTransactionToItems(tx);
 
+        case 18:
+            return scriptInvocationTransactionToItems(tx, networkId);
+
         default:
             return {
                 default: []
@@ -170,7 +173,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             </table>
         </>
     }];
-
+    console.log(tx)
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
@@ -183,6 +186,12 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             },
             ...paymentItems,
             buildFeeItem(tx),
+            tx.version > 2
+                ? {
+                    label: 'ExtraFeePerStep',
+                    value: <MoneyInfo value={tx.extraFeePerStep}/>
+                }
+                : null,
             ...buildSenderAddressAndKeyItems(tx),
             ...stateItems,
             ...results

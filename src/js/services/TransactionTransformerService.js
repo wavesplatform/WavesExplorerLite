@@ -187,13 +187,14 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             })))
         }
 
+        const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
         const result = Object.assign(copyMandatoryAttributes(tx), {
             applicationStatus: tx.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
-            fee: Money.fromCoins(tx.fee, feeCurrency)
-
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            extraFeePerStep: Money.fromCoins(extraFeePerStep, feeCurrency),
         });
 
         const appendAssetData = async (data, assetKey) => {
@@ -219,6 +220,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
         if (!shouldLoadDetails)
             return result;
         const changes = await stateChangeService.loadStateChanges(tx.id)
+        console.log('changes', changes)
         if (changes && changes.stateChanges) {
             result.stateChanges = changes.stateChanges;
             result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
