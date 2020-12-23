@@ -174,7 +174,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         </>
     }];
     console.log(tx)
-    return {
+    const result = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -186,17 +186,18 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             },
             ...paymentItems,
             buildFeeItem(tx),
-            tx.version > 2
-                ? {
-                    label: 'ExtraFeePerStep',
-                    value: <MoneyInfo value={tx.extraFeePerStep}/>
-                }
-                : null,
             ...buildSenderAddressAndKeyItems(tx),
             ...stateItems,
             ...results
         ]
-    };
+    }
+    return tx.version > 2
+        ? result.default = [...result.default,
+            {
+                label: 'ExtraFeePerStep',
+                value: <MoneyInfo value={tx.extraFeePerStep}/>
+            }]
+        : result
 };
 
 const updateAssetInfoTransactionToItems = tx => ({

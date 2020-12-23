@@ -109,6 +109,9 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
 
+        case 18:
+            return transformContinuation(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -173,6 +176,18 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
     });
 }
 
+const transformContinuation = (currencyService, tx) => {
+    return currencyService.get(tx.assetId).then(asset => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            asset,
+            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            timestamp: new DateTime(tx.timestamp),
+            assetName: tx.name,
+            description: tx.description,
+            assetId: tx.assetId,
+        })
+    });
+}
 
 const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
 
@@ -194,7 +209,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            extraFeePerStep: Money.fromCoins(extraFeePerStep, feeCurrency),
+            extraFeePerStep: !!extraFeePerStep && Money.fromCoins(extraFeePerStep, feeCurrency),
         });
 
         const appendAssetData = async (data, assetKey) => {
@@ -220,7 +235,6 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
         if (!shouldLoadDetails)
             return result;
         const changes = await stateChangeService.loadStateChanges(tx.id)
-        console.log('changes', changes)
         if (changes && changes.stateChanges) {
             result.stateChanges = changes.stateChanges;
             result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
