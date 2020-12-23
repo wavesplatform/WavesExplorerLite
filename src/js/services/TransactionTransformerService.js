@@ -177,73 +177,83 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 }
 
 const transformContinuation = (currencyService, tx) => {
-    return currencyService.get(tx.assetId).then(asset => {
-        return Object.assign(copyMandatoryAttributes(tx), {
-            asset,
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
-            timestamp: new DateTime(tx.timestamp),
-            assetName: tx.name,
-            description: tx.description,
-            assetId: tx.assetId,
-        })
-    });
+    let feeCurrency = Currency.WAVES
+    if (!!tx.feeAssetId) currencyService.get(tx.feeAssetId).then(async (currency) => {
+        feeCurrency = currency
+    })
+    else return {
+        version: tx.version,
+        type: tx.type,
+        id: tx.id,
+        nonce: tx.nonce,
+        invokeScriptTransactionId: tx.invokeScriptTransactionId,
+        height: tx.height,
+        applicationStatus: tx.applicationStatus,
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+    }
 }
 
 const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
 
     const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
 
-    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
-        let payment = [];
-        if (tx.payment && tx.payment.length > 0) {
-            payment = (await Promise.all(tx.payment.map(async ({amount, assetId}) => {
-                const currency = await currencyService.get(assetId)
-                return Money.fromCoins(amount, currency)
-            })))
-        }
+    try {
+        return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
+            let payment = [];
+            if (tx.payment && tx.payment.length > 0) {
+                payment = (await Promise.all(tx.payment.map(async ({amount, assetId}) => {
+                    const currency = await currencyService.get(assetId)
+                    return Money.fromCoins(amount, currency)
+                })))
+            }
 
-        const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
-        const result = Object.assign(copyMandatoryAttributes(tx), {
-            applicationStatus: tx.applicationStatus,
-            dappAddress: tx.dApp,
-            call: tx.call || DEFAULT_FUNCTION_CALL,
-            payment,
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            extraFeePerStep: !!extraFeePerStep && Money.fromCoins(extraFeePerStep, feeCurrency),
-        });
+            const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
+            const result = Object.assign(copyMandatoryAttributes(tx), {
+                applicationStatus: tx.applicationStatus,
+                dappAddress: tx.dApp,
+                call: tx.call || DEFAULT_FUNCTION_CALL,
+                payment,
+                fee: Money.fromCoins(tx.fee, feeCurrency),
+                extraFeePerStep: !!extraFeePerStep && Money.fromCoins(extraFeePerStep, feeCurrency),
+            });
 
-        const appendAssetData = async (data, assetKey) => {
-            const detailsArray = data
-                ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
-                : [];
-            return data && data.length
-                ? Promise.all(data.map(async (item) => {
-                    const {assetId: id, name, decimals, description} = detailsArray
-                        .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
-                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
-                    return {
-                        ...item,
-                        money: Money.fromCoins(item.amount || item.quantity || 0, currency),
-                        name,
-                        decimals,
-                        description
-                    }
-                }))
-                : []
-        }
+            const appendAssetData = async (data, assetKey) => {
+                const detailsArray = data
+                    ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
+                    : [];
+                return data && data.length
+                    ? Promise.all(data.map(async (item) => {
+                        const {assetId: id, name, decimals, description} = detailsArray
+                            .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
+                        const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
+                        return {
+                            ...item,
+                            money: Money.fromCoins(item.amount || item.quantity || 0, currency),
+                            name,
+                            decimals,
+                            description
+                        }
+                    }))
+                    : []
+            }
 
-        if (!shouldLoadDetails)
+            if (!shouldLoadDetails)
+                return result;
+            const changes = await stateChangeService.loadStateChanges(tx.id)
+            if (changes && changes.stateChanges) {
+                result.stateChanges = changes.stateChanges;
+                result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
+                result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
+                result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
+                result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
+            }
             return result;
-        const changes = await stateChangeService.loadStateChanges(tx.id)
-        if (changes && changes.stateChanges) {
-            result.stateChanges = changes.stateChanges;
-            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
-            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
-            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
-            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
-        }
-        return result;
-    });
+        });
+    }
+    catch (e)
+    {
+        console.log('error', e)
+    }
 };
 
 
