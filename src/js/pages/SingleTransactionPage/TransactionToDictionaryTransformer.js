@@ -212,7 +212,9 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
                 ...buildSenderAddressAndKeyItems(tx),
                 {
                     label: 'ContinuationsTx',
-                    value: <TransactionRef txId={tx.invokeScriptTransactionId}/> // TODO
+                    value: !!tx.сontinuationTransactionIds
+                        ? tx.сontinuationTransactionIds.map(id => <TransactionRef txId={id}/>)
+                        : null
                 },
                 ...stateItems,
                 ...results
@@ -232,44 +234,39 @@ const updateAssetInfoTransactionToItems = tx => ({
     ]
 });
 
-const continuationToItems = async (tx, networkId) => {
-    await ServiceFactory
-        .forNetwork(networkId)
-        .transactionService()
-        .loadTransaction(tx.invokeScriptTransactionId)
-        .then(senderTx => {
-            console.log('senderTx', senderTx)
-            return {
-                default: [
-                    {
-                        label: 'Type',
-                        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
-                            type={tx.type}/></React.Fragment>
-                    },
-                    {
-                        label: 'Status',
-                        value: tx.applicationStatus === 'script_execution_failed' ?
-                            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-                            : 'Succeed'
-                    },
-                    buildVersionItem(tx),
-                    {
-                        label: 'Block',
-                        value: <BlockRef height={tx.height}/>
-                    },
-                    {
-                        label: 'DApp Address',
-                        value: <TransactionRef txId={senderTx.dappAddress}/>
-                    },
-                    {
-                        label: 'Sender InvokeTx',
-                        value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
-                    },
-                    buildFeeItem(tx),
-                ]
-            }
-        });
-};
+const continuationToItems = tx => ({
+    default: [
+        {
+            label: 'Type',
+            value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
+                type={tx.type}/></React.Fragment>
+        },
+        buildVersionItem(tx),
+        {
+            label: 'Status',
+            value: tx.applicationStatus === 'script_execution_failed' ?
+                <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+                : 'Succeed'
+        },
+        {
+            label: 'Tx Id',
+            value: tx.id
+        },
+        {
+            label: 'Block',
+            value: <BlockRef height={tx.height}/>
+        },
+        {
+            label: 'Nonce',
+            value: tx.nonce
+        },
+        {
+            label: 'Sender InvokeTx',
+            value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
+        },
+        buildFeeItem(tx),
+    ]
+})
 
 const dataTransactionToItems = tx => {
     return {

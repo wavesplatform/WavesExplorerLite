@@ -60,6 +60,9 @@ export const createListItem = (transaction) => {
         case 17:
             return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
 
+        case 18:
+            return <ContinuationTransactionListItem key={transaction.id} tx={transaction}/>;
+
         default:
             return null;
     }
@@ -472,6 +475,38 @@ class UpdateAssetInfoTransactionListItem extends React.Component {
                 </td>
                 <JustFee fee={tx.fee}/>
                 <td data-label="Asset name"><Line>{tx.assetName}</Line></td>
+            </tr>
+        );
+    }
+}
+
+class ContinuationTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <td data-label="ID">
+                    <Line wrap={false}>
+                        {tx.applicationStatus === 'script_execution_failed' && <FailedBrick/>}
+                        <TransactionRef txId={tx.id}/>
+                    </Line>
+                </td>
+                <td data-label="InvokeTx">
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.invokeScriptTransactionId} appearance="regular"/>
+                    </Line>
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.feeAssetId || ''} appearance="regular" type={'asset'}/>
+                    </Line>
+                </td>
+                <JustFee fee={tx.fee}/>
+                <td data-label="Status">
+                    {tx.applicationStatus}
+                </td>
             </tr>
         );
     }

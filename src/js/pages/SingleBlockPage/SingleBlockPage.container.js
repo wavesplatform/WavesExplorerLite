@@ -60,6 +60,12 @@ const typeToHeader = type => {
             result.amount = 'Fee';
             result.price = 'Asset name';
             break;
+
+        case 18:
+            result.subjects = 'InvokeTx';
+            result.amount = 'Fee';
+            result.price = 'Asset name';
+            break;
     }
 
     return result;
