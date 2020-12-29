@@ -210,7 +210,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            extraFeePerStep: !!extraFeePerStep && Money.fromCoins(extraFeePerStep, feeCurrency),
+            extraFeePerStep: extraFeePerStep != null && Money.fromCoins(extraFeePerStep, feeCurrency),
             continuationTransactionIds: !!continuationTransactionIds && continuationTransactionIds,
         });
 
