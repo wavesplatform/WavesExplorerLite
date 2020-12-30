@@ -211,9 +211,9 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
                 },
                 ...buildSenderAddressAndKeyItems(tx),
                 {
-                    label: 'ContinuationsTx',
-                    value: !!tx.сontinuationTransactionIds
-                        ? tx.сontinuationTransactionIds.map(id => <TransactionRef txId={id}/>)
+                    label: 'ContinuationTxs',
+                    value: !!tx.continuationTransactionIds
+                        ? tx.continuationTransactionIds.map(id => <TransactionRef txId={id}/>)
                         : null
                 },
                 ...stateItems,
@@ -261,7 +261,7 @@ const continuationToItems = tx => ({
             value: tx.nonce
         },
         {
-            label: 'Sender InvokeTx',
+            label: 'InvokeScript Transaction Id',
             value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
         },
         buildFeeItem(tx),

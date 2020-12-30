@@ -64,7 +64,7 @@ const typeToHeader = type => {
         case 18:
             result.subjects = 'InvokeTx';
             result.amount = 'Fee';
-            result.price = 'Asset name';
+            result.price = 'Status';
             break;
     }
 
