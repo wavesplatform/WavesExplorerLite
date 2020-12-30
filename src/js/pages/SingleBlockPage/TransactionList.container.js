@@ -49,7 +49,6 @@ export class TransactionList extends React.Component {
                     </thead>
                     <tbody>
                     {this.props.transactions.map(item => {
-                        console.log('item', item)
                         return createListItem(item);
                     })}
                     </tbody>

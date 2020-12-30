@@ -497,7 +497,7 @@ class ContinuationTransactionListItem extends React.Component {
                 </td>
                 <td data-label="InvokeTx">
                     <Line wrap={false}>
-                        <EndpointRef endpoint={tx.invokeScriptTransactionId} appearance="regular"/>
+                        <TransactionRef txId={tx.invokeScriptTransactionId}/>
                     </Line>
                     <Line wrap={false}>
                         <EndpointRef endpoint={tx.feeAssetId || ''} appearance="regular" type={'asset'}/>
