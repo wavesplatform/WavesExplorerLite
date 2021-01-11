@@ -31,7 +31,6 @@ export class TransactionListView extends React.Component {
                     </thead>
                     <tbody>
                     {this.props.transactions.map(tx => {
-                        console.log('tx', tx.type)
                         return (<TransactionListItem key={tx.id} tx={tx} />);
                     })}
                     </tbody>
