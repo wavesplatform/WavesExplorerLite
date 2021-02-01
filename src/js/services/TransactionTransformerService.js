@@ -109,6 +109,9 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
 
+        case 18:
+            return transformContinuation(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -173,6 +176,18 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
     });
 }
 
+const transformContinuation = (currencyService, tx) => {
+    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => ({
+        version: tx.version,
+        type: tx.type,
+        id: tx.id,
+        nonce: tx.nonce,
+        invokeScriptTransactionId: tx.invokeScriptTransactionId,
+        height: tx.height,
+        applicationStatus: tx.applicationStatus,
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+    }))
+}
 
 const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
 
@@ -187,13 +202,16 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             })))
         }
 
+        const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
+        const continuationTransactionIds = tx.version > 2 ? tx.continuationTransactionIds : undefined
         const result = Object.assign(copyMandatoryAttributes(tx), {
             applicationStatus: tx.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
-            fee: Money.fromCoins(tx.fee, feeCurrency)
-
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            extraFeePerStep: extraFeePerStep != null && Money.fromCoins(extraFeePerStep, feeCurrency),
+            continuationTransactionIds: !!continuationTransactionIds && continuationTransactionIds,
         });
 
         const appendAssetData = async (data, assetKey) => {

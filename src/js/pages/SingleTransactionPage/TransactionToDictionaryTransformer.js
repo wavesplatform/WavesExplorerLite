@@ -18,6 +18,8 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
+import pending from "../../../images/pending.svg";
+import ServiceFactory from "../../services/ServiceFactory";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -71,6 +73,9 @@ const transactionToDictionary = (tx, networkId) => {
         case 17:
             return updateAssetInfoTransactionToItems(tx);
 
+        case 18:
+            return continuationToItems(tx, networkId);
+
         default:
             return {
                 default: []
@@ -95,7 +100,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             </div>
             : ''
     }];
-
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
@@ -171,7 +175,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         </>
     }];
 
-    return {
+    const result = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -187,7 +191,36 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...stateItems,
             ...results
         ]
-    };
+    }
+    return tx.version > 2
+        ? {
+            default: [
+                ...buildTransactionHeaderItems(tx),
+                {
+                    label: 'DApp Address',
+                    value: <EndpointRef endpoint={tx.dappAddress}/>
+                }, {
+                    label: 'Call',
+                    value: <InvocationInfo {...tx.call} />
+                },
+                ...paymentItems,
+                buildFeeItem(tx),
+                {
+                    label: 'ExtraFeePerStep',
+                    value: <MoneyInfo value={tx.extraFeePerStep}/>
+                },
+                ...buildSenderAddressAndKeyItems(tx),
+                {
+                    label: 'ContinuationTxs',
+                    value: !!tx.continuationTransactionIds
+                        ? tx.continuationTransactionIds.map(id => <TransactionRef txId={id}/>)
+                        : null
+                },
+                ...stateItems,
+                ...results
+            ]
+        }
+        : result
 };
 
 const updateAssetInfoTransactionToItems = tx => ({
@@ -200,6 +233,40 @@ const updateAssetInfoTransactionToItems = tx => ({
         ...buildSenderAddressAndKeyItems(tx),
     ]
 });
+
+const continuationToItems = tx => ({
+    default: [
+        {
+            label: 'Type',
+            value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
+                type={tx.type}/></React.Fragment>
+        },
+        buildVersionItem(tx),
+        {
+            label: 'Status',
+            value: tx.applicationStatus === 'script_execution_failed' ?
+                <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+                : 'Succeed'
+        },
+        {
+            label: 'Tx Id',
+            value: tx.id
+        },
+        {
+            label: 'Block',
+            value: <BlockRef height={tx.height}/>
+        },
+        {
+            label: 'Nonce',
+            value: tx.nonce
+        },
+        {
+            label: 'InvokeScript Transaction Id',
+            value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
+        },
+        buildFeeItem(tx),
+    ]
+})
 
 const dataTransactionToItems = tx => {
     return {
@@ -483,9 +550,11 @@ const buildTransactionHeaderItems = tx => {
             type={tx.type}/></React.Fragment>
     }, {
         label: 'Status',
-        value: tx.applicationStatus === 'script_execution_failed' ?
-            <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-            : 'Succeed'
+        value: tx.applicationStatus === 'script_execution_failed'
+            ? <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+            : tx.applicationStatus === 'script_execution_in_progress'
+                ? <><img src={pending} height={12} width={12}/>&nbsp;Script execution in progress</>
+                : 'Succeeded'
     }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
         label: 'Block',
         value: <BlockRef height={tx.height}/>
