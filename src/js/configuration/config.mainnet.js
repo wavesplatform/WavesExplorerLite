@@ -25,16 +25,15 @@ export default {
         {name: '$BTC',url: 'https://btcgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WAVES',url: 'https://wavesgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DASH',url: 'https://dashgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$WGR',url: 'https://wgrgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$SYS',url: 'https://sysgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         //Partner gateways polarity
-        {name: '$TUSD', url: 'https://tusdgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
-        {name: '$SENT', url: 'https://sentgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
-        {name: '$ARRR', url: 'https://arrrgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
-        {name: '$USDT', url: 'https://usdtgw.rcanelabs.com', maintainer:'https://www.rcanelabs.com'},
+        {name: '$TUSD', url: 'https://tusdgw.rcanelabs.com', maintainer:'https://tn-tusd.ethereum.gateway.polarity.exchange'},
+        {name: '$SENT', url: 'https://sentgw.rcanelabs.com', maintainer:'https://tn-sent.ethereum.gateway.polarity.exchange'},
+        {name: '$ARRR', url: 'https://arrrgw.rcanelabs.com', maintainer:'https://kgbconcepts.network/ether1totn.html'},
+        {name: '$USDT', url: 'https://usdtgw.rcanelabs.com', maintainer:'https://tn-usdt.ethereum.gateway.polarity.exchange'},
         //Parnet gateways kgb
         {name: '$ETHO', url: 'https://kgbconcepts.network/ether1totn.html', maintainer:'https://kgbconcepts.network/'},
     ],
@@ -54,9 +53,7 @@ export default {
         {url:'https://www.turtlenetwork.eu/#home',asset:'TN',assetId:'TN',priceAsset:'BTC',priceAssetId:'5Asy9P3xjcvBAgbeyiitZhBRJZJ2TPGSZJz9ihDTnB3d', logo:'waves-dex.svg'},
 
         //TN markets
-        {url:'https://www.wagerr.com/',asset:'WGR',assetId:'91NnG9iyUs3ZT3tqK1oQ3ddpgAkE7v5Kbcgp2hhnDhqd',priceAsset:'TN',priceAssetId:'TN', logo:'wgr.svg'},
         {url:'https://www.trusttoken.com/trueusd',asset:'TUSD',assetId:'2R7raH74LuuiCbJbcv3Aa7g14WY1vYPUGushCUJFwW1f',priceAsset:'TN',priceAssetId:'TN', logo:'tusd.svg'},
-        {url:'https://www.hellenicnode.eu/',asset:'HN',assetId:'3GvqjyJFBe1fpiYnGsmiZ1YJTkYiRktQ86M2KMzcTb2s',priceAsset:'TN',priceAssetId:'TN', logo:'hn.svg'},
         {url:'https://ethereum.org/',asset:'ETH',assetId:'6Mh41byVWPg8JVCfuwG5CAPCh9Q7gnuaAVxjDfVNDmcD',priceAsset:'TN',priceAssetId:'TN', logo:'eth.svg'},
         {url:'https://dogecoin.com/',asset:'DOGE',assetId:'HDeemVktm2Z68RMkyA7AexhpaCqot1By7adBzaN9j5Xg',priceAsset:'TN',priceAssetId:'TN', logo:'doge.svg'},
         {url:'https://www.dash.org/',asset:'DASH',assetId:'A62sRG58HFbWUNvFoEEjX4U3txXKcLm11MXWWS429qpN',priceAsset:'TN',priceAssetId:'TN', logo:'dash.svg'},
