@@ -13,8 +13,8 @@
         "app:dev": "webpack --mode development --config=webpack.config.js",
         "app:prod": "webpack --mode production --config=webpack.config.js",
         "test": "jest",
-        "build:dev": "yarn test && yarn app:dev",
-        "build:prod": "yarn test && yarn app:prod"
+        "build:dev": "yarn app:dev",
+        "build:prod": "yarn app:prod"
     },
     "dependencies": {
         "@babel/runtime": "^7.3.4",
