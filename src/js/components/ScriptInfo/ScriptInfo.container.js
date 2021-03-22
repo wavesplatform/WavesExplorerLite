@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
 
-import { BASE64_FORMAT, DECOMPILED_FORMAT, ScriptInfoView } from './ScriptInfo.view';
+import {BASE64_FORMAT, DECOMPILED_FORMAT, ScriptInfoView} from './ScriptInfo.view';
 import ServiceFactory from '../../services/ServiceFactory';
+import {decompile} from "@waves/ride-js";
 
 class ScriptInfoContainer extends React.Component {
     static propTypes = {
@@ -15,9 +16,11 @@ class ScriptInfoContainer extends React.Component {
         this.state = {
             value: ''
         };
-        this.setDecompiledScript();
     }
 
+    componentDidMount() {
+        this.setDecompiledScript();
+    }
 
     componentDidUpdate(prevProps) {
         if (this.props.script !== prevProps.script) {
@@ -34,12 +37,11 @@ class ScriptInfoContainer extends React.Component {
     };
 
     setDecompiledScript = () => {
-        const {networkId} = this.props.match.params;
-        this.props.script && ServiceFactory
-            .forNetwork(networkId)
-            .addressService()
-            .decompileScript(this.props.script, networkId)
-            .then(decompiledScript => this.setState({value: decompiledScript}));
+        if (this.props.script) {
+            const decompilationResult = decompile(this.props.script);
+            const decompiledScript = !decompilationResult.error ? decompilationResult.result : decompilationResult.error;
+            this.setState({value: decompiledScript});
+        }
     };
 
     render() {
