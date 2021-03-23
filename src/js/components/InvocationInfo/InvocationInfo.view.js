@@ -41,6 +41,7 @@ export class InvocationInfoView extends React.Component {
     };
 
     render() {
+        console.log(this.props)
         return (
             <div className="data-container">
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>{this.props.function}&nbsp;

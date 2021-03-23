@@ -18,6 +18,7 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
+import {DappItem} from "../../components/DappItem/DappItem.view";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -118,6 +119,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     const results = [{
         label: 'Results',
         value: <>
+            {tx.stateChanges.invokes && tx.stateChanges.invokes.map(x => <DappItem data={x}/>)}
             {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
             <div className="data-container">
                 {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>
