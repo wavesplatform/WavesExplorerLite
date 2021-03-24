@@ -1,4 +1,4 @@
-const nodeUrl = 'https://testnet.tnnode.turtlenetwork.eu';
+const nodeUrl = 'https://cluster.testnet.tnnode.turtlenetwork.eu';
 
 export default {
     networkId: 'testnet',
@@ -8,7 +8,7 @@ export default {
     dataServicesBaseUrl: 'https://testnet.data-service.turtlenetwork.eu/v0',
     dataFeedBaseUrl: '',
     nodes: [
-        {url: nodeUrl, maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
+        {url: 'https://testnet.tnnode.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
         {url: 'https://testnet.tnnode2.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
         {url: 'https://testnet.tnnode3.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
     ],

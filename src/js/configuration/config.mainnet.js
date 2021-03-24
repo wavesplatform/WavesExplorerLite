@@ -1,4 +1,4 @@
-const nodeUrl = 'https://tnnode2.turtlenetwork.eu';
+const nodeUrl = 'https://cluster.tnnode.turtlenetwork.eu';
 
 export default {
     networkId: 'mainnet',
@@ -10,7 +10,7 @@ export default {
     spamListUrl: 'https://raw.githubusercontent.com/BlackTurtle123/TN-community/master/scam-v2.csv',
     nodes: [
         {url: 'https://tnnode.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
-        {url: nodeUrl,maintainer: 'https://t.me/TurtleNetwork'},
+        {url: 'https://tnnode2.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://tnnode3.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://ninjastar.ninjaturtle.co.za',maintainer: 'https://twitter.com/gordobsa'},
         {url: 'https://node.maplenode.net',maintainer: 'MapleNode'},
@@ -25,7 +25,6 @@ export default {
         {name: '$BTC',url: 'https://btcgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$WAVES',url: 'https://wavesgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DASH',url: 'https://dashgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
-        {name: '$SYS',url: 'https://sysgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$BCH',url: 'https://bchgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$DOGE',url: 'https://dogegw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: '$ETH',url: 'https://ethgw.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
