@@ -19,12 +19,16 @@ export class NodesService extends ApiClientService {
                 api.baseTarget(),
                 api.transactions.utxSize()
             ]).then(axios.spread((version, height, baseTarget, unconfirmedTxCount) => {
+                console.log('version', version)
+                console.log('height', height)
+                console.log('baseTarget', baseTarget)
+                console.log('unconfirmedTxCount', unconfirmedTxCount)
                 const newNode = {
                     ...node,
-                    version: version.data.version,
-                    height: height.data.height,
-                    baseTarget: baseTarget.data.baseTarget,
-                    unconfirmedTxCount: unconfirmedTxCount.data.size
+                    version: version.version,
+                    height: height.height,
+                    baseTarget: baseTarget.baseTarget,
+                    unconfirmedTxCount: unconfirmedTxCount.size
                 };
 
                 return {

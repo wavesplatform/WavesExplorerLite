@@ -30,7 +30,7 @@ export class SearchService extends ApiClientService {
                 const event = this.createEvent(SearchResult.block);
                 this.analyticsService.sendEvent(event);
 
-                return routes.blocks.one(heightResponse.data.height);
+                return routes.blocks.one(heightResponse.height);
             });
         }).catch(() => {
             return api.transactions.info(query).then(infoResponse => {

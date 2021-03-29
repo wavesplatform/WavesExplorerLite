@@ -23,6 +23,7 @@ export class NodeList extends React.Component {
                 </thead>
                 <tbody>
                     {this.props.nodes.map((node, index) => {
+                        console.log('node', node)
                         return (<NodeListItem key={index} node={node} />);
                     })}
                 </tbody>

@@ -97,6 +97,8 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             : ''
     }];
 
+    let updateStateChanges = tx.stateChanges;
+
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
@@ -119,7 +121,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     const results = [{
         label: 'Results',
         value: <>
-            {tx.stateChanges.invokes && tx.stateChanges.invokes.map(x => <DappItem data={x}/>)}
+            {tx.stateChanges.invokes && tx.stateChanges.invokes.map((x, i) => <DappItem data={x} key={i}/>)}
             {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
             <div className="data-container">
                 {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>

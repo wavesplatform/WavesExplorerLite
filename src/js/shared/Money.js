@@ -53,6 +53,8 @@ export default class Money {
         if (amount instanceof BigNumber || amount._isBigNumber)
             amount = amount.toString();
 
+        console.log('amount', amount)
+        console.log('amount.toString()', amount.toString())
         amount = new Decimal(amount);
         amount = amount.div(Math.pow(10, currency.precision));
 

@@ -4,6 +4,29 @@ import json from 'json-bigint';
 
 import DateTime from '../DateTime';
 import Strings from '../Strings';
+import {
+    data,
+    fetchBalanceDetails,
+    fetchScriptInfo,
+    fetchScriptInfoMeta,
+    fetchValidate
+} from "@waves/node-api-js/cjs/api-node/addresses";
+import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
+import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
+import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
+import {
+    fetchInfo,
+    fetchStatus,
+    fetchUnconfirmed,
+    fetchUnconfirmedSize
+} from "@waves/node-api-js/cjs/api-node/transactions";
+import {
+    BlockAt,
+    fetchDelay, fetchHeadersAt,
+    fetchHeadersLast, fetchHeadersSeq,
+    fetchHeight,
+    fetchHeightById
+} from "@waves/node-api-js/cjs/api-node/blocks";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -131,39 +154,33 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {
-        version: () => get('/node/version'),
-        baseTarget: () => get('/consensus/basetarget'),
+        version: () => fetchNodeVersion(baseUrl),
+        baseTarget: () => fetchBasetarget(baseUrl),
         addresses: {
-            details: (address) => retryableGet(`/addresses/balance/details/${address}`),
-            aliases: (address) => retryableGet(`/alias/by-address/${address}`),
-            validate: (address) => retryableGet(`/addresses/validate/${address}`),
-            data: (address) => retryableGet(`/addresses/data/${address}`),
-            scriptInfo: (address) => retryableGet(`/addresses/scriptInfo/${address}`),
-            scriptMeta: (address) => retryableGet(`/addresses/scriptInfo/${address}/meta`)
+            details: (address) => fetchBalanceDetails(baseUrl, address),
+            aliases: (address) => fetchByAddress(baseUrl, address).then(response => ({data: response})),
+            validate: (address) => fetchValidate(baseUrl, address).then(response => ({data: response})),
+            data: (address) => data(baseUrl, address).then(response => ({data: response})),
+            scriptInfo: (address) => fetchScriptInfo(baseUrl, address).then(response => ({data: response})),
+            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address).then(response => ({data: response}))
         },
         blocks: {
-            height: () => get('/blocks/height'),
-            heightBySignature: (signature) => get(`/blocks/height/${signature}`),
-            delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
-            at: (height) => retryableGet(`/blocks/at/${height}`, {
-                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-            }),
+            height: () => fetchHeight(baseUrl),
+            heightBySignature: (id) => fetchHeightById(baseUrl, id),
+            delay: (id, blockNum) => fetchDelay(baseUrl, id, blockNum),
+            at: (height) => BlockAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
             headers: {
-                last: () => retryableGet('/blocks/headers/last', {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                }),
-                at: (height) => retryableGet(`/blocks/headers/at/${height}`, {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                }),
-                sequence: (from, to) => retryableGet(`/blocks/headers/seq/${from}/${to}`, {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                })
-            }
+                last: () => fetchHeadersLast(baseUrl).then(response => transformTimestampToDateTime(response)),
+                at: (height) => fetchHeadersAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
+                sequence: (from, to) => fetchHeadersSeq(baseUrl, from, to).then(response => transformTimestampToDateTime(response)),
+            },
         },
         transactions: {
             unconfirmed: () => retryableGet('/transactions/unconfirmed'),
-            utxSize: () => retryableGet('/transactions/unconfirmed/size'),
-            info: id => retryableGet(`/transactions/info/${id}`),
+            utxSize: () => fetchUnconfirmedSize(baseUrl),
+            info: id => fetchInfo(baseUrl, id).then(response => ({
+                data: response
+            })),
             status: async idsArray => {
                 const limit = 1000;
                 let subarray = [];

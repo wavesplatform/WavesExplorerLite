@@ -28,6 +28,7 @@ export class TransactionService extends ApiClientService {
 
     loadUnconfirmed = () => {
         return this.getApi().transactions.unconfirmed().then(response => {
+            console.log('response', response)
             const transactions = response.data;
             transactions.sort((a, b) => b.timestamp - a.timestamp);
 
