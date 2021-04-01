@@ -18,7 +18,8 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
-import {DappItem} from "../../components/DappItem/DappItem.view";
+import TransactionArrow from "../../components/TransactionArrow";
+import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -97,8 +98,8 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             : ''
     }];
 
-    let updateStateChanges = tx.stateChanges;
-
+    // let updateStateChanges = tx.stateChanges;
+    console.log('stateUpdate', tx.stateUpdate)
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
@@ -121,7 +122,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     const results = [{
         label: 'Results',
         value: <>
-            {tx.stateChanges.invokes && tx.stateChanges.invokes.map((x, i) => <DappItem data={x} key={i}/>)}
             {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
             <div className="data-container">
                 {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>
@@ -175,7 +175,12 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         </>
     }];
 
-    return {
+    const stateUpdate = tx.stateUpdate ? [{
+        label: 'State Update',
+        value: <StateUpdateInfo tx={tx}/>
+    }] : null
+
+    const info = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -191,7 +196,10 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...stateItems,
             ...results
         ]
-    };
+    }
+    console.log('info stateUpdate', stateUpdate)
+    if (stateUpdate) info.default.push(...stateUpdate)
+    return info
 };
 
 const updateAssetInfoTransactionToItems = tx => ({

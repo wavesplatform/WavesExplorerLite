@@ -1167,7 +1167,7 @@
 
 "@types/bignumber.js@^5.0.0":
   version "5.0.0"
-  resolved "https://registry.npmjs.org/@types/bignumber.js/-/bignumber.js-5.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@types/bignumber.js/-/bignumber.js-5.0.0.tgz#d9f1a378509f3010a3255e9cc822ad0eeb4ab969"
   integrity sha512-0DH7aPGCClywOFaxxjE6UwpN2kQYe9LwuDQMv+zYA97j5GkOMo8e66LYT+a8JYU7jfmUFRZLa9KycxHDsKXJCA==
   dependencies:
     bignumber.js "*"
@@ -1224,7 +1224,7 @@
 
 "@types/node-fetch@^2.5.4":
   version "2.5.8"
-  resolved "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.8.tgz"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.8.tgz#e199c835d234c7eb0846f6618012e558544ee2fb"
   integrity sha512-fbjI6ja0N5ZA8TV53RUqzsKNkl9fv8Oj3T7zxW7FGv1GSH7gwJaNF8dzCjrqKaxKeUpTz4yT1DaJFq/omNpGfw==
   dependencies:
     "@types/node" "*"
@@ -1254,7 +1254,7 @@
 
 "@waves/bignumber@0.0.1":
   version "0.0.1"
-  resolved "https://registry.npmjs.org/@waves/bignumber/-/bignumber-0.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/@waves/bignumber/-/bignumber-0.0.1.tgz#b878129008f1076f549aa29f274a499069916ccf"
   integrity sha512-+bQCa8fPCYdkLtwKsKtgbvDD7MzZTv6bc2ZpGMqn9uq+RjO8Qf4XSrs0DVhtWWhCHplkVIqOeS4bzgW1i3P7rw==
   dependencies:
     "@types/bignumber.js" "^5.0.0"
@@ -1277,7 +1277,7 @@
 
 "@waves/node-api-js@^1.2.0":
   version "1.2.0"
-  resolved "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/@waves/node-api-js/-/node-api-js-1.2.0.tgz#28a645bc1f152a6ec426021adcaa1a950d8e4bb5"
   integrity sha512-03QEZUyemhJx2t/sNn5AR6kBcoIO5EeDupIpBi3H6HKWtCgzkt3NWBM+W+hSSU8UNutxpv+seqbFvkMWNtO8zQ==
   dependencies:
     "@types/node-fetch" "^2.5.4"
@@ -1298,7 +1298,7 @@
 
 "@waves/ts-types@^1.0.1":
   version "1.0.2"
-  resolved "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/@waves/ts-types/-/ts-types-1.0.2.tgz#5f8afe419cdb671cddb18f6593f11f197d3938bf"
   integrity sha512-3S7WEAmxa0nzJ4Ipo4CEk+TMw3ZguO9rMZT+FxIvhKbo1yVi/9vKpBZK3+qoDc8HrtDNNjat7ORdH+H+Asz7xg==
 
 "@webassemblyjs/ast@1.7.11":
@@ -2027,7 +2027,12 @@ big.js@^5.2.2:
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@*, bignumber.js@7.0.1:
+bignumber.js@*, bignumber.js@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
+  integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
+
+bignumber.js@7.0.1:
   version "7.0.1"
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-7.0.1.tgz"
   integrity sha512-orXkDA6dhvrCTxYkWMDLIu8R1XWKfPWoJCkFeXOi/Rybl0FVUGHvgDYgUkWVn8fGa5mw2xy25VQGPPmrxfoZkQ==
@@ -2036,11 +2041,6 @@ bignumber.js@^8.1.1:
   version "8.1.1"
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-8.1.1.tgz"
   integrity sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ==
-
-bignumber.js@^9.0.0:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.1.tgz"
-  integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
 
 binary-extensions@^1.0.0:
   version "1.13.1"
@@ -2617,7 +2617,7 @@ color-support@^1.1.3:
 
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
-  resolved "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz"
+  resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
     delayed-stream "~1.0.0"
@@ -4009,7 +4009,7 @@ forever-agent@~0.6.1:
 
 form-data@^3.0.0:
   version "3.0.1"
-  resolved "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.1.tgz#ebd53791b78356a99af9a300d4282c4d5eb9755f"
   integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
   dependencies:
     asynckit "^0.4.0"
@@ -6371,7 +6371,7 @@ node-fetch@^1.0.1:
 
 node-fetch@^2.6.1:
   version "2.6.1"
-  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-forge@^0.10.0:
@@ -8930,7 +8930,7 @@ type@^2.0.0:
 
 typed-ts-events@^1.1.1:
   version "1.2.1"
-  resolved "https://registry.npmjs.org/typed-ts-events/-/typed-ts-events-1.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/typed-ts-events/-/typed-ts-events-1.2.1.tgz#46faea14f937cbe3d0c5158d8ef4cc60497fdbbe"
   integrity sha512-+Fy9cqWA/Kv1QX0k6m5ZflGcG2jQSZQGr+jLGXYUM22yihhkHs243LEXvY4cs54lAVyj5gokm0TbgkmL4qDsTg==
 
 typedarray@^0.0.6:
@@ -8952,9 +8952,9 @@ uglify-js@3.4.x:
     source-map "~0.6.1"
 
 uglify-js@^3.1.4:
-  version "3.13.2"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.13.2.tgz#fe10319861bccc8682bfe2e8151fbdd8aa921c44"
-  integrity sha512-SbMu4D2Vo95LMC/MetNaso1194M1htEA+JrqE9Hk+G2DhI+itfS9TRu9ZKeCahLDNa/J3n4MqUJ/fOHMzQpRWw==
+  version "3.13.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.13.3.tgz#ce72a1ad154348ea2af61f50933c76cc8802276e"
+  integrity sha512-otIc7O9LyxpUcQoXzj2hL4LPWKklO6LJWoJUzNa8A17Xgi4fOeDC8FBDOLHnC/Slo1CQgsZMcM6as0M76BZaig==
 
 unc-path-regex@^0.1.2:
   version "0.1.2"

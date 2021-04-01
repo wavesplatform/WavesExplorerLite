@@ -5,15 +5,14 @@ import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
 const transformSingle = async (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
-
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
-
+    tx.applicationStatus = info && info.applicationStatus
     return transform(
         currencyService,
         spamDetectionService,
         stateChangeService,
         assetService,
-        {...tx, applicationStatus: info && info.applicationStatus},
+        tx,
         true
     );
 };
@@ -39,20 +38,17 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
             [assetDetail.assetId]: assetDetail
         }), {});
 
-    const promises = transactions.map(item =>
-        transform(currencyService,
-            spamDetectionService,
-            stateChangeService,
-            assetService,
-            {
-                ...item,
-                applicationStatus: infoMap[item.id] && infoMap[item.id].applicationStatus,
-                details: transactionsWithAssetDetails.includes(item.type)
-                    ? assetsDetails[item.assetId]
-                    : undefined
-            },
-            false
-        )
+    const promises = transactions.map(item => {
+            item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
+            item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
+            return transform(currencyService,
+                spamDetectionService,
+                stateChangeService,
+                assetService,
+                item,
+                false
+            )
+        }
     );
 
     return Promise.all(promises);
@@ -192,8 +188,8 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
-            fee: Money.fromCoins(tx.fee, feeCurrency)
-
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            stateUpdate: tx.stateUpdate
         });
 
         const appendAssetData = async (data, assetKey) => {
@@ -207,7 +203,7 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
                     const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
                     return {
                         ...item,
-                        money: Money.fromCoins(item.amount || item.quantity || 0, currency),
+                        money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
                         name,
                         decimals,
                         description
@@ -225,6 +221,16 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
             result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
             result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
             result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
+        }
+
+        if (tx.stateUpdate) {
+            result.stateUpdate = tx.stateUpdate;
+            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
+            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
+            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
+            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
+            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
+            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
         }
         return result;
     });

@@ -27,6 +27,8 @@ import {
     fetchHeight,
     fetchHeightById
 } from "@waves/node-api-js/cjs/api-node/blocks";
+import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
+import {fetchAssetsAddressLimit} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -176,11 +178,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             },
         },
         transactions: {
-            unconfirmed: () => retryableGet('/transactions/unconfirmed'),
+            unconfirmed: () => fetchUnconfirmed(baseUrl),
             utxSize: () => fetchUnconfirmedSize(baseUrl),
-            info: id => fetchInfo(baseUrl, id).then(response => ({
-                data: response
-            })),
+            info: id => fetchInfo(baseUrl, id),
             status: async idsArray => {
                 const limit = 1000;
                 let subarray = [];
@@ -242,6 +242,6 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return retryableGet(`/assets/nft/${address}/limit/${top}`, config);
             }
         },
-        peers: () => retryableGet('/peers/connected'),
+        peers: () => fetchConnected(baseUrl),
     };
 };
