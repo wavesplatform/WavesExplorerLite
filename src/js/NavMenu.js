@@ -34,19 +34,9 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).nodes.list,
         visible: alwaysVisible,
         icon: 'icon-nodes'
-    }, {
-        title: 'Gateways',
-        route: networkId => routeBuilder(networkId).gateways.list,
-        visible: alwaysVisible,
-        icon: 'icon-nodes'
-    }, {
+    },{
         title: 'Official Links',
         route: networkId => routeBuilder(networkId).tools.list,
-        visible: alwaysVisible,
-        icon: 'icon-nodes'
-    }, {
-        title: 'TurtleCap',
-        route: networkId => routeBuilder(networkId).tickers.list,
         visible: alwaysVisible,
         icon: 'icon-nodes'
     }];

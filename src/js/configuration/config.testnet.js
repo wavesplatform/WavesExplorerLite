@@ -12,9 +12,6 @@ export default {
         {url: 'https://testnet.tnnode2.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
         {url: 'https://testnet.tnnode3.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
     ],
-    gateways: [
-
-    ],
     tools: [
         {name: 'Online Wallet & DEX', url: 'https://testnet.wallet.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
         {name: 'TurtleShell Chrome Store', url: 'https://chrome.google.com/webstore/detail/turtleshell/billhkeiifjfbbkmmfpcpchikbajnfje?hl=nl',maintainer: 'https://turtlenetwork.eu'},
@@ -24,7 +21,4 @@ export default {
         {name: 'Statistics', url: 'http://statistics.turtlenetwork.eu/testnet/'}
 
     ],
-    tickers: [
-
-    ]
 };

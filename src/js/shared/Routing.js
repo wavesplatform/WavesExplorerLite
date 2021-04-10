@@ -18,14 +18,8 @@ export const routeBuilder = (networkId) => {
 
     return {
         root,
-        gateways: {
-          list:   `${root}/gateways`
-        },
         tools: {
             list:   `${root}/tools`
-        },
-        tickers: {
-            list:   `${root}/tickers`
         },
         nodes: {
             list: `${root}/nodes`

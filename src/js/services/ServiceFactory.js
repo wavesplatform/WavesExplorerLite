@@ -7,9 +7,7 @@ import {StorageService} from './StorageService';
 import {SpamDetectionService} from './SpamDetectionService';
 import {PeersService} from './PeersService';
 import {NodesService} from './NodesService';
-import {GatewaysService} from './GatewaysService';
 import {ToolsService} from './ToolsService';
-import {TickersService} from './TickersService'
 import {TransactionService} from './TransactionService';
 import {BlockService} from './BlockService';
 import {AddressService} from './AddressService';
@@ -61,11 +59,9 @@ class NetworkDependentServices {
 
     nodesService = () => new NodesService(this._globalServices.configurationService(), this._networkId);
 
-    gatewaysService = () => new GatewaysService(this._globalServices.configurationService(), this._networkId);
 
     toolsService = () => new ToolsService(this._globalServices.configurationService(), this._networkId);
 
-    tickersService = () => new TickersService(this._globalServices.configurationService(), this._networkId);
 
 
     transactionService = () => new TransactionService(this._transactionTransformerService,
