@@ -30,7 +30,7 @@ class NetworkInfoContainer extends React.Component {
     };
 
     setRefreshInterval = () => {
-        this.interval = setInterval(() => this.fetchData(), 5000);
+        this.interval = setInterval(() => this.fetchData(), 10000);
     };
 
     removeRefreshInterval = () => {

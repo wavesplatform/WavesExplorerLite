@@ -1,4 +1,4 @@
-const nodeUrl = 'https://cluster.tnnode.turtlenetwork.eu';
+const nodeUrl = 'https://cluster2.tnnode.turtlenetwork.eu';
 
 export default {
     networkId: 'mainnet',
@@ -16,7 +16,6 @@ export default {
         {url: 'https://node.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
         {url: 'https://node.mortysnode.nl', maintainer: 'Morty'}
-        //{url: 'https://www.globalmarketsource.com',maintainer: '@FriGo_Bar'}
         ],
     tools: [
         {name: 'Online Wallet & DEX', url: 'https://wallet.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},

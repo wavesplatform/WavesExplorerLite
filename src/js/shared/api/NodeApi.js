@@ -143,7 +143,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         blocks: {
             height: () => get('/blocks/height'),
             heightBySignature: (signature) => get(`/blocks/height/${signature}`),
-            delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
+            //delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
+            delay: 0,
             at: (height) => retryableGet(`/blocks/at/${height}`, {
                 transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
             }),
