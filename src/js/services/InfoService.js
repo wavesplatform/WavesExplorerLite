@@ -28,6 +28,7 @@ export class InfoService extends ApiClientService {
 
         return axios.all([
             api.version(),
+            api.transactions.leaseInfo(['AbkVZ6EzuUESkQZUHSFtUHdoRQh4khTD66eGc73CmTeg', 'GGSK8RGLRM2j1Hx9FhQjBaFptmbZgGzX93NKToGE1Bjn']),
             this.loadHeight(),
             api.baseTarget()
         ]).then(axios.spread((version, height, baseTarget) => {

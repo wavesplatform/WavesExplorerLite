@@ -29,6 +29,7 @@ import {
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchAssetsAddressLimit} from "@waves/node-api-js/cjs/api-node/assets";
+import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -181,6 +182,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             unconfirmed: () => fetchUnconfirmed(baseUrl),
             utxSize: () => fetchUnconfirmedSize(baseUrl),
             info: id => fetchInfo(baseUrl, id),
+            leaseInfo: ids => fetchLeasingInfo(baseUrl, ids),
             status: async idsArray => {
                 const limit = 1000;
                 let subarray = [];
