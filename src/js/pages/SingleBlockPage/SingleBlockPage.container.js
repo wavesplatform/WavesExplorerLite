@@ -111,10 +111,7 @@ export class SingleBlockPage extends React.Component {
             .forNetwork(networkId)
             .blockService()
             .loadBlock(height)
-            .then(result => {
-                console.log('result', result)
-                this.setState(result)
-            })
+            .then(result => this.setState(result))
             .finally(() => this.setState({loading: false}));
     };
 
@@ -145,7 +142,6 @@ export class SingleBlockPage extends React.Component {
     }
 
     stateToDictionaryItems() {
-        console.log('this.state', this.state)
         const items = {
             default: [{
                 label: 'Height',

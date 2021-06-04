@@ -98,8 +98,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             : ''
     }];
 
-    // let updateStateChanges = tx.stateChanges;
-    console.log('stateUpdate', tx.stateUpdate)
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.stateChanges}/>
@@ -197,7 +195,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...results
         ]
     }
-    console.log('info stateUpdate', stateUpdate)
     if (stateUpdate) info.default.push(...stateUpdate)
     return info
 };

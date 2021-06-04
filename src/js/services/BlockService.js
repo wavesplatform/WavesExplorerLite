@@ -59,8 +59,6 @@ export class BlockService extends ApiClientService {
             const transactions = results[1];
             const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
-            console.log('load block', block)
-
             return {
                 maxHeight,
                 block,
