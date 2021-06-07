@@ -15,7 +15,7 @@ import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
 import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
 import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
 import {
-    fetchInfo,
+    fetchInfo, fetchTransactions,
     fetchUnconfirmed,
     fetchUnconfirmedSize
 } from "@waves/node-api-js/cjs/api-node/transactions";
@@ -28,6 +28,8 @@ import {
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
+import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
+import {fetchAssetsBalance} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -195,22 +197,13 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return [].concat(...res)
             },
-            address: (address, limit, after) => {
-                const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
-                const config = after ? {
-                    params: {
-                        after
-                    }
-                } : undefined;
-
-                return retryableGet(`/transactions/address/${address}/limit/${top}`, config);
-            },
+            address: (address, limit, after) => fetchTransactions(baseUrl, address, limit, after),
         },
         aliases: {
-            address: (alias) => retryableGet(`/alias/by-alias/${alias}`)
+            address: (alias) => fetchByAlias(baseUrl, alias)
         },
         assets: {
-            balance: (address) => retryableGet(`/assets/balance/${address}`),
+            balance: (address) => fetchAssetsBalance(baseUrl, address),
             details: (assetId, full) => retryableGet(`/assets/details/${assetId}`, {
                 params: {
                     full: !!full
