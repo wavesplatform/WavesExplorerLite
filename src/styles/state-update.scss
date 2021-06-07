@@ -1,5 +1,7 @@
 .state-update {
     td {
         width: 33.3% !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }
