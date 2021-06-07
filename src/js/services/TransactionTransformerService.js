@@ -322,7 +322,7 @@ const transformLease = (currencyService, tx) => {
 };
 
 const transformLeaseCancel = async (currencyService, tx) => {
-    const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId)).data;
+    const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId));
     const feeCurrency = await currencyService.get(tx.feeAssetId)
     return Object.assign(copyMandatoryAttributes(tx), {
         amount: Money.fromCoins(amount, Currency.WAVES),
