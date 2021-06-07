@@ -37,7 +37,7 @@ export class SearchService extends ApiClientService {
                 const event = this.createEvent(SearchResult.transaction);
                 this.analyticsService.sendEvent(event);
 
-                return routes.transactions.one(infoResponse.data.id);
+                return routes.transactions.one(infoResponse.id);
             });
         }).catch(() => {
             return this.aliasService.loadAddress(query).then(address => {
