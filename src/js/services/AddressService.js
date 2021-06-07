@@ -33,7 +33,7 @@ export class AddressService extends ApiClientService {
     };
 
     loadRawAliases = (address) => {
-        return this.getApi().addresses.aliases(address).then(aliasesResponse => aliasesResponse.data);
+        return this.getApi().addresses.aliases(address);
     };
 
     transformAndGroupAliases = (rawAliases) => {
@@ -92,19 +92,19 @@ export class AddressService extends ApiClientService {
     };
 
     loadData = (address) => {
-        return this.getApi().addresses.data(address).then(dataResponse => dataResponse.data);
+        return this.getApi().addresses.data(address);
     };
 
     loadScript = (address) => {
-        return this.getApi().addresses.scriptInfo(address).then(scriptResponse => scriptResponse.data);
+        return this.getApi().addresses.scriptInfo(address);
     };
 
     loadScriptMeta = (address) => {
-        return this.getApi().addresses.scriptMeta(address).then(metaResponse => metaResponse.data);
+        return this.getApi().addresses.scriptMeta(address);
     };
 
     validate = (address) => {
-        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
+        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.valid);
     };
 
     decompileScript = (scriptBase64, networkId) => {

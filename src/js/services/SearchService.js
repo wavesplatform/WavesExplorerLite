@@ -19,14 +19,14 @@ export class SearchService extends ApiClientService {
         const routes = routeBuilder(this.networkId);
         const api = this.getApi();
         return api.addresses.validate(query).then(validateResponse => {
-            if (validateResponse.data.valid) {
+            if (validateResponse.valid) {
                 const event = this.createEvent(SearchResult.address);
                 this.analyticsService.sendEvent(event);
 
                 return routes.addresses.one(query);
             }
 
-            return api.blocks.heightBySignature(query).then(heightResponse => {
+            return api.blocks.heightById(query).then(heightResponse => {
                 const event = this.createEvent(SearchResult.block);
                 this.analyticsService.sendEvent(event);
 

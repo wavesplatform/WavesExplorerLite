@@ -159,15 +159,15 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         baseTarget: () => fetchBasetarget(baseUrl),
         addresses: {
             details: (address) => fetchBalanceDetails(baseUrl, address),
-            aliases: (address) => fetchByAddress(baseUrl, address).then(response => ({data: response})),
-            validate: (address) => fetchValidate(baseUrl, address).then(response => ({data: response})),
-            data: (address) => data(baseUrl, address).then(response => ({data: response})),
-            scriptInfo: (address) => fetchScriptInfo(baseUrl, address).then(response => ({data: response})),
-            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address).then(response => ({data: response}))
+            aliases: (address) => fetchByAddress(baseUrl, address),
+            validate: (address) => fetchValidate(baseUrl, address),
+            data: (address) => data(baseUrl, address),
+            scriptInfo: (address) => fetchScriptInfo(baseUrl, address),
+            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address)
         },
         blocks: {
             height: () => fetchHeight(baseUrl),
-            heightBySignature: (id) => fetchHeightById(baseUrl, id),
+            heightById: (id) => fetchHeightById(baseUrl, id),
             delay: (id, blockNum) => fetchDelay(baseUrl, id, blockNum),
             at: (height) => fetchBlockAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
             headers: {
@@ -205,7 +205,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return retryableGet(`/transactions/address/${address}/limit/${top}`, config);
             },
-            stateChanges: id => retryableGet(`/debug/stateChanges/info/${id}`)
+            // stateChanges: id => retryableGet(`/debug/stateChanges/info/${id}`)
         },
         aliases: {
             address: (alias) => retryableGet(`/alias/by-alias/${alias}`)

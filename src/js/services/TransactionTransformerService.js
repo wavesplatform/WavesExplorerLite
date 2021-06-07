@@ -4,20 +4,19 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
-const transformSingle = async (currencyService, spamDetectionService, stateChangeService, assetService, tx) => {
+const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
     tx.applicationStatus = info && info.applicationStatus
     return transform(
         currencyService,
         spamDetectionService,
-        stateChangeService,
         assetService,
         tx,
         true
     );
 };
 
-const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
+const transformMultiple = async (currencyService, spamDetectionService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
 
     const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
@@ -43,7 +42,6 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
             item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
             return transform(currencyService,
                 spamDetectionService,
-                stateChangeService,
                 assetService,
                 item,
                 false
@@ -54,7 +52,7 @@ const transformMultiple = async (currencyService, spamDetectionService, stateCha
     return Promise.all(promises);
 };
 
-const transform = (currencyService, spamDetectionService, stateChangeService, assetService, tx, shouldLoadDetails) => {
+const transform = (currencyService, spamDetectionService, assetService, tx, shouldLoadDetails) => {
     switch (tx.type) {
         case 1:
             return transformGenesis(currencyService, tx);
@@ -100,7 +98,7 @@ const transform = (currencyService, spamDetectionService, stateChangeService, as
             return transformAssetScript(currencyService, tx);
 
         case 16:
-            return transformScriptInvocation(currencyService, stateChangeService, assetService, tx, shouldLoadDetails);
+            return transformScriptInvocation(currencyService, assetService, tx, shouldLoadDetails);
 
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
@@ -170,7 +168,7 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 }
 
 
-const transformScriptInvocation = (currencyService, stateChangeService, assetService, tx, shouldLoadDetails) => {
+const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
 
     const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
 
@@ -214,9 +212,9 @@ const transformScriptInvocation = (currencyService, stateChangeService, assetSer
 
         if (!shouldLoadDetails)
             return result;
-        const changes = await stateChangeService.loadStateChanges(tx.id)
-        if (changes && changes.stateChanges) {
-            result.stateChanges = changes.stateChanges;
+
+        if (tx.stateChanges) {
+            result.stateChanges = tx.stateChanges;
             result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
             result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
             result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
@@ -450,18 +448,17 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 export class TransactionTransformerService {
-    constructor(currencyService, spamDetectionService, stateChangeService, assetService) {
+    constructor(currencyService, spamDetectionService, assetService) {
         this.currencyService = currencyService;
         this.spamDetectionService = spamDetectionService;
-        this.stateChangeService = stateChangeService;
         this.assetService = assetService;
     }
 
     transform = (input) => {
         return Array.isArray(input)
             ? transformMultiple(this.currencyService,
-                this.spamDetectionService, this.stateChangeService, this.assetService, input)
+                this.spamDetectionService, this.assetService, input)
             : transformSingle(this.currencyService,
-                this.spamDetectionService, this.stateChangeService, this.assetService, input)
+                this.spamDetectionService, this.assetService, input)
     };
 }
