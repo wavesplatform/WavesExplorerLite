@@ -16,19 +16,17 @@ import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
 import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
 import {
     fetchInfo,
-    fetchStatus,
     fetchUnconfirmed,
     fetchUnconfirmedSize
 } from "@waves/node-api-js/cjs/api-node/transactions";
 import {
-    BlockAt,
+    fetchBlockAt,
     fetchDelay, fetchHeadersAt,
     fetchHeadersLast, fetchHeadersSeq,
     fetchHeight,
     fetchHeightById
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
-import {fetchAssetsAddressLimit} from "@waves/node-api-js/cjs/api-node/assets";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
@@ -171,7 +169,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             height: () => fetchHeight(baseUrl),
             heightBySignature: (id) => fetchHeightById(baseUrl, id),
             delay: (id, blockNum) => fetchDelay(baseUrl, id, blockNum),
-            at: (height) => BlockAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
+            at: (height) => fetchBlockAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
             headers: {
                 last: () => fetchHeadersLast(baseUrl).then(response => transformTimestampToDateTime(response)),
                 at: (height) => fetchHeadersAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
