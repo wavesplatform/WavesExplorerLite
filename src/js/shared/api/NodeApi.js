@@ -211,7 +211,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             balance: (address) => fetchAssetsBalance(baseUrl, address),
             details: (assetId) => fetchDetails(baseUrl, assetId),
             detailsMultiple: (idsArray) => fetchAssetsDetails(baseUrl, idsArray),
-            nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, {body: new URLSearchParams({after: after})}),
+            nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
             peers: () => fetchConnected(baseUrl),
         }
     }

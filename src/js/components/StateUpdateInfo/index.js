@@ -52,7 +52,7 @@ export const StateUpdateInfo = ({tx}) => (
                         <EndpointRef endpoint={item.address} appearance="regular"/>
                     </Line>
                 </td>
-                <td>{`${item.quantity}`}</td>
+                <td><MoneyInfo key={i} value={item.money}/></td>
                 <td>
                     <Line wrap={false}>
                         {`Description: ${item.description}`}
@@ -79,7 +79,7 @@ export const StateUpdateInfo = ({tx}) => (
                         <EndpointRef endpoint={item.address} appearance="regular"/>
                     </Line>
                 </td>
-                <td>{`${item.quantity}`}</td>
+                <td><MoneyInfo key={i} value={item.money}/></td>
                 <td>
                     <Line wrap={false}>
                         {`Reissuable: ${item.isReissuable}`}
@@ -101,8 +101,7 @@ export const StateUpdateInfo = ({tx}) => (
                     </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
-                    {`${item.quantity} `}
-                    <RoutedAssetRef assetId={item.assetId} text={item.money.currency.displayName}/>
+                    <MoneyInfo key={i} value={item.money}/>
                 </td>
                 <td></td>
             </tr>)
@@ -122,8 +121,7 @@ export const StateUpdateInfo = ({tx}) => (
                     </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
-                    {`${item.money.amount} `}
-                    <RoutedAssetRef assetId={item.assetId} text={item.money.currency.displayName}/>
+                    <MoneyInfo key={i} value={item.money}/>
                 </td>
                 <td></td>
             </tr>)
