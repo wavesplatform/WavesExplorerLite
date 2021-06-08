@@ -29,7 +29,12 @@ import {
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
-import {fetchAssetsBalance} from "@waves/node-api-js/cjs/api-node/assets";
+import {
+    fetchAssetsAddressLimit,
+    fetchAssetsBalance,
+    fetchAssetsDetails,
+    fetchDetails
+} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -197,43 +202,17 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return [].concat(...res)
             },
-            address: (address, limit, after) => fetchTransactions(baseUrl, address, limit, after),
+            address: (address, limit = TRANSACTIONS_BY_ADDRESS_LIMIT, after) => fetchTransactions(baseUrl, address, limit, after),
         },
         aliases: {
             address: (alias) => fetchByAlias(baseUrl, alias)
         },
         assets: {
             balance: (address) => fetchAssetsBalance(baseUrl, address),
-            details: (assetId, full) => retryableGet(`/assets/details/${assetId}`, {
-                params: {
-                    full: !!full
-                }
-            }),
-            detailsMultiple: async idsArray => {
-                const limit = 1000;
-                let subarray = [];
-                for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
-                    subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
-                }
-
-                const res = await Promise.all(
-                    subarray.map(async (ids) =>
-                        (await axios.post('/assets/details', {ids}, {baseURL: baseUrl})).data)
-                );
-
-                return [].concat(...res)
-            },
-            nft: (address, limit, after) => {
-                const top = limit || ASSETS_PER_PAGE;
-                const config = after ? {
-                    params: {
-                        after
-                    }
-                } : undefined;
-
-                return retryableGet(`/assets/nft/${address}/limit/${top}`, config);
-            }
-        },
-        peers: () => fetchConnected(baseUrl),
-    };
-};
+            details: (assetId) => fetchDetails(baseUrl, assetId),
+            detailsMultiple: (idsArray) => fetchAssetsDetails(baseUrl, idsArray),
+            nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, {body: new URLSearchParams({after: after})}),
+            peers: () => fetchConnected(baseUrl),
+        }
+    }
+}

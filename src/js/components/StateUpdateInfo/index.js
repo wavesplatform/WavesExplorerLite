@@ -169,7 +169,7 @@ export const StateUpdateInfo = ({tx}) => (
                     </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
-                    {/*{item.amount}*/}
+                    {item.amount}
                 </td>
                 <td>
                     <Line wrap={false}>
@@ -184,8 +184,8 @@ export const StateUpdateInfo = ({tx}) => (
         {tx.stateUpdate.data && tx.stateUpdate.data
             .map((data, i) => <tr key={i}>
                 <td style={{width: 100}}><Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line></td>
-                <td>{`${data.key}`}</td>
-                <td>{`${data.value}`}</td>
+                <td>{`key: ${data.key}`}</td>
+                <td>{`value: ${data.value}`}</td>
             </tr>)
         }
         </tbody>

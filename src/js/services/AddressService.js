@@ -83,7 +83,7 @@ export class AddressService extends ApiClientService {
 
     loadNftTokens = async (address, limit, after) => {
         const balanceResponse = await this.getApi().assets.nft(address, limit, after)
-        return balanceResponse.data.map(item => {
+        return balanceResponse.map(item => {
             return {
                 id: item.id || item.assetId,
                 name: item.name,
