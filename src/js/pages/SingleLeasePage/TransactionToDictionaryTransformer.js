@@ -613,7 +613,7 @@ const buildAmountItem = tx => ({
 
 const buildLeaseId = tx => ({
     label: 'LeaseId',
-    value: <LeaseRef leaseId={tx.id} />
+    value: <LeaseRef leaseId={tx.leaseId} />
 });
 
 export default transactionToDictionary;
