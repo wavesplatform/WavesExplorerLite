@@ -1,5 +1,7 @@
 import Currency from '../shared/Currency';
 
+const expirationTime = 24 *60 *60 *1000; // 24h
+
 export class DatabaseCurrencyCache {
     constructor(database, errorReportingService) {
         this.cache = database.currencyCache();
@@ -10,6 +12,10 @@ export class DatabaseCurrencyCache {
         return this.cache.get(id)
             .then(entry => {
                 if (!entry) {
+                    return null;
+                }
+
+                if (Date.now() - entry.lastAccess > expirationTime) {
                     return null;
                 }
 
