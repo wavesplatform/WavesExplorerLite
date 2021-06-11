@@ -112,7 +112,6 @@ export const StateUpdateInfo = ({tx}) => (
         {tx.stateUpdate.sponsorFees && tx.stateUpdate.sponsorFees
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
-                    {console.log('SponsorFee', item)}
                     <Line wrap={false} bold>
                         SponsorFee
                     </Line>

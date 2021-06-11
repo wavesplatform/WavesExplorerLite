@@ -210,7 +210,20 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         assets: {
             balance: (address) => fetchAssetsBalance(baseUrl, address),
             details: (assetId) => fetchDetails(baseUrl, assetId),
-            detailsMultiple: (idsArray) => fetchAssetsDetails(baseUrl, idsArray),
+            detailsMultiple: async idsArray => {
+                const limit = 1000;
+                let subarray = [];
+                for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
+                    subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
+                }
+
+                const res = await Promise.all(
+                    subarray.map(async (ids) =>
+                        (await axios.post('/assets/details', {ids}, {baseURL: baseUrl})).data)
+                );
+
+                return [].concat(...res)
+            },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
             peers: () => fetchConnected(baseUrl),
         }
