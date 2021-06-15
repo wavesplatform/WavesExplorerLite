@@ -546,7 +546,7 @@ const buildFeeItem = tx => ({
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: <MoneyInfo value={tx.amount}/>
+    value: <MoneyInfo value={tx.amount} />
 });
 
 export default transactionToDictionary;
