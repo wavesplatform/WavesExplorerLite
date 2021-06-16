@@ -70,15 +70,4 @@ export class ConfigurationService {
             customNetwork: this.customNetwork
         });
     };
-
-    getDecompileScriptUrl = (id) => {
-        if (['devnet', 'testnet', 'stagenet', 'custom'].includes(id)) {
-            let network;
-            if ((network = [...configuredNetworks, this.customNetwork].find(({networkId}) => networkId === id)) != null) {
-                return `${network.apiBaseUrl}/utils/script/decompile`
-            }
-        }
-        return __DECOMPILE_SCRIPT_URL__
-
-    }
 }
