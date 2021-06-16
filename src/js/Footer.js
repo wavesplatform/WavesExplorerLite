@@ -30,7 +30,7 @@ const Footer = ({version}) => {
                     (<a key={item.id} className={`social ${item.id}`} href={item.url} target="_blank"></a>))}
             </div>
             <div>
-                <a className="fade" href="https://wavesplatform.com" target="_blank">wavesplatform.com</a>
+                <a className="fade" href="https://waves.tech/" target="_blank">waves.tech</a>
             </div>
         </div>
     );
