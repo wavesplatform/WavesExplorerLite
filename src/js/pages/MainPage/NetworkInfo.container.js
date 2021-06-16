@@ -15,7 +15,12 @@ class NetworkInfoContainer extends React.Component {
     }
 
     initialFetch = () => {
-        return this.fetchData().then(this.setRefreshInterval);
+        const {networkId} = this.props.match.params;
+        const infoService = ServiceFactory.forNetwork(networkId).infoService();
+        return this.fetchData().then(() => {
+            infoService.loadDelay(this.state.info).then(info => this.setState({info}));
+            return this.setRefreshInterval
+        });
     };
 
     fetchData = () => {
@@ -24,8 +29,6 @@ class NetworkInfoContainer extends React.Component {
         return infoService.loadInfo().then(info => {
             const change = Object.assign({}, this.state.info, info);
             this.setState({info: change});
-
-            infoService.loadDelay(info).then(info => this.setState({info}));
         });
     };
 
