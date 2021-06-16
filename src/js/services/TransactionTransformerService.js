@@ -21,7 +21,7 @@ const transformSingle = async (currencyService, spamDetectionService, stateChang
 const transformMultiple = async (currencyService, spamDetectionService, stateChangeService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
 
-    const infoMap = (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
+    const infoMap = !!transactions[0].applicationStatus ? transactions : (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
         .reduce((acc, val) => ({...acc, [val.id]: val}), {});
 
     const assetsIds = transactions

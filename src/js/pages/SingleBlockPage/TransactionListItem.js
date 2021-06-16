@@ -474,7 +474,9 @@ class UpdateAssetInfoTransactionListItem extends React.Component {
                     </Line>
                 </td>
                 <JustFee fee={tx.fee}/>
-                <td data-label="Asset name"><Line>{tx.assetName}</Line></td>
+                <td data-label="Asset name"><Line>
+                    <RoutedAssetRef assetId={tx.assetId} text={tx.assetName}/>
+                </Line></td>
             </tr>
         );
     }
