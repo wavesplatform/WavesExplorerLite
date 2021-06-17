@@ -37,7 +37,7 @@ export class TransactionListItem extends React.PureComponent {
                 </td>
                 <td data-label="Sender / Receiver">
                     <TransactionArrow type={tx.type} direction={tx.direction} />
-                    <DirectionalEndpoints direction={tx.direction} sender={tx.sender} recipient={tx.recipient} />
+                    <DirectionalEndpoints transaction={tx} />
                 </td>
                 <td data-label="Amount in / out">
                     {this.conventAmount(tx.in)}

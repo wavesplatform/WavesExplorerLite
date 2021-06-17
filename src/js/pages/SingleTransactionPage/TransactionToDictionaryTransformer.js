@@ -18,6 +18,8 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
+import TransactionArrow from "../../components/TransactionArrow";
+import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -171,7 +173,12 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         </>
     }];
 
-    return {
+    const stateUpdate = tx.stateUpdate ? [{
+        label: 'State Update',
+        value: <StateUpdateInfo tx={tx}/>
+    }] : null
+
+    const info = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -187,7 +194,9 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...stateItems,
             ...results
         ]
-    };
+    }
+    if (stateUpdate) info.default.push(...stateUpdate)
+    return info
 };
 
 const updateAssetInfoTransactionToItems = tx => ({

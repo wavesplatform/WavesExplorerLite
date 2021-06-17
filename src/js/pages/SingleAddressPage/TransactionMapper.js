@@ -54,7 +54,8 @@ const copyMandatoryAttributes = tx => ({
     type: tx.type,
     timestamp: tx.timestamp,
     sender: tx.sender,
-    isSpam: tx.isSpam
+    isSpam: tx.isSpam,
+    transferCount: tx.transferCount
 });
 
 const defaultDirection = (tx, currentAddress) => {
@@ -94,6 +95,7 @@ const mapScriptInvocation = (tx, currentAddress) => {
 
 const mapMassTransfer = (tx, currentUser) => {
     const tail = {};
+    if (tx.transferCount) tail.transferCount = tx.transferCount
     if (matchesUser(currentUser, tx.sender)) {
         tail.direction = OUTGOING;
         tail.out = moneyToObject(tx.totalAmount);

@@ -55,7 +55,7 @@ const validate = values => {
                 }
             });
     }).then(versionResponse => {
-        if (!versionResponse.data.version) {
+        if (!versionResponse.version) {
             throw {
                 apiBaseUrl: `Node has failed to report it's version`
             }
