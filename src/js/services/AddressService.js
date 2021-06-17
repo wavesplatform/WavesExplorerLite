@@ -15,8 +15,7 @@ export class AddressService extends ApiClientService {
     }
 
     loadBalance = (address) => {
-        return this.getApi().addresses.details(address).then(balanceResponse => {
-            const data = balanceResponse.data;
+        return this.getApi().addresses.details(address).then(data => {
             return {
                 regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
                 generating: Money.fromCoins(data.generating, Currency.WAVES).toString(),
@@ -28,12 +27,12 @@ export class AddressService extends ApiClientService {
 
     loadTransactions = (address, limit, after) => {
         return this.getApi().transactions.address(address, limit, after).then(transactionsResponse => {
-            return this.transformer.transform(transactionsResponse.data[0]);
+            return this.transformer.transform(transactionsResponse);
         });
     };
 
     loadRawAliases = (address) => {
-        return this.getApi().addresses.aliases(address).then(aliasesResponse => aliasesResponse.data);
+        return this.getApi().addresses.aliases(address);
     };
 
     transformAndGroupAliases = (rawAliases) => {
@@ -52,9 +51,9 @@ export class AddressService extends ApiClientService {
     loadAssets = async (address) => {
         const api = this.getApi().assets
         const balanceResponse = await api.balance(address)
-        const details = (await api.detailsMultiple(balanceResponse.data.balances.map(({assetId}) => assetId)))
+        const details = (await api.detailsMultiple(balanceResponse.balances.map(({assetId}) => assetId)))
             .reduce((acc, val) => ({...acc, [val.assetId]: val}), {})
-        return balanceResponse.data.balances.map(item => {
+        return balanceResponse.balances.map(item => {
 
             // TODO: remove when token is renamed
             if (item.assetId === VostokToWavesEnterprise.id) {
@@ -66,9 +65,7 @@ export class AddressService extends ApiClientService {
                 displayName: details[item.assetId].name,
                 precision: details[item.assetId].decimals
             });
-            ;
 
-            console.log(currency)
             this.currencyService.put(currency);
 
             const amount = Money.fromCoins(item.balance, currency);
@@ -83,7 +80,7 @@ export class AddressService extends ApiClientService {
 
     loadNftTokens = async (address, limit, after) => {
         const balanceResponse = await this.getApi().assets.nft(address, limit, after)
-        return balanceResponse.data.map(item => {
+        return balanceResponse.map(item => {
             return {
                 id: item.id || item.assetId,
                 name: item.name,
@@ -92,18 +89,18 @@ export class AddressService extends ApiClientService {
     };
 
     loadData = (address) => {
-        return this.getApi().addresses.data(address).then(dataResponse => dataResponse.data);
+        return this.getApi().addresses.data(address);
     };
 
     loadScript = (address) => {
-        return this.getApi().addresses.scriptInfo(address).then(scriptResponse => scriptResponse.data);
+        return this.getApi().addresses.scriptInfo(address);
     };
 
     loadScriptMeta = (address) => {
-        return this.getApi().addresses.scriptMeta(address).then(metaResponse => metaResponse.data);
+        return this.getApi().addresses.scriptMeta(address);
     };
 
     validate = (address) => {
-        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
+        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.valid);
     };
 }

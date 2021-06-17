@@ -30,7 +30,7 @@ export class BlockService extends ApiClientService {
 
     loadSequence = (from, to) => {
         return this.getApi().blocks.headers.sequence(from, to).then(blocksResponse => {
-            const blocks = blocksResponse.data.map(block => {
+            const blocks = blocksResponse.map(block => {
                 return {
                     id: block.id,
                     height: block.height,
@@ -50,12 +50,11 @@ export class BlockService extends ApiClientService {
         let block;
 
         return Promise.all([this.infoService.loadHeight(),
-            this.getApi().blocks.at(height).then(blockResponse => {
-                block = blockResponse.data;
-                transformBlock(block);
-                return this.transformer.transform(block.transactions);
-            }
-        )]).then(results => {
+            this.getApi().blocks.at(height).then(response => {
+                    block = transformBlock(response);
+                    return this.transformer.transform(block.transactions);
+                }
+            )]).then(results => {
             const maxHeight = results[0];
             const transactions = results[1];
             const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};

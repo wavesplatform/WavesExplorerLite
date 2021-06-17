@@ -19,7 +19,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
 import pending from "../../../images/pending.svg";
-import ServiceFactory from "../../services/ServiceFactory";
+import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 
 
 const transactionToDictionary = (tx, networkId) => {
@@ -73,8 +73,8 @@ const transactionToDictionary = (tx, networkId) => {
         case 17:
             return updateAssetInfoTransactionToItems(tx);
 
-        case 18:
-            return continuationToItems(tx, networkId);
+        // case 18:
+        //     return continuationToItems(tx, networkId);
 
         default:
             return {
@@ -175,7 +175,12 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
         </>
     }];
 
-    const result = {
+    const stateUpdate = tx.stateUpdate ? [{
+        label: 'State Update',
+        value: <StateUpdateInfo tx={tx}/>
+    }] : null
+
+    const info = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -192,35 +197,9 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...results
         ]
     }
-    return tx.version > 2
-        ? {
-            default: [
-                ...buildTransactionHeaderItems(tx),
-                {
-                    label: 'DApp Address',
-                    value: <EndpointRef endpoint={tx.dappAddress}/>
-                }, {
-                    label: 'Call',
-                    value: <InvocationInfo {...tx.call} />
-                },
-                ...paymentItems,
-                buildFeeItem(tx),
-                {
-                    label: 'ExtraFeePerStep',
-                    value: <MoneyInfo value={tx.extraFeePerStep}/>
-                },
-                ...buildSenderAddressAndKeyItems(tx),
-                {
-                    label: 'ContinuationTxs',
-                    value: !!tx.continuationTransactionIds
-                        ? tx.continuationTransactionIds.map(id => <TransactionRef txId={id}/>)
-                        : null
-                },
-                ...stateItems,
-                ...results
-            ]
-        }
-        : result
+
+    if (stateUpdate) info.default.push(...stateUpdate)
+    return info
 };
 
 const updateAssetInfoTransactionToItems = tx => ({

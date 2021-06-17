@@ -354,8 +354,8 @@ class MassPaymentTransactionListItem extends React.PureComponent {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp}/>
                 <td data-label="Sender / Recipient">
                     <TransactionArrow type={tx.type}/>
+                    <Line>{tx.transferCount} recipients</Line>
                     <Line wrap={false}><EndpointRef endpoint={tx.sender} appearance="regular"/></Line>
-                    <Line>{tx.transferCount}</Line>
                 </td>
                 <AmountAndFee amount={tx.totalAmount} fee={tx.fee}/>
                 <td data-label="Price">
