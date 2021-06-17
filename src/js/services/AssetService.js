@@ -10,9 +10,7 @@ export class AssetService extends ApiClientService {
     }
 
     async loadAssetDetails(assetId) {
-        return this.getApi().assets.details(assetId).then(detailsResponse => {
-            const data = detailsResponse.data;
-
+        return this.getApi().assets.details(assetId).then(data => {
             // TODO: remove when token is renamed
             if (data.assetId === VostokToWavesEnterprise.id) {
                 data.name = VostokToWavesEnterprise.name;

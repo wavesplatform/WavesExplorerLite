@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Headline, {HeadlineSize} from '../Headline';
 import DictionaryItem from '../DictionaryItem';
@@ -14,10 +13,6 @@ const DictionaryItemSection = ({section, items}) => (
 );
 
 export class Dictionary extends React.Component {
-    static propTypes = {
-        items: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape(DictionaryItem.propTypes))).isRequired
-    };
-
     render() {
         return (
             <div className="dictionary">

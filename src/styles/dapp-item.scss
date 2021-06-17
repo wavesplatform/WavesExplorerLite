@@ -1,0 +1,41 @@
+.dapp {
+    height: 63px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-call {
+        display: flex;
+        align-items: center;
+
+        &-function {
+            //height: 56px;
+            padding: 15px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            background: #f8f9fb;
+
+            &-arguments {
+                max-width: 300px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+
+    &-button {
+        padding: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 2px;
+        background: #1f5af6;
+        color: white;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+}

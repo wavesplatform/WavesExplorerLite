@@ -20,7 +20,7 @@ export class InfoService extends ApiClientService {
 
     loadHeight = () => {
         return this.getApi().blocks.height()
-            .then(heightResponse => heightResponse.data.height);
+            .then(heightResponse => heightResponse.height);
     };
 
     loadInfo = () => {
@@ -32,9 +32,9 @@ export class InfoService extends ApiClientService {
             api.baseTarget()
         ]).then(axios.spread((version, height, baseTarget) => {
             return {
-                [CAPTIONS.VERSION]: version.data.version.split('-')[0],
+                [CAPTIONS.VERSION]: version.version.split('-')[0],
                 [CAPTIONS.CURRENT_HEIGHT]: height,
-                [CAPTIONS.BASE_TARGET]: baseTarget.data.baseTarget
+                [CAPTIONS.BASE_TARGET]: baseTarget.baseTarget
             };
         }));
     };
@@ -47,9 +47,9 @@ export class InfoService extends ApiClientService {
             return Promise.resolve(addBlockDelay(info, 'N/A'));
 
         return api.blocks.headers.at(height - 1).then(headerResponse => {
-            return api.blocks.delay(headerResponse.data.id || headerResponse.data.signature, BLOCK_DELAY_INTERVAL);
+            return api.blocks.delay(headerResponse.id || headerResponse.signature, BLOCK_DELAY_INTERVAL);
         }).then(delayResponse => {
-            const delay = parseInt(delayResponse.data.delay)/1000 + ' sec';
+            const delay = delayResponse.delay/1000 + ' sec';
             return addBlockDelay(info, delay);
         });
     };

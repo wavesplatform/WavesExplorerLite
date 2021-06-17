@@ -21,10 +21,10 @@ export class NodesService extends ApiClientService {
             ]).then(axios.spread((version, height, baseTarget, unconfirmedTxCount) => {
                 const newNode = {
                     ...node,
-                    version: version.data.version,
-                    height: height.data.height,
-                    baseTarget: baseTarget.data.baseTarget,
-                    unconfirmedTxCount: unconfirmedTxCount.data.size
+                    version: version.version,
+                    height: height.height,
+                    baseTarget: baseTarget.baseTarget,
+                    unconfirmedTxCount: unconfirmedTxCount.size
                 };
 
                 return {

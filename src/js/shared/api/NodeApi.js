@@ -4,6 +4,37 @@ import json from 'json-bigint';
 
 import DateTime from '../DateTime';
 import Strings from '../Strings';
+import {
+    data,
+    fetchBalanceDetails,
+    fetchScriptInfo,
+    fetchScriptInfoMeta,
+    fetchValidate
+} from "@waves/node-api-js/cjs/api-node/addresses";
+import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
+import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
+import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
+import {
+    fetchInfo, fetchTransactions,
+    fetchUnconfirmed,
+    fetchUnconfirmedSize
+} from "@waves/node-api-js/cjs/api-node/transactions";
+import {
+    fetchBlockAt,
+    fetchDelay, fetchHeadersAt,
+    fetchHeadersLast, fetchHeadersSeq,
+    fetchHeight,
+    fetchHeightById
+} from "@waves/node-api-js/cjs/api-node/blocks";
+import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
+import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
+import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
+import {
+    fetchAssetsAddressLimit,
+    fetchAssetsBalance,
+    fetchAssetsDetails,
+    fetchDetails
+} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -131,39 +162,32 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {
-        version: () => get('/node/version'),
-        baseTarget: () => get('/consensus/basetarget'),
+        version: () => fetchNodeVersion(baseUrl),
+        baseTarget: () => fetchBasetarget(baseUrl),
         addresses: {
-            details: (address) => retryableGet(`/addresses/balance/details/${address}`),
-            aliases: (address) => retryableGet(`/alias/by-address/${address}`),
-            validate: (address) => retryableGet(`/addresses/validate/${address}`),
-            data: (address) => retryableGet(`/addresses/data/${address}`),
-            scriptInfo: (address) => retryableGet(`/addresses/scriptInfo/${address}`),
-            scriptMeta: (address) => retryableGet(`/addresses/scriptInfo/${address}/meta`)
+            details: (address) => fetchBalanceDetails(baseUrl, address),
+            aliases: (address) => fetchByAddress(baseUrl, address),
+            validate: (address) => fetchValidate(baseUrl, address),
+            data: (address) => data(baseUrl, address),
+            scriptInfo: (address) => fetchScriptInfo(baseUrl, address),
+            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address)
         },
         blocks: {
-            height: () => get('/blocks/height'),
-            heightBySignature: (signature) => get(`/blocks/height/${signature}`),
-            delay: (fromSignature, count) => get(`/blocks/delay/${fromSignature}/${count}`),
-            at: (height) => retryableGet(`/blocks/at/${height}`, {
-                transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-            }),
+            height: () => fetchHeight(baseUrl),
+            heightById: (id) => fetchHeightById(baseUrl, id),
+            delay: (id, blockNum) => fetchDelay(baseUrl, id, blockNum),
+            at: (height) => fetchBlockAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
             headers: {
-                last: () => retryableGet('/blocks/headers/last', {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                }),
-                at: (height) => retryableGet(`/blocks/headers/at/${height}`, {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                }),
-                sequence: (from, to) => retryableGet(`/blocks/headers/seq/${from}/${to}`, {
-                    transformResponse: axios.defaults.transformResponse.concat(transformTimestampToDateTime)
-                })
-            }
+                last: () => fetchHeadersLast(baseUrl).then(response => transformTimestampToDateTime(response)),
+                at: (height) => fetchHeadersAt(baseUrl, height).then(response => transformTimestampToDateTime(response)),
+                sequence: (from, to) => fetchHeadersSeq(baseUrl, from, to).then(response => transformTimestampToDateTime(response)),
+            },
         },
         transactions: {
-            unconfirmed: () => retryableGet('/transactions/unconfirmed'),
-            utxSize: () => retryableGet('/transactions/unconfirmed/size'),
-            info: id => retryableGet(`/transactions/info/${id}`),
+            unconfirmed: () => fetchUnconfirmed(baseUrl),
+            utxSize: () => fetchUnconfirmedSize(baseUrl),
+            info: id => fetchInfo(baseUrl, id),
+            leaseInfo: ids => fetchLeasingInfo(baseUrl, ids),
             status: async idsArray => {
                 const limit = 1000;
                 let subarray = [];
@@ -178,28 +202,14 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return [].concat(...res)
             },
-            address: (address, limit, after) => {
-                const top = limit || TRANSACTIONS_BY_ADDRESS_LIMIT;
-                const config = after ? {
-                    params: {
-                        after
-                    }
-                } : undefined;
-
-                return retryableGet(`/transactions/address/${address}/limit/${top}`, config);
-            },
-            stateChanges: id => retryableGet(`/debug/stateChanges/info/${id}`)
+            address: (address, limit = TRANSACTIONS_BY_ADDRESS_LIMIT, after) => fetchTransactions(baseUrl, address, limit, after),
         },
         aliases: {
-            address: (alias) => retryableGet(`/alias/by-alias/${alias}`)
+            address: (alias) => fetchByAlias(baseUrl, alias)
         },
         assets: {
-            balance: (address) => retryableGet(`/assets/balance/${address}`),
-            details: (assetId, full) => retryableGet(`/assets/details/${assetId}`, {
-                params: {
-                    full: !!full
-                }
-            }),
+            balance: (address) => fetchAssetsBalance(baseUrl, address),
+            details: (assetId) => fetchDetails(baseUrl, assetId),
             detailsMultiple: async idsArray => {
                 const limit = 1000;
                 let subarray = [];
@@ -214,17 +224,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 return [].concat(...res)
             },
-            nft: (address, limit, after) => {
-                const top = limit || ASSETS_PER_PAGE;
-                const config = after ? {
-                    params: {
-                        after
-                    }
-                } : undefined;
-
-                return retryableGet(`/assets/nft/${address}/limit/${top}`, config);
-            }
-        },
-        peers: () => retryableGet('/peers/connected'),
-    };
-};
+            nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
+            peers: () => fetchConnected(baseUrl),
+        }
+    }
+}
