@@ -186,10 +186,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         transactions: {
             unconfirmed: () => fetchUnconfirmed(baseUrl),
             utxSize: () => fetchUnconfirmedSize(baseUrl),
-            info: id => fetchInfo(baseUrl, id).then(resp => {
-                console.log('fetchInfo', resp)
-                return resp
-            }),
+            info: id => fetchInfo(baseUrl, id),
             leaseInfo: ids => fetchLeasingInfo(baseUrl, ids),
             status: async idsArray => {
                 const limit = 1000;

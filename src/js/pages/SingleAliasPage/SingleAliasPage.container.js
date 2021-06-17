@@ -13,7 +13,6 @@ export class SingleAliasPage extends React.Component {
 
     fetchData = () => {
         const {networkId} = this.props.match.params;
-        console.log('fetchData')
         return ServiceFactory.forNetwork(networkId).aliasService()
             .loadAddress(this.props.match.params.alias)
             .then(address => this.setState({address}))

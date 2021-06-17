@@ -24,7 +24,6 @@ const getDataEntryType = (type) => {
 export const StateUpdateInfo = ({tx}) => (
     <table className='state-update'>
         <tbody>
-        {console.log(tx.stateUpdate)}
         {tx.stateUpdate.transfers && tx.stateUpdate.transfers
             .map(({address, money, sender}, i) => <tr key={i}>
                 <td style={{width: 100}}><Line bold>Transfer</Line></td>
