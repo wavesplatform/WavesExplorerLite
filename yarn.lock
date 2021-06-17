@@ -1218,9 +1218,9 @@
   "version" "7.0.6"
 
 "@types/minimatch@*":
-  "integrity" "sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA=="
-  "resolved" "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz"
-  "version" "3.0.3"
+  "integrity" "sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA=="
+  "resolved" "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.4.tgz"
+  "version" "3.0.4"
 
 "@types/node-fetch@^2.5.4":
   "integrity" "sha512-IpkX0AasN44hgEad0gEF/V6EgR5n69VEqPEgnmoM8GsIGro3PowbWs4tR6IhxUTyPLpOn+fiGG6nrQhcmoCuIQ=="
@@ -1297,9 +1297,9 @@
     "crypto-js" "3.1.9-1"
 
 "@waves/ts-types@^1.0.2":
-  "integrity" "sha512-3S7WEAmxa0nzJ4Ipo4CEk+TMw3ZguO9rMZT+FxIvhKbo1yVi/9vKpBZK3+qoDc8HrtDNNjat7ORdH+H+Asz7xg=="
-  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.2.tgz"
-  "version" "1.0.2"
+  "integrity" "sha512-8Oa31QLrGfwJowBvO02zfxVA22I5I8vH1TW4xCJp27oEz2UFxIsLTwFE+JBPE6ihGH91hwE62ldvmRcpH2tTIg=="
+  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.3.tgz"
+  "version" "1.0.3"
 
 "@webassemblyjs/ast@1.7.11":
   "integrity" "sha512-ZEzy4vjvTzScC+SH8RBssQUawpaInUdMTYwYYLh54/s8TuT0gBLuyUnppKsVyZEi876VmmStKsUs28UxPgdvrA=="
@@ -3919,9 +3919,9 @@
   "version" "1.1.2"
 
 "faye-websocket@^0.11.3":
-  "integrity" "sha512-D2y4bovYpzziGgbHYtGCMjlJM36vAl/y+xUyn1C+FVx8szd1E+86KwVw6XvYSzOP8iMpm1X0I4xJD+QtUb36OA=="
-  "resolved" "https://registry.npmjs.org/faye-websocket/-/faye-websocket-0.11.3.tgz"
-  "version" "0.11.3"
+  "integrity" "sha512-CzbClwlXAuiRQAlUyfqPgvPoNKTckTPGfwZV4ZdAhVcP2lh9KUxJg2b5GkE7XbjKQ3YJnQ9z6D9ntLAlB+tP8g=="
+  "resolved" "https://registry.npmjs.org/faye-websocket/-/faye-websocket-0.11.4.tgz"
+  "version" "0.11.4"
   dependencies:
     "websocket-driver" ">=0.5.1"
 
@@ -4083,9 +4083,9 @@
     "readable-stream" "^2.3.6"
 
 "follow-redirects@^1.0.0":
-  "integrity" "sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA=="
-  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.3.tgz"
-  "version" "1.13.3"
+  "integrity" "sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.1.tgz"
+  "version" "1.14.1"
 
 "follow-redirects@1.5.10":
   "integrity" "sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ=="
@@ -8493,16 +8493,16 @@
     "use" "^3.1.0"
 
 "sockjs-client@^1.5.0":
-  "integrity" "sha512-8Dt3BDi4FYNrCFGTL/HtwVzkARrENdwOUf1ZoW/9p3M8lZdFT35jVdrHza+qgxuG9H3/shR4cuX/X9umUrjP8Q=="
-  "resolved" "https://registry.npmjs.org/sockjs-client/-/sockjs-client-1.5.0.tgz"
-  "version" "1.5.0"
+  "integrity" "sha512-VnVAb663fosipI/m6pqRXakEOw7nvd7TUgdr3PlR/8V2I95QIdwT8L4nMxhyU8SmDBHYXU1TOElaKOmKLfYzeQ=="
+  "resolved" "https://registry.npmjs.org/sockjs-client/-/sockjs-client-1.5.1.tgz"
+  "version" "1.5.1"
   dependencies:
     "debug" "^3.2.6"
     "eventsource" "^1.0.7"
     "faye-websocket" "^0.11.3"
     "inherits" "^2.0.4"
     "json3" "^3.3.3"
-    "url-parse" "^1.4.7"
+    "url-parse" "^1.5.1"
 
 "sockjs@^0.3.21":
   "integrity" "sha512-DhbPFGpxjc6Z3I+uX07Id5ZO2XwYsWOrYjaSeieES78cq+JaJvVe5q/m1uvjIQhXinhIeCFRH6JgXe+mvVMyXw=="
@@ -9308,7 +9308,7 @@
   "resolved" "https://registry.npmjs.org/urix/-/urix-0.1.0.tgz"
   "version" "0.1.0"
 
-"url-parse@^1.4.3", "url-parse@^1.4.7":
+"url-parse@^1.4.3", "url-parse@^1.5.1":
   "integrity" "sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q=="
   "resolved" "https://registry.npmjs.org/url-parse/-/url-parse-1.5.1.tgz"
   "version" "1.5.1"
@@ -9798,9 +9798,9 @@
     "async-limiter" "~1.0.0"
 
 "ws@^6.2.1":
-  "integrity" "sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA=="
-  "resolved" "https://registry.npmjs.org/ws/-/ws-6.2.1.tgz"
-  "version" "6.2.1"
+  "integrity" "sha512-zmhltoSR8u1cnDsD43TX59mzoMZsLKqUweyYBAIvTngR3shc0W6aOZylZmq/7hqyVxPdi+5Ud2QInblgyE72fw=="
+  "resolved" "https://registry.npmjs.org/ws/-/ws-6.2.2.tgz"
+  "version" "6.2.2"
   dependencies:
     "async-limiter" "~1.0.0"
 
