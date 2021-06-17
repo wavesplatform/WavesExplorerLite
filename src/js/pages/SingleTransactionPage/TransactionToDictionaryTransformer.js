@@ -92,7 +92,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     const paymentItems = [{
         label: 'Payments',
         value: tx.payment && tx.payment.length > 0
-            ? <div style={{display: 'flex', flexDirection: 'column', height: 60, justifyContent: 'space-around'}}>
+            ? <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '5px', paddingBottom: '5px'}}>
                 {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
             </div>
             : ''
@@ -555,7 +555,7 @@ const buildFeeItem = tx => ({
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: <MoneyInfo value={tx.amount}/>
+    value: <MoneyInfo value={tx.amount} />
 });
 
 export default transactionToDictionary;
