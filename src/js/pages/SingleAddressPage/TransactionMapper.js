@@ -67,12 +67,7 @@ const moneyToObject = money => ({
     currency: money.currency.toString()
 });
 
-const matchesUser = (currentUser, addressOrAlias) => {
-    if (addressOrAlias === currentUser.address)
-        return true;
-
-    return !!currentUser.aliases[addressOrAlias];
-};
+const matchesUser = (currentUser, addressOrAlias) => addressOrAlias === currentUser.address;
 
 const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
