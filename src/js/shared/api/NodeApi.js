@@ -15,26 +15,24 @@ import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
 import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
 import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
 import {
-    fetchInfo, fetchTransactions,
+    fetchInfo,
+    fetchTransactions,
     fetchUnconfirmed,
     fetchUnconfirmedSize
 } from "@waves/node-api-js/cjs/api-node/transactions";
 import {
     fetchBlockAt,
-    fetchDelay, fetchHeadersAt,
-    fetchHeadersLast, fetchHeadersSeq,
+    fetchDelay,
+    fetchHeadersAt,
+    fetchHeadersLast,
+    fetchHeadersSeq,
     fetchHeight,
     fetchHeightById
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
-import {
-    fetchAssetsAddressLimit,
-    fetchAssetsBalance,
-    fetchAssetsDetails,
-    fetchDetails
-} from "@waves/node-api-js/cjs/api-node/assets";
+import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -225,7 +223,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return [].concat(...res)
             },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
-            peers: () => fetchConnected(baseUrl),
-        }
+        },
+        peers: () => fetchConnected(baseUrl),
     }
 }
