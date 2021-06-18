@@ -9,6 +9,8 @@ export class AliasService extends ApiClientService {
     loadAddress = (alias) => {
         return this.getApi().aliases.address(alias)
             .then(addressResponse => {
+                addressResponse = addressResponse.data
+
                 if (addressResponse.__type === 'alias') {
                     return addressResponse.data.address;
                 }
