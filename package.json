@@ -1,6 +1,6 @@
 {
     "name": "waves-blockchain-explorer",
-    "version": "3.2.3-testnet",
+    "version": "3.2.4-testnet",
     "private": true,
     "description": "Waves blockchain information tool",
     "repository": {
