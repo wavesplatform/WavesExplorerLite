@@ -181,14 +181,15 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             })))
         }
 
-        const result = Object.assign(copyMandatoryAttributes(tx), {
+        const result = {
+            ...copyMandatoryAttributes(tx),
             applicationStatus: tx.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
             stateUpdate: tx.stateUpdate
-        });
+        };
 
         const appendAssetData = async (data, assetKey) => {
             const detailsArray = data
@@ -214,7 +215,8 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             return result;
 
         if (tx.stateChanges) {
-            result.stateChanges = tx.stateChanges;
+            result.rawStateChanges = tx.stateChanges
+            result.stateChanges = {...tx.stateChanges}
             result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
             result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
             result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
