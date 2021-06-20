@@ -18,7 +18,6 @@ import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
-import TransactionArrow from "../../components/TransactionArrow";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 
 
@@ -100,7 +99,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
 
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
-        value: <RawJsonViewer json={tx.stateChanges}/>
+        value: <RawJsonViewer json={tx.rawStateChanges}/>
     }] : [];
 
     const getDataEntryType = (type) => {
