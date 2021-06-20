@@ -102,7 +102,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
     }];
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
-        value: <RawJsonViewer json={tx.stateChanges}/>
+        value: <RawJsonViewer json={tx.rawStateChanges}/>
     }] : [];
 
     const getDataEntryType = (type) => {
