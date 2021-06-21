@@ -20,6 +20,7 @@ export class UnconfirmedTxList extends React.Component {
                     <span className="title">Unconfirmed Transactions ({this.props.count})</span>
                 </div>
                 {this.props.transactions.map((item) => {
+                    console.log(item)
                     return (<UnconfirmedTxListItem key={item.id} transaction={item}/>);
                 })}
             </React.Fragment>

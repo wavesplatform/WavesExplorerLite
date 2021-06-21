@@ -4,14 +4,16 @@ import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
+
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
+
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
-    tx.applicationStatus = info && info.applicationStatus
+
     return transform(
         currencyService,
         spamDetectionService,
         assetService,
-        tx,
+        {...tx, applicationStatus: info && info.applicationStatus},
         true
     );
 };
@@ -19,8 +21,11 @@ const transformSingle = async (currencyService, spamDetectionService, assetServi
 const transformMultiple = async (currencyService, spamDetectionService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
 
-    const infoMap = transactions[0] && !!transactions[0].applicationStatus ? transactions : (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
-        .reduce((acc, val) => ({...acc, [val.id]: val}), {});
+    console.log(transactions)
+    const infoMap = transactions[0] && !!transactions[0].applicationStatus
+        ? transactions
+        : (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
+            .reduce((acc, val) => ({...acc, [val.id]: val}), {});
 
     const assetsIds = transactions
         .filter(tx => transactionsWithAssetDetails.includes(tx.type))
@@ -40,10 +45,16 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
     const promises = transactions.map(item => {
             item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
             item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
-            return transform(currencyService,
+            transform(currencyService,
                 spamDetectionService,
                 assetService,
-                item,
+                {
+                    ...item,
+                    applicationStatus: infoMap[item.id] && infoMap[item.id].applicationStatus,
+                    details: transactionsWithAssetDetails.includes(item.type)
+                        ? assetsDetails[item.assetId]
+                        : undefined
+                },
                 false
             )
         }
@@ -102,6 +113,9 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
 
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
+
+        case 18:
+            return transformContinuation(currencyService, tx);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -167,6 +181,18 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
     });
 }
 
+const transformContinuation = (currencyService, tx) => {
+    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => ({
+        version: tx.version,
+        type: tx.type,
+        id: tx.id,
+        nonce: tx.nonce,
+        invokeScriptTransactionId: tx.invokeScriptTransactionId,
+        height: tx.height,
+        applicationStatus: tx.applicationStatus,
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+    }))
+}
 
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
 
@@ -181,15 +207,18 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             })))
         }
 
-        const result = {
-            ...copyMandatoryAttributes(tx),
+        const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
+        const continuationTransactionIds = tx.version > 2 ? tx.continuationTransactionIds : undefined
+        const result = Object.assign(copyMandatoryAttributes(tx), {
             applicationStatus: tx.applicationStatus,
             dappAddress: tx.dApp,
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            stateUpdate: tx.stateUpdate
-        };
+            stateUpdate: tx.stateUpdate,
+            extraFeePerStep: extraFeePerStep != null && Money.fromCoins(extraFeePerStep, feeCurrency),
+            continuationTransactionIds: !!continuationTransactionIds && continuationTransactionIds,
+        });
 
         const appendAssetData = async (data, assetKey) => {
             const detailsArray = data
