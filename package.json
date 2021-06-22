@@ -1,6 +1,6 @@
 {
     "name": "TN-blockchain-explorer",
-    "version": "0.0.49",
+    "version": "0.0.50",
     "private": true,
     "description": "Turtle Network blockchain information tool",
     "repository": {
@@ -27,6 +27,7 @@
         "formik": "^1.4.1",
         "json-bigint": "^0.3.0",
         "lodash": "4.17.15",
+        "node-sass": "^6.0.0",
         "prop-types": "15.6.2",
         "react": "16.6.1",
         "react-copy-to-clipboard": "5.0.1",
@@ -58,6 +59,7 @@
         "enzyme-adapter-react-16": "^1.11.2",
         "enzyme-to-json": "^3.3.5",
         "file-loader": "1.1.11",
+        "graceful-fs": "4.2.2",
         "gulp": "4.0.1",
         "gulp-awspublish": "3.4.0",
         "gulp-cloudfront-invalidate": "0.1.5",
@@ -66,7 +68,6 @@
         "identity-obj-proxy": "^3.0.0",
         "jest": "^24.8.0",
         "lodash-webpack-plugin": "^0.11.5",
-        "node-sass": "^4.13.0",
         "react-test-renderer": "^16.8.4",
         "sass-loader": "7.0.3",
         "sass-resources-loader": "1.3.3",
@@ -74,9 +75,7 @@
         "webpack": "4.26.0",
         "webpack-bundle-analyzer": "3.3.2",
         "webpack-cli": "3.1.2",
-        "webpack-dev-server": "3.1.14",
-        "graceful-fs":  "4.2.2"
-
+        "webpack-dev-server": "3.1.14"
     },
     "resolutions": {
         "fstream": "1.0.12",
