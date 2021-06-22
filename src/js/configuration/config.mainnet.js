@@ -13,9 +13,10 @@ export default {
         {url: 'https://tnnode2.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://tnnode3.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://ninjastar.ninjaturtle.co.za',maintainer: 'https://twitter.com/gordobsa'},
-        {url: 'https://node.maplenode.net',maintainer: 'MapleNode'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
-        {url: 'https://node.mortysnode.nl', maintainer: 'Morty'}
+        {url: 'https://node.mortysnode.nl', maintainer: 'Morty'},
+        {url: 'https://api.node.polarity.exchange', maintainer: 'POLARITY'},
+        {url: 'https://api.node-2.polarity.exchange', maintainer: 'POLARITY'}
         ],
     tools: [
         {name: 'Online Wallet & DEX', url: 'https://wallet.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
