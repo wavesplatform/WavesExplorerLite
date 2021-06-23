@@ -12,19 +12,19 @@ const ParameterMapper = ({type, value}) => {
         case "binary":
             return <StringParameter value={value}/>;
         case "list": {
-            return <>
+            return <React.Fragment key={`param${value}`}>
                 [
-                {value.map((x, i) => <>
+                {value.map((x, i) => <React.Fragment key={`param${i}`}>
                     {ParameterMapper(x)}
                     {
                         value.length - 1 !== i
                             ? ', '
                             : null
                     }
-                </>)
+                </React.Fragment>)
                 }
                 ]
-            </>
+            </React.Fragment>
         }
         default:
             return <GenericParameter value={value}/>;
@@ -32,13 +32,13 @@ const ParameterMapper = ({type, value}) => {
 };
 
 export class InvocationInfoView extends React.Component {
-    static propTypes = {
-        function: PropTypes.string.isRequired,
-        args: PropTypes.arrayOf(PropTypes.shape({
-            type: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool, PropTypes.instanceOf(BigNumber)])
-        })).isRequired
-    };
+    // static propTypes = {
+    //     function: PropTypes.string.isRequired,
+    //     args: PropTypes.arrayOf(PropTypes.shape({
+    //         type: PropTypes.string,
+    //         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool, PropTypes.instanceOf(BigNumber)])
+    //     })).isRequired
+    // };
 
     render() {
         return (
