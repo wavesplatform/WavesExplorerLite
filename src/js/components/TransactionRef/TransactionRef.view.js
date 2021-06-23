@@ -12,6 +12,7 @@ class TransactionRef extends React.PureComponent {
     };
 
     render() {
+        console.log(this.props)
         const text = this.props.text || this.props.txId;
         const {networkId} = this.props.match.params;
         const routes = routeBuilder(networkId);
