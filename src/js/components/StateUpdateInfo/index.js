@@ -134,9 +134,9 @@ export const StateUpdateInfo = ({tx}) => (
                     <Line wrap={false} bold>
                         Lease
                     </Line>
-                    <Line wrap={false}>
-                        <TransactionRef txId={item.leaseId}/>
-                    </Line>
+                    {/*<Line wrap={false}>*/}
+                    {/*    <TransactionRef txId={item.originTransactionId} text={item.id}/>*/}
+                    {/*</Line>*/}
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     {item.amount}
@@ -161,9 +161,9 @@ export const StateUpdateInfo = ({tx}) => (
                     <Line wrap={false} bold>
                         LeaseCancel
                     </Line>
-                    <Line wrap={false}>
-                        <TransactionRef txId={item.leaseId}/>
-                    </Line>
+                    {/*<Line wrap={false}>*/}
+                    {/*    <TransactionRef txId={item.leaseId}/>*/}
+                    {/*</Line>*/}
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     {item.amount}
