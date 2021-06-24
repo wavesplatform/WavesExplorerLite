@@ -139,7 +139,7 @@ const mapExchange = (tx, currentAddress) => {
         out: moneyToObject(tx.amount),
         applicationStatus: tx.applicationStatus,
         price: {
-            amount: tx.price.toTokens().toFixed(8),
+            amount: tx.price.price.toFixed(8),
             currency: tx.buyOrder.assetPair.priceAsset.toString()
         }
     });
