@@ -372,7 +372,6 @@ const transformExchange = (currencyService, tx) => {
 };
 
 const transformOrder = (order, assetPair, feeAsset) => {
-    console.log(order)
     return {
         id: order.id,
         sender: order.sender,
