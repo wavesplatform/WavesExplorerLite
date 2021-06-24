@@ -172,15 +172,15 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
                     </tr>)
                 }
                 {tx.stateChanges && (tx.stateChanges.leases || [])
-                    .map(({lease}, i) => <tr key={i}>
+                    .map(({id}, i) => <tr key={i}>
                     <td><Line bold>Lease</Line></td>
-                    <td><MoneyInfo key={i} value={lease.id}/></td>
+                    <td><LeaseRef leaseId={id} /></td>
                 </tr>)
                 }
                 {tx.stateChanges && (tx.stateChanges.leaseCancel || [])
                     .map(({money}, i) => <tr key={i}>
                     <td><Line bold>LeaseCancel</Line></td>
-                    <td><MoneyInfo key={i} value={money}/></td>
+                    <td></td>
                 </tr>)
                 }
                 </tbody>
@@ -331,12 +331,17 @@ const aliasTransactionToItems = tx => {
 };
 
 const cancelLeaseTransactionItems = tx => {
+debugger;
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
-                label: 'Lease',
+                label: 'Lease tx id',
                 value: <TransactionRef txId={tx.leaseId}/>
+            },
+            {
+                label: 'Lease info',
+                value: <LeaseRef leaseId={tx.leaseId}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx)

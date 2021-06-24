@@ -93,7 +93,7 @@ export class SingleLeasePage extends React.Component {
         if (lease.status === 'canceled' ) {
             items.default = [
                 ...items.default,
-                { label: 'Lease Cancel tx id', value: lease.cancelTransactionId },
+                { label: 'Lease Cancel tx id', value: <TransactionRef txId={lease.cancelTransactionId}/>  },
                 { label: 'Lease Cancel Height', value: lease.cancelHeight }
             ];
         }
