@@ -60,7 +60,8 @@ export class SearchService extends ApiClientService {
                 const event = this.createEvent(SearchResult.lease);
                 this.analyticsService.sendEvent(event);
 
-                return routes.leases.one(detail.leaseId);
+                const lease = detail[0];
+                return routes.leases.one(lease.id);
             })
         })
        .catch(e => {
