@@ -45,8 +45,24 @@ export default {
         return new OrderPrice(price, pair);
     },
 
-    fromBackendPrice: function (price, pair) {
-        var normalizedPrice = normalizePrice(price, pair);
+    fromBackendOrderPrice: function (price, pair, version) {
+        if (price instanceof BigNumber || price._isBigNumber)
+            price = price.toString();
+
+        const normalizedPrice = version >= 4
+            ? new Decimal(price).div(MATCHER_SCALE)
+            : new Decimal(price).div(MATCHER_SCALE).div(Math.pow(10, pair.priceAsset.precision - pair.amountAsset.precision));
+
+        return new OrderPrice(normalizedPrice, pair);
+    },
+
+    fromBackendExchangePrice: function (price, pair, version) {
+        if (price instanceof BigNumber || price._isBigNumber)
+            price = price.toString();
+
+        const normalizedPrice = version >= 3
+            ? new Decimal(price).div(MATCHER_SCALE)
+            : new Decimal(price).div(MATCHER_SCALE).div(Math.pow(10, pair.priceAsset.precision - pair.amountAsset.precision));
 
         return new OrderPrice(normalizedPrice, pair);
     }

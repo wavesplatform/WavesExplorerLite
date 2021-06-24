@@ -352,7 +352,7 @@ const transformExchange = (currencyService, tx) => {
         const feeAsset = tuple[2];
         const buyFeeAsset = tuple[3];
         const sellFeeAsset = tuple[4];
-        const price = OrderPrice.fromBackendPrice(tx.price, currencyPair);
+        const price = OrderPrice.fromBackendExchangePrice(tx.price, currencyPair, tx.version);
         const amount = Money.fromCoins(tx.amount, currencyPair.amountAsset);
 
         return Object.assign(copyMandatoryAttributes(tx), {
@@ -372,13 +372,14 @@ const transformExchange = (currencyService, tx) => {
 };
 
 const transformOrder = (order, assetPair, feeAsset) => {
+    console.log(order)
     return {
         id: order.id,
         sender: order.sender,
         assetPair,
         orderType: order.orderType,
         amount: Money.fromCoins(order.amount, assetPair.amountAsset),
-        price: OrderPrice.fromBackendPrice(order.price, assetPair),
+        price: OrderPrice.fromBackendOrderPrice(order.price, assetPair, order.version),
         timestamp: new DateTime(order.timestamp),
         expiration: new DateTime(order.expiration),
         fee: Money.fromCoins(order.matcherFee, feeAsset)
