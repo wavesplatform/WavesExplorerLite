@@ -18,6 +18,7 @@ import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
 import {BrowserService} from './BrowserService';
+import {LeaseService} from './LeaseService';
 
 const database = new Database();
 
@@ -50,6 +51,7 @@ class NetworkDependentServices {
             this._spamDetectionService, this._assetService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
         this._aliasService = new AliasService(globalServices.configurationService(), networkId);
+        this._leaseService =  new LeaseService(this._globalServices.configurationService(), this._networkId);
     }
 
     searchService = () => new SearchService(this._globalServices.configurationService(),
@@ -83,6 +85,8 @@ class NetworkDependentServices {
     aliasService = () => this._aliasService;
 
     assetService = () => this._assetService;
+
+    leaseService = () => this._leaseService;
 }
 
 class ServiceFactory {

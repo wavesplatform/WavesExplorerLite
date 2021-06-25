@@ -5,4 +5,5 @@ export const SearchResult = {
     alias: 'Alias',
     unknown: 'Unknown',
     asset: 'Asset',
+    lease: 'Lease',
 };
