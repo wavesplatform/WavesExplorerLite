@@ -3,8 +3,7 @@ import {Line} from "../../pages/SingleBlockPage/TransactionListItem";
 import MoneyInfo from "../MoneyInfo";
 import TransactionArrow from "../TransactionArrow";
 import EndpointRef from "../EndpointRef";
-import {RoutedAssetRef} from "../AssetRef/AssetRef.view";
-import TransactionRef from "../TransactionRef";
+import LeaseRef from '../LeaseRef';
 
 const getDataEntryType = (type) => {
     switch (type) {
@@ -21,36 +20,37 @@ const getDataEntryType = (type) => {
     }
 }
 
-export const StateUpdateInfo = ({tx}) => (
-    <table className='state-update'>
+export const StateUpdateInfo = ({tx}) => {
+    const data = !!tx.stateUpdate ? tx.stateUpdate : tx.stateChanges
+    return <table className='state-update'>
         <tbody>
-        {tx.stateUpdate.transfers && tx.stateUpdate.transfers
+        {data.transfers && data.transfers
             .map(({address, money, sender}, i) => <tr key={i}>
                 <td style={{width: 100}}><Line bold>Transfer</Line></td>
                 <td><MoneyInfo key={i} value={money}/></td>
                 <td>
-                    <TransactionArrow type={4} direction={'incoming'}/>
-                    <Line wrap={false}>
+                    {sender && <TransactionArrow type={4} direction={'incoming'}/>}
+                    {sender && <Line wrap={false}>
                         <EndpointRef endpoint={sender} appearance="regular"/>
-                    </Line>
-                    <Line wrap={false}>
+                    </Line>}
+                    {address && <Line wrap={false}>
                         <EndpointRef endpoint={address} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
             </tr>)
         }
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.issues && tx.stateUpdate.issues
+        {data.issues && data.issues
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         Issue
                     </Line>
-                    <Line wrap={false}>
+                    {item.address && <Line wrap={false}>
                         <EndpointRef endpoint={item.address} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
                 <td><MoneyInfo key={i} value={item.money}/></td>
                 <td>
@@ -69,15 +69,15 @@ export const StateUpdateInfo = ({tx}) => (
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.reissues && tx.stateUpdate.reissues
+        {data.reissues && data.reissues
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         Reissue
                     </Line>
-                    <Line wrap={false}>
+                    {item.address && <Line wrap={false}>
                         <EndpointRef endpoint={item.address} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
                 <td><MoneyInfo key={i} value={item.money}/></td>
                 <td>
@@ -90,15 +90,15 @@ export const StateUpdateInfo = ({tx}) => (
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.burns && tx.stateUpdate.burns
+        {data.burns && data.burns
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         Burn
                     </Line>
-                    <Line wrap={false}>
+                    {item.address && <Line wrap={false}>
                         <EndpointRef endpoint={item.address} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     <MoneyInfo key={i} value={item.money}/>
@@ -109,15 +109,15 @@ export const StateUpdateInfo = ({tx}) => (
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.sponsorFees && tx.stateUpdate.sponsorFees
+        {data.sponsorFees && data.sponsorFees
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         SponsorFee
                     </Line>
-                    <Line wrap={false}>
+                    {item.address && <Line wrap={false}>
                         <EndpointRef endpoint={item.address} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     <MoneyInfo key={i} value={item.money}/>
@@ -128,42 +128,42 @@ export const StateUpdateInfo = ({tx}) => (
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.leases && tx.stateUpdate.leases
+        {data.leases && data.leases
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         Lease
                     </Line>
-                    {/*<Line wrap={false}>*/}
-                    {/*    <TransactionRef txId={item.originTransactionId} text={item.id}/>*/}
-                    {/*</Line>*/}
+                    <Line wrap={false}>
+                        <LeaseRef leaseId={item.id}/>
+                    </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     {item.amount}
                 </td>
                 <td>
-                    <TransactionArrow type={4} direction={'incoming'}/>
-                    <Line wrap={false}>
+                    {item.sender && <TransactionArrow type={4} direction={'incoming'}/>}
+                    {item.sender && <Line wrap={false}>
                         <EndpointRef endpoint={item.sender} appearance="regular"/>
-                    </Line>
-                    <Line wrap={false}>
+                    </Line>}
+                    {item.recipient && <Line wrap={false}>
                         <EndpointRef endpoint={item.recipient} appearance="regular"/>
-                    </Line>
+                    </Line>}
                 </td>
             </tr>)
         }
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.leaseCancels && tx.stateUpdate.leaseCancels
+        {data.leaseCancels && data.leaseCancels
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
                     <Line wrap={false} bold>
                         LeaseCancel
                     </Line>
-                    {/*<Line wrap={false}>*/}
-                    {/*    <TransactionRef txId={item.leaseId}/>*/}
-                    {/*</Line>*/}
+                    <Line wrap={false}>
+                        <LeaseRef leaseId={item.id}/>
+                    </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
                     {item.amount}
@@ -178,7 +178,7 @@ export const StateUpdateInfo = ({tx}) => (
         </tbody>
 
         <tbody>
-        {tx.stateUpdate.data && tx.stateUpdate.data
+        {data.data && data.data
             .map((data, i) => <tr key={i}>
                 <td style={{width: 100}}><Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line></td>
                 <td>{`key: ${data.key}`}</td>
@@ -187,4 +187,4 @@ export const StateUpdateInfo = ({tx}) => (
         }
         </tbody>
     </table>
-);
+};

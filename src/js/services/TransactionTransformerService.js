@@ -221,6 +221,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
             result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
             result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
+            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
         }
 
         if (tx.stateUpdate) {

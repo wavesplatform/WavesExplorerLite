@@ -32,7 +32,8 @@ export class SearchService extends ApiClientService {
 
                 return routes.blocks.one(heightResponse.height);
             });
-        }).catch(() => {
+        })
+        .catch(() => {
             return api.transactions.info(query).then(infoResponse => {
                 const event = this.createEvent(SearchResult.transaction);
                 this.analyticsService.sendEvent(event);
@@ -53,7 +54,17 @@ export class SearchService extends ApiClientService {
 
                 return routes.assets.one(detail.assetId);
             })
-        }).catch(e => {
+        })
+        .catch(() => {
+            return api.transactions.leaseInfo([query]).then(detail => {
+                const event = this.createEvent(SearchResult.lease);
+                this.analyticsService.sendEvent(event);
+
+                const lease = detail[0];
+                return routes.leases.one(lease.id);
+            })
+        })
+       .catch(e => {
             const event = this.createEvent(SearchResult.unknown);
             this.analyticsService.sendEvent(event);
 
