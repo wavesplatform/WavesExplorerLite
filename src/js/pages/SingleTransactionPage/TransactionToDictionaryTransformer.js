@@ -15,13 +15,10 @@ import MoneyInfo from '../../components/MoneyInfo';
 import InvocationInfo from '../../components/InvocationInfo';
 import {Description} from './Description.view';
 import RawJsonViewer from "./RawJsonViewer";
-import {Line} from "../SingleBlockPage/TransactionListItem";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
-import {AddressRef} from "../../components/EndpointRef/AddressRef.view";
 import brick from "../../../images/brick.svg";
 import pending from "../../../images/pending.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
-
 
 const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
@@ -120,78 +117,11 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
                 return "DeleteEntry"
         }
     }
+
     const results = [{
         label: 'Results',
-        value: <>
-            {tx.stateChanges && (tx.stateChanges.errorMessage || tx.stateChanges.error) &&
-            <div className="data-container">
-                {`Error code: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).code}`}<br/><br/>
-                {`Cause: ${(tx.stateChanges.errorMessage || tx.stateChanges.error).text}`}
-            </div>}
-            <table>
-                <tbody>
-                {tx.stateChanges && tx.stateChanges.transfers && tx.stateChanges.transfers
-                    .map(({address, money}, i) => <tr key={i}>
-                        <td style={{width: 100}}><Line bold>Transfer</Line></td>
-                        <td><MoneyInfo key={i} value={money}/></td>
-                        <td>{address ? <AddressRef networkId={networkId} address={address}/> : ''}</td>
-                    </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.issues || [])
-                    .map(({money, isReissuable, compiledScript}, i) => <tr key={i}>
-                        <td><Line bold>Issue</Line></td>
-                        <td><MoneyInfo key={i} value={money}/></td>
-                        <td>
-                            <Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line>
-                            <Line>Scripted:&nbsp;{compiledScript ? "true" : "false"}</Line>
-                        </td>
-                    </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.reissues || [])
-                    .map(({money, isReissuable}, i) => <tr key={i}>
-                        <td><Line bold>Reissue</Line></td>
-                        <td><MoneyInfo key={i} value={money}/></td>
-                        <td><Line>Reissuable:&nbsp;{isReissuable ? "true" : "false"}</Line></td>
-                    </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.burns || [])
-                    .map(({money}, i) => <tr key={i}>
-                        <td><Line bold>Burn</Line></td>
-                        <td><MoneyInfo key={i} value={money}/></td>
-                    </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.data || [])
-                    .map((entry, i) => <tr key={i}>
-                        <td><Line bold>{getDataEntryType(entry.type)}</Line></td>
-                        <td>
-                            <Line wrap={false}>key: {entry.key}</Line>
-                        </td>
-                        {entry.value && <td>
-                            <Line wrap={false}>value: {String(entry.value)}</Line>
-                        </td>}
-                    </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.leases || [])
-                    .map(({id}, i) => <tr key={i}>
-                    <td><Line bold>Lease</Line></td>
-                    <td><LeaseRef leaseId={id} /></td>
-                </tr>)
-                }
-                {tx.stateChanges && (tx.stateChanges.leaseCancel || [])
-                    .map(({money}, i) => <tr key={i}>
-                    <td><Line bold>LeaseCancel</Line></td>
-                    <td></td>
-                </tr>)
-                }
-                </tbody>
-            </table>
-        </>
-    }];
-
-    const stateUpdate = tx.stateUpdate ? [{
-        label: 'State Update',
         value: <StateUpdateInfo tx={tx}/>
-    }] : null
+    }];
 
     const info = {
         default: [
@@ -210,8 +140,6 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...results
         ]
     }
-
-    if (stateUpdate) info.default.push(...stateUpdate)
     return info
 };
 
