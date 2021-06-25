@@ -331,7 +331,6 @@ const aliasTransactionToItems = tx => {
 };
 
 const cancelLeaseTransactionItems = tx => {
-debugger;
     return {
         default: [
             ...buildTransactionHeaderItems(tx),
