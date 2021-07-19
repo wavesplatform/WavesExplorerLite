@@ -407,8 +407,9 @@ const transformOrder = (order, assetPair, feeAsset) => {
 
 const transformBurn = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(currency => {
+        const amount = tx.amount != null ? tx.amount : tx.quantity
         return Object.assign(copyMandatoryAttributes(tx), {
-            amount: Money.fromCoins(tx.amount || tx.quantity, currency),
+            amount: Money.fromCoins(amount, currency),
             fee: Money.fromCoins(tx.fee, Currency.WAVES)
         });
     });
