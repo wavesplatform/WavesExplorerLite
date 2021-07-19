@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
    height="24"
    viewBox="0 0 24 24"
    version="1.1"
    id="svg3608"
    sodipodi:docname="loading-24.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata3614">
     <rdf:RDF>
@@ -36,17 +36,18 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
      id="namedview3610"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="12"
-     inkscape:cy="12"
+     inkscape:cx="12.050847"
+     inkscape:cy="11.949153"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg3608" />
+     inkscape:current-layer="g3606"
+     inkscape:pagecheckerboard="0" />
   <g
      fill="none"
      fill-rule="evenodd"
@@ -60,6 +61,6 @@
        fill="#1F5AF6"
        d="M12.01 0C5.786 0 0 5.362 0 12c.012.603.05 1.19.125 1.71.224 1.466 1.02 1.81 1.679 1.751.335-.03.636-.185.834-.438.188-.24.304-.572.23-1.063-.017-.068-.022-.144-.032-.208A9.2 9.2 0 0 1 2.648 12c0-5.16 4.204-9.341 9.362-9.341 5.148 0 9.342 4.181 9.342 9.341 0 5.149-4.193 9.341-9.342 9.341a9.358 9.358 0 0 1-3.273-.583c-1.662-.704-2.744 1.544-1.053 2.44 1.317.622 3.02.793 4.326.802C18.636 24 24 18.638 24 12 23.886 5.044 17.933.098 12.01 0z"
        id="path3604"
-       style="fill:#076600;fill-opacity:1" />
+       style="fill:#6800ff;fill-opacity:1" />
   </g>
 </svg>
