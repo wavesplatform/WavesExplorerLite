@@ -169,9 +169,16 @@ export const StateUpdateInfo = ({tx}) => {
                     {item.amount}
                 </td>
                 <td>
-                    <Line wrap={false}>
+                    {item.address && <Line wrap={false}>
                         <EndpointRef endpoint={item.address} appearance="regular"/>
-                    </Line>
+                    </Line>}
+                    {item.sender && item.recipient && <TransactionArrow type={4} direction={'incoming'}/>}
+                    {item.sender && <Line wrap={false}>
+                        <EndpointRef endpoint={item.sender} appearance="regular"/>
+                    </Line>}
+                    {item.recipient && <Line wrap={false}>
+                        <EndpointRef endpoint={item.recipient} appearance="regular"/>
+                    </Line>}
                 </td>
             </tr>)
         }
