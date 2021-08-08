@@ -23,7 +23,7 @@ function buildApp(network, env, done) {
 }
 
 function dockerImage(done) {
-    exec('docker build . -t docker.turtlenetwork.eu/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
+    exec('docker build . -t turtlenetwork/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
@@ -31,7 +31,7 @@ function dockerImage(done) {
 }
 
 function pushDockerImage(done){
-    exec('docker push docker.turtlenetwork.eu/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
+    exec('docker push turtlenetwork/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
