@@ -12,7 +12,6 @@ export default {
         {url: 'https://tnnode.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://tnnode2.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
         {url: 'https://tnnode3.turtlenetwork.eu',maintainer: 'https://t.me/TurtleNetwork'},
-        {url: 'https://ninjastar.ninjaturtle.co.za',maintainer: 'https://twitter.com/gordobsa'},
         {url: 'https://giznode.thegremlins.net',maintainer: 'G1zm0'},
         {url: 'https://node.mortysnode.nl', maintainer: 'Morty'},
         {url: 'https://api.node.polarity.exchange', maintainer: 'POLARITY'},
