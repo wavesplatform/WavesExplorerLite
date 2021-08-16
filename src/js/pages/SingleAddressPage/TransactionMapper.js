@@ -72,7 +72,8 @@ const matchesUser = (currentUser, addressOrAlias) => addressOrAlias === currentU
 const mapScriptInvocation = (tx, currentAddress) => {
     const tail = {
         recipient: tx.dappAddress,
-        applicationStatus: tx.applicationStatus
+        applicationStatus: tx.applicationStatus,
+        call: tx.call
     };
     const payment = tx.payment ?
         Array.isArray(tx.payment) ? tx.payment.map(v => moneyToObject(v)) :  [moneyToObject(tx.payment)]

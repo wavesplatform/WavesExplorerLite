@@ -44,6 +44,9 @@ export class TransactionListItem extends React.PureComponent {
                     {this.conventAmount(tx.out)}
                 </td>
                 <td data-label="Price">
+                    {tx.type === 16 ? <React.Fragment>
+                        <div className="line">{tx.call.function}</div>
+                    </React.Fragment> : null}
                     {tx.price && <React.Fragment>
                         <div className="line">{tx.price.amount}</div>
                         <div className="line"><label>{tx.price.currency}</label></div>

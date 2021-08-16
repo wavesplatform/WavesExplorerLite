@@ -14,7 +14,7 @@ export class AddressService extends ApiClientService {
         this.currencyService = currencyService;
     }
 
-    loadBalance = (address) => {
+    loadBalance = async (address) => {
         return this.getApi().addresses.details(address).then(data => {
             return {
                 regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
