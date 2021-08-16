@@ -13,9 +13,10 @@ export class TransactionListItem extends React.PureComponent {
     };
 
     conventAmount = (v) => {
-        if(!v) return null
-        if(Array.isArray(v)) return v.map(({amount,currency}, i) => <p key={i} className="line">{amount} {currency}</p>)
-        else return  <div className="line">{v.amount} {v.currency}</div>
+        if (!v) return null
+        if (Array.isArray(v)) return v.map(({amount, currency}, i) => <p key={i}
+                                                                         className="line">{amount} {currency}</p>)
+        else return <div className="line">{v.amount} {v.currency}</div>
     }
 
     render() {
@@ -36,8 +37,8 @@ export class TransactionListItem extends React.PureComponent {
                     <div className="line"><label>{tx.timestamp.time}</label></div>
                 </td>
                 <td data-label="Sender / Receiver">
-                    <TransactionArrow type={tx.type} direction={tx.direction} />
-                    <DirectionalEndpoints transaction={tx} />
+                    <TransactionArrow type={tx.type} direction={tx.direction}/>
+                    <DirectionalEndpoints transaction={tx}/>
                 </td>
                 <td data-label="Amount in / out">
                     {this.conventAmount(tx.in)}
@@ -45,7 +46,10 @@ export class TransactionListItem extends React.PureComponent {
                 </td>
                 <td data-label="Price">
                     {tx.type === 16 ? <React.Fragment>
-                        <div className="line">{tx.call.function}</div>
+                        <div className="line" title={tx.call.function}>{tx.call.function.length >= 16 ?
+                            tx.call.function.slice(0, 13).concat('...')
+                            : tx.call.function}
+                        </div>
                     </React.Fragment> : null}
                     {tx.price && <React.Fragment>
                         <div className="line">{tx.price.amount}</div>
