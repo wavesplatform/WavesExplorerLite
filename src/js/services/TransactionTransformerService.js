@@ -38,7 +38,7 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
         }), {});
 
     const promises = transactions.map(item => {
-            item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
+            item.applicationStatus = item.applicationStatus || infoMap[item.id] && infoMap[item.id].applicationStatus;
             item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
             return transform(currencyService,
                 spamDetectionService,
