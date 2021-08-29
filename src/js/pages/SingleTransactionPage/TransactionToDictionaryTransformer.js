@@ -71,10 +71,14 @@ const transactionToDictionary = (tx, networkId) => {
 
         case 17:
             return updateAssetInfoTransactionToItems(tx);
+        
+        case 18:
+            return invokeExpressionTransactionToItems(tx, networkId);
 
         case 19:
             const transaction = convertEthTx(tx)
             return transactionToDictionary(transaction, networkId)
+
 
         default:
             return {
@@ -138,6 +142,48 @@ const scriptInvocationTransactionToItems = (tx) => {
     return info
 };
 
+const invokeExpressionTransactionToItems = (tx, networkId) => {
+    const stateItems = tx.stateChanges ? [{
+        label: 'State Changes',
+        value: <RawJsonViewer json={tx.rawStateChanges}/>
+    }] : [];
+
+    const getDataEntryType = (type) => {
+        switch (type) {
+            case "binary":
+                return "BinaryEntry";
+            case "integer":
+                return "IntegerEntry";
+            case "string":
+                return "StringEntry";
+            case "boolean":
+                return "BooleanEntry";
+            default:
+                return "DeleteEntry"
+        }
+    }
+
+    const results = [{
+        label: 'Results',
+        value: <StateUpdateInfo tx={tx}/>
+    }];
+
+    const info = {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            {
+                label: 'Script',
+                value: <ScriptInfo script={tx.script}/>
+            },
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx),
+            ...stateItems,
+            ...results
+        ]
+    }
+    return info
+};
+
 const updateAssetInfoTransactionToItems = tx => ({
     default: [
         ...buildTransactionHeaderItems(tx),
@@ -148,40 +194,6 @@ const updateAssetInfoTransactionToItems = tx => ({
         ...buildSenderAddressAndKeyItems(tx),
     ]
 });
-
-// const continuationToItems = tx => ({
-//     default: [
-//         {
-//             label: 'Type',
-//             value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
-//                 type={tx.type}/></React.Fragment>
-//         },
-//         buildVersionItem(tx),
-//         {
-//             label: 'Status',
-//             value: tx.applicationStatus === 'script_execution_failed' ?
-//                 <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-//                 : 'Succeed'
-//         },
-//         {
-//             label: 'Tx Id',
-//             value: tx.id
-//         },
-//         {
-//             label: 'Block',
-//             value: <BlockRef height={tx.height}/>
-//         },
-//         {
-//             label: 'Nonce',
-//             value: tx.nonce
-//         },
-//         {
-//             label: 'InvokeScript Transaction Id',
-//             value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
-//         },
-//         buildFeeItem(tx),
-//     ]
-// })
 
 const dataTransactionToItems = tx => {
     return {

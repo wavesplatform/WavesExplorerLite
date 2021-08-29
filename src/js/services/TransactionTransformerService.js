@@ -104,11 +104,13 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
 
-        // case 18:
-        //     return transformContinuation(currencyService, tx);
-
+        case 18:
+                return transformInvokeExpression(currencyService, tx);
+                
         case 19:
             return transformEthereumTransaction(currencyService, assetService, spamDetectionService, tx, shouldLoadDetails);
+
+
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -119,6 +121,28 @@ const DEFAULT_FUNCTION_CALL = {
     function: 'default',
     args: []
 };
+
+const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
+
+const appendAssetData = async (data, assetKey) => {
+    const detailsArray = data
+        ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
+        : [];
+    return data && data.length
+        ? Promise.all(data.map(async (item) => {
+            const {assetId: id, name, decimals, description} = detailsArray
+                .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
+            const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
+            return {
+                ...item,
+                money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
+                name,
+                decimals,
+                description
+            }
+        }))
+        : []
+}
 
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
@@ -189,8 +213,6 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
 
-    const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
-
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
         if (tx.payment && tx.payment.length > 0) {
@@ -211,26 +233,6 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             isEthereum: tx.isEthereum,
             bytes: tx.bytes
         };
-
-        const appendAssetData = async (data, assetKey) => {
-            const detailsArray = data
-                ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
-                : [];
-            return data && data.length
-                ? Promise.all(data.map(async (item) => {
-                    const {assetId: id, name, decimals, description} = detailsArray
-                        .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
-                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
-                    return {
-                        ...item,
-                        money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
-                        name,
-                        decimals,
-                        description
-                    }
-                }))
-                : []
-        }
 
         if (!shouldLoadDetails)
             return result;
@@ -258,6 +260,44 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
     });
 };
 
+const transformInvokeExpression = (currencyService, assetService, tx, shouldLoadDetails) => {
+
+    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
+
+        const result = {
+            ...copyMandatoryAttributes(tx),
+            applicationStatus: tx.applicationStatus,
+            expression,
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            stateUpdate: tx.stateUpdate
+        };
+
+        if (!shouldLoadDetails)
+            return result;
+
+        if (tx.stateChanges) {
+            result.rawStateChanges = tx.stateChanges
+            result.stateChanges = {...tx.stateChanges}
+            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
+            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
+            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
+            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
+            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
+        }
+
+        if (tx.stateUpdate) {
+            result.stateUpdate = tx.stateUpdate;
+            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
+            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
+            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
+            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
+            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
+            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
+        }
+
+        return result;
+    });
+};
 
 const transformAssetScript = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {
