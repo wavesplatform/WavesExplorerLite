@@ -174,7 +174,7 @@ const invokeExpressionTransactionToItems = (tx, networkId) => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Script',
-                value: <ScriptInfo script={tx.script}/>
+                value: <ScriptInfo script={tx.expression}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx),

@@ -60,6 +60,8 @@ export const createListItem = (transaction) => {
         case 17:
             return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
 
+        case 18:
+            return <ExpressionInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
         default:
             return null;
     }
@@ -474,6 +476,23 @@ class UpdateAssetInfoTransactionListItem extends React.Component {
                 <td data-label="Asset name"><Line>
                     <RoutedAssetRef assetId={tx.assetId} text={tx.assetName}/>
                 </Line></td>
+            </tr>
+        );
+    }
+}
+
+class ExpressionInvocationTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
+                <Subjects type={tx.type} sender={tx.sender}/>
+                <JustFee fee={tx.fee}/>
             </tr>
         );
     }
