@@ -5,8 +5,8 @@ import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
-    const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
-    tx.applicationStatus = info && info.applicationStatus
+    const info = tx.applicationStatus || (await currencyService.getApi().transactions.status([tx.id]))[0].applicationStatus;
+    tx.applicationStatus = info
     return transform(
         currencyService,
         spamDetectionService,
@@ -104,7 +104,7 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
             return transformUpdateAssetInfo(currencyService, tx);
 
         case 18:
-            return transformInvokeExpression(currencyService, tx);
+            return transformInvokeExpression(currencyService, assetService, tx, shouldLoadDetails);
 
         default:
             return Promise.resolve(Object.assign({}, tx));
@@ -118,7 +118,7 @@ const DEFAULT_FUNCTION_CALL = {
 
 const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
 
-const appendAssetData = async (data, assetKey) => {
+const appendAssetData = async (currencyService, data, assetKey) => {
     const detailsArray = data
         ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
         : [];
@@ -220,63 +220,61 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
         if (tx.stateChanges) {
             result.rawStateChanges = tx.stateChanges
             result.stateChanges = {...tx.stateChanges}
-            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
-            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
-            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
-            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
-            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges.transfers = await appendAssetData(currencyService, result.stateChanges.transfers, 'asset')
+            result.stateChanges.issues = await appendAssetData(currencyService, result.stateChanges.issues, 'assetId')
+            result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
+            result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
+            result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
         }
 
         if (tx.stateUpdate) {
             result.stateUpdate = tx.stateUpdate;
-            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
-            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
-            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
-            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
-            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
-            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.payments = await appendAssetData(currencyService, tx.stateUpdate.payments.map(item => item.payment), 'asset')
+            result.stateUpdate.transfers = await appendAssetData(currencyService, tx.stateUpdate.transfers, 'asset')
+            result.stateUpdate.issues = await appendAssetData(currencyService, tx.stateUpdate.issues, 'assetId')
+            result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
+            result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
+            result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
         }
         return result;
     });
 };
 
-const transformInvokeExpression = (currencyService, assetService, tx, shouldLoadDetails) => {
+const transformInvokeExpression = async (currencyService, assetService, tx, shouldLoadDetails) => {
+    const feeCurrency = await currencyService.get(tx.feeAssetId)
 
-    return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
+    const result = {
+        ...copyMandatoryAttributes(tx),
+        applicationStatus: tx.applicationStatus,
+        expression: tx.expression,
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        stateUpdate: tx.stateUpdate
+    };
 
-        const result = {
-            ...copyMandatoryAttributes(tx),
-            applicationStatus: tx.applicationStatus,
-            expression,
-            fee: Money.fromCoins(tx.fee, feeCurrency),
-            stateUpdate: tx.stateUpdate
-        };
-
-        if (!shouldLoadDetails)
-            return result;
-
-        if (tx.stateChanges) {
-            result.rawStateChanges = tx.stateChanges
-            result.stateChanges = {...tx.stateChanges}
-            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
-            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
-            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
-            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
-            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
-        }
-
-        if (tx.stateUpdate) {
-            result.stateUpdate = tx.stateUpdate;
-            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
-            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
-            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
-            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
-            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
-            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
-        }
-
+    if (!shouldLoadDetails)
         return result;
-    });
+
+    if (tx.stateChanges) {
+        result.rawStateChanges = tx.stateChanges
+        result.stateChanges = {...tx.stateChanges}
+        result.stateChanges.transfers = await appendAssetData(currencyService, result.stateChanges.transfers, 'asset')
+        result.stateChanges.issues = await appendAssetData(currencyService, result.stateChanges.issues, 'assetId')
+        result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
+        result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
+        result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+    }
+
+    if (tx.stateUpdate) {
+        result.stateUpdate = tx.stateUpdate;
+        result.stateUpdate.payments = await appendAssetData(currencyService, tx.stateUpdate.payments.map(item => item.payment), 'asset')
+        result.stateUpdate.transfers = await appendAssetData(currencyService, tx.stateUpdate.transfers, 'asset')
+        result.stateUpdate.issues = await appendAssetData(currencyService, tx.stateUpdate.issues, 'assetId')
+        result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
+        result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
+        result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+    }
+
+    return result;
 };
 
 const transformAssetScript = (currencyService, tx) => {
