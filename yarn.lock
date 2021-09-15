@@ -1165,13 +1165,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bignumber.js@^5.0.0":
-  "integrity" "sha512-0DH7aPGCClywOFaxxjE6UwpN2kQYe9LwuDQMv+zYA97j5GkOMo8e66LYT+a8JYU7jfmUFRZLa9KycxHDsKXJCA=="
-  "resolved" "https://registry.npmjs.org/@types/bignumber.js/-/bignumber.js-5.0.0.tgz"
-  "version" "5.0.0"
-  dependencies:
-    "bignumber.js" "*"
-
 "@types/cheerio@^0.22.22":
   "integrity" "sha512-05DYX4zU96IBfZFY+t3Mh88nlwSMtmmzSYaQkKN48T495VV1dkHSah6qYyDTN5ngaS0i0VonH37m+RuzSM0YiA=="
   "resolved" "https://registry.npmjs.org/@types/cheerio/-/cheerio-0.22.22.tgz"
@@ -1252,13 +1245,12 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@waves/bignumber@0.0.1":
-  "integrity" "sha512-+bQCa8fPCYdkLtwKsKtgbvDD7MzZTv6bc2ZpGMqn9uq+RjO8Qf4XSrs0DVhtWWhCHplkVIqOeS4bzgW1i3P7rw=="
-  "resolved" "https://registry.npmjs.org/@waves/bignumber/-/bignumber-0.0.1.tgz"
-  "version" "0.0.1"
+"@waves/bignumber@^1.1.1":
+  "integrity" "sha512-WUY0R0y0Rd92nbyQHbIFDXCWh2YMtf5FYtpoTv4yRomM75cRLJ0/NIQ828guUXLKeVytKzWgvDYj1CZfxatDkg=="
+  "resolved" "https://registry.npmjs.org/@waves/bignumber/-/bignumber-1.1.1.tgz"
+  "version" "1.1.1"
   dependencies:
-    "@types/bignumber.js" "^5.0.0"
-    "bignumber.js" "^8.1.1"
+    "bignumber.js" "^9.0.1"
 
 "@waves/bignumber@0.0.2":
   "integrity" "sha512-5Yu2StNAWkfH8qhzhu1gY9+zJIRzlz/2RQU39tsbyvi8UxeJN4RR3NzYDJbe+R8Eex49JkXtNCsH+/m6LJ5WhQ=="
@@ -1275,14 +1267,14 @@
     "@waves/bignumber" "0.0.2"
     "bignumber.js" "7.0.1"
 
-"@waves/node-api-js@1.2.2-beta.1":
-  "integrity" "sha512-Zl7yZmjHdXQYJ8YLIeJBLu6TA24NrVbuySfy4A3BfsuwmAG72GQXQ7ZCEYn7TnzVUOO4INw4/t937jTGvy63IA=="
-  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.2-beta.1.tgz"
-  "version" "1.2.2-beta.1"
+"@waves/node-api-js@1.2.4":
+  "integrity" "sha512-Bn82D4056BbUQmUoNg8VMXWj97vGAkqOKgjGGxcAspVXI02CoYkIK+7UHvKCTltvzSpomEpeZ0xephCnetJOzw=="
+  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.4.tgz"
+  "version" "1.2.4"
   dependencies:
     "@types/node-fetch" "^2.5.4"
-    "@waves/bignumber" "0.0.1"
-    "@waves/ts-types" "^1.0.2"
+    "@waves/bignumber" "^1.1.1"
+    "@waves/ts-types" "^1.0.5"
     "node-fetch" "^2.6.1"
     "typed-ts-events" "^1.1.1"
 
@@ -1312,10 +1304,10 @@
     "js-sha3" "^0.8.0"
     "node-forge" "^0.8.5"
 
-"@waves/ts-types@^1.0.2":
-  "integrity" "sha512-8Oa31QLrGfwJowBvO02zfxVA22I5I8vH1TW4xCJp27oEz2UFxIsLTwFE+JBPE6ihGH91hwE62ldvmRcpH2tTIg=="
-  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.3.tgz"
-  "version" "1.0.3"
+"@waves/ts-types@^1.0.5":
+  "integrity" "sha512-6vSeVqsvH49DJHa4FzvPSa/yfpRVfbB0r4Zu6GjrXnwsxvF0uAoqQy60wbJxbRqYMLwch8jnBM1+ztZaJ9CAoA=="
+  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.5.tgz"
+  "version" "1.0.5"
 
 "@webassemblyjs/ast@1.7.11":
   "integrity" "sha512-ZEzy4vjvTzScC+SH8RBssQUawpaInUdMTYwYYLh54/s8TuT0gBLuyUnppKsVyZEi876VmmStKsUs28UxPgdvrA=="
@@ -2048,12 +2040,12 @@
   "resolved" "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   "version" "5.2.2"
 
-"bignumber.js@*", "bignumber.js@^8.1.1":
+"bignumber.js@^8.1.1":
   "integrity" "sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ=="
   "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-8.1.1.tgz"
   "version" "8.1.1"
 
-"bignumber.js@^9.0.0":
+"bignumber.js@^9.0.0", "bignumber.js@^9.0.1":
   "integrity" "sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA=="
   "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.1.tgz"
   "version" "9.0.1"
@@ -2477,7 +2469,6 @@
     "anymatch" "^2.0.0"
     "async-each" "^1.0.1"
     "braces" "^2.3.2"
-    "fsevents" "^1.2.7"
     "glob-parent" "^3.1.0"
     "inherits" "^2.0.3"
     "is-binary-path" "^1.0.0"
@@ -2496,7 +2487,6 @@
   dependencies:
     "anymatch" "~3.1.1"
     "braces" "~3.0.2"
-    "fsevents" "~2.3.1"
     "glob-parent" "~5.1.0"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
@@ -3654,7 +3644,6 @@
     "estraverse" "^4.2.0"
     "esutils" "^2.0.2"
     "optionator" "^0.8.1"
-    "source-map" "~0.6.1"
   optionalDependencies:
     "source-map" "~0.6.1"
 
@@ -5461,7 +5450,6 @@
     "@jest/types" "^24.9.0"
     "anymatch" "^2.0.0"
     "fb-watchman" "^2.0.0"
-    "fsevents" "^1.2.7"
     "graceful-fs" "^4.1.15"
     "invariant" "^2.2.4"
     "jest-serializer" "^24.9.0"
@@ -9517,10 +9505,8 @@
   "resolved" "https://registry.npmjs.org/watchpack/-/watchpack-1.7.5.tgz"
   "version" "1.7.5"
   dependencies:
-    "chokidar" "^3.4.1"
     "graceful-fs" "^4.1.2"
     "neo-async" "^2.5.0"
-    "watchpack-chokidar2" "^2.0.1"
   optionalDependencies:
     "chokidar" "^3.4.1"
     "watchpack-chokidar2" "^2.0.1"

@@ -187,7 +187,12 @@ export const StateUpdateInfo = ({tx}) => {
         <tbody>
         {data.data && data.data
             .map((data, i) => <tr key={i}>
-                <td style={{width: 100}}><Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line></td>
+                <td style={{width: 100}}>
+                    <Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line>
+                    {data.address && <Line wrap={false}>
+                        <EndpointRef endpoint={data.address} appearance="regular"/>
+                    </Line>}
+                </td>
                 <td>{`key: ${data.key}`}</td>
                 <td>{`value: ${data.value}`}</td>
             </tr>)
