@@ -63,6 +63,9 @@ export const createListItem = (transaction) => {
         case 18:
             return <ContinuationTransactionListItem key={transaction.id} tx={transaction}/>;
 
+        case 19:
+            return <EthereumTransactionListItem key={transaction.id} tx={transaction}/>;
+
         default:
             return null;
     }
@@ -509,6 +512,23 @@ class ContinuationTransactionListItem extends React.Component {
                 <td data-label="Status">
                     {tx.applicationStatus}
                 </td>
+            </tr>
+        );
+    }
+}
+
+class EthereumTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
+                <Subjects type={tx.type} sender={tx.sender}/>
+                {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
             </tr>
         );
     }

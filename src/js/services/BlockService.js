@@ -57,6 +57,14 @@ export class BlockService extends ApiClientService {
             )]).then(results => {
             const maxHeight = results[0];
             const transactions = results[1];
+
+            transactions.forEach(tx => {
+                if (tx.type === 19) {
+                    if (!!tx.dApp) tx.type = 16
+                    if (!!tx.recipient) tx.type = 4
+                }
+            })
+
             const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
             return {

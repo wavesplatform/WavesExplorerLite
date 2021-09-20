@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {typeToCssClass, typeToTitle, directionToCssClass} from '../../shared/TransactionDefinitions';
+import {directionToCssClass, typeToCssClass, typeToTitle} from '../../shared/TransactionDefinitions';
 
-export const TransactionBadge = ({type, direction}) => {
+export const TransactionBadge = ({type, direction, isEthereum}) => {
     const className = 'badge ' + typeToCssClass(type) + ' ' + directionToCssClass(direction);
+    const title = isEthereum ? typeToTitle(type) + '(Ethereum)' : typeToTitle(type)
     return (
-        <span className={className}>{typeToTitle(type)}</span>
+        <span className={className}>{title}</span>
     );
 };
 
