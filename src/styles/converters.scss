@@ -3,32 +3,53 @@
 
 .converter {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    margin-bottom: 30px;
 
-    &-item {
-        width: 300px;
+    &-title {
+        font-size: 19px;
+        margin-bottom: 10px;
+    }
+
+    &-wrapper {
+        width: 100%;
         display: flex;
         align-items: center;
-        div {
+        margin-bottom: 10px;
+    }
+
+    &-item {
+        flex: 5;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-title {
+            width: 90px;
             padding: 0 10px;
-            text-align: center;
         }
 
         &-field {
+            width: calc(100% - 90px);
             height: 42px;
-            flex: 1;
             border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px;
+            padding: 10px;
             border: 1px solid map-get($colors, paleBlue);
+            box-sizing: border-box;
+            text-align: left;
         }
     }
 
     &-icon {
         width: 20px;
         height: 20px;
-        margin: 0 10px;
+        margin: 0 25px 0 20px;
+        cursor: pointer;
     }
 }

@@ -32,7 +32,7 @@ import {
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
-import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
+import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails, convertEthToWaves} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -223,6 +223,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return [].concat(...res)
             },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
+            convertEth2Waves: (ethAssetId) => convertEthToWaves(baseUrl, ethAssetId)
         },
         peers: () => fetchConnected(baseUrl),
     }
