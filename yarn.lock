@@ -1277,10 +1277,10 @@
     "@waves/bignumber" "0.0.2"
     "bignumber.js" "7.0.1"
 
-"@waves/node-api-js@1.2.5-beta.1":
-  "integrity" "sha512-iVkqd2HFMZ14kpDBdCIWlL6mRDgcwkrWd4zDkA1Wbd9RSEardsuVuUK8Ccp3L4gEDRqFDUkRtP9NmuNh49j2Rg=="
-  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.5-beta.1.tgz"
-  "version" "1.2.5-beta.1"
+"@waves/node-api-js@1.2.5-beta.2":
+  "integrity" "sha512-kgZoHwDNa7WAQS0TOh+ZVTXJpSBkmNe8WYdNRUB8eKVMzzk/haHmL8KqxQ9JVUnJdKL1aBtcNfZT3NCm1M40aA=="
+  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.5-beta.2.tgz"
+  "version" "1.2.5-beta.2"
   dependencies:
     "@types/node-fetch" "^2.5.4"
     "@waves/bignumber" "^1.1.1"
