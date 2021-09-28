@@ -1,31 +1,10 @@
 import React from 'react';
 import {ConverterItem} from './ConverterItem';
 import {ethAddress2waves, wavesAddress2eth, wavesAsset2Eth} from '@waves/node-api-js'
-
+import {getNetworkByte} from '../../shared/utils'
 const labels = {
     WAVES: 'WAVES',
     ETHEREUM: 'ETHEREUM'
-}
-
-const getNetworkByte = (id) => {
-    let byte
-    switch (id) {
-        case 'testnet':
-            byte = 'T'.charCodeAt()
-            break;
-        case 'mainnet':
-            byte = 'W'.charCodeAt()
-            break;
-        case 'stagenet':
-            byte = 'S'.charCodeAt()
-            break;
-        case 'custom':
-            byte = 'D'.charCodeAt()
-            break;
-        default:
-            byte = 'S'.charCodeAt()
-    }
-    return byte
 }
 
 export class ConvertEthPage extends React.Component {

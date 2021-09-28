@@ -1,3 +1,6 @@
+import {ethAddress2waves} from '@waves/node-api-js'
+import {getNetworkByte} from './utils'
+
 export const routeParamsBuilder = (networks) => {
     const regex = networks.map(network => network.networkId).join('|');
 
@@ -37,6 +40,8 @@ export const routeBuilder = (networkId) => {
         },
         addresses: {
             one: (address, tab) => {
+                if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(networkId))
+
                 let result = `${root}/address/${address}`;
 
                 if (tab)
