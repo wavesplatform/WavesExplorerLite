@@ -11,7 +11,7 @@ export const getNetworkByte = (id) => {
             byte = 'S'.charCodeAt()
             break;
         case 'custom':
-            byte = 'D'.charCodeAt()
+            byte = 'C'.charCodeAt()
             break;
         default:
             byte = 'S'.charCodeAt()

@@ -25,34 +25,62 @@ export class SearchService extends ApiClientService {
         const routes = routeBuilder(this.networkId);
         const api = this.getApi();
 
-        const getWavesAssetId = async (asset) => {
-            await this.convertAsset(asset)
-        }
 
-        const assetId = await getWavesAssetId(query)
 
-        return api.asset.details(assetId).then(detail => {
-            const event = this.createEvent(SearchResult.asset);
-            this.analyticsService.sendEvent(event);
+        //todo: раскомментить когда пояявится ручка эфирАссет -> вавесАссет
 
-            return routes.assets.one(detail.assetId);
-        }).catch(() => {
-            return api.addresses.validate(this.convertAddress(query, this.networkId)).then(validateResponse => {
-                if (validateResponse.valid) {
-                    const event = this.createEvent(SearchResult.address);
+        // const getWavesAssetId = async (asset) => {
+        //     await this.convertAsset(asset)
+        // }
+        // const assetId = await getWavesAssetId(query)
+        // return api.assets.details(assetId).then(details => {
+        //     if(details) {
+        //         const event = this.createEvent(SearchResult.asset);
+        //         this.analyticsService.sendEvent(event);
+        //
+        //         return routes.assets.one(details.assetId);
+        //     }
+        // }).catch(() => {
+        //     return api.addresses.validate(this.convertAddress(query, this.networkId)).then(validateResponse => {
+        //
+        //         if (validateResponse.valid) {
+        //             const event = this.createEvent(SearchResult.address);
+        //             this.analyticsService.sendEvent(event);
+        //
+        //             return routes.addresses.one(this.convertAddress(query, this.networkId));
+        //         }
+        //
+        //         return api.blocks.heightById(query).then(heightResponse => {
+        //             const event = this.createEvent(SearchResult.block);
+        //             this.analyticsService.sendEvent(event);
+        //
+        //             return routes.blocks.one(heightResponse.height);
+        //         });
+        //     })
+        // })
+        return api.addresses.validate(this.convertAddress(query, this.networkId)).then(validateResponse => {
+            if (validateResponse.valid) {
+                const event = this.createEvent(SearchResult.address);
+                this.analyticsService.sendEvent(event);
+
+                return routes.addresses.one(this.convertAddress(query, this.networkId));
+            }
+
+            return api.blocks.heightById(query).then(heightResponse => {
+                const event = this.createEvent(SearchResult.block);
+                this.analyticsService.sendEvent(event);
+
+                return routes.blocks.one(heightResponse.height);
+            });
+        })
+            .catch(() => {
+                return api.transactions.info(query).then(infoResponse => {
+                    const event = this.createEvent(SearchResult.transaction);
                     this.analyticsService.sendEvent(event);
 
-                    return routes.addresses.one(this.convertAddress(query, this.networkId));
-                }
-
-                return api.blocks.heightById(query).then(heightResponse => {
-                    const event = this.createEvent(SearchResult.block);
-                    this.analyticsService.sendEvent(event);
-
-                    return routes.blocks.one(heightResponse.height);
+                    return routes.transactions.one(infoResponse.id);
                 });
             })
-        })
             .catch(() => {
                 return api.transactions.info(query).then(infoResponse => {
                     const event = this.createEvent(SearchResult.transaction);
