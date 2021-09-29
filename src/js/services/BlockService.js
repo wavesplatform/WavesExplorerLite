@@ -46,32 +46,31 @@ export class BlockService extends ApiClientService {
         });
     };
 
-    loadBlock = (height) => {
+    loadBlock = async (height) => {
         let block;
 
-        return Promise.all([this.infoService.loadHeight(),
-            this.getApi().blocks.at(height).then(response => {
-                    block = transformBlock(response);
-                    return this.transformer.transform(block.transactions);
-                }
-            )]).then(results => {
-            const maxHeight = results[0];
-            const transactions = results[1];
+        const maxHeight = await this.infoService.loadHeight();
+        const transactions = await this.getApi().blocks.at(height).then(response => {
+                block = transformBlock(response);
+                return this.transformer.transform(block.transactions);
+            }
+        )
 
-            transactions.forEach(tx => {
-                if (tx.type === 19) {
-                    if (!!tx.dApp) tx.type = 16
-                    if (!!tx.recipient) tx.type = 4
-                }
-            })
+        await transactions.forEach(tx => {
+            if (tx.type === 19) {
+                tx = this.getApi().transactions.info(tx.id)
+                if (!!tx.dApp) tx.type = 16
+                if (!!tx.recipient) tx.type = 4
+            }
+        })
 
-            const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
+        const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
-            return {
-                maxHeight,
-                block,
-                groupedTransactions
-            };
-        });
+        return {
+            maxHeight,
+            block,
+            groupedTransactions
+        };
+
     };
 }
