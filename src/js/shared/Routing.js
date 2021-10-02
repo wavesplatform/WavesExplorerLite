@@ -1,5 +1,7 @@
 import {ethAddress2waves} from '@waves/node-api-js'
 import {getNetworkByte} from './utils'
+import ethTxId2waves from "@waves/node-api-js/cjs/tools/adresses/ethTxId2waves";
+
 
 export const routeParamsBuilder = (networks) => {
     const regex = networks.map(network => network.networkId).join('|');
@@ -33,7 +35,11 @@ export const routeBuilder = (networkId) => {
             one: (height) => `${blocks}/${height}`
         },
         transactions: {
-            one: (id) => `${root}/tx/${id}`
+            one: (id) => {
+                let txId
+                id.startsWith('0x') ? txId = ethTxId2waves(id) : txId = id
+                return `${root}/tx/${txId}`
+            }
         },
         leases: {
             one: (id) => `${root}/leases/${id}`
