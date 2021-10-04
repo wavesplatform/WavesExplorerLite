@@ -3,6 +3,7 @@ import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
+import {convertEthTx} from '../shared/utils'
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
@@ -474,34 +475,14 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 const transformEthereumTransaction = (currencyService, assetService, spamDetectionService, tx, shouldLoadDetails) => {
-        console.log('tx', tx)
-    const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, stateChanges, version, chainId} = tx
-    const commonFields = {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, proofs: proofs || [], stateChanges, version, chainId}
-    if (payload.type === 'invocation') {
-        const transaction = {
-            ...commonFields,
-            type: 16,
-            dApp: payload.dApp || '',
-            // version: payload.version,
-            proofs: proofs || [],
-            payment: payload.payment,
-            call: payload.call,
-        }
-        return transformScriptInvocation(currencyService, assetService, transaction, shouldLoadDetails);
+    const transaction = convertEthTx(tx)
+
+    if (transaction.type === 4) {
+        return transformTransfer(currencyService, assetService, spamDetectionService, transaction);
     }
 
-    if (payload.type === 'transfer') {
-        const transaction = {
-            ...commonFields,
-            type: 4,
-            recipient: payload.recipient,
-            // version: payload.version,
-            assetId: payload.asset,
-            amount: payload.amount,
-            attachment: payload.attachment || '',
-            call: payload.call,
-        }
-        return transformTransfer(currencyService, assetService, spamDetectionService, transaction);
+    if (transaction.type === 16) {
+        return transformScriptInvocation(currencyService, assetService, transaction, shouldLoadDetails);
     }
 }
 

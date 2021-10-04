@@ -19,6 +19,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import brick from "../../../images/brick.svg";
 import pending from "../../../images/pending.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
+import {convertEthTx} from "../../shared/utils";
 
 const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
@@ -75,8 +76,8 @@ const transactionToDictionary = (tx, networkId) => {
         //     return continuationToItems(tx, networkId);
 
         case 19:
-            if (!!tx.recipient) return transferTransactionToItems(tx);
-            if (!!tx.dApp) return scriptInvocationTransactionToItems(tx);
+            const transaction = convertEthTx(tx)
+            return transactionToDictionary(transaction, networkId)
 
         default:
             return {
