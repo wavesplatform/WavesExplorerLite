@@ -53,7 +53,6 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
 };
 
 const transform = (currencyService, spamDetectionService, assetService, tx, shouldLoadDetails) => {
-    console.log('transform', tx)
     switch (tx.type) {
         case 1:
             return transformGenesis(currencyService, tx);
@@ -475,6 +474,7 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 const transformEthereumTransaction = (currencyService, assetService, spamDetectionService, tx, shouldLoadDetails) => {
+        console.log('tx', tx)
     const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, stateChanges, version, chainId} = tx
     const commonFields = {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, proofs: proofs || [], stateChanges, version, chainId}
     if (payload.type === 'invocation') {
