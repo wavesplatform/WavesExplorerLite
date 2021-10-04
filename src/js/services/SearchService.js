@@ -4,6 +4,7 @@ import EventBuilder from '../shared/analytics/EventBuilder';
 import {ApiClientService} from './ApiClientService';
 import {ethAddress2waves} from "@waves/node-api-js";
 import {getNetworkByte} from "../shared/utils";
+import {ethTxId2waves} from "@waves/node-api-js";
 
 export class SearchService extends ApiClientService {
     constructor(configurationService, analyticsService, aliasService, networkId) {
@@ -13,8 +14,9 @@ export class SearchService extends ApiClientService {
         this.aliasService = aliasService;
     }
 
-    convertAddress = (address, networkId) => address.startsWith('0x') ? ethAddress2waves(address, getNetworkByte(networkId)) : address
+    convertAddress = (address, networkId) => address.startsWith('0x') && address.length === 42 ? ethAddress2waves(address, getNetworkByte(networkId)) : address
     convertAsset = (asset) => asset.startsWith('0x') ? this.getApi().assets.convertEth2Waves(asset) : asset;
+    convertTxId = (ethTxId) => (ethTxId.startsWith('0x') && ethTxId.length === 66) ? ethTxId2waves(ethTxId) : ethTxId
 
     search = async query => {
         if (!query)
@@ -26,7 +28,7 @@ export class SearchService extends ApiClientService {
         const api = this.getApi();
 
 
-
+        console.log(this.convertTxId(query))
         //todo: раскомментить когда пояявится ручка эфирАссет -> вавесАссет
 
         // const getWavesAssetId = async (asset) => {
@@ -74,7 +76,7 @@ export class SearchService extends ApiClientService {
             });
         })
             .catch(() => {
-                return api.transactions.info(query).then(infoResponse => {
+                return api.transactions.info(this.convertTxId(query)).then(infoResponse => {
                     const event = this.createEvent(SearchResult.transaction);
                     this.analyticsService.sendEvent(event);
 
@@ -82,13 +84,6 @@ export class SearchService extends ApiClientService {
                 });
             })
             .catch(() => {
-                return api.transactions.info(query).then(infoResponse => {
-                    const event = this.createEvent(SearchResult.transaction);
-                    this.analyticsService.sendEvent(event);
-
-                    return routes.transactions.one(infoResponse.id);
-                });
-            }).catch(() => {
                 return this.aliasService.loadAddress(query).then(address => {
                     const event = this.createEvent(SearchResult.alias);
                     this.analyticsService.sendEvent(event);
