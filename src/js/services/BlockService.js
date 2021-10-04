@@ -3,6 +3,7 @@ import groupBy from 'lodash/groupBy';
 import Money from '../shared/Money';
 import Currency from '../shared/Currency';
 import {ApiClientService} from './ApiClientService';
+import {convertEthTx} from "../shared/utils";
 
 const transformBlock = block => {
     if (block.totalFee) {
@@ -50,19 +51,25 @@ export class BlockService extends ApiClientService {
         let block;
 
         const maxHeight = await this.infoService.loadHeight();
-        const transactions = await this.getApi().blocks.at(height).then(response => {
-                block = transformBlock(response);
-                return this.transformer.transform(block.transactions);
-            }
-        )
 
-        await transactions.forEach(tx => {
+        const rawBlock = await this.getApi().blocks.at(height)
+
+        block = transformBlock(rawBlock);
+
+        block.transactions = await Promise.all(block.transactions.map(async (tx) => {
             if (tx.type === 19) {
-                tx = this.getApi().transactions.info(tx.id)
-                if (!!tx.dApp) tx.type = 16
-                if (!!tx.recipient) tx.type = 4
+                tx = await this.getApi().transactions.info(tx.id)
+                return tx
+            } else return tx
+        }))
+
+        block.transactions.forEach(tx => {
+            if (tx.type === 19) {
+                return convertEthTx(tx)
             }
         })
+
+        const transactions = await this.transformer.transform(block.transactions)
 
         const groupedTransactions = transactions ? groupBy(transactions, 'type') : {};
 
