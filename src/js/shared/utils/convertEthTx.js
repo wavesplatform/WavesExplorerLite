@@ -1,5 +1,5 @@
 export const convertEthTx = (tx) => {
-    const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, version, chainId} = tx
+    const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, version, chainId, bytes} = tx
     const commonFields = {
         id,
         sender,
@@ -9,9 +9,9 @@ export const convertEthTx = (tx) => {
         timestamp,
         height,
         applicationStatus,
-        proofs: proofs || [],
         version,
-        chainId
+        chainId,
+        bytes
     }
 
     if (payload.type === 'invocation') {
@@ -19,11 +19,12 @@ export const convertEthTx = (tx) => {
             ...commonFields,
             type: 16,
             dApp: payload.dApp || '',
-            version: payload.version || '',
+            version,
             proofs: proofs || [],
             payment: payload.payment,
             call: payload.call,
             stateChanges: payload.stateChanges,
+            isEthereum: true,
         }
 
     }
@@ -33,11 +34,11 @@ export const convertEthTx = (tx) => {
             ...commonFields,
             type: 4,
             recipient: payload.recipient,
-            version: payload.version || '',
+            version,
             assetId: payload.asset,
             amount: payload.amount,
-            attachment: payload.attachment || '',
             call: payload.call,
+            isEthereum: true
         }
     }
 }

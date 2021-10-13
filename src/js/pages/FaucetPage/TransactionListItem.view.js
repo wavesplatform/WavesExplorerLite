@@ -19,7 +19,7 @@ export class TransactionListItem extends React.PureComponent {
             <tr className={rowClassName}>
                 <td data-label="ID / Type">
                     <div className="line no-wrap"><TransactionRef txId={tx.id}/></div>
-                    <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
+                    <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction} isEthereum={tx.isEthereum}/></div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
                     <div className="line"><label>{tx.timestamp.date}</label></div>

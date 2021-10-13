@@ -200,8 +200,6 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             })))
         }
 
-        // const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
-        // const continuationTransactionIds = tx.version > 2 ? tx.continuationTransactionIds : undefined
         const result = {
             ...copyMandatoryAttributes(tx),
             applicationStatus: tx.applicationStatus,
@@ -209,9 +207,9 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            // extraFeePerStep: extraFeePerStep != null && Money.fromCoins(extraFeePerStep, feeCurrency),
-            // continuationTransactionIds: !!continuationTransactionIds && continuationTransactionIds,
-            stateUpdate: tx.stateUpdate
+            stateUpdate: tx.stateUpdate,
+            isEthereum: tx.isEthereum,
+            bytes: tx.bytes
         };
 
         const appendAssetData = async (data, assetKey) => {
@@ -458,7 +456,9 @@ const transformTransfer = async (currencyService, assetService, spamDetectionSer
         fee: Money.fromCoins(tx.fee, feeCurrency),
         attachment: attachmentToString(tx.attachment),
         recipient: tx.recipient,
-        isSpam: spamDetectionService.isSpam(tx.assetId)
+        isSpam: spamDetectionService.isSpam(tx.assetId),
+        isEthereum: tx.isEthereum,
+        bytes: tx.bytes
     });
 };
 

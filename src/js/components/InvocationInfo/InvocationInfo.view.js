@@ -32,14 +32,6 @@ const ParameterMapper = ({type, value}) => {
 };
 
 export class InvocationInfoView extends React.Component {
-    // static propTypes = {
-    //     function: PropTypes.string.isRequired,
-    //     args: PropTypes.arrayOf(PropTypes.shape({
-    //         type: PropTypes.string,
-    //         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.bool, PropTypes.instanceOf(BigNumber)])
-    //     })).isRequired
-    // };
-
     render() {
         return (
             <div className="data-container">

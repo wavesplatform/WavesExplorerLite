@@ -5,7 +5,7 @@ import {directionToCssClass, typeToCssClass, typeToTitle} from '../../shared/Tra
 
 export const TransactionBadge = ({type, direction, isEthereum}) => {
     const className = 'badge ' + typeToCssClass(type) + ' ' + directionToCssClass(direction);
-    const title = isEthereum ? typeToTitle(type) + '(Ethereum)' : typeToTitle(type)
+    const title = isEthereum ? typeToTitle(type) + ' (Ethereum)' : typeToTitle(type)
     return (
         <span className={className}>{title}</span>
     );
