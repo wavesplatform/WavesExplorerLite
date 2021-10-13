@@ -1,5 +1,5 @@
 export const convertEthTx = (tx) => {
-    const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, stateChanges, version, chainId} = tx
+    const {id, sender, senderPublicKey, fee, feeAssetId, timestamp, height, applicationStatus, payload, proofs, version, chainId} = tx
     const commonFields = {
         id,
         sender,
@@ -10,7 +10,6 @@ export const convertEthTx = (tx) => {
         height,
         applicationStatus,
         proofs: proofs || [],
-        stateChanges,
         version,
         chainId
     }
@@ -20,10 +19,11 @@ export const convertEthTx = (tx) => {
             ...commonFields,
             type: 16,
             dApp: payload.dApp || '',
-            // version: payload.version,
+            version: payload.version || '',
             proofs: proofs || [],
             payment: payload.payment,
             call: payload.call,
+            stateChanges: payload.stateChanges,
         }
 
     }
@@ -33,7 +33,7 @@ export const convertEthTx = (tx) => {
             ...commonFields,
             type: 4,
             recipient: payload.recipient,
-            // version: payload.version,
+            version: payload.version || '',
             assetId: payload.asset,
             amount: payload.amount,
             attachment: payload.attachment || '',

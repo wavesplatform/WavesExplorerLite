@@ -35,7 +35,7 @@ import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
 import {fetchEthAssetDetails} from "@waves/node-api-js/cjs/api-node/eth";
 
-const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+const TRANSACTIONS_BY_ADDRESS_LIMIT = 10;
 const ASSETS_PER_PAGE = 100;
 
 const parseResponse = (response) => {

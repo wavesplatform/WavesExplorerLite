@@ -7,7 +7,7 @@ import {TransactionListView} from './TransactionList.view';
 import transactionMapper from './TransactionMapper';
 
 //todo: заменить на 100, когда доделают ноду
-const TX_PAGE_SIZE = 10;
+const TX_PAGE_SIZE = 5;
 
 class TransactionListContainer extends React.Component {
     _isMounted = false;
