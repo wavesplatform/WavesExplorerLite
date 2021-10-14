@@ -476,7 +476,7 @@ const buildTransactionHeaderItems = tx => {
     const res = [{
         label: 'Type',
         value: <React.Fragment>
-            <span>{tx.type}</span>
+            <span>{tx.isEthereum ? 19 : tx.type}</span>
             <Spacer size={14}/>
             <TransactionBadge type={tx.type} isEthereum={tx.isEthereum}/>
         </React.Fragment>
