@@ -19,7 +19,7 @@ export class ConvertEthPage extends React.Component {
     convertE2WAddress = (value) => ethAddress2waves(value, getNetworkByte(this.props.match.params.networkId))
 
     convertW2EAsset = (value) => wavesAsset2Eth(value)
-    convertE2WAsset = async (value) => await ServiceFactory.forNetwork(this.props.match.params).assetService().convertEth2Waves(value)
+    convertE2WAsset = async (value) => await ServiceFactory.forNetwork(this.props.match.params.networkId).assetService().convertEth2Waves(value)
 
     render() {
         console.log(this.props.match.params)
