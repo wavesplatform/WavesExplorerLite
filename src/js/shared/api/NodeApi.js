@@ -33,8 +33,9 @@ import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
+import {fetchEthAssetDetails} from "@waves/node-api-js/cjs/api-node/eth";
 
-const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
+const TRANSACTIONS_BY_ADDRESS_LIMIT = 10;
 const ASSETS_PER_PAGE = 100;
 
 const parseResponse = (response) => {
@@ -161,7 +162,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
     return {
         version: () => fetchNodeVersion(baseUrl),
-        baseTarget: () => fetchBasetarget(baseUrl),
+        baseTarget: () => fetchHeadersLast(baseUrl).then(resp => resp["nxt-consensus"]["base-target"]),
         addresses: {
             details: (address) => fetchBalanceDetails(baseUrl, address),
             aliases: (address) => fetchByAddress(baseUrl, address),
@@ -223,6 +224,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return [].concat(...res)
             },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
+            convertEth2Waves: (id) => axios.get(`${baseUrl}/eth/assets?id=${id}`)
         },
         peers: () => fetchConnected(baseUrl),
     }

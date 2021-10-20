@@ -16,7 +16,6 @@ const TransactionTypes = Object.freeze({
     15: {title: 'Asset Script', cssClassName: 'asset-script'},
     16: {title: 'Script Invocation', cssClassName: 'script-invocation'},
     17: {title: 'Update Asset Info', cssClassName: 'update-asset-info'},
-    18: {title: 'Continuation', cssClassName: 'script-invocation'}
 });
 
 export const TransactionDirections = {

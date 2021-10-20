@@ -3,6 +3,7 @@ import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
 import {libs} from '@waves/signature-generator';
+import {convertEthTx} from '../shared/utils'
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
@@ -106,6 +107,9 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
         // case 18:
         //     return transformContinuation(currencyService, tx);
 
+        case 19:
+            return transformEthereumTransaction(currencyService, assetService, spamDetectionService, tx, shouldLoadDetails);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -196,8 +200,6 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             })))
         }
 
-        // const extraFeePerStep = tx.version > 2 ? tx.extraFeePerStep : undefined
-        // const continuationTransactionIds = tx.version > 2 ? tx.continuationTransactionIds : undefined
         const result = {
             ...copyMandatoryAttributes(tx),
             applicationStatus: tx.applicationStatus,
@@ -205,9 +207,9 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             call: tx.call || DEFAULT_FUNCTION_CALL,
             payment,
             fee: Money.fromCoins(tx.fee, feeCurrency),
-            // extraFeePerStep: extraFeePerStep != null && Money.fromCoins(extraFeePerStep, feeCurrency),
-            // continuationTransactionIds: !!continuationTransactionIds && continuationTransactionIds,
-            stateUpdate: tx.stateUpdate
+            stateUpdate: tx.stateUpdate,
+            isEthereum: tx.isEthereum,
+            bytes: tx.bytes
         };
 
         const appendAssetData = async (data, assetKey) => {
@@ -454,7 +456,9 @@ const transformTransfer = async (currencyService, assetService, spamDetectionSer
         fee: Money.fromCoins(tx.fee, feeCurrency),
         attachment: attachmentToString(tx.attachment),
         recipient: tx.recipient,
-        isSpam: spamDetectionService.isSpam(tx.assetId)
+        isSpam: spamDetectionService.isSpam(tx.assetId),
+        isEthereum: tx.isEthereum,
+        bytes: tx.bytes
     });
 };
 
@@ -469,6 +473,18 @@ const transformGenesis = (currencyService, tx) => {
         height: 1
     });
 };
+
+const transformEthereumTransaction = (currencyService, assetService, spamDetectionService, tx, shouldLoadDetails) => {
+    const transaction = convertEthTx(tx)
+
+    if (transaction.type === 4) {
+        return transformTransfer(currencyService, assetService, spamDetectionService, transaction);
+    }
+
+    if (transaction.type === 16) {
+        return transformScriptInvocation(currencyService, assetService, transaction, shouldLoadDetails);
+    }
+}
 
 export class TransactionTransformerService {
     constructor(currencyService, spamDetectionService, assetService) {

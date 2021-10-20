@@ -19,6 +19,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import brick from "../../../images/brick.svg";
 import pending from "../../../images/pending.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
+import {convertEthTx} from "../../shared/utils";
 
 const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
@@ -71,8 +72,9 @@ const transactionToDictionary = (tx, networkId) => {
         case 17:
             return updateAssetInfoTransactionToItems(tx);
 
-        // case 18:
-        //     return continuationToItems(tx, networkId);
+        case 19:
+            const transaction = convertEthTx(tx)
+            return transactionToDictionary(transaction, networkId)
 
         default:
             return {
@@ -89,34 +91,26 @@ const InfoWrapper = ({children}) => (
     </div>
 );
 
-const scriptInvocationTransactionToItems = (tx, networkId) => {
+const scriptInvocationTransactionToItems = (tx) => {
     const paymentItems = [{
         label: 'Payments',
         value: tx.payment && tx.payment.length > 0
-            ? <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingTop: '5px', paddingBottom: '5px'}}>
+            ? <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                paddingTop: '5px',
+                paddingBottom: '5px'
+            }}>
                 {tx.payment.map((v, i) => <MoneyInfo key={i} value={v}/>)}
             </div>
             : ''
     }];
+
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.rawStateChanges}/>
     }] : [];
-
-    const getDataEntryType = (type) => {
-        switch (type) {
-            case "binary":
-                return "BinaryEntry";
-            case "integer":
-                return "IntegerEntry";
-            case "string":
-                return "StringEntry";
-            case "boolean":
-                return "BooleanEntry";
-            default:
-                return "DeleteEntry"
-        }
-    }
 
     const results = [{
         label: 'Results',
@@ -140,6 +134,7 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...results
         ]
     }
+    if (tx.isEthereum) info.default.splice(-([...stateItems, ...results].length), 0, buildBytesItem(tx))
     return info
 };
 
@@ -154,39 +149,39 @@ const updateAssetInfoTransactionToItems = tx => ({
     ]
 });
 
-const continuationToItems = tx => ({
-    default: [
-        {
-            label: 'Type',
-            value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
-                type={tx.type}/></React.Fragment>
-        },
-        buildVersionItem(tx),
-        {
-            label: 'Status',
-            value: tx.applicationStatus === 'script_execution_failed' ?
-                <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-                : 'Succeed'
-        },
-        {
-            label: 'Tx Id',
-            value: tx.id
-        },
-        {
-            label: 'Block',
-            value: <BlockRef height={tx.height}/>
-        },
-        {
-            label: 'Nonce',
-            value: tx.nonce
-        },
-        {
-            label: 'InvokeScript Transaction Id',
-            value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
-        },
-        buildFeeItem(tx),
-    ]
-})
+// const continuationToItems = tx => ({
+//     default: [
+//         {
+//             label: 'Type',
+//             value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
+//                 type={tx.type}/></React.Fragment>
+//         },
+//         buildVersionItem(tx),
+//         {
+//             label: 'Status',
+//             value: tx.applicationStatus === 'script_execution_failed' ?
+//                 <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
+//                 : 'Succeed'
+//         },
+//         {
+//             label: 'Tx Id',
+//             value: tx.id
+//         },
+//         {
+//             label: 'Block',
+//             value: <BlockRef height={tx.height}/>
+//         },
+//         {
+//             label: 'Nonce',
+//             value: tx.nonce
+//         },
+//         {
+//             label: 'InvokeScript Transaction Id',
+//             value: <TransactionRef txId={tx.invokeScriptTransactionId}/>
+//         },
+//         buildFeeItem(tx),
+//     ]
+// })
 
 const dataTransactionToItems = tx => {
     return {
@@ -349,16 +344,21 @@ const genesisTransactionToItems = tx => {
 };
 
 const transferTransactionToItems = tx => {
-    return {
+    const result = {
         default: [
             ...buildTransactionHeaderItems(tx),
             buildRecipientItem(tx),
             buildAmountItem(tx),
             buildFeeItem(tx),
             buildAttachmentItem(tx),
-            ...buildSenderAddressAndKeyItems(tx)
+            ...buildSenderAddressAndKeyItems(tx),
         ]
-    };
+    }
+    if (tx.isEthereum) {
+        result.default.splice(-(buildSenderAddressAndKeyItems(tx).length + 1), 1)
+        result.default.push(buildBytesItem(tx))
+    }
+    return result
 };
 
 const exchangeTransactionToItems = tx => {
@@ -422,6 +422,10 @@ const massPaymentTransactionToItems = tx => {
     };
 };
 
+const ethereumTransactionToItems = tx => {
+    const items = []
+};
+
 const buildOrderItems = order => {
     return [{
         label: 'Order Id',
@@ -469,10 +473,13 @@ const buildTimestampItem = timestamp => ({
 });
 
 const buildTransactionHeaderItems = tx => {
-    return [{
+    const res = [{
         label: 'Type',
-        value: <React.Fragment><span>{tx.type}</span><Spacer size={14}/><TransactionBadge
-            type={tx.type}/></React.Fragment>
+        value: <React.Fragment>
+            <span>{tx.isEthereum ? 19 : tx.type}</span>
+            <Spacer size={14}/>
+            <TransactionBadge type={tx.type} isEthereum={tx.isEthereum}/>
+        </React.Fragment>
     }, {
         label: 'Status',
         value: tx.applicationStatus === 'script_execution_failed'
@@ -480,10 +487,16 @@ const buildTransactionHeaderItems = tx => {
             : tx.applicationStatus === 'script_execution_in_progress'
                 ? <><img src={pending} height={12} width={12}/>&nbsp;Script execution in progress</>
                 : 'Succeeded'
-    }, buildVersionItem(tx), buildTimestampItem(tx.timestamp), {
-        label: 'Block',
-        value: <BlockRef height={tx.height}/>
-    }, buildProofsItem(tx)];
+    },
+        buildVersionItem(tx),
+        buildTimestampItem(tx.timestamp),
+        {
+            label: 'Block',
+            value: <BlockRef height={tx.height}/>
+        }, buildProofsItem(tx)];
+
+    if (tx.isEthereum) res.pop()
+    return res
 };
 
 const buildVersionItem = tx => ({
@@ -540,12 +553,17 @@ const buildFeeItem = tx => ({
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: <MoneyInfo value={tx.amount} />
+    value: <MoneyInfo value={tx.amount}/>
 });
 
 const buildLeaseId = tx => ({
     label: 'LeaseId',
-    value: <LeaseRef leaseId={tx.id} />
+    value: <LeaseRef leaseId={tx.id}/>
 });
+
+const buildBytesItem = tx => ({
+    label: 'Bytes',
+    value: <RawJsonViewer json={tx.bytes}/>
+})
 
 export default transactionToDictionary;
