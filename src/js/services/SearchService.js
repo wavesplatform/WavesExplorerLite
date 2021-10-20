@@ -16,7 +16,7 @@ export class SearchService extends ApiClientService {
 
     convertAddress = (address, networkId) => address.startsWith('0x') && address.length === 42 ? ethAddress2waves(address, getNetworkByte(networkId)) : address
     convertAsset = (asset) => asset.startsWith('0x') ? this.getApi().assets.convertEth2Waves(asset).then(resp => resp.data[0].assetId) : asset;
-    convertTxId = (ethTxId) => (ethTxId.startsWith('0x')) ? ethTxId2waves(ethTxId) : ethTxId
+    convertTxId = (ethTxId) => (ethTxId.startsWith('0x') && ethTxId.length === 66) ? ethTxId2waves(ethTxId) : ethTxId
 
     search = async query => {
         if (!query)
@@ -31,7 +31,7 @@ export class SearchService extends ApiClientService {
         try {
             assetId = await this.convertAsset(query)
         } catch {}
-        
+
         return api.assets.details(assetId).then(details => {
             if(details) {
                 const event = this.createEvent(SearchResult.asset);
