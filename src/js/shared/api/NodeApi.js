@@ -162,7 +162,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
     return {
         version: () => fetchNodeVersion(baseUrl),
-        baseTarget: () => fetchBasetarget(baseUrl),
+        baseTarget: () => fetchHeadersLast(baseUrl).then(resp => resp["nxt-consensus"]["base-target"]),
         addresses: {
             details: (address) => fetchBalanceDetails(baseUrl, address),
             aliases: (address) => fetchByAddress(baseUrl, address),

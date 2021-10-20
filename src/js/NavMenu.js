@@ -42,7 +42,7 @@ const buildItems = () => {
     }, {
         title: 'Converters',
         route: networkId => routeBuilder(networkId).converters,
-        visible: networkId => networkId === 'custom',
+        visible: alwaysVisible,
         icon: 'icon-converters'
     }];
 };
