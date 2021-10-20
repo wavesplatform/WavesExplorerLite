@@ -61,10 +61,11 @@ export const createListItem = (transaction) => {
             return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
 
         case 18:
-            return <ContinuationTransactionListItem key={transaction.id} tx={transaction}/>;
+            return <ExpressionInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
 
         case 19:
             return <EthereumTransactionListItem key={transaction.id} tx={transaction}/>;
+                
 
         default:
             return null;
@@ -485,37 +486,6 @@ class UpdateAssetInfoTransactionListItem extends React.Component {
     }
 }
 
-class ContinuationTransactionListItem extends React.Component {
-    static propTypes = {
-        tx: PropTypes.object.isRequired
-    };
-
-    render() {
-        const {tx} = this.props;
-        return (
-            <tr>
-                <td data-label="ID">
-                    <Line wrap={false}>
-                        {tx.applicationStatus === 'script_execution_failed' && <FailedBrick/>}
-                        <TransactionRef txId={tx.id}/>
-                    </Line>
-                </td>
-                <td data-label="InvokeTx">
-                    <Line wrap={false}>
-                        <TransactionRef txId={tx.invokeScriptTransactionId}/>
-                    </Line>
-                    <Line wrap={false}>
-                        <EndpointRef endpoint={tx.feeAssetId || ''} appearance="regular" type={'asset'}/>
-                    </Line>
-                </td>
-                <JustFee fee={tx.fee}/>
-                <td data-label="Status">
-                    {tx.applicationStatus}
-                </td>
-            </tr>
-        );
-    }
-}
 
 class EthereumTransactionListItem extends React.Component {
     static propTypes = {
@@ -529,6 +499,23 @@ class EthereumTransactionListItem extends React.Component {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <Subjects type={tx.type} sender={tx.sender}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+            </tr>
+        );
+    }
+}
+
+class ExpressionInvocationTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
+                <Subjects type={tx.type} sender={tx.sender}/>
+                <JustFee fee={tx.fee}/>
             </tr>
         );
     }

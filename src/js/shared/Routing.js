@@ -1,6 +1,6 @@
 import {ethAddress2waves} from '@waves/node-api-js'
 import {getNetworkByte} from './utils'
-import ethTxId2waves from "@waves/node-api-js/cjs/tools/adresses/ethTxId2waves";
+import ethTxId2waves from "@waves/node-api-js/cjs/tools/transactions/ethTxId2waves";
 
 
 export const routeParamsBuilder = (networks) => {

@@ -6,8 +6,8 @@ import {libs} from '@waves/signature-generator';
 import {convertEthTx} from '../shared/utils'
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
-    const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
-    tx.applicationStatus = info && info.applicationStatus
+    const info = tx.applicationStatus || (await currencyService.getApi().transactions.status([tx.id]))[0].applicationStatus;
+    tx.applicationStatus = info
     return transform(
         currencyService,
         spamDetectionService,
@@ -104,9 +104,9 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
 
-        // case 18:
-        //     return transformContinuation(currencyService, tx);
-
+        case 18:
+            return transformInvokeExpression(currencyService, assetService, tx, shouldLoadDetails);
+                
         case 19:
             return transformEthereumTransaction(currencyService, assetService, spamDetectionService, tx, shouldLoadDetails);
 
@@ -119,6 +119,28 @@ const DEFAULT_FUNCTION_CALL = {
     function: 'default',
     args: []
 };
+
+const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
+
+const appendAssetData = async (currencyService, data, assetKey) => {
+    const detailsArray = data
+        ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
+        : [];
+    return data && data.length
+        ? Promise.all(data.map(async (item) => {
+            const {assetId: id, name, decimals, description} = detailsArray
+                .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
+            const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
+            return {
+                ...item,
+                money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
+                name,
+                decimals,
+                description
+            }
+        }))
+        : []
+}
 
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
@@ -174,22 +196,7 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
     });
 }
 
-// const transformContinuation = (currencyService, tx) => {
-//     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => ({
-//         version: tx.version,
-//         type: tx.type,
-//         id: tx.id,
-//         nonce: tx.nonce,
-//         invokeScriptTransactionId: tx.invokeScriptTransactionId,
-//         height: tx.height,
-//         applicationStatus: tx.applicationStatus,
-//         fee: Money.fromCoins(tx.fee, feeCurrency),
-//     }))
-// }
-
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
-
-    const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
 
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
@@ -212,52 +219,68 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             bytes: tx.bytes
         };
 
-        const appendAssetData = async (data, assetKey) => {
-            const detailsArray = data
-                ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
-                : [];
-            return data && data.length
-                ? Promise.all(data.map(async (item) => {
-                    const {assetId: id, name, decimals, description} = detailsArray
-                        .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
-                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
-                    return {
-                        ...item,
-                        money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
-                        name,
-                        decimals,
-                        description
-                    }
-                }))
-                : []
-        }
-
         if (!shouldLoadDetails)
             return result;
 
         if (tx.stateChanges) {
             result.rawStateChanges = tx.stateChanges
             result.stateChanges = {...tx.stateChanges}
-            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
-            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
-            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
-            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
-            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges.transfers = await appendAssetData(currencyService, result.stateChanges.transfers, 'asset')
+            result.stateChanges.issues = await appendAssetData(currencyService, result.stateChanges.issues, 'assetId')
+            result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
+            result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
+            result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
         }
 
         if (tx.stateUpdate) {
             result.stateUpdate = tx.stateUpdate;
-            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
-            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
-            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
-            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
-            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
-            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.payments = await appendAssetData(currencyService, tx.stateUpdate.payments.map(item => item.payment), 'asset')
+            result.stateUpdate.transfers = await appendAssetData(currencyService, tx.stateUpdate.transfers, 'asset')
+            result.stateUpdate.issues = await appendAssetData(currencyService, tx.stateUpdate.issues, 'assetId')
+            result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
+            result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
+            result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
         }
         return result;
     });
 };
 
+const transformInvokeExpression = async (currencyService, assetService, tx, shouldLoadDetails) => {
+    const feeCurrency = await currencyService.get(tx.feeAssetId)
+
+    const result = {
+        ...copyMandatoryAttributes(tx),
+        applicationStatus: tx.applicationStatus,
+        expression: tx.expression,
+        fee: Money.fromCoins(tx.fee, feeCurrency),
+        stateUpdate: tx.stateUpdate
+    };
+
+    if (!shouldLoadDetails)
+        return result;
+
+    if (tx.stateChanges) {
+        result.rawStateChanges = tx.stateChanges
+        result.stateChanges = {...tx.stateChanges}
+        result.stateChanges.transfers = await appendAssetData(currencyService, result.stateChanges.transfers, 'asset')
+        result.stateChanges.issues = await appendAssetData(currencyService, result.stateChanges.issues, 'assetId')
+        result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
+        result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
+        result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+    }
+
+    if (tx.stateUpdate) {
+        result.stateUpdate = tx.stateUpdate;
+        result.stateUpdate.payments = await appendAssetData(currencyService, tx.stateUpdate.payments.map(item => item.payment), 'asset')
+        result.stateUpdate.transfers = await appendAssetData(currencyService, tx.stateUpdate.transfers, 'asset')
+        result.stateUpdate.issues = await appendAssetData(currencyService, tx.stateUpdate.issues, 'assetId')
+        result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
+        result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
+        result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+    }
+
+    return result;
+};
 
 const transformAssetScript = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {
