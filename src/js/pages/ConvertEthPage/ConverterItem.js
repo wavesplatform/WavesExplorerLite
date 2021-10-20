@@ -5,8 +5,9 @@ export function ConverterItem(props) {
     const [value, setValue] = useState('');
     const [convertedValue, setConvertedValue] = useState('');
 
-    const convert = () => {
-        if (!!value.length) setConvertedValue(props.handleConvert(value))
+    const convert = async () => {
+        const val = await props.handleConvert(value)
+        setConvertedValue(v)     
     }
 
     const handleKeyPress = (e) => {

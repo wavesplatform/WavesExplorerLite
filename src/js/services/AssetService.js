@@ -69,5 +69,9 @@ export class AssetService extends ApiClientService {
             ? await this.loadAssetsDetails(assetId)
             : await this.loadAssetDetails(assetId)
     }
+
+    async convertEthAsset(assetId) {
+        return this.getApi().assets.convertEth2Waves(assetId)
+    }
 }
 
