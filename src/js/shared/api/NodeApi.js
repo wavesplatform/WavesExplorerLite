@@ -160,6 +160,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
     rax.attach(retryableAxios);
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
+    console.log('baseUrl', baseUrl)
     return {
         version: () => fetchNodeVersion(baseUrl),
         baseTarget: () => fetchHeadersLast(baseUrl).then(resp => resp["nxt-consensus"]["base-target"]),
@@ -224,7 +225,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return [].concat(...res)
             },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
-            convertEth2Waves: (ethAssetId) => fetchEthAssetDetails(baseUrl, ethAssetId).then(resp => resp[0].assetId)
+            convertEth2Waves: (id) => axios.post(`${baseUrl}/eth/assets?id=${id}`)[0]
         },
         peers: () => fetchConnected(baseUrl),
     }
