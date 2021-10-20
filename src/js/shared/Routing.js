@@ -37,7 +37,7 @@ export const routeBuilder = (networkId) => {
         transactions: {
             one: (id) => {
                 let txId
-                id.startsWith('0x') ? txId = ethTxId2waves(id) : txId = id
+                id.startsWith('0x') && id.length == 66 ? txId = ethTxId2waves(id) : txId = id
                 return `${root}/tx/${txId}`
             }
         },

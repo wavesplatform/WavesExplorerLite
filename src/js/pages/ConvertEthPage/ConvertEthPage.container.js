@@ -22,7 +22,6 @@ export class ConvertEthPage extends React.Component {
     convertE2WAsset = async (value) => await ServiceFactory.forNetwork(this.props.match.params.networkId).assetService().convertEth2Waves(value)
 
     render() {
-        console.log(this.props.match.params)
         return (
             <div className="loaderWrapper">
                 <div className="content card">

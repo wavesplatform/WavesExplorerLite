@@ -71,7 +71,7 @@ export class AssetService extends ApiClientService {
     }
 
     async convertEth2Waves(assetId) {
-        return this.getApi().assets.convertEth2Waves(assetId)
+        return this.getApi().assets.convertEth2Waves(assetId).then(resp => resp.data[0].assetId)
     }
 }
 
