@@ -125,9 +125,9 @@ const wavesDetail = { name: "WAVES", assetId: null, decimals: 8, description: "w
 const appendAssetData = async (currencyService, data, assetKey) => {
     if (Array.isArray(data)) {
         const detailsArray = data
-            ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
-            : [];
-
+        ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
+        : [];
+        
         return data && data.length
             ? Promise.all(data.map(async (item) => {
                 const { assetId: id, name, decimals, description } = detailsArray
@@ -147,9 +147,9 @@ const appendAssetData = async (currencyService, data, assetKey) => {
             ? await currencyService.getApi().assets.details(data[assetKey])
             : [];
 
+        const { assetId: id, name, decimals, description } = detailsArray
         const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
 
-        const { assetId: id, name, decimals, description } = detailsArray
 
         return {
             ...data,
