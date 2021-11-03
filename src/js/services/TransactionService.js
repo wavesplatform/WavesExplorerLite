@@ -17,12 +17,12 @@ export class TransactionService extends ApiClientService {
     };
 
     loadRawTransaction = (id) => {
-        return this.getApi().transactions.info(id).then(response => response.data);
+        return this.getApi().transactions.info(id);
     };
 
     loadUnconfirmed = () => {
         return this.getApi().transactions.unconfirmed().then(response => {
-            const transactions = response.data;
+            const transactions = response;
             transactions.sort((a, b) => b.timestamp - a.timestamp);
 
             const size = transactions.length;

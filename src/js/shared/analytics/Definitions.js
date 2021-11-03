@@ -3,5 +3,7 @@ export const SearchResult = {
     transaction: 'Tx',
     address: 'Address',
     alias: 'Alias',
-    unknown: 'Unknown'
+    unknown: 'Unknown',
+    asset: 'Asset',
+    lease: 'Lease',
 };

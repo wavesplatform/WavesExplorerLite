@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Question from '../../../images/question-14.svg';
-import {TOOLTIP_ID} from '../../shared/constants';
-import {CAPTIONS} from '../../services/InfoService';
+import { TOOLTIP_ID } from '../../shared/constants';
+import { CAPTIONS } from '../../services/InfoService';
 import Tooltip from '../../components/Tooltip';
 
 const Caption = ({caption}) => {

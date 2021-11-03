@@ -13,13 +13,36 @@ const config = {
 
 config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
+function buildApp(vars, env, done) {
 
-function buildApp(network, env, done) {
-    exec('yarn run build:' + env + ' --env.network=' + network, function (err, stdout, stderr) {
+    const cmd = `yarn run build:${env} ${Object.entries(vars).map(([k, v]) => `--env.${k}=${v}`).join(' ')}`;
+
+    exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
     })
+}
+
+function clean() {
+    return del([
+        config.releaseDirectory + '/*',
+        config.releaseDirectory
+    ]);
+}
+
+function buildOfficialProd(done) {
+    buildApp({
+        network: 'mainnet',
+        decompileUrl: 'https://nodes.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
+}
+
+function buildOfficialTestnet(done) {
+    buildApp({
+        network: 'testnet',
+        decompileUrl: 'https://testnode1.wavesnodes.com/utils/script/decompile'
+    }, 'prod', done);
 }
 
 function dockerImage(done) {
@@ -39,30 +62,8 @@ function pushDockerImage(done){
 }
 
 
-gulp.task('clean', function (done) {
-    return del([
-        config.releaseDirectory + '/*',
-        config.releaseDirectory
-    ], done);
-});
-
-gulp.task('build-official-prod', gulp.series('clean', function (done) {
-    buildApp('mainnet', 'prod', done);
-}));
-
-gulp.task('build-official-staging', gulp.series('clean', function (done) {
-    buildApp('mainnet', 'dev', done);
-}));
-
-gulp.task('docker-prod', function (done) {
-    dockerImage(done);
-});
-gulp.task('docker-push',gulp.series('docker-prod', function (done) {
-    pushDockerImage(done);
-}));
-
-gulp.task('build-devnet', gulp.series('clean', function (done) {
-    buildApp('devnet', 'prod', done);
-}));
 
 
+exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
+exports.buildOfficialTestnet = gulp.series(clean, buildOfficialTestnet);
+exports.buildOfficialDocker = gulp.series(clean,buildOfficialProd, dockerImage,pushDockerImage);

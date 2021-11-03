@@ -18,6 +18,7 @@ import NodesPage from './pages/NodesPage';
 import BlocksPage from './pages/BlocksPage';
 import SingleBlockPage from './pages/SingleBlockPage';
 import SingleTransactionPage from './pages/SingleTransactionPage';
+import SingleLeasePage from './pages/SingleLeasePage';
 import SingleAddressPage from './pages/SingleAddressPage';
 import SingleAliasPage from './pages/SingleAliasPage';
 import SingleAssetPage from './pages/SingleAssetPage';
@@ -45,8 +46,14 @@ const withNetworkRouter = (RootComponent) => {
 
 class App extends React.Component {
     state = {
-        mobileMenuVisible: null
+        mobileMenuVisible: null,
+        isBrowserSupported: true
     };
+
+    componentDidMount() {
+        const isBrowserSupported = ServiceFactory.global().browserService().isCurrentBrowserSupported();
+        this.setState({isBrowserSupported});
+    }
 
     componentDidCatch(error, errorInfo) {
         ServiceFactory
@@ -64,6 +71,10 @@ class App extends React.Component {
         const isAnimated = isVisible != null;
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
+        if (!this.state.isBrowserSupported) {
+            return <UnsupportedPage />;
+        }
+
         return (
             <React.Fragment>
                 <div className={wrapperClassName}>
@@ -76,6 +87,7 @@ class App extends React.Component {
                             <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
                             <Route exact path={routes.blocks.list} component={BlocksPage} />
                             <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
+                            <Route exact path={routes.leases.one(routeParams.leaseId)} component={SingleLeasePage} />
                             <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
                             <Route exact path={routes.addresses.one(routeParams.address, routeParams.tab)} component={SingleAddressPage} />
                             <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />

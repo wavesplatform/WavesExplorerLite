@@ -8,11 +8,20 @@ const copyAndFreeze = object => Object.freeze(Object.assign({}, object));
 export class ConfigurationService {
     constructor(storageService) {
         this.storageService = storageService;
-
         this.networks = configuredNetworks.slice();
-        this.customNetwork = null;
+        this.customNetwork = global.__CONFIG__ && global.__CONFIG__.API_NODE_URL
+            ? {
+                "networkId": "custom",
+                "displayName": "Custom",
+                "apiBaseUrl": global.__CONFIG__.API_NODE_URL,
+                "nodes": [{"url": global.__CONFIG__.API_NODE_URL}]
+            } : null
+
         const saved = this.storageService.loadConfiguration();
-        if (saved) {
+        if (this.customNetwork) {
+            this.networks.push(this.customNetwork);
+            this.selectedIndex = this.networks.length - 1;
+        } else if (saved) {
             this.selectedIndex = saved.selectedIndex;
             if (saved.customNetwork) {
                 this.networks.push(saved.customNetwork);
@@ -61,6 +70,4 @@ export class ConfigurationService {
             customNetwork: this.customNetwork
         });
     };
-
-    getDecompileScriptUrl = () => __DECOMPILE_SCRIPT_URL__;
 }

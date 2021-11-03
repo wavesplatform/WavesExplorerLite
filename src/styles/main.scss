@@ -9,6 +9,7 @@
 @import "address.scss";
 @import "fonts.scss";
 @import "buttons.scss";
+@import "state-update.scss";
 
 html {
     display: block;
@@ -506,6 +507,34 @@ body {
             margin-bottom: 6px;
             display: block;
             font-size: 12px;
+        }
+
+        .icon {
+            margin: 0 auto;
+            display: block;
+        }
+
+        .title {
+            @include font(headline1);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .message {
+            @include font(headline3, basic500);
+            text-align: center;
+        }
+
+        .browser-icon {
+            float: left;
+            padding-right: 20px;
+            height: 42px;
+            width: 42px;
+        }
+
+        .browser-list {
+            max-width: 482px;
+            margin: 0 auto;
         }
     }
 

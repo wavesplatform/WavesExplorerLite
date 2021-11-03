@@ -1,6 +1,6 @@
 {
     "name": "TN-blockchain-explorer",
-    "version": "0.0.52",
+    "version": "3.2.4",
     "private": true,
     "description": "Turtle Network blockchain information tool",
     "repository": {
@@ -13,21 +13,25 @@
         "app:dev": "webpack --mode development --config=webpack.config.js",
         "app:prod": "webpack --mode production --config=webpack.config.js",
         "test": "jest",
-        "build:dev": "yarn test && yarn app:dev",
-        "build:prod": "yarn test && yarn app:prod"
+        "build:dev": "yarn app:dev",
+        "build:prod": "yarn app:prod"
     },
     "dependencies": {
         "@babel/runtime": "^7.3.4",
         "@sentry/browser": "^4.6.4",
         "@turtlenetwork/signature-generator": "^5.0.0",
+        "@waves/node-api-js": "1.2.4",
+        "@waves/ride-js": "2.1.1",
         "amplitude-js": "^4.6.0-beta.2",
         "axios": "0.19.0",
         "decimal.js": "10.0.1",
+        "detect-browser": "^4.8.0",
         "dexie": "^2.0.4",
-        "formik": "^1.4.1",
+        "formik": "^1.5.8",
         "json-bigint": "^0.3.0",
         "lodash": "4.17.15",
         "node-sass": "^6.0.0",
+        "lodash": "^4.17.20",
         "prop-types": "15.6.2",
         "react": "16.6.1",
         "react-copy-to-clipboard": "5.0.1",
@@ -42,6 +46,7 @@
         "react-scroll-up": "^1.3.3",
         "react-tooltip": "^3.11.1",
         "retry-axios": "^0.3.2",
+        "semver": "^6.3.0",
         "valid-url": "^1.0.9"
     },
     "devDependencies": {
@@ -59,15 +64,13 @@
         "enzyme-adapter-react-16": "^1.11.2",
         "enzyme-to-json": "^3.3.5",
         "file-loader": "1.1.11",
-        "graceful-fs": "4.2.2",
-        "gulp": "4.0.1",
-        "gulp-awspublish": "3.4.0",
-        "gulp-cloudfront-invalidate": "0.1.5",
+        "gulp": "4.0.2",
         "html-loader": "0.5.5",
         "html-webpack-plugin": "3.2.0",
         "identity-obj-proxy": "^3.0.0",
-        "jest": "^24.8.0",
+        "jest": "^24.9.0",
         "lodash-webpack-plugin": "^0.11.5",
+        "node-sass": "^5.0.0",
         "react-test-renderer": "^16.8.4",
         "sass-loader": "7.0.3",
         "sass-resources-loader": "1.3.3",
@@ -75,10 +78,14 @@
         "webpack": "4.26.0",
         "webpack-bundle-analyzer": "3.3.2",
         "webpack-cli": "3.1.2",
-        "webpack-dev-server": "3.1.14"
+        "webpack-dev-server": "^3.11.0"
     },
     "resolutions": {
         "fstream": "1.0.12",
-        "istanbul-reports": "2.2.6"
+        "istanbul-reports": "2.2.6",
+        "lodash": "4.17.15",
+        "lodash.mergewith": "4.6.2",
+        "minimatch": "3.0.4",
+        "mixin-deep": "1.3.2"
     }
 }

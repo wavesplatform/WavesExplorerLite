@@ -9,6 +9,7 @@ import EndpointRef from '../../components/EndpointRef';
 import ScriptInfo from '../../components/ScriptInfo';
 import Timestamp from '../../components/Timestamp';
 import ServiceFactory from '../../services/ServiceFactory';
+import {RoutedBlockRef} from "../../components/BlockRef/BlockRef.view";
 
 export class SingleAssetPage extends React.Component {
     state = {
@@ -60,11 +61,11 @@ export class SingleAssetPage extends React.Component {
         const {details} = this.state;
         return {
             default: [{
-                label: 'Transaction Id',
-                value: <TransactionRef txId={details.id}/>
+                label: 'Origin Tx Id',
+                value: <TransactionRef txId={details.originTransactionId}/>
             }, {
                 label: 'Issue Height',
-                value: details.issued.height
+                value: <RoutedBlockRef height={details.issued.height} />
             }, {
                 label: 'Issued at',
                 value: <Timestamp value={details.issued.timestamp}/>
@@ -90,11 +91,11 @@ export class SingleAssetPage extends React.Component {
                 label: 'Scripted',
                 value: (!!details.scripted).toString()
             },
-            ...this.buildScriptItem(details.scriptDetails),
-            {
-                label: 'Sponsored Fee',
-                value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
-            }]
+                ...this.buildScriptItem(details.scriptDetails),
+                {
+                    label: 'Sponsored Fee',
+                    value: details.minSponsoredFee ? details.minSponsoredFee.toString() : 'N/A'
+                }]
         };
     }
 

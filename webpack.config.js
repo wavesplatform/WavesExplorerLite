@@ -76,7 +76,6 @@ var config = {
         }),
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(require('./package.json').version),
-            __DECOMPILE_SCRIPT_URL__: JSON.stringify('https://tnnode2.turtlenetwork.eu/utils/script/decompile')
         }),
         new LodashModuleReplacementPlugin({
             shorthands: true
@@ -88,7 +87,12 @@ var config = {
         }, {
             from: 'manifest.json',
             to: buildPath
-        }], { debug: true })
+        },
+            // {
+            //     from: path.join(sourcesPath, 'config.js'),
+            //     to: buildPath
+            // }
+        ], {debug: true})
     ],
     optimization: {
         splitChunks: {
@@ -104,7 +108,10 @@ var config = {
 
 const networks = {
     mainnet: ['mainnet', 'testnet', 'stagenet'],
-    devnet: ['devnet']
+    stagenet: ['mainnet', 'testnet', 'stagenet'],
+    testnet: ['mainnet', 'testnet', 'stagenet'],
+    devnet: ['devnet'],
+    custom: [],
 };
 
 module.exports = (env, argv) => {
@@ -133,12 +140,14 @@ module.exports = (env, argv) => {
     }
 
     const network = (env && env.network) || 'mainnet';
-    const networkConfiguration = networks[network];
+    const decompileUrl = (env && env.decompileUrl) || 'https://testnet.testnet.tnnode.turtlenetwork.eu/utils/script/decompile';
+    const networkConfiguration = networks[network] || [];
     config.plugins.push(new webpack.DefinePlugin({
         __NETWORKS__: JSON.stringify(networkConfiguration),
         __GOOGLE_TRACKING_ID__: JSON.stringify(googleTrackingId),
         __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey),
-        __SENTRY_DSN__: JSON.stringify(sentryDsn)
+        __SENTRY_DSN__: JSON.stringify(sentryDsn),
+        __DECOMPILE_SCRIPT_URL__: JSON.stringify(decompileUrl)
     }));
 
     return config;

@@ -17,7 +17,8 @@ import {AssetService} from './AssetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
-import {StateChangeService} from './StateChangeService';
+import {BrowserService} from './BrowserService';
+import {LeaseService} from './LeaseService';
 
 const database = new Database();
 
@@ -27,12 +28,14 @@ class GlobalServices {
         this._configurationService = new ConfigurationService(this._storageService);
         this._analyticsService = new AnalyticsService(__GOOGLE_TRACKING_ID__, __AMPLITUDE_API_KEY__);
         this._errorReportingService = new ErrorReportingService(__SENTRY_DSN__);
+        this._browserService = new BrowserService();
     }
 
     configurationService = () => this._configurationService;
     storageService = () => this._storageService;
     analyticsService = () => this._analyticsService;
     errorReportingService = () => this._errorReportingService;
+    browserService = () => this._browserService;
 }
 
 class NetworkDependentServices {
@@ -43,11 +46,12 @@ class NetworkDependentServices {
             new SafeCurrencyCache(database, globalServices.errorReportingService()), networkId);
         this._spamDetectionService = new SpamDetectionService(globalServices.storageService(),
             globalServices.configurationService(), networkId);
-        this._stateChangeService = new StateChangeService(globalServices.configurationService(), networkId);
+        this._assetService = new AssetService(globalServices.configurationService(), networkId);
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
-            this._spamDetectionService, this._stateChangeService);
+            this._spamDetectionService, this._assetService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
         this._aliasService = new AliasService(globalServices.configurationService(), networkId);
+        this._leaseService =  new LeaseService(this._globalServices.configurationService(), this._networkId);
     }
 
     searchService = () => new SearchService(this._globalServices.configurationService(),
@@ -82,7 +86,9 @@ class NetworkDependentServices {
 
     aliasService = () => this._aliasService;
 
-    assetService = () => new AssetService(this._globalServices.configurationService(), this._networkId);
+    assetService = () => this._assetService;
+
+    leaseService = () => this._leaseService;
 }
 
 class ServiceFactory {
@@ -94,7 +100,8 @@ class ServiceFactory {
     global = () => ({
         configurationService: this._globalServices.configurationService,
         analyticsService: this._globalServices.analyticsService,
-        errorReportingService: this._globalServices.errorReportingService
+        errorReportingService: this._globalServices.errorReportingService,
+        browserService: this._globalServices.browserService
     });
 
     forNetwork = networkId => {

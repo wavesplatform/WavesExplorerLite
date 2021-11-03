@@ -4,7 +4,6 @@ import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import {ApiClientService} from './ApiClientService';
-import {thirdPartyApi} from '../shared/api/ThirdPartyApi';
 
 export class AddressService extends ApiClientService {
     constructor(transactionTransformerService, currencyService, configurationService, networkId) {
@@ -15,8 +14,7 @@ export class AddressService extends ApiClientService {
     }
 
     loadBalance = (address) => {
-        return this.getApi().addresses.details(address).then(balanceResponse => {
-            const data = balanceResponse.data;
+        return this.getApi().addresses.details(address).then(data => {
             return {
                 regular: Money.fromCoins(data.regular, Currency.TN).toString(),
                 generating: Money.fromCoins(data.generating, Currency.TN).toString(),
@@ -28,12 +26,12 @@ export class AddressService extends ApiClientService {
 
     loadTransactions = (address, limit, after) => {
         return this.getApi().transactions.address(address, limit, after).then(transactionsResponse => {
-            return this.transformer.transform(transactionsResponse.data[0]);
+            return this.transformer.transform(transactionsResponse);
         });
     };
 
     loadRawAliases = (address) => {
-        return this.getApi().addresses.aliases(address).then(aliasesResponse => aliasesResponse.data);
+        return this.getApi().addresses.aliases(address);
     };
 
     transformAndGroupAliases = (rawAliases) => {
@@ -49,55 +47,59 @@ export class AddressService extends ApiClientService {
         return this.loadRawAliases(address).then(rawAliases => this.transformAndGroupAliases(rawAliases));
     };
 
-    loadAssets = (address) => {
-        return this.getApi().assets.balance(address).then(balanceResponse => {
-            const assets = balanceResponse.data.balances.map(item => {
+    loadAssets = async (address) => {
+        const api = this.getApi().assets
+        const balanceResponse = await api.balance(address)
+        const details = (await api.detailsMultiple(balanceResponse.balances.map(({assetId}) => assetId)))
+            .reduce((acc, val) => ({...acc, [val.assetId]: val}), {})
+        return balanceResponse.balances.map(item => {
 
-                const currency = Currency.fromIssueTransaction(item.issueTransaction);
-                this.currencyService.put(currency);
-
-                const amount = Money.fromCoins(item.balance, currency);
-
-                return {
-                    id: item.assetId,
-                    name: currency.toString(),
-                    amount: amount.formatAmount()
-                };
+            // TODO: remove when token is renamed
+            if (item.assetId === VostokToWavesEnterprise.id) {
+                item.issueTransaction.name = VostokToWavesEnterprise.name;
+                item.issueTransaction.description = VostokToWavesEnterprise.description;
+            }
+            const currency = new Currency({
+                id: details[item.assetId].originTransactionId,
+                displayName: details[item.assetId].name,
+                precision: details[item.assetId].decimals
             });
 
-            return assets;
+            this.currencyService.put(currency);
+
+            const amount = Money.fromCoins(item.balance, currency);
+
+            return {
+                id: item.assetId,
+                name: currency.toString(),
+                amount: amount.formatAmount()
+            };
         });
     };
 
-    loadNftTokens = (address, limit, after) => {
-        return this.getApi().assets.nft(address, limit, after).then(balanceResponse => {
-            const tokens = balanceResponse.data.map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                };
-            });
-
-            return tokens;
+    loadNftTokens = async (address, limit, after) => {
+        const balanceResponse = await this.getApi().assets.nft(address, limit, after)
+        return balanceResponse.map(item => {
+            return {
+                id: item.id || item.assetId,
+                name: item.name,
+            };
         });
     };
 
     loadData = (address) => {
-        return this.getApi().addresses.data(address).then(dataResponse => dataResponse.data);
+        return this.getApi().addresses.data(address);
     };
 
     loadScript = (address) => {
-        return this.getApi().addresses.script(address).then(scriptResponse => scriptResponse.data);
+        return this.getApi().addresses.scriptInfo(address);
+    };
+
+    loadScriptMeta = (address) => {
+        return this.getApi().addresses.scriptMeta(address);
     };
 
     validate = (address) => {
-        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.data.valid);
-    };
-
-    decompileScript = (scriptBase64) => {
-        const config = this.configuration();
-        const api = thirdPartyApi(config.spamListUrl, this.configurationService.getDecompileScriptUrl());
-
-        return api.decompileScript(scriptBase64).then(decompileResponse => decompileResponse.data.script);
+        return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.valid);
     };
 }

@@ -4,10 +4,20 @@ import EventBuilder from '../../shared/analytics/EventBuilder';
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 
-import {Pagination} from './Pagination.container';
-import {BlockList} from './BlockList.view';
+import { Pagination } from './Pagination.container';
+import { BlockList } from './BlockList.view';
 
 const BLOCKS_PER_PAGE = 20;
+
+const NUMBER_OF_PAGES_IN_ROW = 5;
+const derivePageBoundaries = (pageNumber, lastPage) => {
+    const lowPage = Math.floor((pageNumber - 1) / NUMBER_OF_PAGES_IN_ROW) * NUMBER_OF_PAGES_IN_ROW;
+
+    return {
+        lowPage: lowPage + 1,
+        highPage: Math.min(lastPage, lowPage + NUMBER_OF_PAGES_IN_ROW)
+    };
+};
 
 export class BlocksPage extends React.Component {
     state = {
@@ -18,7 +28,15 @@ export class BlocksPage extends React.Component {
         hasError: false
     };
 
+    _isMounted = false;
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     componentDidMount() {
+        this._isMounted = true;
+
         const event = new EventBuilder().blocks().events().show().build();
         ServiceFactory.global().analyticsService().sendEvent(event);
     }
@@ -28,7 +46,7 @@ export class BlocksPage extends React.Component {
         return ServiceFactory.forNetwork(networkId).infoService().loadHeight().then(height => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
-            this.setState({height, lastPage});
+            this._isMounted && this.setState({height, lastPage});
 
             return this.loadCurrentPage(1);
         })
@@ -43,24 +61,32 @@ export class BlocksPage extends React.Component {
             .forNetwork(networkId)
             .blockService()
             .loadSequence(from, to)
-            .then(blocks => this.setState({blocks}));
+            .then(blocks => this._isMounted && this.setState({blocks}));
     };
 
-    handlePageChange = pageNumber => {
-        this.loadCurrentPage(pageNumber);
+    handlePageChange = currentPage => {
+        this.loadCurrentPage(currentPage);
+        this.setState({currentPage});
+        window.scrollTo(0,0)
     };
 
     render() {
+        const {currentPage, lastPage, blocks} = this.state;
+        const boundaries = derivePageBoundaries(currentPage, lastPage);
+        const pagination = <Pagination boundaries={boundaries} currentPage={currentPage} lastPage={lastPage}
+                                       onPageChange={this.handlePageChange}/>;
         return (
             <div className="loaderWrapper">
                 <Loader fetchData={this.initialFetch} errorTitle="Failed to load blocks">
                     <div className="content card">
                         <div className="headline">
                             <span className="title large">Blocks</span>
-                            <Pagination currentPage={this.state.currentPage} lastPage={this.state.lastPage}
-                                        onPageChange={this.handlePageChange} />
+                            {pagination}
                         </div>
-                        <BlockList blocks={this.state.blocks} />
+                        <BlockList blocks={blocks}/>
+                        <div className="headline">
+                            {pagination}
+                        </div>
                     </div>
                 </Loader>
             </div>

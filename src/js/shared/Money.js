@@ -36,7 +36,7 @@ export default class Money {
         if (currency === undefined)
             throw new Error('Currency is required');
 
-        if (amount instanceof BigNumber)
+        if (amount instanceof BigNumber || amount._isBigNumber)
             amount = amount.toString();
 
         this.amount = new Decimal(amount)
@@ -50,7 +50,7 @@ export default class Money {
         if (currency.precision === undefined)
             throw new Error('A valid currency must be provided');
 
-        if (amount instanceof BigNumber)
+        if (amount instanceof BigNumber || amount._isBigNumber)
             amount = amount.toString();
 
         amount = new Decimal(amount);
