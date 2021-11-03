@@ -143,9 +143,9 @@ const appendAssetData = async (currencyService, data, assetKey) => {
             }))
             : []
     } else {
-        const detailsArray = data
+        const detailsArray = data && data[assetKey]
             ? await currencyService.getApi().assets.details(data[assetKey])
-            : [];
+            : wavesDetail;
 
         const { assetId: id, name, decimals, description } = detailsArray
         const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
@@ -252,7 +252,6 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
         }
 
-        console.log(result.stateUpdate.payments)
         if (tx.stateUpdate) {
             result.stateUpdate = tx.stateUpdate;
             result.stateUpdate.payments = await Promise.all(tx.stateUpdate.payments.map(async x => ({ sender: x.sender, dApp: x.dApp, payment: await appendAssetData(currencyService, x.payment, 'assetId') })))
