@@ -42,6 +42,24 @@ export const StateUpdateInfo = ({tx}) => {
         </tbody>
 
         <tbody>
+        {data.payments && data.payments
+            .map(({dApp, sender, payment}, i) => <tr key={i}>
+                <td style={{width: 100}}><Line bold>Transfer (Payment)</Line></td>
+                <td><MoneyInfo key={i} value={payment.money}/></td>
+                <td>
+                    {sender && <TransactionArrow type={4} direction={'incoming'}/>}
+                    {sender && <Line wrap={false}>
+                        <EndpointRef endpoint={sender} appearance="regular"/>
+                    </Line>}
+                    {dApp && <Line wrap={false}>
+                        <EndpointRef endpoint={dApp} appearance="regular"/>
+                    </Line>}
+                </td>
+            </tr>)
+        }
+        </tbody>
+
+        <tbody>
         {data.issues && data.issues
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
