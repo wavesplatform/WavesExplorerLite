@@ -53,12 +53,6 @@ export class AddressService extends ApiClientService {
         const details = (await api.detailsMultiple(balanceResponse.balances.map(({assetId}) => assetId)))
             .reduce((acc, val) => ({...acc, [val.assetId]: val}), {})
         return balanceResponse.balances.map(item => {
-
-            // TODO: remove when token is renamed
-            if (item.assetId === VostokToWavesEnterprise.id) {
-                item.issueTransaction.name = VostokToWavesEnterprise.name;
-                item.issueTransaction.description = VostokToWavesEnterprise.description;
-            }
             const currency = new Currency({
                 id: details[item.assetId].originTransactionId,
                 displayName: details[item.assetId].name,
