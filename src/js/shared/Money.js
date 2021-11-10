@@ -47,8 +47,11 @@ export default class Money {
     static fromTokens = (amount, currency) => new Money(amount, currency);
     static fromCoins = (amount, currency) => {
         currency = currency || {};
-        if (currency.precision === undefined)
+        if (currency.precision === undefined){
+            //console.log(currency);
             throw new Error('A valid currency must be provided');
+        }
+
 
         if (amount instanceof BigNumber || amount._isBigNumber)
             amount = amount.toString();

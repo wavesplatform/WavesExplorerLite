@@ -158,7 +158,7 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {
         return Object.assign(copyMandatoryAttributes(tx), {
             asset,
-            fee: Money.fromCoins(tx.fee, Currency.WAVES),
+            fee: Money.fromCoins(tx.fee, Currency.TN),
             timestamp: new DateTime(tx.timestamp),
             assetName: tx.name,
             description: tx.description,
@@ -199,7 +199,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
                 ? Promise.all(data.map(async (item) => {
                     const {assetId: id, name, decimals, description} = detailsArray
                         .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
-                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
+                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.TN;
                     return {
                         ...item,
                         money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
@@ -326,7 +326,7 @@ const transformLeaseCancel = async (currencyService, tx) => {
     const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId));
     const feeCurrency = await currencyService.get(tx.feeAssetId)
     return Object.assign(copyMandatoryAttributes(tx), {
-        amount: Money.fromCoins(amount, Currency.WAVES),
+        amount: Money.fromCoins(amount, Currency.TN),
         fee: Money.fromCoins(tx.fee, feeCurrency),
         leaseId: tx.leaseId,
         recipient: tx.lease ? tx.lease.recipient : null

@@ -4,6 +4,7 @@ import {Redirect, withRouter} from 'react-router';
 
 import {TabHeader} from './TabHeader.view';
 import {RoutedOpenDappButtonContainer} from './OpenDappButton.container';
+import {RoutedOpenNFTButtonContainer} from "./OpenNFTButton.container";
 
 class TabsView extends React.Component {
     static propTypes = {
@@ -35,6 +36,7 @@ class TabsView extends React.Component {
                         />
                     })}
                     <RoutedOpenDappButtonContainer />
+                    <RoutedOpenNFTButtonContainer />
                 </div>
                 <Component />
             </React.Fragment>
