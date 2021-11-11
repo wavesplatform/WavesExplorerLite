@@ -4,7 +4,6 @@ import Alias from '../shared/Alias';
 import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import {ApiClientService} from './ApiClientService';
-import {VostokToWavesEnterprise} from '../shared/constants';
 
 export class AddressService extends ApiClientService {
     constructor(transactionTransformerService, currencyService, configurationService, networkId) {
@@ -17,10 +16,10 @@ export class AddressService extends ApiClientService {
     loadBalance = (address) => {
         return this.getApi().addresses.details(address).then(data => {
             return {
-                regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
-                generating: Money.fromCoins(data.generating, Currency.WAVES).toString(),
-                available: Money.fromCoins(data.available, Currency.WAVES).toString(),
-                effective: Money.fromCoins(data.effective, Currency.WAVES).toString()
+                regular: Money.fromCoins(data.regular, Currency.TN).toString(),
+                generating: Money.fromCoins(data.generating, Currency.TN).toString(),
+                available: Money.fromCoins(data.available, Currency.TN).toString(),
+                effective: Money.fromCoins(data.effective, Currency.TN).toString()
             };
         });
     };
@@ -54,12 +53,6 @@ export class AddressService extends ApiClientService {
         const details = (await api.detailsMultiple(balanceResponse.balances.map(({assetId}) => assetId)))
             .reduce((acc, val) => ({...acc, [val.assetId]: val}), {})
         return balanceResponse.balances.map(item => {
-
-            // TODO: remove when token is renamed
-            if (item.assetId === VostokToWavesEnterprise.id) {
-                item.issueTransaction.name = VostokToWavesEnterprise.name;
-                item.issueTransaction.description = VostokToWavesEnterprise.description;
-            }
             const currency = new Currency({
                 id: details[item.assetId].originTransactionId,
                 displayName: details[item.assetId].name,

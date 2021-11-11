@@ -1,16 +1,16 @@
-import amplitude from 'amplitude-js';
+//import amplitude from 'amplitude-js';
 
 export class AmplitudeAnalyticsService {
     constructor(apiKey) {
-        this.apiKey = apiKey;
+        //this.apiKey = apiKey;
     }
 
     initialize() {
-        amplitude.getInstance().init(this.apiKey);
+        //amplitude.getInstance().init(this.apiKey);
     }
 
     sendEvent(event) {
-        let properties = {
+        /*let properties = {
             category: event.categoryName
         };
 
@@ -18,6 +18,6 @@ export class AmplitudeAnalyticsService {
             properties = Object.assign({}, event.properties, properties);
         }
 
-        amplitude.getInstance().logEvent(event.eventName, properties);
+        amplitude.getInstance().logEvent(event.eventName, properties);*/
     }
 }

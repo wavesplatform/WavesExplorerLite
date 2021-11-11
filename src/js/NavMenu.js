@@ -25,20 +25,20 @@ const buildItems = () => {
         visible: alwaysVisible,
         icon: 'icon-blocks'
     }, {
-        title: 'Peers',
+        title: 'Nodes',
         route: networkId => routeBuilder(networkId).peers.list,
         visible: alwaysVisible,
         icon: 'icon-peers'
     }, {
-        title: 'Nodes',
+        title: 'Trusted Nodes',
         route: networkId => routeBuilder(networkId).nodes.list,
         visible: alwaysVisible,
         icon: 'icon-nodes'
-    }, {
-        title: 'Faucet',
-        route: networkId => routeBuilder(networkId).faucet,
-        visible: visibleIfConfigured,
-        icon: 'icon-faucet'
+    },{
+        title: 'Official Links',
+        route: networkId => routeBuilder(networkId).tools.list,
+        visible: alwaysVisible,
+        icon: 'icon-nodes'
     }];
 };
 

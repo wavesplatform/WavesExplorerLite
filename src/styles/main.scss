@@ -9,7 +9,6 @@
 @import "address.scss";
 @import "fonts.scss";
 @import "buttons.scss";
-@import "faucet.scss";
 @import "state-update.scss";
 
 html {
@@ -176,16 +175,18 @@ body {
             }
 
             &::after {
-                content: "Explorer";
-                left: 132px;
+                // content: "Explorer";
+                // left: 132px;
                 bottom: -8px;
-                position: relative;
-                @include font(headline1);
+                // position: relative;
+                // @include font(headline1);
             }
         }
     }
 }
-
+.logo {
+    height: 22px;
+}
 .container {
     @include responsive_styles($layout, padding-top);
     @media screen and (min-width: 1367px) {

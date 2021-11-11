@@ -1,9 +1,9 @@
 {
-  "short_name": "Waves Explorer",
-  "name": "Waves blockchain explorer",
+  "short_name": "TN Explorer",
+  "name": "TN blockchain explorer",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon.ico",
       "sizes": "16x16",
       "type": "image/png"
     }

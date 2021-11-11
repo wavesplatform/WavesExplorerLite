@@ -2,7 +2,6 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import DateTime from '../shared/DateTime';
 import {ApiClientService} from './ApiClientService';
-import {VostokToWavesEnterprise} from '../shared/constants';
 
 export class AssetService extends ApiClientService {
     constructor(configurationService, networkId) {
@@ -11,11 +10,6 @@ export class AssetService extends ApiClientService {
 
     async loadAssetDetails(assetId) {
         return this.getApi().assets.details(assetId).then(data => {
-            // TODO: remove when token is renamed
-            if (data.assetId === VostokToWavesEnterprise.id) {
-                data.name = VostokToWavesEnterprise.name;
-                data.description = VostokToWavesEnterprise.description;
-            }
 
             const currency = Currency.fromAssetDetails(data);
 

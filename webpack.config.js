@@ -82,7 +82,7 @@ var config = {
         }),
         new webpack.HashedModuleIdsPlugin(),
         new CopyWebpackPlugin([{
-            from: path.join(sourcesPath, 'favicon.png'),
+            from: path.join(sourcesPath, 'favicon.ico'),
             to: buildPath
         }, {
             from: 'manifest.json',
@@ -140,7 +140,7 @@ module.exports = (env, argv) => {
     }
 
     const network = (env && env.network) || 'mainnet';
-    const decompileUrl = (env && env.decompileUrl) || 'https://testnode1.wavesnodes.com/utils/script/decompile';
+    const decompileUrl = (env && env.decompileUrl) || 'https://testnet.testnet.tnnode.turtlenetwork.eu/utils/script/decompile';
     const networkConfiguration = networks[network] || [];
     config.plugins.push(new webpack.DefinePlugin({
         __NETWORKS__: JSON.stringify(networkConfiguration),

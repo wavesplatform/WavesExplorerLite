@@ -3,7 +3,7 @@
 
 .info-box {
     justify-content: space-between;
-    background-color: map-get($colors, basic50);
+    background-color: map-get($colors, basicHeader);
     margin-bottom: 12px;
 
     > * {

@@ -1,20 +1,24 @@
-const nodeUrl = 'https://testnode1.wavesnodes.com';
+const nodeUrl = 'https://cluster.testnet.tnnode.turtlenetwork.eu';
 
 export default {
     networkId: 'testnet',
     displayName: 'Testnet',
     apiBaseUrl: nodeUrl,
     useCustomRequestConfig: true,
-    dataServicesBaseUrl: 'https://api.testnet.wavesplatform.com/v0',
+    dataServicesBaseUrl: 'https://testnet.data-service.turtlenetwork.eu/v0',
+    dataFeedBaseUrl: '',
     nodes: [
-        {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode3.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode4.wavesnodes.com', maintainer: 'Waves', showAsLink: true}
+        {url: 'https://testnet.tnnode.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
+        {url: 'https://testnet.tnnode2.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
+        {url: 'https://testnet.tnnode3.turtlenetwork.eu', maintainer: 'https://t.me/TurtleNetwork', showAsLink: true},
     ],
-    faucet: {
-        url: 'https://waves-faucet-testnet.wvservices.com/faucet',
-        captchaKey: '6Le5cskZAAAAAGR6u8UvY1-wn4Gg97lUef-hFfQC',
-        address: '3Myqjf1D44wR8Vko4Tr5CwSzRNo2Vg9S7u7'
-    }
+    tools: [
+        {name: 'Online Wallet & DEX', url: 'https://testnet.wallet.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: 'TurtleShell Chrome Store', url: 'https://chrome.google.com/webstore/detail/turtleshell/billhkeiifjfbbkmmfpcpchikbajnfje?hl=nl',maintainer: 'https://turtlenetwork.eu'},
+        {name: 'TurtleShell Firefox', url: 'https://addons.mozilla.org/en-US/firefox/addon/turtleshell/',maintainer: 'https://turtlenetwork.eu'},
+        {name: 'TurtleShell tool', url: 'https://turtleshell.turtlenetwork.eu/',maintainer: 'https://turtlenetwork.eu'},
+        {name: 'Android Wallet', url: 'https://play.google.com/store/apps/details?id=com.tn.wallet&hl=nl',maintainer: 'https://turtlenetwork.eu'},
+        {name: 'Statistics', url: 'http://statistics.turtlenetwork.eu/testnet/'}
+
+    ],
 };

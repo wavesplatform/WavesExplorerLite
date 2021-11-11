@@ -45,28 +45,25 @@ function buildOfficialTestnet(done) {
     }, 'prod', done);
 }
 
-function buildOfficialStagenet(done) {
-    buildApp({
-        network: 'stagenet',
-        decompileUrl: 'https://nodes-stagenet.wavesnodes.com/utils/script/decompile'
-    }, 'prod', done);
+function dockerImage(done) {
+    exec('docker build . -t turtlenetwork/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    });
 }
 
-function buildOfficialStaging(done) {
-    buildApp({network: 'mainnet'}, 'dev', done);
+function pushDockerImage(done){
+    exec('docker push turtlenetwork/tn-explorer:' + config.package.data.version, function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    });
 }
 
-function buildDevnet(done) {
-    buildApp({network: 'devnet'}, 'prod', done);
-}
 
-function buildCustom(done) {
-    buildApp({network: 'custom'}, 'prod', done);
-}
+
 
 exports.buildOfficialProd = gulp.series(clean, buildOfficialProd);
-exports.buildOfficialStaging = gulp.series(clean, buildOfficialStaging);
-exports.buildOfficialStagenet = gulp.series(clean, buildOfficialStagenet);
 exports.buildOfficialTestnet = gulp.series(clean, buildOfficialTestnet);
-exports.buildDevnet = gulp.series(clean, buildDevnet);
-exports.buildCustom = gulp.series(clean, buildCustom);
+exports.buildOfficialDocker = gulp.series(clean,buildOfficialProd, dockerImage,pushDockerImage);

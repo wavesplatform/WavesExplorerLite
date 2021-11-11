@@ -1,12 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 53 (72520) - https://sketchapp.com -->
-    <title>4D6512F7-67A0-4B6F-9007-7266598C89A8</title>
-    <desc>Created with sketchtool.</desc>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icon/Check-18-Success400">
-            <polygon id="Path" fill-opacity="0" fill="#D8D8D8" points="0 0 18 0 18 18 0 18"></polygon>
-            <path d="M15.133,3.306 L6.057,12.61 L2.834,9.159 C2.53355689,8.90146143 2.12165624,8.81681396 1.744,8.935 C1.364,9.053 1.084,9.356 1.016,9.723 C0.950143437,10.0967498 1.10645336,10.4748561 1.417,10.693 L5.406,14.756 C5.84593677,15.1003061 6.46985462,15.0779329 6.884,14.703 L16.674,4.735 C16.9912973,4.45531969 17.0886953,4.0012015 16.914,3.616 C16.738,3.233 16.328,2.988 15.881,3 C15.598,3.008 15.331,3.118 15.133,3.306 Z" id="Path" fill="#4AAD02"></path>
-        </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="18px"
+   height="18px"
+   viewBox="0 0 18 18"
+   version="1.1"
+   id="svg23304"
+   sodipodi:docname="check-18-success-400.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata23310">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs23308" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     id="namedview23306"
+     showgrid="false"
+     inkscape:zoom="13.111111"
+     inkscape:cx="-4.7288136"
+     inkscape:cy="9"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg23304" />
+  <!-- Generator: sketchtool 53 (72520) - https://sketchapp.com -->
+  <title
+     id="title23295">4D6512F7-67A0-4B6F-9007-7266598C89A8</title>
+  <desc
+     id="desc23297">Created with sketchtool.</desc>
+  <g
+     id="Symbols"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="Icon/Check-18-Success400">
+      <polygon
+         id="Path"
+         fill-opacity="0"
+         fill="#D8D8D8"
+         points="0 0 18 0 18 18 0 18" />
+      <path
+         d="M15.133,3.306 L6.057,12.61 L2.834,9.159 C2.53355689,8.90146143 2.12165624,8.81681396 1.744,8.935 C1.364,9.053 1.084,9.356 1.016,9.723 C0.950143437,10.0967498 1.10645336,10.4748561 1.417,10.693 L5.406,14.756 C5.84593677,15.1003061 6.46985462,15.0779329 6.884,14.703 L16.674,4.735 C16.9912973,4.45531969 17.0886953,4.0012015 16.914,3.616 C16.738,3.233 16.328,2.988 15.881,3 C15.598,3.008 15.331,3.118 15.133,3.306 Z"
+         id="path23300"
+         fill="#4AAD02" />
     </g>
+  </g>
 </svg>

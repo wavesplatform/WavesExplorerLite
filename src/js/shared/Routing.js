@@ -19,6 +19,9 @@ export const routeBuilder = (networkId) => {
 
     return {
         root,
+        tools: {
+            list:   `${root}/tools`
+        },
         nodes: {
             list: `${root}/nodes`
         },
@@ -50,8 +53,6 @@ export const routeBuilder = (networkId) => {
         },
         assets: {
             one: (assetId) => `${root}/assets/${assetId}`
-        },
-        faucet: `${root}/faucet`
-
+        }
     };
 };

@@ -7,13 +7,13 @@ import {StorageService} from './StorageService';
 import {SpamDetectionService} from './SpamDetectionService';
 import {PeersService} from './PeersService';
 import {NodesService} from './NodesService';
+import {ToolsService} from './ToolsService';
 import {TransactionService} from './TransactionService';
 import {BlockService} from './BlockService';
 import {AddressService} from './AddressService';
 import {InfoService} from './InfoService';
 import {AliasService} from './AliasService';
 import {AssetService} from './AssetService';
-import {FaucetService} from './FaucetService';
 import {ConfigurationService} from './ConfigurationService';
 import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
@@ -63,6 +63,11 @@ class NetworkDependentServices {
 
     nodesService = () => new NodesService(this._globalServices.configurationService(), this._networkId);
 
+
+    toolsService = () => new ToolsService(this._globalServices.configurationService(), this._networkId);
+
+
+
     transactionService = () => new TransactionService(this._transactionTransformerService,
         this._globalServices.configurationService(), this._networkId);
 
@@ -78,9 +83,6 @@ class NetworkDependentServices {
 
     infoService = () => this._infoService;
 
-    faucetService = () => new FaucetService(this._transactionTransformerService,
-        this._globalServices.configurationService(),
-        this._networkId);
 
     aliasService = () => this._aliasService;
 

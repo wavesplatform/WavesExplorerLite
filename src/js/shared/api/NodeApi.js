@@ -54,10 +54,10 @@ const DEFAULT_AXIOS_CONFIG = {
 };
 
 const CUSTOM_AXIOS_CONFIG = {
-    withCredentials: true,
+    withCredentials: false,
     headers: {
         common: {
-            ['Cache-Control']: 'no-cache'
+            //['Cache-Control']: 'no-cache'
         }
     }
 };
@@ -71,6 +71,8 @@ const buildAxiosConfig = useCustomRequestConfig => {
 };
 
 const buildRetryableAxiosConfig = axiosInstance => ({
+    withCredentials: false,
+    credentials: 'omit',
     instance: axiosInstance,
     retryDelay: 100,
     retry: 5,
@@ -160,10 +162,12 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
     const retryableGet = (url, config) => retryableAxios.get(trimmedUrl + url, config);
 
     return {
-        version: () => fetchNodeVersion(baseUrl),
+        //https://github.com/wavesplatform/node-api-js/blob/7ee38a651277b3eb2ef0fff5a8af3f88dd83ee40/src/api-node/node/index.ts
+        //TODO: solve cors issues for connected nodes
+        version: () => fetchNodeVersion(baseUrl,{credentials: 'omit'}),
         baseTarget: () => fetchBasetarget(baseUrl),
         addresses: {
-            details: (address) => fetchBalanceDetails(baseUrl, address),
+            details: (address) => fetchBalanceDetails(baseUrl, address,{credentials: 'omit'}),
             aliases: (address) => fetchByAddress(baseUrl, address),
             validate: (address) => fetchValidate(baseUrl, address),
             data: (address) => data(baseUrl, address),
@@ -182,7 +186,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             },
         },
         transactions: {
-            unconfirmed: () => fetchUnconfirmed(baseUrl),
+            unconfirmed: () => fetchUnconfirmed(baseUrl,{credentials: 'omit'}),
             utxSize: () => fetchUnconfirmedSize(baseUrl),
             info: id => fetchInfo(baseUrl, id),
             leaseInfo: ids => fetchLeasingInfo(baseUrl, ids),
