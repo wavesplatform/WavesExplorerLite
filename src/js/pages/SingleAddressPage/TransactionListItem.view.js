@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import config from '../../configuration/config.mainnet';
 import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
 import TransactionBadge from '../../components/TransactionBadge';
@@ -18,6 +19,17 @@ export class TransactionListItem extends React.PureComponent {
         else return  <div className="line">{v.amount} {v.currency}</div>
     }
 
+    dappBadgeOrNothing = (tx) => {
+        if(tx.type === 16 && typeof config.dapps[tx.recipient] !== 'undefined') {
+            return (
+                <div className="badge dapp">{config.dapps[tx.recipient]}</div>
+            );
+        }
+        else {
+            return;
+        }
+    }
+
     render() {
         const {tx} = this.props;
         const rowClassName = tx.isSpam ? 'spam' : '';
@@ -29,7 +41,10 @@ export class TransactionListItem extends React.PureComponent {
                         {tx.applicationStatus === "script_execution_failed" && <FailedBrick/>}
                         <TransactionRef txId={tx.id}/>
                     </div>
-                    <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
+                    <div style={{display:"flex", flexDirection: "row", float: "left"}}>
+                        <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
+                        <div style={{marginLeft: "10px"}} >{this.dappBadgeOrNothing(tx)}</div>
+                    </div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
                     <div className="line"><label>{tx.timestamp.date}</label></div>

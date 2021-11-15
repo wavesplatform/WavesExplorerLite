@@ -243,6 +243,9 @@ a {
     &.create-alias, &.asset-reissue, &.data {
         background-color: map-get($colors, info400);
     }
+    &.dapp {
+        background-color: map-get($colors, deepViolet);
+    }
 }
 
 .no-select {
