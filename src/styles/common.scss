@@ -245,6 +245,7 @@ a {
     }
     &.dapp {
         background-color: map-get($colors, deepViolet);
+        margin-left: 10px;
     }
 }
 

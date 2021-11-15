@@ -38,9 +38,9 @@ export class TransactionListItem extends React.PureComponent {
                         {tx.applicationStatus === "script_execution_failed" && <FailedBrick/>}
                         <TransactionRef txId={tx.id}/>
                     </div>
-                    <div style={{display:"flex", flexDirection: "row", float: "left"}}>
+                    <div style={{display:"flex", float: "left"}}>
                         <div className="line no-wrap"><TransactionBadge type={tx.type} direction={tx.direction}/></div>
-                        <div style={{marginLeft: "10px"}} >{this.dappBadgeOrNothing(tx)}</div>
+                        <div>{this.dappBadgeOrNothing(tx)}</div>
                     </div>
                 </td>
                 <td data-label="Timestamp" className="timestamp">
