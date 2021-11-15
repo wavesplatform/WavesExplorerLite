@@ -25,9 +25,6 @@ export class TransactionListItem extends React.PureComponent {
                 <div className="badge dapp">{config.dapps[tx.recipient]}</div>
             );
         }
-        else {
-            return;
-        }
     }
 
     render() {
