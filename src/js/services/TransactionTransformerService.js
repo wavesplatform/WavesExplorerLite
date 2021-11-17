@@ -6,8 +6,6 @@ import { libs } from '@waves/signature-generator';
 import { convertEthTx } from '../shared/utils'
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
-    const info = tx.applicationStatus || (await currencyService.getApi().transactions.status([tx.id]))[0].applicationStatus;
-    tx.applicationStatus = info
     return transform(
         currencyService,
         spamDetectionService,
@@ -19,9 +17,6 @@ const transformSingle = async (currencyService, spamDetectionService, assetServi
 
 const transformMultiple = async (currencyService, spamDetectionService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
-
-    const infoMap = transactions[0] && !!transactions[0].applicationStatus ? transactions : (await currencyService.getApi().transactions.status(transactions.map(({ id }) => id)))
-        .reduce((acc, val) => ({ ...acc, [val.id]: val }), {});
 
     const assetsIds = transactions
         .filter(tx => transactionsWithAssetDetails.includes(tx.type))
@@ -39,7 +34,6 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
         }), {});
 
     const promises = transactions.map(item => {
-        item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
         item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
         return transform(currencyService,
             spamDetectionService,
@@ -127,7 +121,7 @@ const appendAssetData = async (currencyService, data, assetKey) => {
         const detailsArray = data
         ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
         : [];
-        
+
         return data && data.length
             ? Promise.all(data.map(async (item) => {
                 const { assetId: id, name, decimals, description } = detailsArray
@@ -518,6 +512,7 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 const transformEthereumTransaction = (currencyService, assetService, spamDetectionService, tx, shouldLoadDetails) => {
+    // console.log('transformEthereumTransaction', tx)
     const transaction = convertEthTx(tx)
 
     if (transaction.type === 4) {

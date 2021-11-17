@@ -14,6 +14,20 @@ export const convertEthTx = (tx) => {
         bytes
     }
 
+    if (!!payload) {
+        return {
+            ...commonFields,
+            type: 16,
+            dApp: '',
+            version,
+            proofs: proofs || [],
+            payment: [],
+            call: '',
+            stateChanges: {},
+            isEthereum: true,
+        }
+    }
+
     if (payload.type === 'invocation') {
         return {
             ...commonFields,

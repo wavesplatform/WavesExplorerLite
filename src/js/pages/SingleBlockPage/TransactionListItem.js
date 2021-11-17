@@ -65,7 +65,6 @@ export const createListItem = (transaction) => {
 
         case 19:
             return <EthereumTransactionListItem key={transaction.id} tx={transaction}/>;
-                
 
         default:
             return null;
