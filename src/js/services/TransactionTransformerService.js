@@ -512,7 +512,6 @@ const transformGenesis = (currencyService, tx) => {
 };
 
 const transformEthereumTransaction = (currencyService, assetService, spamDetectionService, tx, shouldLoadDetails) => {
-    // console.log('transformEthereumTransaction', tx)
     const transaction = convertEthTx(tx)
 
     if (transaction.type === 4) {

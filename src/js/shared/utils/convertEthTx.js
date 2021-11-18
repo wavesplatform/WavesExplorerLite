@@ -14,7 +14,7 @@ export const convertEthTx = (tx) => {
         bytes
     }
 
-    if (!!payload) {
+    if (!Object.keys(payload).length) {
         return {
             ...commonFields,
             type: 16,
