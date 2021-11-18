@@ -1288,10 +1288,10 @@
     "node-fetch" "^2.6.1"
     "typed-ts-events" "^1.1.1"
 
-"@waves/ride-js@2.1.1":
-  "integrity" "sha512-Nw0D0wQQpfakfAOOZmhxUbNHpj4X5bZlpex9V0RF3nOW2vsG15272dJPy90gYrcZgPF6sIl8ejKfcfrcIaHzyA=="
-  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.1.tgz"
-  "version" "2.1.1"
+"@waves/ride-js@2.1.2-beta.10":
+  "integrity" "sha512-jDi20RcgYWR/qtF8La8jPuJ1Sgr6OwJVPseGeeT9wG1e75+3tSHTvl3zTfRX+s9EHrej1BM7fHCFg4zuRrrhxg=="
+  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.2-beta.10.tgz"
+  "version" "2.1.2-beta.10"
   dependencies:
     "@waves/ts-lib-crypto" "^1.4.3"
     "axios" "^0.19.0"
