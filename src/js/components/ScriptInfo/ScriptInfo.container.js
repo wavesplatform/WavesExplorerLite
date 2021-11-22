@@ -38,9 +38,14 @@ class ScriptInfoContainer extends React.Component {
 
     setDecompiledScript = () => {
         if (this.props.script) {
-            const decompilationResult = decompile(this.props.script);
-            const decompiledScript = !decompilationResult.error ? decompilationResult.result : decompilationResult.error;
-            this.setState({value: decompiledScript});
+            try {
+                const decompilationResult = decompile(this.props.script);
+                const decompiledScript = !decompilationResult.error ? decompilationResult.result : decompilationResult.error;
+                this.setState({value: decompiledScript});
+            } catch (e) {
+                console.error('Decompilation error:', e)
+                this.setState({value: 'Decompilation error'});
+            }
         }
     };
 
