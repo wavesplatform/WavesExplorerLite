@@ -127,7 +127,7 @@ const appendAssetData = async (currencyService, data, assetKey) => {
         const detailsArray = data
         ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
         : [];
-        
+
         return data && data.length
             ? Promise.all(data.map(async (item) => {
                 const { assetId: id, name, decimals, description } = detailsArray
@@ -250,6 +250,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
             result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
             result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges.leases = await appendAssetData(currencyService, tx.stateChanges.leases, 'assetId')
         }
 
         if (tx.stateUpdate) {
@@ -260,6 +261,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
             result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
             result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.leases = await appendAssetData(currencyService, tx.stateUpdate.leases, 'assetId')
         }
         return result;
     });
@@ -287,6 +289,7 @@ const transformInvokeExpression = async (currencyService, assetService, tx, shou
         result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
         result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
         result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+        result.stateChanges.leases = await appendAssetData(currencyService, tx.stateChanges.leases, 'assetId')
     }
 
     if (tx.stateUpdate) {
@@ -297,6 +300,7 @@ const transformInvokeExpression = async (currencyService, assetService, tx, shou
         result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
         result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
         result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+        result.stateUpdate.leases = await appendAssetData(currencyService, tx.stateUpdate.leases, 'assetId')
     }
 
     return result;
