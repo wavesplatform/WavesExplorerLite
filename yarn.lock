@@ -1267,21 +1267,21 @@
     "@waves/bignumber" "0.0.2"
     "bignumber.js" "7.0.1"
 
-"@waves/node-api-js@1.2.4":
-  "integrity" "sha512-Bn82D4056BbUQmUoNg8VMXWj97vGAkqOKgjGGxcAspVXI02CoYkIK+7UHvKCTltvzSpomEpeZ0xephCnetJOzw=="
-  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.4.tgz"
-  "version" "1.2.4"
+"@waves/node-api-js@1.2.5-beta.13":
+  "integrity" "sha512-XT5b0l3S9SGGgDX8ZeGQJBPi4QedDLJuihWHj8f8D1HH9Jn8PZwMZwHdNOj33BPQVpZuMlqW9inpW7tT8x2RoA=="
+  "resolved" "https://registry.npmjs.org/@waves/node-api-js/-/node-api-js-1.2.5-beta.13.tgz"
+  "version" "1.2.5-beta.13"
   dependencies:
     "@types/node-fetch" "^2.5.4"
     "@waves/bignumber" "^1.1.1"
-    "@waves/ts-types" "^1.0.5"
+    "@waves/ts-types" "^1.0.6-beta.7"
     "node-fetch" "^2.6.1"
     "typed-ts-events" "^1.1.1"
 
-"@waves/ride-js@2.1.5-beta.1":
-  "integrity" "sha512-bsyVjMvW5ijXVcyMqzQS/N3wuTaYLtcjy9Z8SkXA86JGNynoLQnha7cfJ4dM9nZ+mUsNQuyxy3SaIeZAvjrVhg=="
-  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.5-beta.1.tgz"
-  "version" "2.1.5-beta.1"
+"@waves/ride-js@2.1.1":
+  "integrity" "sha512-Nw0D0wQQpfakfAOOZmhxUbNHpj4X5bZlpex9V0RF3nOW2vsG15272dJPy90gYrcZgPF6sIl8ejKfcfrcIaHzyA=="
+  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.1.tgz"
+  "version" "2.1.1"
   dependencies:
     "@waves/ts-lib-crypto" "^1.4.3"
     "axios" "^0.19.0"
@@ -1304,10 +1304,10 @@
     "js-sha3" "^0.8.0"
     "node-forge" "^0.8.5"
 
-"@waves/ts-types@^1.0.5":
-  "integrity" "sha512-6vSeVqsvH49DJHa4FzvPSa/yfpRVfbB0r4Zu6GjrXnwsxvF0uAoqQy60wbJxbRqYMLwch8jnBM1+ztZaJ9CAoA=="
-  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.5.tgz"
-  "version" "1.0.5"
+"@waves/ts-types@^1.0.6-beta.7":
+  "integrity" "sha512-nhwx+wFIBW8PBTMT95Z7dzqB29+7MU/HI+CmYT4ImatlFoM3AZkgcn+NKMAV00e/+nFgO3pYLbRnKxx3HmkcBw=="
+  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.6-beta.7.tgz"
+  "version" "1.0.6-beta.7"
 
 "@webassemblyjs/ast@1.7.11":
   "integrity" "sha512-ZEzy4vjvTzScC+SH8RBssQUawpaInUdMTYwYYLh54/s8TuT0gBLuyUnppKsVyZEi876VmmStKsUs28UxPgdvrA=="
