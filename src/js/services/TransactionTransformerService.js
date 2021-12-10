@@ -2,7 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import {libs} from '@waves/signature-generator';
+import { libs } from '@waves/signature-generator';
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
     const info = (await currencyService.getApi().transactions.status([tx.id]))[0];
@@ -19,16 +19,16 @@ const transformSingle = async (currencyService, spamDetectionService, assetServi
 const transformMultiple = async (currencyService, spamDetectionService, assetService, transactions) => {
     const transactionsWithAssetDetails = [2, 4, 14]
 
-    const infoMap = transactions[0] && !!transactions[0].applicationStatus ? transactions : (await currencyService.getApi().transactions.status(transactions.map(({id}) => id)))
-        .reduce((acc, val) => ({...acc, [val.id]: val}), {});
+    const infoMap = transactions[0] && !!transactions[0].applicationStatus ? transactions : (await currencyService.getApi().transactions.status(transactions.map(({ id }) => id)))
+        .reduce((acc, val) => ({ ...acc, [val.id]: val }), {});
 
     const assetsIds = transactions
         .filter(tx => transactionsWithAssetDetails.includes(tx.type))
         .reduce((acc, tx) => {
-                return (tx.assetId !== null && tx.assetId !== undefined && !acc.includes(tx.assetId))
-                    ? [...acc, tx.assetId]
-                    : acc
-            }, []
+            return (tx.assetId !== null && tx.assetId !== undefined && !acc.includes(tx.assetId))
+                ? [...acc, tx.assetId]
+                : acc
+        }, []
         )
 
     const assetsDetails = (await assetService.loadDetails(assetsIds))
@@ -38,15 +38,15 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
         }), {});
 
     const promises = transactions.map(item => {
-            item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
-            item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
-            return transform(currencyService,
-                spamDetectionService,
-                assetService,
-                item,
-                false
-            )
-        }
+        item.applicationStatus = item.applicationStatus || infoMap[item.id] && infoMap[item.id].applicationStatus;
+        item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
+        return transform(currencyService,
+            spamDetectionService,
+            assetService,
+            item,
+            false
+        )
+    }
     );
 
     return Promise.all(promises);
@@ -113,6 +113,47 @@ const DEFAULT_FUNCTION_CALL = {
     args: []
 };
 
+const wavesDetail = { name: "WAVES", assetId: null, decimals: 8, description: "waves" }
+
+const appendAssetData = async (currencyService, data, assetKey) => {
+    if (Array.isArray(data)) {
+        const detailsArray = data
+            ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
+            : [];
+
+        return data && data.length
+            ? Promise.all(data.map(async (item) => {
+                const { assetId: id, name, decimals, description } = detailsArray
+                    .find(({ assetId }) => assetId === item[assetKey]) || wavesDetail
+                const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
+                return {
+                    ...item,
+                    money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
+                    name,
+                    decimals,
+                    description
+                }
+            }))
+            : []
+    } else {
+        const detailsArray = data[assetKey]
+            ? await currencyService.getApi().assets.details(data[assetKey])
+            : [wavesDetail];
+
+        const { assetId: id, name, decimals, description } = detailsArray
+        const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
+
+        return {
+            ...data,
+            money: Money.fromCoins(data.amount || data.quantity || data.minSponsoredAssetFee || 0, currency),
+            name,
+            decimals,
+            description
+        }
+    }
+
+}
+
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
     if (attachment.value) return attachment.value.toString();
@@ -169,13 +210,10 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 
 
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
-
-    const wavesDetail = {name: "WAVES", assetId: null, decimals: 8, description: "waves"}
-
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
         if (tx.payment && tx.payment.length > 0) {
-            payment = (await Promise.all(tx.payment.map(async ({amount, assetId}) => {
+            payment = (await Promise.all(tx.payment.map(async ({ amount, assetId }) => {
                 const currency = await currencyService.get(assetId)
                 return Money.fromCoins(amount, currency)
             })))
@@ -191,52 +229,33 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             stateUpdate: tx.stateUpdate
         };
 
-        const appendAssetData = async (data, assetKey) => {
-            const detailsArray = data
-                ? await currencyService.getApi().assets.detailsMultiple(data.map(v => v[assetKey]).filter(v => v != null))
-                : [];
-            return data && data.length
-                ? Promise.all(data.map(async (item) => {
-                    const {assetId: id, name, decimals, description} = detailsArray
-                        .find(({assetId}) => assetId === item[assetKey]) || wavesDetail
-                    const currency = id ? new Currency({id, displayName: name, precision: decimals}) : Currency.WAVES;
-                    return {
-                        ...item,
-                        money: Money.fromCoins(item.amount || item.quantity || item.minSponsoredAssetFee || 0, currency),
-                        name,
-                        decimals,
-                        description
-                    }
-                }))
-                : []
-        }
-
         if (!shouldLoadDetails)
             return result;
 
         if (tx.stateChanges) {
             result.rawStateChanges = tx.stateChanges
-            result.stateChanges = {...tx.stateChanges}
-            result.stateChanges.transfers = await appendAssetData(result.stateChanges.transfers, 'asset')
-            result.stateChanges.issues = await appendAssetData(result.stateChanges.issues, 'assetId')
-            result.stateChanges.reissues = await appendAssetData(result.stateChanges.reissues, 'assetId')
-            result.stateChanges.burns = await appendAssetData(result.stateChanges.burns, 'assetId')
-            result.stateChanges.sponsorFees = await appendAssetData(tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges = { ...tx.stateChanges }
+            result.stateChanges.transfers = await appendAssetData(currencyService, result.stateChanges.transfers, 'asset')
+            result.stateChanges.issues = await appendAssetData(currencyService, result.stateChanges.issues, 'assetId')
+            result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
+            result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
+            result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges.leases = await appendAssetData(currencyService, tx.stateChanges.leases, 'assetId')
         }
 
         if (tx.stateUpdate) {
             result.stateUpdate = tx.stateUpdate;
-            result.stateUpdate.payments = await appendAssetData(tx.stateUpdate.payments.map(item => item.payment), 'asset')
-            result.stateUpdate.transfers = await appendAssetData(tx.stateUpdate.transfers, 'asset')
-            result.stateUpdate.issues = await appendAssetData(tx.stateUpdate.issues, 'assetId')
-            result.stateUpdate.reissues = await appendAssetData(tx.stateUpdate.reissues, 'assetId')
-            result.stateUpdate.burns = await appendAssetData(tx.stateUpdate.burns, 'assetId')
-            result.stateUpdate.sponsorFees = await appendAssetData(tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.payments = await Promise.all(tx.stateUpdate.payments.map(async x => ({ sender: x.sender, dApp: x.dApp, payment: await appendAssetData(currencyService, x.payment, 'assetId') })))
+            result.stateUpdate.transfers = await appendAssetData(currencyService, tx.stateUpdate.transfers, 'asset')
+            result.stateUpdate.issues = await appendAssetData(currencyService, tx.stateUpdate.issues, 'assetId')
+            result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
+            result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
+            result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.leases = await appendAssetData(currencyService, tx.stateUpdate.leases, 'assetId')
         }
         return result;
     });
 };
-
 
 const transformAssetScript = (currencyService, tx) => {
     return currencyService.get(tx.assetId).then(asset => {
@@ -323,7 +342,7 @@ const transformLease = (currencyService, tx) => {
 };
 
 const transformLeaseCancel = async (currencyService, tx) => {
-    const {amount} = (await currencyService.getApi().transactions.info(tx.leaseId));
+    const { amount } = (await currencyService.getApi().transactions.info(tx.leaseId));
     const feeCurrency = await currencyService.get(tx.feeAssetId)
     return Object.assign(copyMandatoryAttributes(tx), {
         amount: Money.fromCoins(amount, Currency.WAVES),
