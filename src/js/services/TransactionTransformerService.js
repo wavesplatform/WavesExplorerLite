@@ -342,13 +342,16 @@ const transformLease = (currencyService, tx) => {
 };
 
 const transformLeaseCancel = async (currencyService, tx) => {
-    const { amount } = (await currencyService.getApi().transactions.info(tx.leaseId));
+    const response = (await currencyService.getApi().leasing.info(tx.leaseId));
+    const amount = response[0].amount
     const feeCurrency = await currencyService.get(tx.feeAssetId)
+    console.log('tx.lease', tx.lease)
     return Object.assign(copyMandatoryAttributes(tx), {
         amount: Money.fromCoins(amount, Currency.WAVES),
         fee: Money.fromCoins(tx.fee, feeCurrency),
         leaseId: tx.leaseId,
-        recipient: tx.lease ? tx.lease.recipient : null
+        recipient: tx.lease ? tx.lease.recipient : null,
+        originTransactionId: tx.lease.originTransactionId
     });
 };
 
