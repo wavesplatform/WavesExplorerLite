@@ -271,7 +271,7 @@ const cancelLeaseTransactionItems = tx => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Lease tx id',
-                value: <TransactionRef txId={tx.leaseId}/>
+                value: <TransactionRef txId={tx.originTransactionId}/>
             },
             {
                 label: 'Lease info',

@@ -39,7 +39,7 @@ const transformMultiple = async (currencyService, spamDetectionService, assetSer
         }), {});
 
     const promises = transactions.map(item => {
-        item.applicationStatus = infoMap[item.id] && infoMap[item.id].applicationStatus;
+        item.applicationStatus = item.applicationStatus || infoMap[item.id] && infoMap[item.id].applicationStatus;
         item.details = transactionsWithAssetDetails.includes(item.type) ? assetsDetails[item.assetId] : undefined;
         return transform(currencyService,
             spamDetectionService,
@@ -143,13 +143,12 @@ const appendAssetData = async (currencyService, data, assetKey) => {
             }))
             : []
     } else {
-        const detailsArray = data && data[assetKey]
+        const detailsArray = data[assetKey]
             ? await currencyService.getApi().assets.details(data[assetKey])
-            : wavesDetail;
+            : [wavesDetail];
 
         const { assetId: id, name, decimals, description } = detailsArray
         const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
-
 
         return {
             ...data,
@@ -217,7 +216,6 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 }
 
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
-
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
         if (tx.payment && tx.payment.length > 0) {
@@ -391,13 +389,15 @@ const transformLease = (currencyService, tx) => {
 };
 
 const transformLeaseCancel = async (currencyService, tx) => {
-    const { amount } = (await currencyService.getApi().transactions.info(tx.leaseId));
+    const leaseTx = (await currencyService.getApi().leasing.info(tx.leaseId))[0];
+    const {amount, recipient, originTransactionId} = leaseTx
     const feeCurrency = await currencyService.get(tx.feeAssetId)
     return Object.assign(copyMandatoryAttributes(tx), {
         amount: Money.fromCoins(amount, Currency.WAVES),
         fee: Money.fromCoins(tx.fee, feeCurrency),
         leaseId: tx.leaseId,
-        recipient: tx.lease ? tx.lease.recipient : null
+        recipient,
+        originTransactionId
     });
 };
 
