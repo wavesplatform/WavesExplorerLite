@@ -18,6 +18,7 @@ import RawJsonViewer from "./RawJsonViewer";
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import brick from "../../../images/brick.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
+import config from "../../configuration/config.mainnet";
 
 const transactionToDictionary = (tx, networkId) => {
     switch (tx.type) {
@@ -125,7 +126,10 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'DApp Address',
-                value: <EndpointRef endpoint={tx.dappAddress}/>
+                value: <>
+                    <EndpointRef endpoint={tx.dappAddress}/>
+                    {config.dapps[tx.dappAddress] ? <div className="badge dapp">{config.dapps[tx.dappAddress]}</div> : null}
+                </>
             }, {
                 label: 'Call',
                 value: <InvocationInfo {...tx.call} />

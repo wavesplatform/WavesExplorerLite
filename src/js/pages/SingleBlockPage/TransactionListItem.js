@@ -9,6 +9,7 @@ import TransactionRef from '../../components/TransactionRef';
 import TransactionArrow from '../../components/TransactionArrow';
 import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import FailedBrick from "../../components/FailedBrick";
+import config from '../../configuration/config.mainnet';
 
 
 export const createListItem = (transaction) => {
@@ -113,14 +114,29 @@ class Subjects extends React.PureComponent {
     static propTypes = {
         type: PropTypes.number.isRequired,
         sender: PropTypes.string.isRequired,
-        recipient: PropTypes.string
+        recipient: PropTypes.string,
+        dappAddress: PropTypes.string
     };
+
+    dappBadgeOrNothing = () => {
+        if (config.dapps[this.props.dappAddress] !== 'undefined') {
+            return (
+                <div>
+                    <div className="badge dapp" style={{margin: "0px 6px 0px 0px"}}>{config.dapps[this.props.dappAddress]}</div>
+                    invocation
+                </div>
+            );
+        } else return null
+    }
 
     render() {
         return (
             <td data-label="Sender / Recipient">
                 <TransactionArrow type={this.props.type} direction={'incoming'}/>
-                <Line wrap={false}><EndpointRef endpoint={this.props.sender} appearance="regular"/></Line>
+                <Line wrap={false}>
+                    <EndpointRef endpoint={this.props.sender} appearance="regular"/>
+                </Line>
+                {config.dapps[this.props.dappAddress] ? this.dappBadgeOrNothing() : null}
                 <Line wrap={false}>
                     {this.props.recipient && <EndpointRef endpoint={this.props.recipient} appearance="regular"/>}
                 </Line>
@@ -443,9 +459,8 @@ class ScriptInvocationTransactionListItem extends React.Component {
         const {tx} = this.props;
         return (
             <tr>
-
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
-                <Subjects type={tx.type} sender={tx.sender}/>
+                <Subjects type={tx.type} sender={tx.sender} dappAddress={tx.dappAddress}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
             </tr>
         );
