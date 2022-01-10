@@ -1,47 +1,60 @@
 import React, {useState} from 'react';
-import CopyToClipboard from "react-copy-to-clipboard";
 
 export function ConverterItem(props) {
-    const [value, setValue] = useState('');
-    const [convertedValue, setConvertedValue] = useState('');
+    const [wavesValue, setWavesValue] = useState('');
+    const [ethValue, setEthValue] = useState('');
+    let isLoading = false;
 
-    const convert = async () => {
-        if(!!value.length) {
-            const val = await props.handleConvert(value)
-            setConvertedValue(val)     
+    const convertWaves = async () => {
+        if (!!wavesValue.length) {
+            const val = await props.convertW2E(wavesValue)
+            setEthValue(val)
         }
     }
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') convert()
+    const convertEth = async () => {
+        if (!!ethValue.length) {
+            if (props.convertE2W(ethValue).hasOwnProperty('then')) {
+                isLoading = true
+                console.log('isLoading')
+            }
+            const val = await props.convertE2W(ethValue)
+            setWavesValue(val)
+        }
     }
 
-    return <div className="converter-wrapper">
-        <div className="converter-item">
-            <div className="converter-item-title">{props.title}</div>
-            <input className="converter-item-field"
-                   value={value}
-                   onChange={(e) => setValue(e.target.value)}
-                   onKeyPress={e => handleKeyPress(e)}
-            />
-        </div>
+    const handleKeyPress = (e, handler) => {
+        if (e.key === 'Enter') handler()
+    }
 
-        <div className="converter-icon" onClick={convert}>
-            <svg height="20px" id="Layer_1" version="1.1" viewBox="0 0 30 20" width="30px"
-                 xmlns="http://www.w3.org/2000/svg">
-                <polygon points="15 -5 5 10 10.833 10 10.833 25 19.167 25 19.167 10 25 10"
-                         transform="matrix(0, 1, -1, 0, 25, -5)" fill="#1F5AF6"/>
-            </svg>
+    return <div className="converter">
+        <div className="converter-title">
+            {props.title}
         </div>
-
-        <div className="converter-item">
-            <div>{props.convertedTitle}</div>
-            <div className="converter-item-field">
-                <p>{convertedValue}</p>
-                <CopyToClipboard text={convertedValue}>
-                    <div className="copy-btn"/>
-                </CopyToClipboard>
+            <div className="converter-wrapper">
+                <div className="converter-input">
+                    <input className="converter-input-field"
+                           value={wavesValue}
+                           onChange={(e) => setWavesValue(e.target.value)}
+                           onKeyPress={e => handleKeyPress(e, convertWaves)}/>
+                    <div className="converter-waves-title">
+                        WAVES
+                    </div>
+                </div>
+                <div className="converter-arrows"/>
+                <div className="converter-input">
+                    <input className="converter-input-field"
+                           value={ethValue}
+                           onChange={(e) => setEthValue(e.target.value)}
+                           onKeyPress={e => handleKeyPress(e, convertEth)}/>
+                    <div className="converter-ethereum-title">
+                        ETHEREUM
+                    </div>
+                </div>
+                <div className="converter-button">
+                    <div className="converter-button-icon"/>
+                    Convert
+                </div>
             </div>
-        </div>
     </div>
 }
