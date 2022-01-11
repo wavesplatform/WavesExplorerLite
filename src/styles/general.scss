@@ -368,6 +368,10 @@ th.price, th.amount {
     &.exchange {
         background: url('../images/transaction-exchange.svg') no-repeat;
     }
+
+    &.script-invocation {
+        background: url('../images/transaction-invoke.svg') no-repeat;
+    }
 }
 
 .data-container-tools {
