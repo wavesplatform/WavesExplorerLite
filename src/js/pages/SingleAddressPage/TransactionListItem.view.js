@@ -20,9 +20,9 @@ export class TransactionListItem extends React.PureComponent {
     }
 
     dappBadgeOrNothing = (tx) => {
-        if(tx.type === 16 && typeof config.dapps[tx.recipient] !== 'undefined') {
+        if(tx.type === 16 && typeof this.props.dApps[tx.recipient] !== 'undefined') {
             return (
-                <div className="badge dapp">{config.dapps[tx.recipient]}</div>
+                <div className="badge dapp">{this.props.dApps[tx.recipient]}</div>
             );
         }
     }
