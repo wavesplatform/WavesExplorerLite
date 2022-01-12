@@ -138,7 +138,7 @@ class AmountAndFee extends React.PureComponent {
         return (
             <td data-label="Amount / Fee">
                 <Line>{Array.isArray(amount)
-                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i}>{v.toString()}</p>)
+                    ? amount.map((v, i) => <p className="no-wrap" key={i}>{v.toString()}</p>)
                     : amount.toString()}
                 </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
