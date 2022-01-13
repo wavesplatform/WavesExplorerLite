@@ -15,7 +15,8 @@ $colors: (
     info400: #8dabc4,
     mixUnicorn: #ab7df6,
     iceBlue: #eef0f3,
-    paleBlue: #dee3ea
+    paleBlue: #dee3ea,
+    deepViolet: #800080
 );
 
 $layout: (
@@ -143,7 +144,7 @@ $address_tr_list_columns: (
         )
     ),
     price: (
-        width: 160px,
+        width: 190px,
         md: (
             width: 130px
         )

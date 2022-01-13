@@ -7,6 +7,8 @@ import {ApiClientService} from './ApiClientService';
 import {VostokToWavesEnterprise} from '../shared/constants';
 import {ethAddress2waves} from "@waves/node-api-js";
 import {getNetworkByte} from "../shared/utils";
+import config from '../configuration/config.mainnet';
+import axios from "axios";
 
 export class AddressService extends ApiClientService {
     constructor(transactionTransformerService, currencyService, configurationService, networkId) {
@@ -117,6 +119,11 @@ export class AddressService extends ApiClientService {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
 
         return this.getApi().addresses.scriptMeta(address);
+    };
+
+    loadDApps = () => {
+        const res = axios.get(config.dappsUrl).then(resp => resp.data);
+        return res
     };
 
     validate = (address) => {
