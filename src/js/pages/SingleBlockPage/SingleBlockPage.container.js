@@ -193,7 +193,11 @@ export class SingleBlockPage extends React.Component {
             }]
         };
 
-        this.state.block.id && items.default.push({label: 'BlockID', value: this.state.block.id})
+        this.state.block.id && items.default.splice(1, 0, {
+            label: 'ID',
+            value: this.state.block.id,
+            action: <CopyButton text={this.state.block.id}/>
+        })
 
         if(this.state.block.version === 5){
             items.default.push( {label: 'VRF', value: this.state.block.VRF})
