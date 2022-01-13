@@ -13,7 +13,8 @@ export class TransactionList extends React.Component {
             amount: PropTypes.string,
             price: PropTypes.string
         }),
-        transactions: PropTypes.arrayOf(PropTypes.object)
+        transactions: PropTypes.arrayOf(PropTypes.object),
+        dApps: PropTypes.object,
     };
 
     state = {
@@ -44,12 +45,12 @@ export class TransactionList extends React.Component {
                         <th>{this.props.header.id}</th>
                         <th>{this.props.header.subjects}</th>
                         <th className="amount">{this.props.header.amount}</th>
-                        <th className="price">{this.props.header.price}</th>
+                        {this.props.header.price && <th className="price">{this.props.header.price}</th>}
                     </tr>
                     </thead>
                     <tbody>
                     {this.props.transactions.map(item => {
-                        return createListItem(item);
+                        return createListItem(item, this.props.dApps);
                     })}
                     </tbody>
                 </table>

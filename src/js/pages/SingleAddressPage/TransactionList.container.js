@@ -22,7 +22,8 @@ class TransactionListContainer extends React.Component {
     state = {
         transactions: [],
         loading: false,
-        hasMore: true
+        hasMore: true,
+        dApps: {}
     };
 
     fetchData = () => {
@@ -33,7 +34,7 @@ class TransactionListContainer extends React.Component {
             address,
         };
 
-        return addressService.loadTransactions(address, TX_PAGE_SIZE).then(transactions => {
+        const transactionsPromise = addressService.loadTransactions(address, TX_PAGE_SIZE).then(transactions => {
             return transactionMapper(transactions, currentUser);
         }).then(transactions => {
             this._isMounted && this.setState({
@@ -42,7 +43,13 @@ class TransactionListContainer extends React.Component {
                 hasMore: transactions.length === TX_PAGE_SIZE
             });
         });
+
+        if (networkId === 'mainnet' || networkId === undefined) {
+            const dAppsPromise = addressService.loadDApps().then(dApps => this.setState({dApps}))
+            return Promise.all([transactionsPromise, dAppsPromise])
+        } else return transactionsPromise
     };
+
 
     loadMore = (after) => {
         const {address, networkId} = this.props.match.params;
@@ -83,6 +90,7 @@ class TransactionListContainer extends React.Component {
                     transactions={this.state.transactions}
                     hasMore={this.state.hasMore}
                     loadMore={this.handleMore}
+                    dApps={this.state.dApps}
                 />
             </Loader>
         );

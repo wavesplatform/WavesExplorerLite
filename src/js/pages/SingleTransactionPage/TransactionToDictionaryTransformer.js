@@ -19,7 +19,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import brick from "../../../images/brick.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 
-const transactionToDictionary = (tx, networkId) => {
+const transactionToDictionary = (tx, networkId, dApps) => {
     switch (tx.type) {
         case 1:
             return genesisTransactionToItems(tx);
@@ -65,7 +65,7 @@ const transactionToDictionary = (tx, networkId) => {
             return assetScriptTransactionToItems(tx);
 
         case 16:
-            return scriptInvocationTransactionToItems(tx, networkId);
+            return scriptInvocationTransactionToItems(tx, networkId, dApps);
 
         case 17:
             return updateAssetInfoTransactionToItems(tx);
@@ -85,7 +85,7 @@ const InfoWrapper = ({children}) => (
     </div>
 );
 
-const scriptInvocationTransactionToItems = (tx, networkId) => {
+const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
     const paymentItems = [{
         label: 'Payments',
         value: tx.payment && tx.payment.length > 0
@@ -125,7 +125,10 @@ const scriptInvocationTransactionToItems = (tx, networkId) => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'DApp Address',
-                value: <EndpointRef endpoint={tx.dappAddress}/>
+                value: <>
+                    <EndpointRef endpoint={tx.dappAddress}/>
+                    {dApps[tx.dappAddress] ? <div className="badge dapp" style={{marginLeft: "10px"}}>{dApps[tx.dappAddress]}</div> : null}
+                </>
             }, {
                 label: 'Call',
                 value: <InvocationInfo {...tx.call} />

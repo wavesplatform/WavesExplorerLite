@@ -243,6 +243,20 @@ a {
     &.create-alias, &.asset-reissue, &.data {
         background-color: map-get($colors, info400);
     }
+    &.dapp {
+        background-color: map-get($colors, deepViolet);
+        white-space: nowrap;
+
+        &-link {
+            border: 2px solid map-get($colors, deepViolet);
+            background: unset;
+            box-sizing: border-box;
+            padding: 3px 4px;
+        }
+    }
+    &.script-invocation {
+        margin-right: 10px;
+    }
 }
 
 .no-select {

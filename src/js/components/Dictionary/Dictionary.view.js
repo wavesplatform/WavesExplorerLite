@@ -17,7 +17,7 @@ export class Dictionary extends React.Component {
         return (
             <div className="dictionary">
                 {Object.keys(this.props.items).map((key, index) => {
-                    return <DictionaryItemSection key={index} section={key} items={this.props.items[key]} />
+                    return <DictionaryItemSection key={index} section={key} items={this.props.items[key]}/>
                 })}
             </div>
         );
