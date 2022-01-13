@@ -86,7 +86,8 @@ export class SingleBlockPage extends React.Component {
             generator: ''
         },
         groupedTransactions: {},
-        loading: false
+        loading: false,
+        dApps: {}
     };
 
     componentDidUpdate(prevProps) {
@@ -110,15 +111,28 @@ export class SingleBlockPage extends React.Component {
 
     fetchData = height => {
         this.setState({loading: true});
-
+        let blockInfo;
+        let dApps;
         const {networkId} = this.props.match.params;
-        return ServiceFactory
+
+        const blockPromise = ServiceFactory
             .forNetwork(networkId)
             .blockService()
             .loadBlock(height)
-            .then(result => this.setState(result))
-            .finally(() => this.setState({loading: false}));
+            .then(result => blockInfo = result)
+
+        if (networkId === 'mainnet' || networkId === undefined) {
+            const dAppsPromise = ServiceFactory
+                .forNetwork(networkId)
+                .addressService()
+                .loadDApps()
+                .then(result => dApps = result)
+            return Promise.all([blockPromise, dAppsPromise]).then(() => {
+                this.setState({dApps, ...blockInfo})
+            }).finally(() => this.setState({loading: false}));
+        } else return blockPromise.finally(() => this.setState({loading: false, ...blockInfo}));
     };
+
 
     showBlock = height => {
         const {networkId} = this.props.match.params;
@@ -139,7 +153,7 @@ export class SingleBlockPage extends React.Component {
                         const numericType = parseInt(type);
                         const header = typeToHeader(numericType);
                         return <TransactionList key={numericType} type={numericType} header={header}
-                                                transactions={this.state.groupedTransactions[type]}/>
+                                                transactions={this.state.groupedTransactions[type]} dApps={this.state.dApps}/>
                     })}
                 </div>
             </Loader>
