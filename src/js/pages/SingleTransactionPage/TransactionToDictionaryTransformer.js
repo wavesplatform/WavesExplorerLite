@@ -163,10 +163,10 @@ const invokeExpressionTransactionToItems = (tx, networkId) => {
         }
     }
 
-    const results = [{
+    const results = (tx.stateUpdate && tx.applicationStatus ===  "succeeded") ? [{
         label: 'Results',
         value: <StateUpdateInfo tx={tx}/>
-    }];
+    }] : [];
 
     const info = {
         default: [
