@@ -20,7 +20,8 @@ export class SingleTransactionPage extends React.Component {
     state = {
         tx: {
             id: this.props.match.params.transactionId
-        }
+        },
+        dApps: {}
     };
 
     componentDidUpdate(prevProps) {
@@ -36,15 +37,25 @@ export class SingleTransactionPage extends React.Component {
 
     fetchData = () => {
         const {transactionId, networkId} = this.props.match.params;
-        return ServiceFactory
+
+        const transactionPromise = ServiceFactory
             .forNetwork(networkId)
             .transactionService()
             .loadTransaction(transactionId)
             .then(tx => this.setState({tx}));
+
+        if (networkId === 'mainnet' || networkId === undefined) {
+            const dAppsPromise = ServiceFactory
+                .forNetwork(networkId)
+                .addressService()
+                .loadDApps()
+                .then(dApps => this.setState({dApps}))
+            return Promise.all([transactionPromise, dAppsPromise])
+        } else return transactionPromise
     };
 
     render() {
-        const transactionItems = transactionToDictionary(this.state.tx, this.props.match.params.networkId);
+        const transactionItems = transactionToDictionary(this.state.tx, this.props.match.params.networkId, this.state.dApps);
         if (!!transactionItems.default && transactionItems.default.length > 0) {
             transactionItems.default.push({
                 label: 'JSON',

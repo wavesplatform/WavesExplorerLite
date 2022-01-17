@@ -11,7 +11,7 @@ import {RoutedAssetRef} from "../../components/AssetRef/AssetRef.view";
 import FailedBrick from "../../components/FailedBrick";
 
 
-export const createListItem = (transaction) => {
+export const createListItem = (transaction, dApps) => {
     switch (transaction.type) {
         case 1:
             return <GenesisTransactionListItem key={transaction.id} tx={transaction}/>;
@@ -55,7 +55,7 @@ export const createListItem = (transaction) => {
             return <AssetScriptTransactionListItem key={transaction.id} tx={transaction}/>;
 
         case 16:
-            return <ScriptInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
+            return <ScriptInvocationTransactionListItem key={transaction.id} tx={transaction} dApps={dApps}/>;
 
         case 17:
             return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
@@ -120,14 +120,16 @@ class Subjects extends React.PureComponent {
     static propTypes = {
         type: PropTypes.number.isRequired,
         sender: PropTypes.string.isRequired,
-        recipient: PropTypes.string
+        recipient: PropTypes.string,
     };
 
     render() {
         return (
             <td data-label="Sender / Recipient">
-                <TransactionArrow type={this.props.type} direction={'incoming'}/>
-                <Line wrap={false}><EndpointRef endpoint={this.props.sender} appearance="regular"/></Line>
+                <TransactionArrow type={this.props.type} direction="incoming"/>
+                <Line wrap={false}>
+                    <EndpointRef endpoint={this.props.sender} appearance="regular"/>
+                </Line>
                 <Line wrap={false}>
                     {this.props.recipient && <EndpointRef endpoint={this.props.recipient} appearance="regular"/>}
                 </Line>
@@ -143,7 +145,7 @@ class AmountAndFee extends React.PureComponent {
         return (
             <td data-label="Amount / Fee">
                 <Line>{Array.isArray(amount)
-                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i}>{v.toString()}</p>)
+                    ? amount.map((v, i) => <p key={i}>{v.toString()}</p>)
                     : amount.toString()}
                 </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
@@ -443,17 +445,36 @@ class AssetScriptTransactionListItem extends React.PureComponent {
 
 class ScriptInvocationTransactionListItem extends React.Component {
     static propTypes = {
-        tx: PropTypes.object.isRequired
+        tx: PropTypes.object.isRequired,
+        // dApps: PropTypes.object,
     };
 
     render() {
-        const {tx} = this.props;
+        const {tx, dApps} = this.props;
         return (
             <tr>
-
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
-                <Subjects type={tx.type} sender={tx.sender}/>
+                <td data-label="Sender / DApp">
+                    <TransactionArrow type={tx.type}/>
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.sender} appearance="regular"/>
+                    </Line>
+                    <Line wrap={false}>
+                        {tx.dappAddress && <div style={{display: 'flex', alignItems: 'center'}}>
+                            {dApps[tx.dappAddress] ? <div>
+                                <div className="badge dapp-link">
+                                    <EndpointRef endpoint={tx.sender} title={dApps[tx.dappAddress]} appearance="regular"/>
+                                </div>
+                            </div> : <EndpointRef endpoint={tx.dappAddress} appearance="regular"/>}
+                        </div>}
+                    </Line>
+                </td>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+                <td data-label="Function name">
+                    <div className="line" title={tx.call.function} style={{textOverflow:'ellipsis', overflow: 'hidden'}}>
+                        {tx.call.function}
+                    </div>
+                </td>
             </tr>
         );
     }

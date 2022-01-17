@@ -55,6 +55,11 @@ const typeToHeader = type => {
             result.price = 'Alias';
             break;
 
+        case 16:
+            result.subjects = 'Sender / DApp';
+            result.price = 'Function name';
+            break;
+
         case 17:
             result.subjects = 'Sender / Asset ID';
             result.amount = 'Fee';
@@ -87,7 +92,8 @@ export class SingleBlockPage extends React.Component {
             generator: ''
         },
         groupedTransactions: {},
-        loading: false
+        loading: false,
+        dApps: {}
     };
 
     componentDidUpdate(prevProps) {
@@ -111,17 +117,32 @@ export class SingleBlockPage extends React.Component {
 
     fetchData = height => {
         this.setState({loading: true});
-
+        let blockInfo;
+        let dApps;
         const {networkId} = this.props.match.params;
-        return ServiceFactory
+
+        const blockPromise = ServiceFactory
             .forNetwork(networkId)
             .blockService()
             .loadBlock(height)
             .then(result => {
                 return this.setState(result)
             })
+            .then(result => blockInfo = result)
             .finally(() => this.setState({loading: false}));
+
+        if (networkId === 'mainnet' || networkId === undefined) {
+            const dAppsPromise = ServiceFactory
+                .forNetwork(networkId)
+                .addressService()
+                .loadDApps()
+                .then(result => dApps = result)
+            return Promise.all([blockPromise, dAppsPromise]).then(() => {
+                this.setState({dApps, ...blockInfo})
+            }).finally(() => this.setState({loading: false}));
+        } else return blockPromise.finally(() => this.setState({loading: false, ...blockInfo}));
     };
+
 
     showBlock = height => {
         const {networkId} = this.props.match.params;
@@ -141,7 +162,7 @@ export class SingleBlockPage extends React.Component {
                         const numericType = parseInt(type);
                         const header = typeToHeader(numericType);
                         return <TransactionList key={numericType} type={numericType} header={header}
-                                                transactions={this.state.groupedTransactions[type]}/>
+                                                transactions={this.state.groupedTransactions[type]} dApps={this.state.dApps}/>
                     })}
                 </div>
             </Loader>
@@ -193,7 +214,11 @@ export class SingleBlockPage extends React.Component {
             }]
         };
 
-        this.state.block.id && items.default.push({label: 'BlockID', value: this.state.block.id})
+        this.state.block.id && items.default.splice(1, 0, {
+            label: 'ID',
+            value: this.state.block.id,
+            action: <CopyButton text={this.state.block.id}/>
+        })
 
         if(this.state.block.version === 5){
             items.default.push( {label: 'VRF', value: this.state.block.VRF})
