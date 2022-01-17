@@ -143,7 +143,7 @@ class AmountAndFee extends React.PureComponent {
         return (
             <td data-label="Amount / Fee">
                 <Line>{Array.isArray(amount)
-                    ? amount.map((v, i) => <p style={{whiteSpace: 'nowrap'}} key={i}>{v.toString()}</p>)
+                    ? amount.map((v, i) => <p key={i}>{v.toString()}</p>)
                     : amount.toString()}
                 </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
@@ -450,10 +450,14 @@ class ScriptInvocationTransactionListItem extends React.Component {
         const {tx} = this.props;
         return (
             <tr>
-
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <Subjects type={tx.type} sender={tx.sender}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+                <td data-label="Function name">
+                    <div className="line" title={tx.call.function} style={{textOverflow:'ellipsis'}}>
+                        {tx.call.function}
+                    </div>
+                </td>
             </tr>
         );
     }

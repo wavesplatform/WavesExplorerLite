@@ -18,7 +18,6 @@ export class AddressService extends ApiClientService {
 
     loadBalance = (address) => {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
-
         return this.getApi().addresses.details(address).then(data => {
             return {
                 regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
