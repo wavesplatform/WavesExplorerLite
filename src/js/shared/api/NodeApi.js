@@ -96,6 +96,8 @@ const transformTimestampToDateTime = (responseData) => {
     return responseData;
 };
 
+const toArray = (x) => Array.isArray(x) ? x : [x]
+
 /**
  * Determine based on config if we should retry the request.
  * @param err The AxiosError passed to the interceptor.
@@ -223,6 +225,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
                 return [].concat(...res)
             },
             nft: (address, limit, after) => fetchAssetsAddressLimit(baseUrl, address, limit = ASSETS_PER_PAGE, !!after ? {body: new URLSearchParams({after: after})} : undefined),
+        },
+        leasing: {
+            info: (id) => fetchLeasingInfo(baseUrl, toArray(id))
         },
         peers: () => fetchConnected(baseUrl),
     }

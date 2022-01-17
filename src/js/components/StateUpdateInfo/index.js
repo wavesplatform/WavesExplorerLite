@@ -42,6 +42,24 @@ export const StateUpdateInfo = ({tx}) => {
         </tbody>
 
         <tbody>
+        {data.payments && data.payments
+            .map(({dApp, sender, payment}, i) => <tr key={i}>
+                <td style={{width: 100}}><Line bold>Transfer (Payment)</Line></td>
+                <td><MoneyInfo key={i} value={payment.money}/></td>
+                <td>
+                    {sender && <TransactionArrow type={4} direction={'incoming'}/>}
+                    {sender && <Line wrap={false}>
+                        <EndpointRef endpoint={sender} appearance="regular"/>
+                    </Line>}
+                    {dApp && <Line wrap={false}>
+                        <EndpointRef endpoint={dApp} appearance="regular"/>
+                    </Line>}
+                </td>
+            </tr>)
+        }
+        </tbody>
+
+        <tbody>
         {data.issues && data.issues
             .map((item, i) => <tr key={i}>
                 <td style={{width: 100}}>
@@ -139,7 +157,7 @@ export const StateUpdateInfo = ({tx}) => {
                     </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
-                    {item.amount}
+                    <MoneyInfo key={i} value={item.money}/>
                 </td>
                 <td>
                     {item.sender && <TransactionArrow type={4} direction={'incoming'}/>}
@@ -187,7 +205,12 @@ export const StateUpdateInfo = ({tx}) => {
         <tbody>
         {data.data && data.data
             .map((data, i) => <tr key={i}>
-                <td style={{width: 100}}><Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line></td>
+                <td style={{width: 100}}>
+                    <Line bold>{getDataEntryType(data.type) || 'Delete value'}</Line>
+                    {data.address && <Line wrap={false}>
+                        <EndpointRef endpoint={data.address} appearance="regular"/>
+                    </Line>}
+                </td>
                 <td>{`key: ${data.key}`}</td>
                 <td>{`value: ${data.value}`}</td>
             </tr>)
