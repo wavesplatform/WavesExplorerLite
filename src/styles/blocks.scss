@@ -15,6 +15,7 @@ table.blocks {
     }
 
     tbody tr {
+        max-width: 380px;
         .block-img {
             background: url(../images/waves-block-1.svg) center no-repeat
         }

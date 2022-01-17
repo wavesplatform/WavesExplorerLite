@@ -7,6 +7,7 @@ table.address-tr-list {
     }
 
     th.amount {
+        min-width: 380px;
         @include responsive_styles(map_get($address_tr_list_columns, 'amount'))
     }
 

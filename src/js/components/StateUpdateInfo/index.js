@@ -157,7 +157,7 @@ export const StateUpdateInfo = ({tx}) => {
                     </Line>
                 </td>
                 <td style={{verticalAlign: 'middle'}}>
-                    {item.amount}
+                    <MoneyInfo key={i} value={item.money}/>
                 </td>
                 <td>
                     {item.sender && <TransactionArrow type={4} direction={'incoming'}/>}

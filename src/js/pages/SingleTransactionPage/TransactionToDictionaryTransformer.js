@@ -21,7 +21,7 @@ import pending from "../../../images/pending.svg";
 import {StateUpdateInfo} from "../../components/StateUpdateInfo";
 import {convertEthTx} from "../../shared/utils";
 
-const transactionToDictionary = (tx, networkId) => {
+const transactionToDictionary = (tx, networkId, dApps) => {
     switch (tx.type) {
         case 1:
             return genesisTransactionToItems(tx);
@@ -67,11 +67,11 @@ const transactionToDictionary = (tx, networkId) => {
             return assetScriptTransactionToItems(tx);
 
         case 16:
-            return scriptInvocationTransactionToItems(tx, networkId);
+            return scriptInvocationTransactionToItems(tx, networkId, dApps);
 
         case 17:
             return updateAssetInfoTransactionToItems(tx);
-        
+
         case 18:
             return invokeExpressionTransactionToItems(tx, networkId);
 
@@ -95,7 +95,7 @@ const InfoWrapper = ({children}) => (
     </div>
 );
 
-const scriptInvocationTransactionToItems = (tx) => {
+const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
     const paymentItems = [{
         label: 'Payments',
         value: tx.payment && tx.payment.length > 0
@@ -163,17 +163,23 @@ const invokeExpressionTransactionToItems = (tx, networkId) => {
         }
     }
 
-    const results = [{
+    const results = (tx.stateUpdate && tx.applicationStatus ===  "succeeded") ? [{
         label: 'Results',
         value: <StateUpdateInfo tx={tx}/>
-    }];
+    }] : [];
 
     const info = {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
-                label: 'Script',
-                value: <ScriptInfo script={tx.expression}/>
+                label: 'DApp Address',
+                value: <>
+                    <EndpointRef endpoint={tx.dappAddress}/>
+                    {dApps[tx.dappAddress] ? <div className="badge dapp" style={{marginLeft: "10px"}}>{dApps[tx.dappAddress]}</div> : null}
+                </>
+            }, {
+                label: 'Call',
+                value: <InvocationInfo {...tx.call} />
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx),
@@ -271,7 +277,7 @@ const cancelLeaseTransactionItems = tx => {
             ...buildTransactionHeaderItems(tx),
             {
                 label: 'Lease tx id',
-                value: <TransactionRef txId={tx.leaseId}/>
+                value: <TransactionRef txId={tx.originTransactionId}/>
             },
             {
                 label: 'Lease info',

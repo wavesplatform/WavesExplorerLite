@@ -137,13 +137,12 @@ const appendAssetData = async (currencyService, data, assetKey) => {
             }))
             : []
     } else {
-        const detailsArray = data && data[assetKey]
+        const detailsArray = data[assetKey]
             ? await currencyService.getApi().assets.details(data[assetKey])
-            : wavesDetail;
+            : [wavesDetail];
 
         const { assetId: id, name, decimals, description } = detailsArray
         const currency = id ? new Currency({ id, displayName: name, precision: decimals }) : Currency.WAVES;
-
 
         return {
             ...data,
@@ -211,7 +210,6 @@ const transformUpdateAssetInfo = (currencyService, tx) => {
 }
 
 const transformScriptInvocation = (currencyService, assetService, tx, shouldLoadDetails) => {
-
     return currencyService.get(tx.feeAssetId).then(async (feeCurrency) => {
         let payment = [];
         if (tx.payment && tx.payment.length > 0) {
@@ -244,6 +242,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
             result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
             result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+            result.stateChanges.leases = await appendAssetData(currencyService, tx.stateChanges.leases, 'assetId')
         }
 
         if (tx.stateUpdate) {
@@ -254,6 +253,7 @@ const transformScriptInvocation = (currencyService, assetService, tx, shouldLoad
             result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
             result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
             result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+            result.stateUpdate.leases = await appendAssetData(currencyService, tx.stateUpdate.leases, 'assetId')
         }
         return result;
     });
@@ -281,6 +281,7 @@ const transformInvokeExpression = async (currencyService, assetService, tx, shou
         result.stateChanges.reissues = await appendAssetData(currencyService, result.stateChanges.reissues, 'assetId')
         result.stateChanges.burns = await appendAssetData(currencyService, result.stateChanges.burns, 'assetId')
         result.stateChanges.sponsorFees = await appendAssetData(currencyService, tx.stateChanges.sponsorFees, 'assetId')
+        result.stateChanges.leases = await appendAssetData(currencyService, tx.stateChanges.leases, 'assetId')
     }
 
     if (tx.stateUpdate) {
@@ -291,6 +292,7 @@ const transformInvokeExpression = async (currencyService, assetService, tx, shou
         result.stateUpdate.reissues = await appendAssetData(currencyService, tx.stateUpdate.reissues, 'assetId')
         result.stateUpdate.burns = await appendAssetData(currencyService, tx.stateUpdate.burns, 'assetId')
         result.stateUpdate.sponsorFees = await appendAssetData(currencyService, tx.stateUpdate.sponsorFees, 'assetId')
+        result.stateUpdate.leases = await appendAssetData(currencyService, tx.stateUpdate.leases, 'assetId')
     }
 
     return result;
@@ -381,13 +383,15 @@ const transformLease = (currencyService, tx) => {
 };
 
 const transformLeaseCancel = async (currencyService, tx) => {
-    const { amount } = (await currencyService.getApi().transactions.info(tx.leaseId));
+    const leaseTx = (await currencyService.getApi().leasing.info(tx.leaseId))[0];
+    const {amount, recipient, originTransactionId} = leaseTx
     const feeCurrency = await currencyService.get(tx.feeAssetId)
     return Object.assign(copyMandatoryAttributes(tx), {
         amount: Money.fromCoins(amount, Currency.WAVES),
         fee: Money.fromCoins(tx.fee, feeCurrency),
         leaseId: tx.leaseId,
-        recipient: tx.lease ? tx.lease.recipient : null
+        recipient,
+        originTransactionId
     });
 };
 

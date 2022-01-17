@@ -885,9 +885,9 @@
     "@babel/plugin-transform-react-pure-annotations" "^7.12.1"
 
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.3.4", "@babel/runtime@^7.8.4":
-  "integrity" "sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw=="
-  "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.15.4.tgz"
-  "version" "7.15.4"
+  "integrity" "sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ=="
+  "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.16.3.tgz"
+  "version" "7.16.3"
   dependencies:
     "regenerator-runtime" "^0.13.4"
 
@@ -1288,10 +1288,10 @@
     "node-fetch" "^2.6.1"
     "typed-ts-events" "^1.1.1"
 
-"@waves/ride-js@2.1.1":
-  "integrity" "sha512-Nw0D0wQQpfakfAOOZmhxUbNHpj4X5bZlpex9V0RF3nOW2vsG15272dJPy90gYrcZgPF6sIl8ejKfcfrcIaHzyA=="
-  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.1.tgz"
-  "version" "2.1.1"
+"@waves/ride-js@2.1.2-beta.10":
+  "integrity" "sha512-jDi20RcgYWR/qtF8La8jPuJ1Sgr6OwJVPseGeeT9wG1e75+3tSHTvl3zTfRX+s9EHrej1BM7fHCFg4zuRrrhxg=="
+  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.2-beta.10.tgz"
+  "version" "2.1.2-beta.10"
   dependencies:
     "@waves/ts-lib-crypto" "^1.4.3"
     "axios" "^0.19.0"
@@ -5979,9 +5979,9 @@
     "resolve" "^1.1.7"
 
 "lines-and-columns@^1.1.6":
-  "integrity" "sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA="
-  "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.1.6.tgz"
-  "version" "1.1.6"
+  "integrity" "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg=="
+  "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
+  "version" "1.2.4"
 
 "load-json-file@^1.0.0":
   "integrity" "sha1-lWkFcI1YtLq0wiYbBPWfMcmTdMA="
