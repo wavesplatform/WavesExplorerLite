@@ -138,7 +138,7 @@ class AmountAndFee extends React.PureComponent {
         return (
             <td data-label="Amount / Fee">
                 <Line>{Array.isArray(amount)
-                    ? amount.map((v, i) => <p className="no-wrap" key={i}>{v.toString()}</p>)
+                    ? amount.map((v, i) => <p key={i}>{v.toString()}</p>)
                     : amount.toString()}
                 </Line>
                 <Line><label>{this.props.fee.toString()}</label></Line>
@@ -439,7 +439,7 @@ class AssetScriptTransactionListItem extends React.PureComponent {
 class ScriptInvocationTransactionListItem extends React.Component {
     static propTypes = {
         tx: PropTypes.object.isRequired,
-        // dApps: PropTypes.object,
+        dApps: PropTypes.object,
     };
 
     render() {
@@ -456,13 +456,19 @@ class ScriptInvocationTransactionListItem extends React.Component {
                         {tx.dappAddress && <div style={{display: 'flex', alignItems: 'center'}}>
                             {dApps[tx.dappAddress] ? <div>
                                 <div className="badge dapp-link">
-                                    <EndpointRef endpoint={tx.sender} title={dApps[tx.dappAddress]} appearance="regular"/>
+                                    <EndpointRef endpoint={tx.sender} title={dApps[tx.dappAddress]}
+                                                 appearance="regular"/>
                                 </div>
                             </div> : <EndpointRef endpoint={tx.dappAddress} appearance="regular"/>}
                         </div>}
                     </Line>
                 </td>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+                <td data-label="Function name">
+                    <div className="line" title={tx.call.function} style={{textOverflow:'ellipsis'}}>
+                        {tx.call.function}
+                    </div>
+                </td>
             </tr>
         );
     }

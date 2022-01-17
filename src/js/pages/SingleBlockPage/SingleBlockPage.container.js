@@ -57,7 +57,7 @@ const typeToHeader = type => {
 
         case 16:
             result.subjects = 'Sender / DApp';
-            result.price = undefined;
+            result.price = 'Function name';
             break;
 
         case 17:
