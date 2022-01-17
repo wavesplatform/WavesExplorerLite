@@ -465,7 +465,7 @@ class ScriptInvocationTransactionListItem extends React.Component {
                 </td>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
                 <td data-label="Function name">
-                    <div className="line" title={tx.call.function} style={{textOverflow:'ellipsis'}}>
+                    <div className="line" title={tx.call.function} style={{textOverflow:'ellipsis', overflow: 'hidden'}}>
                         {tx.call.function}
                     </div>
                 </td>
