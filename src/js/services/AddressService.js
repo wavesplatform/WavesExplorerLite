@@ -5,6 +5,8 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import {ApiClientService} from './ApiClientService';
 import {VostokToWavesEnterprise} from '../shared/constants';
+import config from '../configuration/config.mainnet';
+import axios from "axios";
 
 export class AddressService extends ApiClientService {
     constructor(transactionTransformerService, currencyService, configurationService, networkId) {
@@ -14,7 +16,7 @@ export class AddressService extends ApiClientService {
         this.currencyService = currencyService;
     }
 
-    loadBalance = (address) => {
+    loadBalance = async (address) => {
         return this.getApi().addresses.details(address).then(data => {
             return {
                 regular: Money.fromCoins(data.regular, Currency.WAVES).toString(),
@@ -98,6 +100,11 @@ export class AddressService extends ApiClientService {
 
     loadScriptMeta = (address) => {
         return this.getApi().addresses.scriptMeta(address);
+    };
+
+    loadDApps = () => {
+        const res = axios.get(config.dappsUrl).then(resp => resp.data);
+        return res
     };
 
     validate = (address) => {
