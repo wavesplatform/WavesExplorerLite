@@ -1278,10 +1278,10 @@
     "node-fetch" "^2.6.1"
     "typed-ts-events" "^1.1.1"
 
-"@waves/ride-js@2.1.1":
-  "integrity" "sha512-Nw0D0wQQpfakfAOOZmhxUbNHpj4X5bZlpex9V0RF3nOW2vsG15272dJPy90gYrcZgPF6sIl8ejKfcfrcIaHzyA=="
-  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.1.tgz"
-  "version" "2.1.1"
+"@waves/ride-js@2.1.5-beta.3":
+  "integrity" "sha512-67Oo+9IWQQgfF7oTcacgR2ipZ69e/7KbqJa9vZLWkTT6pPw/YhbJAgmY3Belpyhsp42UCq39ybCYWYyFXl+enw=="
+  "resolved" "https://registry.npmjs.org/@waves/ride-js/-/ride-js-2.1.5-beta.3.tgz"
+  "version" "2.1.5-beta.3"
   dependencies:
     "@waves/ts-lib-crypto" "^1.4.3"
     "axios" "^0.19.0"
@@ -1305,9 +1305,9 @@
     "node-forge" "^0.8.5"
 
 "@waves/ts-types@^1.0.6-beta.7":
-  "integrity" "sha512-nhwx+wFIBW8PBTMT95Z7dzqB29+7MU/HI+CmYT4ImatlFoM3AZkgcn+NKMAV00e/+nFgO3pYLbRnKxx3HmkcBw=="
-  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.6-beta.7.tgz"
-  "version" "1.0.6-beta.7"
+  "integrity" "sha512-fbUCGIM5BIaZCCje3Nm135r0n9zDJIJicHSa5OJxO+NEU46aEtmfUoAL9fBbWAgQmTmtR57E5Wi4s+fUjqY7DA=="
+  "resolved" "https://registry.npmjs.org/@waves/ts-types/-/ts-types-1.0.7.tgz"
+  "version" "1.0.7"
 
 "@webassemblyjs/ast@1.7.11":
   "integrity" "sha512-ZEzy4vjvTzScC+SH8RBssQUawpaInUdMTYwYYLh54/s8TuT0gBLuyUnppKsVyZEi876VmmStKsUs28UxPgdvrA=="

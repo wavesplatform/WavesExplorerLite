@@ -115,7 +115,7 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
         }
     }
 
-    const results = (tx.stateUpdate && tx.applicationStatus ===  "succeeded") ? [{
+    const results = tx.applicationStatus ===  "succeeded" ? [{
         label: 'Results',
         value: <StateUpdateInfo tx={tx}/>
     }] : [];
