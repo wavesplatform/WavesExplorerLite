@@ -102,7 +102,7 @@ class Search extends React.PureComponent {
                 <input
                     className="search-input"
                     ref={this.inputRef}
-                    placeholder="Search address, transaction id, block id, alias, lease id"
+                    placeholder="Search address, transaction id, block id, alias, lease id, block height"
                     onKeyUp={this.handleKeyUp}
                     onChange={this.handleChange}
                     value={this.state.searchText}
