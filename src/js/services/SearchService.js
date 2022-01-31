@@ -64,14 +64,12 @@ export class SearchService extends ApiClientService {
                     return routes.leases.one(lease.id);
                 })
             }).catch(() => {
-                if (!isNaN(query)) {
-                    return api.blocks.at(query).then(heightResponse => {
-                        const event = this.createEvent(SearchResult.block);
-                        this.analyticsService.sendEvent(event);
+                return api.blocks.at(query).then(heightResponse => {
+                    const event = this.createEvent(SearchResult.block);
+                    this.analyticsService.sendEvent(event);
 
-                        return routes.blocks.one(heightResponse.height);
-                    });
-                }
+                    return routes.blocks.one(heightResponse.height);
+                });
             }).catch(e => {
                 const event = this.createEvent(SearchResult.unknown);
                 this.analyticsService.sendEvent(event);
