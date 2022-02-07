@@ -142,7 +142,7 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
     return info
 };
 
-const invokeExpressionTransactionToItems = (tx, networkId) => {
+const invokeExpressionTransactionToItems = (tx) => {
     const stateItems = tx.stateChanges ? [{
         label: 'State Changes',
         value: <RawJsonViewer json={tx.rawStateChanges}/>
@@ -172,14 +172,8 @@ const invokeExpressionTransactionToItems = (tx, networkId) => {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
-                label: 'DApp Address',
-                value: <>
-                    <EndpointRef endpoint={tx.dappAddress}/>
-                    {dApps[tx.dappAddress] ? <div className="badge dapp" style={{marginLeft: "10px"}}>{dApps[tx.dappAddress]}</div> : null}
-                </>
-            }, {
-                label: 'Call',
-                value: <InvocationInfo {...tx.call} />
+                label: 'Script',
+                value: <ScriptInfo script={tx.expression}/>
             },
             buildFeeItem(tx),
             ...buildSenderAddressAndKeyItems(tx),
