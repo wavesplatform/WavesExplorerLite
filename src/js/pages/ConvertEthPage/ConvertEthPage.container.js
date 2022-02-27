@@ -4,11 +4,6 @@ import {ethAddress2waves, wavesAddress2eth, wavesAsset2Eth} from '@waves/node-ap
 import {getNetworkByte} from '../../shared/utils'
 import ServiceFactory from '../../services/ServiceFactory';
 
-const labels = {
-    WAVES: 'WAVES',
-    ETHEREUM: 'ETHEREUM'
-}
-
 export class ConvertEthPage extends React.Component {
     state = {
         address: '',
@@ -21,28 +16,13 @@ export class ConvertEthPage extends React.Component {
     convertW2EAsset = (value) => wavesAsset2Eth(value)
     convertE2WAsset = async (value) => await ServiceFactory.forNetwork(this.props.match.params.networkId).assetService().convertEth2Waves(value)
 
+
     render() {
         return (
             <div className="loaderWrapper">
                 <div className="content card">
-                    <div className="converter">
-                        <div className="converter-title">
-                            Address
-                        </div>
-                        <ConverterItem title={labels.WAVES} convertedTitle={labels.ETHEREUM}
-                                       handleConvert={this.convertW2EAddress}/>
-                        <ConverterItem title={labels.ETHEREUM} convertedTitle={labels.WAVES}
-                                       handleConvert={this.convertE2WAddress}/>
-                    </div>
-                    <div className="converter">
-                        <div className="converter-title">
-                            Asset
-                        </div>
-                        <ConverterItem title={labels.WAVES} convertedTitle={labels.ETHEREUM}
-                                       handleConvert={this.convertW2EAsset}/>
-                        <ConverterItem title={labels.ETHEREUM} convertedTitle={labels.WAVES}
-                                       handleConvert={this.convertE2WAsset}/>
-                    </div>
+                    <ConverterItem title={"Address"} convertW2E={this.convertW2EAddress} convertE2W={this.convertE2WAddress}/>
+                    <ConverterItem title={"Asset"} convertW2E={this.convertW2EAsset} convertE2W={this.convertE2WAsset}/>
                 </div>
             </div>
         );
