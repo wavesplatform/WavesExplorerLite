@@ -1,0 +1,62 @@
+.new-version-dialog-container {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    padding: 16px 28px 24px 60px;
+    width: 275px;
+    margin-bottom: 18px;
+    border-radius: 4px;
+    background: #202931;
+}
+
+.nvd-icon {
+    width: 21px;
+    height: 21px;
+    background: url(../images/new-version-icon.svg) center no-repeat;
+    position: absolute;
+    top: 20px;
+    left: 22px;
+}
+
+.nvd-title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #F8F9FB;
+}
+
+.nvd-descr {
+    margin-top: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgba(248, 249, 251, 0.5);
+
+    opacity: 0.8;
+}
+
+.nvd-btn {
+    width: 186px;
+    height: 44px;
+    box-sizing: border-box;
+    margin-top: 18px;
+    border-radius: 4px;
+    border: 1px solid #5A8BCD;
+
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(90, 139, 205, 0.3);
+    color: #F8F9FB;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(90, 139, 205, 0.4);
+    }
+}

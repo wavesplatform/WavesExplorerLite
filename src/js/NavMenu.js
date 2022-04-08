@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 import ServiceFactory from './services/ServiceFactory';
+import { NewVersionDialog } from './components/NewVersionDialog';
 
 const alwaysVisible = networkId => true;
 const visibleIfConfigured = networkId => {
@@ -93,6 +94,7 @@ class NavMenu extends React.Component {
                         />
                     );
                 })}
+                <NewVersionDialog />
             </div>
         );
     }
