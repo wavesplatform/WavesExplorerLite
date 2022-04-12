@@ -98,10 +98,10 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
         case 17:
             return transformUpdateAssetInfo(currencyService, tx);
 
-        case 18:
-            return transformInvokeExpression(currencyService, assetService, tx, shouldLoadDetails);
+        // case 18:
+        //     return transformInvokeExpression(currencyService, assetService, tx, shouldLoadDetails);
 
-        case 19:
+        case 18:
             return transformEthereumTransaction(currencyService, assetService, spamDetectionService, tx, shouldLoadDetails);
 
         default:

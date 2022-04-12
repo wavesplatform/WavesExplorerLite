@@ -72,10 +72,10 @@ const transactionToDictionary = (tx, networkId, dApps) => {
         case 17:
             return updateAssetInfoTransactionToItems(tx);
 
-        case 18:
-            return invokeExpressionTransactionToItems(tx, networkId);
+        // case 18:
+        //     return invokeExpressionTransactionToItems(tx, networkId);
 
-        case 19:
+        case 18:
             const transaction = convertEthTx(tx)
             return transactionToDictionary(transaction, networkId)
 
@@ -488,7 +488,7 @@ const buildTransactionHeaderItems = tx => {
     const res = [{
         label: 'Type',
         value: <React.Fragment>
-            <span>{tx.isEthereum ? 19 : tx.type}</span>
+            <span>{tx.isEthereum ? 18 : tx.type}</span>
             <Spacer size={14}/>
             <TransactionBadge type={tx.type} isEthereum={tx.isEthereum}/>
         </React.Fragment>

@@ -57,14 +57,14 @@ export class BlockService extends ApiClientService {
         block = transformBlock(rawBlock);
 
         block.transactions = await Promise.all(block.transactions.map(async (tx) => {
-            if (tx.type === 19) {
+            if (tx.type === 18) {
                 tx = await this.getApi().transactions.info(tx.id)
                 return tx
             } else return tx
         }))
 
         block.transactions.forEach(tx => {
-            if (tx.type === 19) {
+            if (tx.type === 18) {
                 return convertEthTx(tx)
             }
         })

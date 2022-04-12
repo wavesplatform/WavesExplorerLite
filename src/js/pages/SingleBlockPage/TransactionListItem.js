@@ -60,10 +60,10 @@ export const createListItem = (transaction, dApps) => {
         case 17:
             return <UpdateAssetInfoTransactionListItem key={transaction.id} tx={transaction}/>;
 
-        case 18:
-            return <ExpressionInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
+        // case 18:
+        //     return <ExpressionInvocationTransactionListItem key={transaction.id} tx={transaction}/>;
 
-        case 19:
+        case 18:
             return <EthereumTransactionListItem key={transaction.id} tx={transaction}/>;
 
         default:
