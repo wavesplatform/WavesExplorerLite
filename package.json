@@ -19,7 +19,7 @@
     "dependencies": {
         "@babel/runtime": "^7.3.4",
         "@sentry/browser": "^4.6.4",
-        "@waves/node-api-js": "1.2.5-beta.13",
+        "@waves/node-api-js": "1.2.5-beta.18",
         "@waves/ride-js": "2.2.0-beta.5",
         "@waves/signature-generator": "^5.0.0",
         "amplitude-js": "^4.6.0-beta.2",
