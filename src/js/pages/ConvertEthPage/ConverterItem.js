@@ -27,6 +27,11 @@ export function ConverterItem(props) {
         if (e.key === 'Enter') handler()
     }
 
+    const handleConvert = () => {
+        if(wavesValue) convertWaves()
+        if(ethValue) convertEth()
+    }
+
     return <div className="converter">
         <div className="converter-title">
             {props.title}
@@ -51,7 +56,7 @@ export function ConverterItem(props) {
                         ETHEREUM
                     </div>
                 </div>
-                <div className="converter-button">
+                <div className="converter-button" onClick={handleConvert}>
                     <div className="converter-button-icon"/>
                     Convert
                 </div>
