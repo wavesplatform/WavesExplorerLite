@@ -1,7 +1,8 @@
 export const isDialogEnabled = () => {
     const url = new URL(window.location);
 
-    return url.searchParams.has('new_version')
+    return !(/faucet/.test(url.pathname));
+    // return url.searchParams.has('new_version');
 };
 
 export const setRedirectCookie = () => {
