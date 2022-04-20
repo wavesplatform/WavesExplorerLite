@@ -9,7 +9,8 @@ export const setRedirectCookie = () => {
     const cookieName = 'new_version_url';
     const newVersionUrl = 'https://dev.wavesexplorer.com';
     const domain = '.wavesexplorer.com';
-    const expires = new Date(2023, 11, 31).getTime();
+    const expires = new Date(2023, 11, 31).toUTCString();
+    const cookie = `${cookieName}=${newVersionUrl};domain=${domain};path=/;expires=${expires};`;
 
-    document.cookie=`${cookieName}=${newVersionUrl};domain=${domain};path=/;expires=${expires};`;
+    document.cookie = cookie;
 }
