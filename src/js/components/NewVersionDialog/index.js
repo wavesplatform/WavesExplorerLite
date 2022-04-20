@@ -20,10 +20,10 @@ export class NewVersionDialog extends React.Component {
                 <div className="nvd-content">
                     <h1 className="nvd-title">New Waves Explorer</h1>
                     <div className="nvd-descr">
-                        The new Waves Explorer is available! You can transfer from old interface to new one on any page and feel differences. Give us feedback via Intercom.
+                        The new Waves explorer is available. You can switch the old interface to the new one and feel the differences. Try the new version right now and give us feedback via Intercom.
                     </div>
                     <button className="nvd-btn" onClick={this.onClickNewVersion.bind(this)}>
-                        Go to new site
+                        Switch to the new version
                     </button>
                 </div>
             </div>
