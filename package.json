@@ -26,7 +26,7 @@
         "axios": "0.19.0",
         "decimal.js": "10.0.1",
         "detect-browser": "^4.8.0",
-        "dexie": "^2.0.4",
+        "dexie": "^3.2.2",
         "formik": "^1.5.8",
         "json-bigint": "^0.3.0",
         "lodash": "^4.17.20",
