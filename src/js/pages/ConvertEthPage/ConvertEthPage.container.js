@@ -11,18 +11,24 @@ export class ConvertEthPage extends React.Component {
     };
 
     convertW2EAddress = (value) => wavesAddress2eth(value)
-    convertE2WAddress = (value) => ethAddress2waves(value, getNetworkByte(this.props.match.params.networkId))
+    convertE2WAddress = (value) => {
+        const { networkId } = ServiceFactory.global().configurationService().get(this.props.match.params.networkId);
+        return ethAddress2waves(value, getNetworkByte(networkId));
+    }
 
     convertW2EAsset = (value) => wavesAsset2Eth(value)
-    convertE2WAsset = async (value) => await ServiceFactory.forNetwork(this.props.match.params.networkId).assetService().convertEth2Waves(value)
+    convertE2WAsset = async (value) => {
+        const { networkId } = ServiceFactory.global().configurationService().get(this.props.match.params.networkId);
+        return await ServiceFactory.forNetwork(networkId).assetService().convertEth2Waves(value);
+    }
 
 
     render() {
         return (
             <div className="loaderWrapper">
                 <div className="content card">
-                    <ConverterItem title={"Address"} convertW2E={this.convertW2EAddress} convertE2W={this.convertE2WAddress}/>
-                    <ConverterItem title={"Asset"} convertW2E={this.convertW2EAsset} convertE2W={this.convertE2WAsset}/>
+                    <ConverterItem title="Address" convertW2E={this.convertW2EAddress} convertE2W={this.convertE2WAddress} key='address' />
+                    <ConverterItem title="Asset" convertW2E={this.convertW2EAsset} convertE2W={this.convertE2WAsset} key='asset'/>
                 </div>
             </div>
         );
