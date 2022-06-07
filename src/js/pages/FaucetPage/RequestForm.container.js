@@ -33,7 +33,7 @@ export class RequestForm extends React.Component {
     };
 
     static defaultProps = {
-        amount: "10",
+        amount: "2",
     };
 
     state = {
