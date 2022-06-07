@@ -30,6 +30,7 @@ class Search extends React.PureComponent {
             });
 
             const {networkId} = this.props.match.params;
+
             const searchService = ServiceFactory.forNetwork(networkId).searchService();
 
             return searchService.search(this.state.searchText).then(route => {

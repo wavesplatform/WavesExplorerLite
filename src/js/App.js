@@ -24,6 +24,7 @@ import SingleAliasPage from './pages/SingleAliasPage';
 import SingleAssetPage from './pages/SingleAssetPage';
 import FaucetPage from './pages/FaucetPage'
 import UnsupportedPage from './pages/UnsupportedPage';
+import ConvertEthPage from './pages/ConvertEthPage';
 
 const routeParams = routeParamsBuilder(ServiceFactory.global().configurationService().all());
 const routes = routeBuilder(routeParams.networkId);
@@ -96,6 +97,7 @@ class App extends React.Component {
                             <Route path={routes.nodes.list} component={NodesPage} />
                             <Route path={routes.peers.list} component={PeersPage} />
                             <Route exact path={routes.faucet} component={FaucetPage} />
+                            <Route exact path={routes.converters} component={ConvertEthPage} />
                             <Route path={routes.root} component={MainPage} />
                         </Switch>
                     </div>
