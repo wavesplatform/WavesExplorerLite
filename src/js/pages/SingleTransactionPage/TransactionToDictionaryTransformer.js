@@ -570,11 +570,6 @@ const buildAmountItem = tx => ({
 
 const buildLeaseId = tx => ({
     label: 'LeaseId',
-    value: <LeaseRef leaseId={tx.id} />
-});
-
-const buildLeaseId = tx => ({
-    label: 'LeaseId',
     value: <LeaseRef leaseId={tx.id}/>
 });
 
