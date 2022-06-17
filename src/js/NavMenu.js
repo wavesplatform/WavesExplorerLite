@@ -40,7 +40,14 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).faucet,
         visible: visibleIfConfigured,
         icon: 'icon-faucet'
-    }];
+    },
+    //     {
+    //     title: 'Converters',
+    //     route: networkId => routeBuilder(networkId).converters,
+    //     visible: alwaysVisible,
+    //     icon: 'icon-converters'
+    // }
+    ];
 };
 
 class NavMenu extends React.Component {

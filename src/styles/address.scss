@@ -29,3 +29,12 @@ table.address-alias-list {
 div.pager {
     margin: 16px 8px 8px 24px;
 }
+
+.address-title {
+    @media (min-width: 1280px) {
+       display: flex;
+    }
+    * {
+        white-space: nowrap;
+    }
+}

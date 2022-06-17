@@ -302,6 +302,20 @@ body {
                         background-position: 0 -110px;
                     }
                 }
+
+                &-converters {
+                    a {
+                        &::after {
+                            background-image: url(../images/icon-converter.svg);
+                        }
+                        &:hover::after {
+                            background-image: url(../images/icon-converter-active.svg);
+                        }
+                    }
+                    &.current a::after {
+                        background-image: url(../images/icon-converter-active.svg);
+                    }
+                }
             }
 
             a {
