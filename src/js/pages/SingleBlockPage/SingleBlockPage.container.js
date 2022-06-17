@@ -65,6 +65,12 @@ const typeToHeader = type => {
             result.amount = 'Fee';
             result.price = 'Asset name';
             break;
+
+        // case 18:
+        //     result.subjects = 'InvokeTx';
+        //     result.amount = 'Fee';
+        //     result.price = 'Status';
+        //     break;
     }
 
     return result;
@@ -119,7 +125,11 @@ export class SingleBlockPage extends React.Component {
             .forNetwork(networkId)
             .blockService()
             .loadBlock(height)
+            .then(result => {
+                return this.setState(result)
+            })
             .then(result => blockInfo = result)
+            .finally(() => this.setState({loading: false}));
 
         if (networkId === 'mainnet' || networkId === undefined) {
             const dAppsPromise = ServiceFactory
@@ -148,7 +158,6 @@ export class SingleBlockPage extends React.Component {
                     <GoBack/>
                     <Headline title="Block" subtitle={this.state.currentHeight.toString()} copyVisible={false}/>
                     <Dictionary items={dictionaryItems}/>
-
                     {Object.keys(this.state.groupedTransactions).map(type => {
                         const numericType = parseInt(type);
                         const header = typeToHeader(numericType);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import GoBack from '../../components/GoBack';
-import Headline from '../../components/Headline';
+import Headline, {HeadlineSize} from '../../components/Headline';
 import Loader from '../../components/Loader';
 
 import {routeBuilder} from '../../shared/Routing';
@@ -15,6 +15,7 @@ import ScriptTab from './ScriptTab.container';
 import {RoutedTabsContainer} from './Tabs.container';
 import {Tab} from './Tab.view';
 import {BalanceDetails} from './BalanceDetails.view';
+import {wavesAddress2eth} from "@waves/node-api-js";
 
 const INITIAL_STATE = {
     balance: {}
@@ -45,19 +46,23 @@ export class SingleAddressPage extends React.Component {
         const {networkId, address, tab} = this.props.match.params;
         const basePath = routeBuilder(networkId).addresses.one(address);
 
+        const ethAddress = wavesAddress2eth(this.props.match.params.address)
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
                 <div className="content card">
-                    <GoBack />
-                    <Headline title="Address" subtitle={this.props.match.params.address} />
-                    <BalanceDetails balance={this.state.balance} />
+                    <GoBack/>
+                    <div className="address-title">
+                        <Headline title="Address" subtitle={this.props.match.params.address} size={HeadlineSize.Medium}/>
+                        <Headline title="Ethereum Address" subtitle={ethAddress} size={HeadlineSize.Small}/>
+                    </div>
+                    <BalanceDetails balance={this.state.balance}/>
                     <RoutedTabsContainer defaultTab="tx" basePath={basePath} activeTab={tab}>
-                        <Tab id="tx" title="Transactions" component={TransactionList} />
-                        <Tab id="aliases" title="Aliases" component={GroupedAliasList} />
-                        <Tab id="assets" title="Assets" component={AssetList} />
-                        <Tab id="nft" title="Non-fungible tokens" component={NonFungibleTokenList} />
-                        <Tab id="data" title="Data" component={DataTab} />
-                        <Tab id="script" title="Script" component={ScriptTab} />
+                        <Tab id="tx" title="Transactions" component={TransactionList}/>
+                        <Tab id="aliases" title="Aliases" component={GroupedAliasList}/>
+                        <Tab id="assets" title="Assets" component={AssetList}/>
+                        <Tab id="nft" title="Non-fungible tokens" component={NonFungibleTokenList}/>
+                        <Tab id="data" title="Data" component={DataTab}/>
+                        <Tab id="script" title="Script" component={ScriptTab}/>
                     </RoutedTabsContainer>
                 </div>
             </Loader>

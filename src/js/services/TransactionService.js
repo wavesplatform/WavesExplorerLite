@@ -1,5 +1,6 @@
 import {ApiClientService} from './ApiClientService';
 import {VostokToWavesEnterprise} from '../shared/constants';
+import {ethTxId2waves} from "@waves/node-api-js";
 
 const MAX_UNCONFIRMED_TRANSACTIONS = 25;
 
@@ -11,6 +12,7 @@ export class TransactionService extends ApiClientService {
     }
 
     loadTransaction = (id) => {
+        id.startsWith('0x') && id.length == 66 ? id = ethTxId2waves(id) : id
         return this.loadRawTransaction(id).then(tx => {
             // TODO: remove when token is renamed
             if (tx.id === VostokToWavesEnterprise.id) {
@@ -23,6 +25,7 @@ export class TransactionService extends ApiClientService {
     };
 
     loadRawTransaction = (id) => {
+        id.startsWith('0x') && id.length == 66 ? id = ethTxId2waves(id) : id
         return this.getApi().transactions.info(id);
     };
 

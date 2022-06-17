@@ -1,6 +1,5 @@
 import React from 'react';
 import Loader from "../../components/Loader";
-import PropTypes from "prop-types";
 
 class RawJsonViewer extends React.Component {
 
@@ -27,11 +26,6 @@ class RawJsonViewer extends React.Component {
         </>
     }
 }
-
-RawJsonViewer.propTypes = {
-    json: PropTypes.object,
-    fetchData: PropTypes.func
-};
 
 
 export default RawJsonViewer

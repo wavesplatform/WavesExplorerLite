@@ -1,4 +1,4 @@
-const nodeUrl = 'https://nodes.wavesnodes.com';
+const nodeUrl = 'https://nodes.wavesexplorer.com';
 
 export default {
     networkId: 'mainnet',
