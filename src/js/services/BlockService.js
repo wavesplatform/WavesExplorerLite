@@ -78,6 +78,5 @@ export class BlockService extends ApiClientService {
             block,
             groupedTransactions
         };
-
     };
 }

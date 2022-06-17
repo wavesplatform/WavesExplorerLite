@@ -565,12 +565,12 @@ const buildFeeItem = tx => ({
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: <MoneyInfo value={tx.amount}/>
+    value: <MoneyInfo value={tx.amount} />
 });
 
 const buildLeaseId = tx => ({
     label: 'LeaseId',
-    value: <LeaseRef leaseId={tx.id}/>
+    value: <LeaseRef leaseId={tx.id} />
 });
 
 const buildBytesItem = tx => ({

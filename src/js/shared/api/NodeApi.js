@@ -13,7 +13,6 @@ import {
 } from "@waves/node-api-js/cjs/api-node/addresses";
 import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
 import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
-import {fetchBasetarget} from "@waves/node-api-js/cjs/api-node/consensus";
 import {
     fetchInfo,
     fetchTransactions,
@@ -35,7 +34,7 @@ import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
 import {fetchEthAssetDetails} from "@waves/node-api-js/cjs/api-node/eth";
 
-const TRANSACTIONS_BY_ADDRESS_LIMIT = 10;
+const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
 
 const parseResponse = (response) => {
@@ -187,10 +186,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         transactions: {
             unconfirmed: () => fetchUnconfirmed(baseUrl),
             utxSize: () => fetchUnconfirmedSize(baseUrl),
-            info: id => fetchInfo(baseUrl, id).then(x => {
-                console.log(x)
-                return x
-            }),
+            info: id => fetchInfo(baseUrl, id),
             leaseInfo: ids => fetchLeasingInfo(baseUrl, ids),
             status: async idsArray => {
                 const limit = 1000;

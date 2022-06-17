@@ -26,51 +26,47 @@ export class SearchService extends ApiClientService {
         query = query.trim();
         const routes = routeBuilder(this.networkId);
         const api = this.getApi();
-
-        let assetId = query
-        try {
-            assetId = await this.convertAsset(query)
-        } catch {}
-
-        return api.assets.details(assetId).then(details => {
-            if(details) {
-                const event = this.createEvent(SearchResult.asset);
+        return api.addresses.validate(query).then(async validateResponse => {
+            if (validateResponse.valid) {
+                const event = this.createEvent(SearchResult.address);
                 this.analyticsService.sendEvent(event);
-        
-                return routes.assets.one(details.assetId);
-            }
-        }).catch(() => {
-            return api.addresses.validate(this.convertAddress(query, this.networkId)).then(validateResponse => {
-        
-                if (validateResponse.valid) {
-                    const event = this.createEvent(SearchResult.address);
-                    this.analyticsService.sendEvent(event);
-        
-                    return routes.addresses.one(this.convertAddress(query, this.networkId));
+
+                let assetId = query
+                try {
+                    assetId = await this.convertAsset(query)
+                } catch {
                 }
-        
+
                 return api.blocks.heightById(query).then(heightResponse => {
                     const event = this.createEvent(SearchResult.block);
                     this.analyticsService.sendEvent(event);
-        
+
                     return routes.blocks.one(heightResponse.height);
                 });
+            }
+        }).catch(() => {
+            return api.transactions.info(query).then(infoResponse => {
+                const event = this.createEvent(SearchResult.transaction);
+                this.analyticsService.sendEvent(event);
+
+                return routes.transactions.one(infoResponse.id);
+            });
+        }).catch(() => {
+            return this.aliasService.loadAddress(query).then(address => {
+                const event = this.createEvent(SearchResult.alias);
+                this.analyticsService.sendEvent(event);
+
+                return routes.addresses.one(address);
+            });
+        }).catch(() => {
+            return api.assets.details(query).then(detail => {
+                const event = this.createEvent(SearchResult.asset);
+                this.analyticsService.sendEvent(event);
+
+                return routes.assets.one(detail.assetId);
             })
-        }).catch(() => {
-                return api.transactions.info(this.convertTxId(query)).then(infoResponse => {
-                    const event = this.createEvent(SearchResult.transaction);
-                    this.analyticsService.sendEvent(event);
-
-                    return routes.transactions.one(infoResponse.id);
-                });
-        }).catch(() => {
-                return this.aliasService.loadAddress(query).then(address => {
-                    const event = this.createEvent(SearchResult.alias);
-                    this.analyticsService.sendEvent(event);
-
-                    return routes.addresses.one(address);
-                });
-        }).catch(() => {
+        })
+            .catch(() => {
                 return api.transactions.leaseInfo([query]).then(detail => {
                     const event = this.createEvent(SearchResult.lease);
                     this.analyticsService.sendEvent(event);
@@ -78,14 +74,19 @@ export class SearchService extends ApiClientService {
                     const lease = detail[0];
                     return routes.leases.one(lease.id);
                 })
-            })
-            .catch(e => {
+            }).catch(() => {
+                return api.blocks.at(query).then(heightResponse => {
+                    const event = this.createEvent(SearchResult.block);
+                    this.analyticsService.sendEvent(event);
+
+                    return routes.blocks.one(heightResponse.height);
+                });
+            }).catch(e => {
                 const event = this.createEvent(SearchResult.unknown);
                 this.analyticsService.sendEvent(event);
-
                 throw e;
             });
-    };
+    }
 
     createEvent = searchResult => new EventBuilder().search().events().results(searchResult).build();
 }

@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 import ServiceFactory from './services/ServiceFactory';
+import { NewVersionDialog } from './components/NewVersionDialog';
 
 const alwaysVisible = networkId => true;
 const visibleIfConfigured = networkId => {
@@ -39,12 +40,14 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).faucet,
         visible: visibleIfConfigured,
         icon: 'icon-faucet'
-    }, {
-        title: 'Converters',
-        route: networkId => routeBuilder(networkId).converters,
-        visible: alwaysVisible,
-        icon: 'icon-converters'
-    }];
+    },
+    //     {
+    //     title: 'Converters',
+    //     route: networkId => routeBuilder(networkId).converters,
+    //     visible: alwaysVisible,
+    //     icon: 'icon-converters'
+    // }
+    ];
 };
 
 class NavMenu extends React.Component {
@@ -98,6 +101,7 @@ class NavMenu extends React.Component {
                         />
                     );
                 })}
+                <NewVersionDialog />
             </div>
         );
     }

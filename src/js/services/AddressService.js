@@ -18,7 +18,7 @@ export class AddressService extends ApiClientService {
         this.currencyService = currencyService;
     }
 
-    loadBalance = (address) => {
+    loadBalance = async (address) => {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
         return this.getApi().addresses.details(address).then(data => {
             return {
@@ -40,7 +40,6 @@ export class AddressService extends ApiClientService {
 
     loadRawAliases = (address) => {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
-
         return this.getApi().addresses.aliases(address);
     };
 
@@ -105,13 +104,11 @@ export class AddressService extends ApiClientService {
 
     loadData = (address) => {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
-
         return this.getApi().addresses.data(address);
     };
 
     loadScript = (address) => {
         if (address.startsWith('0x') && address.length === 42) address = ethAddress2waves(address, getNetworkByte(this.networkId))
-
         return this.getApi().addresses.scriptInfo(address);
     };
 
@@ -125,7 +122,6 @@ export class AddressService extends ApiClientService {
         const res = axios.get(config.dappsUrl).then(resp => resp.data);
         return res
     };
-
     validate = (address) => {
         return this.getApi().addresses.validate(address).then(validateResponse => validateResponse.valid);
     };

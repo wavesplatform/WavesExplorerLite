@@ -445,7 +445,7 @@ class AssetScriptTransactionListItem extends React.PureComponent {
 class ScriptInvocationTransactionListItem extends React.Component {
     static propTypes = {
         tx: PropTypes.object.isRequired,
-        // dApps: PropTypes.object,
+        dApps: PropTypes.object,
     };
 
     render() {
