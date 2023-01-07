@@ -221,7 +221,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
 
                 const res = await Promise.all(
                     subarray.map(async (ids) =>
-                        (await axios.post('/assets/details', {ids}, {baseURL: baseUrl})).data)
+                        //TODO: Reform because our node doesnt support post yet
+                        //(await axios.post('/assets/details', {id}, {baseURL: baseUrl})).data)
+                        (await axios.get('/assets/details?id='+ids.join('&id='),  {baseURL: baseUrl})).data)
                 );
 
                 return [].concat(...res)

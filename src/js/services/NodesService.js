@@ -14,11 +14,10 @@ export class NodesService extends ApiClientService {
         const promises = nodes.map((node, index) => {
             const api = nodeApi(node.url);
             return axios.all([
-                //TODO: figure out solution for all broken data
-                api.version(), //ok
-                api.blocks.height(),
-                api.baseTarget(),
-                api.transactions.utxSize()
+                api.version().catch(e => e), //ok
+                api.blocks.height().catch(e => e),
+                api.baseTarget().catch(e => e),
+                api.transactions.utxSize().catch(e => e)
             ]).then(axios.spread((version, height, baseTarget, unconfirmedTxCount) => {
                 const newNode = {
                     ...node,
@@ -32,16 +31,7 @@ export class NodesService extends ApiClientService {
                     index,
                     node: newNode
                 };
-            })).catch(() =>{
-                const newNode = {
-                    ...node
-                };
-
-                return {
-                    index,
-                    node: newNode
-                };
-            })
+            }))
         });
 
         return Promise.all(promises).then(values => {

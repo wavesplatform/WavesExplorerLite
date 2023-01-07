@@ -44,7 +44,7 @@ class OpenDappButtonContainer extends React.Component {
     handleClick = () => {
         const {address} = this.props.match.params;
 
-        const url = `https://waves-dapp.com/${address}`;
+        const url = `https://dapp-ui.turtlenetwork.eu/${address}`;
         window.open(url, '_blank');
     };
 
