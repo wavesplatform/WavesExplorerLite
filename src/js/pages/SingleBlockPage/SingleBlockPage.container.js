@@ -14,6 +14,8 @@ import MoneyInfo from '../../components/MoneyInfo';
 import Timestamp from '../../components/Timestamp';
 import Tooltip from '../../components/Tooltip';
 import {TransactionList} from './TransactionList.container';
+import Currency from "../../shared/Currency";
+import Money from "../../shared/Money";
 
 const typeToHeader = type => {
     let result = {
@@ -91,6 +93,7 @@ export class SingleBlockPage extends React.Component {
         block: {
             generator: ''
         },
+        rewardShares: {},
         groupedTransactions: {},
         loading: false,
         dApps: {}
@@ -162,7 +165,8 @@ export class SingleBlockPage extends React.Component {
                         const numericType = parseInt(type);
                         const header = typeToHeader(numericType);
                         return <TransactionList key={numericType} type={numericType} header={header}
-                                                transactions={this.state.groupedTransactions[type]} dApps={this.state.dApps}/>
+                                                transactions={this.state.groupedTransactions[type]}
+                                                dApps={this.state.dApps}/>
                     })}
                 </div>
             </Loader>
@@ -209,7 +213,7 @@ export class SingleBlockPage extends React.Component {
                 label: 'Total Fee',
                 value: <MaybeMoney value={this.state.block.totalFee}/>
             }, {
-                label: 'Reward',
+                label: 'Total Reward',
                 value: <MaybeMoney value={this.state.block.reward}/>
             }]
         };
@@ -220,9 +224,59 @@ export class SingleBlockPage extends React.Component {
             action: <CopyButton text={this.state.block.id}/>
         })
 
-        if(this.state.block.version === 5){
-            items.default.push( {label: 'VRF', value: this.state.block.VRF})
-            items.default.push( {label: 'transactionsRoot', value: this.state.block.transactionsRoot})
+        if (this.state.block.rewardShares) {
+            items.default.push({
+                label: 'Reward Shares',
+                value: <table className='state-update'>
+                    <tbody>
+                    {Object.entries(this.state.block.rewardShares).map((entry, i) =>
+                        <tr key={i}>
+                            <td>{entry[0]}</td>
+                            <td><MaybeMoney value={Money.fromCoins(entry[1], Currency.WAVES)}/></td>
+                        </tr>
+                        )}
+                    </tbody>
+                </table>
+            })
+        }
+
+        if (this.state.block.stateHash) {
+            items.default.push({label: 'State hash', value: this.state.block.stateHash})
+        }
+
+        if (this.state.block.challengedHeader) {
+            items.default.push({
+                label: 'Challenged Header',
+                value: <table className='ch-block'>
+                    <tbody>
+                    <tr>
+                        <td>Generator</td>
+                        <td>{this.state.block.challengedHeader.generator}</td>
+                    </tr>
+                    <tr>
+                        <td>Generator PublicKey</td>
+                        <td>{this.state.block.challengedHeader.generatorPublicKey}</td>
+                    </tr>
+                    <tr>
+                        <td>Signature</td>
+                        <td>{this.state.block.challengedHeader.headerSignature}</td>
+                    </tr>
+                    <tr>
+                        <td>Desired Reward</td>
+                        <td><MaybeMoney value={Money.fromCoins(this.state.block.challengedHeader.desiredReward, Currency.WAVES)}/></td>
+                    </tr>
+                    <tr>
+                        <td>State Hash</td>
+                        <td>{this.state.block.challengedHeader.stateHash}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            })
+        }
+
+        if (this.state.block.version === 5) {
+            items.default.push({label: 'VRF', value: this.state.block.VRF})
+            items.default.push({label: 'transactionsRoot', value: this.state.block.transactionsRoot})
         }
 
         return items;

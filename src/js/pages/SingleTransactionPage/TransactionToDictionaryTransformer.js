@@ -116,10 +116,10 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
         value: <RawJsonViewer json={tx.rawStateChanges}/>
     }] : [];
 
-    const results = [{
+    const results = tx.stateUpdate ? [{
         label: 'Results',
-        value: <StateUpdateInfo tx={tx}/>
-    }];
+        value:  <StateUpdateInfo tx={tx}/>
+    }] : [];
 
     const info = {
         default: [

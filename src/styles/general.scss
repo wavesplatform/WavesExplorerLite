@@ -465,3 +465,12 @@ th.price, th.amount {
         }
     }
 }
+
+.ch-block {
+    td:first-child {
+        width: 30% !important;
+    }
+    td:last-child {
+        width: 70% !important;
+    }
+}
