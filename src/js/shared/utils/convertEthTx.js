@@ -23,7 +23,7 @@ export const convertEthTx = (tx) => {
             proofs: proofs || [],
             payment: [],
             call: '',
-            stateChanges: {},
+            stateChanges: null,
             isEthereum: true,
         }
     }

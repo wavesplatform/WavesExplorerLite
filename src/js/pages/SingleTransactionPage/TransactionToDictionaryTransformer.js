@@ -116,12 +116,12 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
         value: <RawJsonViewer json={tx.rawStateChanges}/>
     }] : [];
 
-    const results = tx.stateUpdate ? [{
+    const results = tx.stateUpdate || tx.stateChanges ? [{
         label: 'Results',
         value:  <StateUpdateInfo tx={tx}/>
     }] : [];
 
-    const info = {
+    const info =  tx.dappAddress ? {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -136,6 +136,13 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
             ...buildSenderAddressAndKeyItems(tx),
             ...stateItems,
             ...results
+        ]
+    } : {
+        default: [
+            ...buildTransactionHeaderItems(tx),
+            buildFeeItem(tx),
+            ...buildSenderAddressAndKeyItems(tx),
+            buildBytesItem(tx)
         ]
     }
     if (tx.isEthereum) info.default.splice(-([...stateItems, ...results].length), 0, buildBytesItem(tx))
