@@ -143,11 +143,9 @@ function shouldRetryRequest(err) {
     }
 
     // If we are out of retry attempts, return
-    if (config.currentRetryAttempt >= config.retry) {
-        return false;
-    }
+    return config.currentRetryAttempt < config.retry;
 
-    return true;
+
 }
 
 export const nodeApi = (baseUrl, useCustomRequestConfig) => {
@@ -211,7 +209,7 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             balance: (address) => fetchAssetsBalance(baseUrl, address),
             details: (assetId) => fetchDetails(baseUrl, assetId),
             detailsMultiple: async idsArray => {
-                const limit = 1000;
+                const limit = 100;
                 let subarray = [];
                 for (let i = 0; i < Math.ceil(idsArray.length / limit); i++) {
                     subarray[i] = idsArray.slice((i * limit), (i * limit) + limit);
