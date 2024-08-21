@@ -33,6 +33,7 @@ import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
 import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
 import {fetchEthAssetDetails} from "@waves/node-api-js/cjs/api-node/eth";
+import {fetchAddresses} from "@waves/node-api-js/es/api-node/addresses";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -168,7 +169,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
             validate: (address) => fetchValidate(baseUrl, address),
             data: (address) => data(baseUrl, address),
             scriptInfo: (address) => fetchScriptInfo(baseUrl, address),
-            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address)
+            scriptMeta: (address) => fetchScriptInfoMeta(baseUrl, address),
+            wallet: () => fetchAddresses(baseUrl)
         },
         blocks: {
             height: () => fetchHeight(baseUrl),

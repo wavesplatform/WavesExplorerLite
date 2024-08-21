@@ -118,10 +118,10 @@ const scriptInvocationTransactionToItems = (tx, networkId, dApps) => {
 
     const results = tx.stateUpdate || tx.stateChanges ? [{
         label: 'Results',
-        value:  <StateUpdateInfo tx={tx}/>
+        value: <StateUpdateInfo tx={tx}/>
     }] : [];
 
-    const info =  tx.dappAddress ? {
+    const info = tx.dappAddress ? {
         default: [
             ...buildTransactionHeaderItems(tx),
             {
@@ -170,7 +170,7 @@ const invokeExpressionTransactionToItems = (tx) => {
         }
     }
 
-    const results = (tx.stateUpdate && tx.applicationStatus ===  "succeeded") ? [{
+    const results = (tx.stateUpdate && tx.applicationStatus === "succeeded") ? [{
         label: 'Results',
         value: <StateUpdateInfo tx={tx}/>
     }] : [];
@@ -503,9 +503,11 @@ const buildTransactionHeaderItems = tx => {
         label: 'Status',
         value: tx.applicationStatus === 'script_execution_failed'
             ? <><img src={brick} height={12} width={12}/>&nbsp;Script execution failed</>
-            : tx.applicationStatus === 'script_execution_in_progress'
-                ? <><img src={pending} height={12} width={12}/>&nbsp;Script execution in progress</>
-                : 'Succeeded'
+            : tx.applicationStatus === 'elided'
+                ? <><img src={brick} height={12} width={12}/>&nbsp;Elided</>
+                : tx.applicationStatus === 'script_execution_in_progress'
+                    ? <><img src={pending} height={12} width={12}/>&nbsp;Script execution in progress</>
+                    : 'Succeeded'
     },
         buildVersionItem(tx),
         buildTimestampItem(tx.timestamp),
@@ -572,12 +574,12 @@ const buildFeeItem = tx => ({
 
 const buildAmountItem = tx => ({
     label: 'Amount',
-    value: <MoneyInfo value={tx.amount} />
+    value: <MoneyInfo value={tx.amount}/>
 });
 
 const buildLeaseId = tx => ({
     label: 'LeaseId',
-    value: <LeaseRef leaseId={tx.id} />
+    value: <LeaseRef leaseId={tx.id}/>
 });
 
 const buildBytesItem = tx => ({
