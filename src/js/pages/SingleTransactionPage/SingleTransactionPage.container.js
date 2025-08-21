@@ -10,33 +10,32 @@ import Tooltip from '../../components/Tooltip';
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import {MassPaymentDetails} from './MassPaymentDetails.view';
 import {RoutedRawTransactionContainer} from './RawTransaction.container';
+import {withRouter} from "../../withRouter";
 
 const LOADER_ERROR_CAPTIONS = {
     [ERROR_TYPES.GENERIC]: 'Failed to load transaction',
     [ERROR_TYPES.NOT_FOUND]: 'Transaction not found in blockchain'
 };
 
-export class SingleTransactionPage extends React.Component {
+class SingleTransactionPage extends React.Component {
     state = {
         tx: {
-            id: this.props.match.params.transactionId
+            id: this.props.params.transactionId
         },
         dApps: {}
     };
 
     componentDidUpdate(prevProps) {
-        const {transactionId, networkId} = this.props.match.params;
-        const {transactionId: prevTransactionId, networkId: prevNetworkId} = prevProps.match.params;
+        const {transactionId, networkId} = this.props.params;
+        const {transactionId: prevTransactionId, networkId: prevNetworkId} = prevProps.params;
 
         if (transactionId !== prevTransactionId || networkId !== prevNetworkId) {
             this.fetchData();
         }
-
-        Tooltip.rebind();
     }
 
     fetchData = () => {
-        const {transactionId, networkId} = this.props.match.params;
+        const {transactionId, networkId} = this.props.params;
 
         const transactionPromise = ServiceFactory
             .forNetwork(networkId)
@@ -55,7 +54,7 @@ export class SingleTransactionPage extends React.Component {
     };
 
     render() {
-        const transactionItems = transactionToDictionary(this.state.tx, this.props.match.params.networkId, this.state.dApps);
+        const transactionItems = transactionToDictionary(this.state.tx, this.props.params.networkId, this.state.dApps);
         if (!!transactionItems.default && transactionItems.default.length > 0) {
             transactionItems.default.push({
                 label: 'JSON',
@@ -77,3 +76,4 @@ export class SingleTransactionPage extends React.Component {
         );
     }
 }
+ export const RoutedSingleTransactionPage = withRouter(SingleTransactionPage);

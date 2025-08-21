@@ -6,7 +6,7 @@ import ServiceFactory from '../../services/ServiceFactory';
 
 export class FaucetPage extends React.Component {
     render() {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const {faucet, displayName} = ServiceFactory.global().configurationService().get(networkId);
         if (!faucet)
             return null;

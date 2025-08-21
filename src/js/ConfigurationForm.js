@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboard from 'react-copy-to-clipboard-ts';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import {isWebUri, isHttpsUri} from 'valid-url';
 import {nodeApi} from './shared/api/NodeApi';

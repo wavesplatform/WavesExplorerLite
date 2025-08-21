@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 
 import {routeBuilder} from '../../shared/Routing';
 import ServiceFactory from '../../services/ServiceFactory';
@@ -12,18 +12,18 @@ export class SingleAliasPage extends React.Component {
     };
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         return ServiceFactory.forNetwork(networkId).aliasService()
-            .loadAddress(this.props.match.params.alias)
+            .loadAddress(this.props.params.alias)
             .then(address => this.setState({address}))
     };
 
     render() {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to resolve alias">
-                {this.state.address && <Redirect to={routes.addresses.one(this.state.address)}/>}
+                {this.state.address && <Navigate to={routes.addresses.one(this.state.address)}/>}
             </Loader>
         );
     }

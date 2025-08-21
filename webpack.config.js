@@ -10,6 +10,13 @@ const sourcesPath = path.join(__dirname, 'src');
 const scriptsPath = path.join(sourcesPath, 'js');
 
 var config = {
+    resolve: {
+        fallback: {
+            "crypto": require.resolve("crypto-browserify"),
+            "vm": require.resolve("vm-browserify"),
+            "stream": require.resolve("stream-browserify")
+        }
+    },
     entry: {
         main: path.join(scriptsPath, 'index.js')
     },
@@ -29,7 +36,7 @@ var config = {
                     // It enables caching results in ./node_modules/.cache/babel-loader/
                     // directory for faster rebuilds.
                     cacheDirectory: true,
-                    plugins: ['react-hot-loader/babel'],
+                    plugins: []
                 }
             }
         }, {
@@ -38,16 +45,10 @@ var config = {
                 loader: 'html-loader'
             }]
         }, {
-            test: /\.scss$/,
+            test: /\.s[ac]ss$/i,
             use: [
                 'style-loader',
-                {
-                    loader: 'css-loader',
-                    options: {
-                        sourceMap: true,
-                        modules: false
-                    }
-                },
+                'css-loader',
                 'sass-loader'
             ]
         },
@@ -80,19 +81,21 @@ var config = {
         new LodashModuleReplacementPlugin({
             shorthands: true
         }),
-        new webpack.HashedModuleIdsPlugin(),
-        new CopyWebpackPlugin([{
-            from: path.join(sourcesPath, 'favicon.png'),
-            to: buildPath
-        }, {
-            from: 'manifest.json',
-            to: buildPath
-        },
-            // {
-            //     from: path.join(sourcesPath, 'config.js'),
-            //     to: buildPath
-            // }
-        ], {debug: true})
+        new webpack.ids.HashedModuleIdsPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [/*{
+                from: path.join(sourcesPath, 'favicon.png'),
+                to: buildPath
+            }, */{
+                from: 'manifest.json',
+                to: buildPath
+            },
+                // {
+                //     from: path.join(sourcesPath, 'config.js'),
+                //     to: buildPath
+                // }
+            ]
+        })
     ],
     optimization: {
         splitChunks: {

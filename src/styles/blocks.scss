@@ -1,17 +1,18 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 table.blocks {
     th.timestamp {
-        @include responsive_styles(map_get($blocks_columns, 'timestamp'))
+        @include mixins.responsive_styles(map.get(variables.$blocks_columns, 'timestamp'))
     }
 
     th.target {
-        @include responsive_styles(map_get($blocks_columns, 'target'))
+        @include mixins.responsive_styles(map.get(variables.$blocks_columns, 'target'))
     }
 
     th.txs {
-        @include responsive_styles(map_get($blocks_columns, 'txs'))
+        @include mixins.responsive_styles(map.get(variables.$blocks_columns, 'txs'))
     }
 
     tbody tr {

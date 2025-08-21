@@ -1,21 +1,31 @@
-@import "variables";
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
 
 @function map-deep-get($map, $keys...) {
     @each $key in $keys {
-        $map: map-get($map, $key);
+        $map: map.get($map, $key);
     }
     @return $map;
 }
+
+$breakpoints: (
+    xxlg: 1920px,
+    xlg: 1600px,
+    lg: 1366px,
+    md: 1024px,
+    sm: 800px
+);
 
 @function map-deep-has-key($map, $keys...) {
     $root: $map;
     $index: 1;
     $result: true;
 
-    @while $index <= length($keys) and $result {
-        $key: nth($keys, $index);
-        $result: map-has-key($root, $key);
-        $root: map-get($root, $key);
+    @while $index <= list.length($keys) and $result {
+        $key: list.nth($keys, $index);
+        $result: map.has-key($root, $key);
+        $root: map.get($root, $key);
         $index: $index + 1;
     }
     @return $result;
@@ -24,48 +34,81 @@
 @function map-deep-merge($parent-map, $child-map) {
     $result: $parent-map;
     @each $key, $value in $child-map {
-        @if (not map-has-key($result, $key)) or
-        (type-of(map-get($result, $key)) != type-of($value)) or
-        (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
-            $result: map-merge($result, ($key: $value));
+        @if (not map.has-key($result, $key)) or
+        (meta.type-of(map.get($result, $key)) != meta.type-of($value)) or
+        (not (meta.type-of(map.get($result, $key)) == map and meta.type-of($value) == map)) {
+            $result: map.merge($result, ($key: $value));
         } @else {
-            $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+            $result: map.merge($result, ($key: map-deep-merge(map.get($result, $key), $value)));
         }
     }
     @return $result;
 }
 
 @mixin breakpoint($name) {
-    @if not map-has-key($breakpoints, $name) {
+    @if not map.has-key($breakpoints, $name) {
         @warn "Warning: `#{$name}` is not a valid breakpoint name.";
     } @else {
-        @media (max-width: map-get($breakpoints, $name)) {
+        @media (max-width: map.get($breakpoints, $name)) {
             @content;
         }
     }
 }
 
 @mixin responsive_styles($map, $keys...) {
-    @each $style_name in map-keys($map) {
-        @if map-has-key($breakpoints, $style_name) {
+    @each $style_name in map.keys($map) {
+        @if map.has-key($breakpoints, $style_name) {
             @include breakpoint($style_name) {
-                @include responsive_styles(map-get($map, $style_name), $keys...);
+                @include responsive_styles(map.get($map, $style_name), $keys...);
             }
-        } @else if length($keys) == 0 or index($keys, $style_name) {
-            #{$style_name}: map-get($map, $style_name);
+        } @else if list.length($keys) == 0 or list.index($keys, $style_name) {
+            & { #{$style_name}: map.get($map, $style_name); }
         }
     }
 }
 
+$font: (
+    family: Roboto,
+    weight: 400,
+    headline1_size: 24px,
+    headline2_size: 18px,
+    headline3_size: 16px,
+    body_size: 14px
+);
+
+$colors: (
+    basic50: #f8f9fb,
+    basic500: #9ba6b2,
+    basic700: #4e5c6e,
+    accent50: #e9e9eb,
+    disabled500: #999999,
+    black: #000000,
+    white: #ffffff,
+    submit200: #bacaf4,
+    submit400: #1f5af6,
+    submit500: #1751EC,
+    submit600: #2051D3,
+    success400: #4aad02,
+    error500: #ef4829,
+    info400: #8dabc4,
+    mixUnicorn: #ab7df6,
+    iceBlue: #eef0f3,
+    paleBlue: #dee3ea,
+    deepViolet: #800080
+);
+
+
 @mixin font($type, $color_name: black) {
-    font-weight: map-get($font, weight);
-    font-family: map-get($font, family);
-    font-size: map-get($font, #{$type}_size);
-    color: map-get($colors, $color_name);
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+    & {
+        font-weight: map.get($font, weight);
+        font-family: map.get($font, family);
+        font-size: map.get($font, #{$type}_size);
+        color: map.get($colors, $color_name);
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+    }
 }
 
 @mixin loading() {

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import EndpointRef from '../../components/EndpointRef';
+import {withRouter} from "../../withRouter";
 
 class Address extends React.PureComponent {
     static propTypes = {
@@ -10,7 +10,7 @@ class Address extends React.PureComponent {
     };
 
     render() {
-        const currentAddress = this.props.match.params.address;
+        const currentAddress = this.props.params.address;
         const {address} = this.props;
 
         if (!address)
@@ -19,7 +19,7 @@ class Address extends React.PureComponent {
         if (address === currentAddress)
             return <label>{address}</label>;
 
-        return <EndpointRef endpoint={address} appearance="regular" />;
+        return <EndpointRef endpoint={address} appearance="regular"/>;
     }
 }
 

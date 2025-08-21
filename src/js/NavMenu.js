@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 import ServiceFactory from './services/ServiceFactory';
 import { NewVersionDialog } from './components/NewVersionDialog';
+import {withRouter} from "./withRouter";
 
 const alwaysVisible = networkId => true;
 const visibleIfConfigured = networkId => {
@@ -75,7 +75,7 @@ class NavMenu extends React.Component {
 
     findItemByCurrentRoute(items) {
         const {pathname} = this.props.location;
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         return items.find(item => (item.route(networkId) || '/') === pathname);
     }

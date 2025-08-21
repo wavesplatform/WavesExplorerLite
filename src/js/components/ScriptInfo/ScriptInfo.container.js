@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import {BASE64_FORMAT, DECOMPILED_FORMAT, ScriptInfoView} from './ScriptInfo.view';
 import ServiceFactory from '../../services/ServiceFactory';
 import {decompile} from "@waves/ride-js";
+import {withRouter} from "../../withRouter";
 
 class ScriptInfoContainer extends React.Component {
     static propTypes = {

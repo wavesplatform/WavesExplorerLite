@@ -1,1 +1,1 @@
-export {SingleBlockPage as default} from './SingleBlockPage.container';
+export {RoutedSingleBlockPage as default} from './SingleBlockPage.container';

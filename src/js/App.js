@@ -1,8 +1,7 @@
 import React from 'react';
-import {hot} from 'react-hot-loader';
+import {BrowserRouter, Routes, Route, Outlet} from "react-router";
+
 import '../styles/main.scss';
-import {Route, Switch} from 'react-router';
-import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
 import {routeParamsBuilder, routeBuilder} from './shared/Routing';
@@ -32,19 +31,13 @@ const routes = routeBuilder(routeParams.networkId);
 ServiceFactory.global().errorReportingService().initialize();
 ServiceFactory.global().analyticsService().initialize();
 
-const withNetworkRouter = (RootComponent) => {
-    return class extends React.Component {
-        render() {
-            return (
-                <Router>
-                    <Switch>
-                        <Route path={routes.root} component={RootComponent} />
-                    </Switch>
-                </Router>
-            );
-        }
-    };
-};
+class RC extends React.Component {
+    render() {
+        return (
+            <Outlet/>
+        )
+    }
+}
 
 class App extends React.Component {
     state = {
@@ -74,46 +67,46 @@ class App extends React.Component {
         let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
 
         if (!this.state.isBrowserSupported) {
-            return <UnsupportedPage />;
+            return <UnsupportedPage/>;
         }
 
         return (
-            <React.Fragment>
+            <BrowserRouter>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
-                        <Search />
+                        <Search/>
                     </Header>
+                    <NavBar/>
                     <div className="container grid">
-                        <NavBar />
-                        <Switch>
-                            <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
-                            <Route exact path={routes.blocks.list} component={BlocksPage} />
-                            <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
-                            <Route exact path={routes.leases.one(routeParams.leaseId)} component={SingleLeasePage} />
-                            <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
-                            <Route exact path={routes.addresses.one(routeParams.address, routeParams.tab)} component={SingleAddressPage} />
-                            <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
-                            <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
-                            <Route path={routes.nodes.list} component={NodesPage} />
-                            <Route path={routes.peers.list} component={PeersPage} />
-                            <Route exact path={routes.faucet} component={FaucetPage} />
-                            <Route exact path={routes.converters} component={ConvertEthPage} />
-                            <Route path={routes.root} component={MainPage} />
-                        </Switch>
+                        <Routes>
+                            <Route index element={<MainPage/>}/>
+                            <Route path={routes.blocks.one(routeParams.blockHeight)} element={<SingleBlockPage/>}/>
+                            <Route path={routes.blocks.list} element={<BlocksPage/>}/>
+                            <Route path={routes.transactions.one(routeParams.transactionId)} element={<SingleTransactionPage/>}/>
+                            <Route path={routes.leases.one(routeParams.leaseId)} element={<SingleLeasePage/>}/>
+                            <Route path={routes.addresses.one(routeParams.address)} element={<SingleAddressPage/>}/>
+                            <Route path={routes.addresses.one(routeParams.address, routeParams.tab)} element={<SingleAddressPage/>}/>
+                            <Route path={routes.aliases.one(routeParams.alias)} element={<SingleAliasPage/>}/>
+                            <Route path={routes.assets.one(routeParams.assetId)} element={<SingleAssetPage/>}/>
+                            <Route path={routes.nodes.list} element={<NodesPage/>}/>
+                            <Route path={routes.peers.list} element={<PeersPage/>}/>
+                            <Route path={routes.faucet} element={<FaucetPage/>}/>
+                            <Route path={routes.converters} element={<ConvertEthPage/>}/>
+                        </Routes>
                     </div>
                     <div className="fading" onClick={this.handleMobileMenuToggle}></div>
                 </div>
                 <div className="mobile-menu">
-                    <Header onMenuToggle={this.handleMobileMenuToggle} />
-                    <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle} />
+                    <Header onMenuToggle={this.handleMobileMenuToggle}/>
+                    <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle}/>
                 </div>
                 <Tooltip id={TOOLTIP_ID}/>
                 <ScrollToTop showUnder={100}>
                     <div className="scroll-button"></div>
                 </ScrollToTop>
-            </React.Fragment>
+            </BrowserRouter>
         );
     }
 }
 
-export default hot(module)(withNetworkRouter(App));
+export default App;

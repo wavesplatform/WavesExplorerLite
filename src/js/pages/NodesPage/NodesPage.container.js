@@ -17,13 +17,13 @@ export class NodesPage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+        if (this.props.params.networkId !== prevProps.params.networkId) {
             this.fetchData();
         }
     }
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)
@@ -33,7 +33,7 @@ export class NodesPage extends React.Component {
     };
 
     render() {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const configuration = ServiceFactory.global().configurationService().get(networkId);
 
         return (

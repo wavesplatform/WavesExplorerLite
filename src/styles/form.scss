@@ -1,22 +1,23 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 input {
     box-sizing: border-box;
     width: 100%;
     font-size: 14px;
     border-radius: 6px;
-    border: 1px solid map-get($colors, paleBlue);
+    border: 1px solid map.get(variables.$colors, paleBlue);
     outline: 0 none;
     height: 42px;
     padding: 0 14px;
 
     &:focus {
-        border: 1px solid map-get($colors, submit400);
+        border: 1px solid map.get(variables.$colors, submit400);
     }
 
     &.invalid {
-        border: 1px solid map-get($colors, error500);
+        border: 1px solid map.get(variables.$colors, error500);
     }
 
     &.search-input {
@@ -27,39 +28,39 @@ input {
         padding: 12px;
         outline: none;
 
-        @include font(headline3);
+        @include mixins.font(headline3);
         line-height: 1.25;
 
         & ::placeholder {
-            @include font(headline3, basic500);
+            @include mixins.font(headline3, basic500);
             line-height: 1.25;
         }
 
         & :focus {
-            border-bottom-color: map-get($colors, submit400);
+            border-bottom-color: map.get(variables.$colors, submit400);
         }
 
         &.invalid {
-            border-bottom-color: map-get($colors, error500);
+            border-bottom-color: map.get(variables.$colors, error500);
         }
     }
 
     &:not(.search-input) {
         &::-webkit-input-placeholder {
-            color: map-get($colors, basic500);
+            color: map.get(variables.$colors, basic500);
         }
         &::-moz-placeholder {
-            color: map-get($colors, basic500);
+            color: map.get(variables.$colors, basic500);
         }
         &:-ms-input-placeholder {
-            color: map-get($colors, basic500);
+            color: map.get(variables.$colors, basic500);
         }
         &:-moz-placeholder {
-            color: map-get($colors, basic500);
+            color: map.get(variables.$colors, basic500);
         }
     }
 }
 
 label {
-    @include font(body, basic500);
+    @include mixins.font(body, basic500);
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, withRouter} from 'react-router';
+import {Navigate} from 'react-router';
 
 import {TabHeader} from './TabHeader.view';
 import {RoutedOpenDappButtonContainer} from './OpenDappButton.container';
+import {withRouter} from "../../withRouter";
 
 class TabsView extends React.Component {
     static propTypes = {
@@ -56,7 +57,7 @@ class TabsContainer extends React.Component {
     componentDidMount() {
         const availableTabIds = this.props.children.map(child => child.props.id);
 
-        const activeTab = this.props.match.params.tab;
+        const activeTab = this.props.params.tab;
 
         if (!activeTab || !availableTabIds.includes(activeTab)) {
             this.setState({activeTabFound: false});
@@ -68,7 +69,7 @@ class TabsContainer extends React.Component {
         const availableTabIds = this.props.children.map(child => child.props.id);
 
         if (!activeTab || !availableTabIds.includes(activeTab)) {
-            return <Redirect to={`${basePath}/${defaultTab}`} />;
+            return <Navigate to={`${basePath}/${defaultTab}`} />;
         }
 
         return (

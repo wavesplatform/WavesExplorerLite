@@ -1,1 +1,1 @@
-export {SingleTransactionPage as default} from './SingleTransactionPage.container';
+export {RoutedSingleTransactionPage as default} from './SingleTransactionPage.container';

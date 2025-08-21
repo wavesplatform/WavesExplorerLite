@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from "./withRouter";
 
 const Header = (props) => {
     return (
@@ -19,4 +20,4 @@ Header.propTypes = {
     onMenuToggle: PropTypes.func.isRequired
 };
 
-export default Header;
+export default withRouter(Header);

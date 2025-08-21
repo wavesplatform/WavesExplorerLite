@@ -1,14 +1,15 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 .info-box {
     justify-content: space-between;
-    background-color: map-get($colors, basic50);
+    background-color: map.get(variables.$colors, basic50);
     margin-bottom: 12px;
 
     > * {
-        @include responsive_styles(
-                map-deep-merge($card_inner, (sm: (
+        @include mixins.responsive_styles(
+                mixins.map-deep-merge(variables.$card_inner, (sm: (
                     padding-top: 14px,
                     padding-bottom: 14px
                 )))
@@ -42,19 +43,22 @@
 }
 
 .tooltip {
-    @include font(body);
-    background-color: map-get($colors, basic500) !important;
-
+    @include mixins.font(body);
+    & {
+        background-color: map.get(variables.$colors, basic500) !important;
+    }
     &.place-top {
         &:after {
-            border-top-color: map-get($colors, basic500) !important;
+            border-top-color: map.get(variables.$colors, basic500) !important;
         }
     }
 }
 
 .line {
-    @include font(body);
-    padding-bottom: 8px;
+    @include mixins.font(body);
+    & {
+        padding-bottom: 8px;
+    }
 
     &.wide {
         padding-top: 18px;
@@ -81,25 +85,28 @@
 }
 
 .panel {
-    @include responsive_styles($card_inner);
-    padding-top: 0 !important;
-    margin-top: 24px;
+    @include mixins.responsive_styles(variables.$card_inner);
+
+    & {
+        padding-top: 0 !important;
+        margin-top: 24px
+    }
 
     &:not(:last-child) {
-        border-right: 1px solid map-get($colors, accent50);
+        border-right: 1px solid map.get(variables.$colors, accent50);
     }
 
     .panel-title {
         padding-bottom: 24px;
 
         .title {
-            @include font(headline1);
+            @include mixins.font(headline1);
         }
     }
 
-    @each $size in map-keys($breakpoints) {
+    @each $size in map.keys(variables.$breakpoints) {
         &.column-#{$size}-12 {
-            @include breakpoint($size) {
+            @include mixins.breakpoint($size) {
                 border: none;
             }
         }
@@ -113,8 +120,10 @@
         }
 
         > .panel-empty-label {
-            @include font(body, basic500);
-            text-align: center;
+            @include mixins.font(body, basic500);
+            & {
+                text-align: center;
+            }
         }
 
         &.confirmed {
@@ -146,7 +155,7 @@
         }
 
         &.no-data {
-            @include responsive_styles($panel_empty);
+            @include mixins.responsive_styles(variables.$panel_empty);
 
             > .icon {
                 background: url('../images/empty-88.svg') no-repeat center center;
@@ -193,7 +202,7 @@
     }
 
     * {
-        color: map_get($colors, basic500);
+        color: map.get(variables.$colors, basic500);
     }
 }
 
@@ -201,27 +210,29 @@
     display: flex;
     align-items: center;
 
-    @include responsive_styles($card_inner);
+    @include mixins.responsive_styles(variables.$card_inner);
 
     .title.large {
-        @include font(headline1);
+        @include mixins.font(headline1);
     }
 
     .title.medium {
-        @include font(headline2);
+        @include mixins.font(headline2);
     }
 
     .title.small {
-        @include font(headline3);
+        @include mixins.font(headline3);
     }
 
     .title-details {
-        @include font(headline2, disabled500);
-        flex-wrap: nowrap;
-        flex-grow: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        @include mixins.font(headline2, disabled500);
+        & {
+            flex-wrap: nowrap;
+            flex-grow: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     .title-details + .btn {
@@ -234,38 +245,40 @@
 }
 
 .headline2 {
-    @include responsive_styles($card_inner);
-    margin-top: 12px;
-    margin-bottom: -6px;
+    @include mixins.responsive_styles(variables.$card_inner);
+    & {
+        margin-top: 12px;
+        margin-bottom: -6px;
+    }
 
     > .title {
-        @include font(headline2);
+        @include mixins.font(headline2);
     }
 
     > .title-details {
-        @include font(headline2, disabled500);
+        @include mixins.font(headline2, disabled500);
     }
 
     > .action {
-        border-bottom: 1px dashed map-get($colors, black);
+        border-bottom: 1px dashed map.get(variables.$colors, black);
         float: right;
         cursor: pointer;
     }
 }
 
 .back {
-    @include responsive_styles($card_inner, padding-right, padding-left);
+    @include mixins.responsive_styles(variables.$card_inner, padding-right, padding-left);
 }
 
 .divider {
     width: 1px;
 
     &.divider-dashed {
-        border-left: 1px dashed map-get($colors, accent50);
+        border-left: 1px dashed map.get(variables.$colors, accent50);
     }
 
     &.divider-utx {
-        border-left: 2px solid map-get($colors, submit200);
+        border-left: 2px solid map.get(variables.$colors, submit200);
     }
 }
 
@@ -296,11 +309,11 @@
 
         > .dictionary-pair-key {
             flex: 0 0 auto;
-            background-color: map-get($colors, basic50);
+            background-color: map.get(variables.$colors, basic50);
 
-            @include responsive_styles($card_inner, padding-right, padding-left);
-            @include responsive_styles($card_column);
-            @include font(body, basic500);
+            @include mixins.responsive_styles(variables.$card_inner, padding-right, padding-left);
+            @include mixins.responsive_styles(variables.$card_column);
+            @include mixins.font(body, basic500);
         }
 
         > .dictionary-pair-value {
@@ -309,9 +322,10 @@
             flex: 0 1 auto;
             padding: 0 14px;
             overflow: hidden;
-            @include font(body);
-            flex-wrap: wrap;
-
+            @include mixins.font(body);
+            & {
+                flex-wrap: wrap;
+            }
             @media screen and (max-width: 1100px) {
                 max-width: calc(100% - 110px);
             }
@@ -387,7 +401,7 @@ th.price, th.amount {
 }
 
 .data-container-tools {
-    background-color: map_get($colors, basic50);
+    background-color: map.get(variables.$colors, basic50);
     height: 52px;
     display: flex;
     justify-content: space-between;
@@ -402,7 +416,7 @@ th.price, th.amount {
 }
 
 .data-container {
-    background-color: map_get($colors, basic50);
+    background-color: map.get(variables.$colors, basic50);
     padding: 20px;
     overflow: auto;
     margin-top: 20px;
@@ -426,9 +440,11 @@ th.price, th.amount {
         }
 
         .empty-label {
-            @include font(body, basic500);
-            text-align: center;
-            margin-top: 10px;
+            @include mixins.font(body, basic500);
+            & {
+                text-align: center;
+                margin-top: 10px;
+            }
         }
     }
 
@@ -470,6 +486,7 @@ th.price, th.amount {
     td:first-child {
         width: 30% !important;
     }
+
     td:last-child {
         width: 70% !important;
     }

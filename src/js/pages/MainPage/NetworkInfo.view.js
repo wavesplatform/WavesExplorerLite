@@ -19,12 +19,6 @@ export class NetworkInfo extends React.PureComponent {
         info: PropTypes.object.isRequired
     };
 
-    componentDidUpdate(prevProps) {
-        if (this.props.info !== prevProps.info) {
-            Tooltip.rebind();
-        }
-    }
-
     render() {
         return (
             <div className="grid grid-wrap">

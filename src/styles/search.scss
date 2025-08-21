@@ -1,5 +1,6 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 .search-box {
     position: relative;
@@ -12,7 +13,7 @@
         bottom: 0;
         display: block;
         transition: background-color .5s;
-        background-color: map-get($colors, basic500);
+        background-color: map.get(variables.$colors, basic500);
     }
 
     .search {
@@ -26,44 +27,46 @@
 
     &.search-box-active {
         svg {
-            color: map-get($colors, black);
+            color: map.get(variables.$colors, black);
         }
         &::before {
-            background-color: map-get($colors, black);
+            background-color: map.get(variables.$colors, black);
         }
     }
 
     &.search-box-focus {
         svg {
-            color: map-get($colors, submit400);
+            color: map.get(variables.$colors, submit400);
         }
         &::before {
-            background-color: map-get($colors, submit400);
+            background-color: map.get(variables.$colors, submit400);
         }
     }
 
     &.search-box-invalid {
         svg {
-            color: map-get($colors, error500);
+            color: map.get(variables.$colors, error500);
         }
         &::before {
-            background-color: map-get($colors, error500);
+            background-color: map.get(variables.$colors, error500);
         }
         &::after {
             content: "Nothing has been found for query";
             display: block;
-            background-color: map-get($colors, error500);
-            @include font(body, white);
-            position: absolute;
-            bottom: -48px;
-            left: 36px;
-            padding: 14px 24px;
-            white-space: nowrap;
+            background-color: map.get(variables.$colors, error500);
+            @include mixins.font(body, white);
+            & {
+                position: absolute;
+                bottom: -48px;
+                left: 36px;
+                padding: 14px 24px;
+                white-space: nowrap;
+            }
         }
     }
 
     &.search-box-loading > .search {
-        @include loading();
+        @include mixins.loading();
     }
 
     > input {
@@ -75,23 +78,24 @@
         height: 24px;
         padding-left: 10px;
         cursor: pointer;
-        @include font(body, basic500);
-        line-height: 24px;
-        transition: .3s;
-
+        @include mixins.font(body, basic500);
+        & {
+            line-height: 24px;
+            transition: .3s;
+        }
         svg {
             display: inline-block;
             vertical-align: middle;
             margin-top: -2px;
             margin-right: 7px;
-            fill: map-get($colors, basic500);
+            fill: map.get(variables.$colors, basic500);
             transition: .3s;
         }
 
         &:hover {
             color: black;
             svg {
-                fill: map-get($colors, black);
+                fill: map.get(variables.$colors, black);
             }
         }
     }
