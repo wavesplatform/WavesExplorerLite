@@ -23,7 +23,7 @@ jobs:
                 cache: yarn
             - run: |
                 yarn install
-                gulp buildOfficialProd
+                BASE_PATH="/${GITHUB_REPOSITORY#*/}/" gulp buildOfficialProd
                 rm -rf dist/report.html
                 cp ./dist/index.html ./dist/404.html
             - uses: actions/upload-pages-artifact@v3

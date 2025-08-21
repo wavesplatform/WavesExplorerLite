@@ -5,8 +5,9 @@ import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import Headline from '../../components/Headline';
 import {NodeList} from './NodeList.view';
+import {withRouter} from "../../withRouter";
 
-export class NodesPage extends React.Component {
+class NodesPage extends React.Component {
     state = {
         nodes: []
     };
@@ -48,3 +49,5 @@ export class NodesPage extends React.Component {
         );
     }
 }
+
+export const RoutedNodesPage = withRouter(NodesPage)

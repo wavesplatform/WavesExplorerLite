@@ -71,7 +71,7 @@ class App extends React.Component {
         }
 
         return (
-            <BrowserRouter>
+            <BrowserRouter basename={__BASE_PATH__}>
                 <div className={wrapperClassName}>
                     <Header onMenuToggle={this.handleMobileMenuToggle}>
                         <Search/>

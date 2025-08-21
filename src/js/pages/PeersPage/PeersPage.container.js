@@ -4,8 +4,9 @@ import EventBuilder from '../../shared/analytics/EventBuilder';
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {PeerList} from './PeerList.view';
+import {withRouter} from "../../withRouter";
 
-export class PeersPage extends React.Component {
+class PeersPage extends React.Component {
     state = {
         peers: []
     };
@@ -50,3 +51,5 @@ export class PeersPage extends React.Component {
         );
     }
 }
+
+export const RoutedPeersPage = withRouter(RoutedPeersPage);

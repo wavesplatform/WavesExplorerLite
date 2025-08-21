@@ -3,8 +3,9 @@ import React from 'react';
 import {RoutedFaucetCardContainer} from './FaucetCard.container';
 import {RoutedTransactionCardContainer} from './TransactionCard.container';
 import ServiceFactory from '../../services/ServiceFactory';
+import {withRouter} from "../../withRouter";
 
-export class FaucetPage extends React.Component {
+class FaucetPage extends React.Component {
     render() {
         const {networkId} = this.props.params;
         const {faucet, displayName} = ServiceFactory.global().configurationService().get(networkId);
@@ -23,3 +24,5 @@ export class FaucetPage extends React.Component {
         );
     }
 }
+
+export const RoutedFaucetPage = withRouter(RoutedFaucetPage);

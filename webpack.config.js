@@ -8,6 +8,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const buildPath = path.join(__dirname, 'dist');
 const sourcesPath = path.join(__dirname, 'src');
 const scriptsPath = path.join(sourcesPath, 'js');
+const basePath = process.env.BASE_PATH || '/'
 
 var config = {
     resolve: {
@@ -23,7 +24,7 @@ var config = {
     output: {
         filename: '[name].[hash:16].js',
         path: buildPath,
-        publicPath: '/'
+        publicPath: basePath
     },
     module: {
         rules: [{
@@ -40,11 +41,6 @@ var config = {
                 }
             }
         }, {
-            test: /\.html$/,
-            use: [{
-                loader: 'html-loader'
-            }]
-        }, {
             test: /\.s[ac]ss$/i,
             use: [
                 'style-loader',
@@ -55,10 +51,10 @@ var config = {
             {
                 test: /\.(woff|woff2|ttf|otf)$/,
                 exclude: /node_modules/,
-                loader: 'file-loader',
-                options: {
-                    name: 'fonts/[name].[ext]',
-                }
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]', // fonts folder in dist
+                },
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
@@ -73,7 +69,8 @@ var config = {
     plugins: [
         new HtmlWebPackPlugin({
             template: path.join(sourcesPath, 'index.html'),
-            filename: './index.html'
+            filename: './index.html',
+            base: basePath
         }),
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(require('./package.json').version),
@@ -83,10 +80,10 @@ var config = {
         }),
         new webpack.ids.HashedModuleIdsPlugin(),
         new CopyWebpackPlugin({
-            patterns: [/*{
+            patterns: [{
                 from: path.join(sourcesPath, 'favicon.png'),
                 to: buildPath
-            }, */{
+            }, {
                 from: 'manifest.json',
                 to: buildPath
             },
@@ -150,7 +147,8 @@ module.exports = (env, argv) => {
         __GOOGLE_TRACKING_ID__: JSON.stringify(googleTrackingId),
         __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey),
         __SENTRY_DSN__: JSON.stringify(sentryDsn),
-        __DECOMPILE_SCRIPT_URL__: JSON.stringify(decompileUrl)
+        __DECOMPILE_SCRIPT_URL__: JSON.stringify(decompileUrl),
+        __BASE_PATH__: JSON.stringify(basePath)
     }));
 
     return config;
