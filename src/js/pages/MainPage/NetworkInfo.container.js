@@ -27,10 +27,13 @@ class NetworkInfoContainer extends React.Component {
     fetchData = () => {
         const {networkId} = this.props.params;
         const infoService = ServiceFactory.forNetwork(networkId).infoService();
-        return infoService.loadInfo().then(info => {
-            const change = Object.assign({}, this.state.info, info);
-            this.setState({info: change});
-        });
+        return new Promise(resolve => {
+            infoService.loadInfo().then(info => {
+                const change = Object.assign({}, this.state.info, info);
+                this.setState({info: change}, () => resolve(change));
+            })
+        })
+
     };
 
     setRefreshInterval = () => {

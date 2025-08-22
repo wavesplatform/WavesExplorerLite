@@ -101,7 +101,6 @@ class NavMenu extends React.Component {
                         />
                     );
                 })}
-                <NewVersionDialog />
             </div>
         );
     }

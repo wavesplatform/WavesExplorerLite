@@ -29,36 +29,36 @@ const validate = values => {
     return Promise.resolve().then(() => {
         const url = values.apiBaseUrl.trim();
         if (!url) {
-            throw {
+            return Promise.resolve({
                 apiBaseUrl: 'Url is required'
-            };
+            });
         }
 
         const currentProtocol = window.location.protocol;
         if (currentProtocol.startsWith('https') && !isHttpsUri(values.apiBaseUrl)) {
-            throw {
+            return Promise.resolve({
                 apiBaseUrl: `Invalid url. The url must match protocol definition (${currentProtocol})`
-            };
+            });
         }
 
         if (!isWebUri(values.apiBaseUrl)) {
-            throw {
+            return Promise.resolve({
                 apiBaseUrl: `Invalid url`
-            };
+            });
         }
 
         return nodeApi(values.apiBaseUrl)
             .version()
             .catch(() => {
-                throw {
+                Promise.resolve({
                     apiBaseUrl: 'Failed to connect to the specified node'
-                }
+                });
             });
     }).then(versionResponse => {
-        if (!versionResponse.version) {
-            throw {
+        if (versionResponse === undefined || !versionResponse.version) {
+            return Promise.resolve({
                 apiBaseUrl: `Node has failed to report it's version`
-            }
+            })
         }
     });
 };
@@ -80,8 +80,8 @@ export default class ConfigurationForm extends React.Component {
                     this.props.onSubmit(values);
                     actions.setSubmitting(false);
                     this.props.onClose();
-                }}
-                render={({errors, status, touched, dirty, isSubmitting}) => (
+                }}>
+                {({errors, status, touched, dirty, isSubmitting}) => (
                     <Form>
                         <div className="header">
                             Settings
@@ -105,7 +105,7 @@ export default class ConfigurationForm extends React.Component {
                         </div>
                     </Form>
                 )}
-            />
+            </Formik>
         );
     }
 }

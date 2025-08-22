@@ -7,7 +7,7 @@ export const routeParamsBuilder = (networks) => {
     const regex = networks.map(network => network.networkId).join('|');
 
     return {
-        networkId: `:networkId(${regex})?`,
+        networkId: `:networkId?`,
         blockHeight: ':height',
         transactionId: ':transactionId',
         leaseId: ':leaseId',
@@ -37,7 +37,7 @@ export const routeBuilder = (networkId) => {
         transactions: {
             one: (id) => {
                 let txId
-                id.startsWith('0x') && id.length == 66 ? txId = ethTxId2waves(id) : txId = id
+                id.startsWith('0x') && id.length === 66 ? txId = ethTxId2waves(id) : txId = id
                 return `${root}/tx/${txId}`
             }
         },

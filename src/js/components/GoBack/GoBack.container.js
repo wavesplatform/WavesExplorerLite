@@ -13,7 +13,7 @@ class GoBack extends React.PureComponent {
 
     handleClick = () => {
         if (this.state.enabled) {
-            this.props.router.navigate(-1);
+            this.props.navigate(-1);
         }
     };
 

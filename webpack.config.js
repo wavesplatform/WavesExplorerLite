@@ -58,12 +58,10 @@ var config = {
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: 'images/[name].[hash].[ext]'
-                    }
-                }]
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[name].[hash].[ext]',
+                }
             }]
     },
     plugins: [
