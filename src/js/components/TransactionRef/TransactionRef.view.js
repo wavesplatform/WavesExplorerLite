@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 
 import {routeBuilder} from '../../shared/Routing';
+import {withRouter} from "../../withRouter";
 
 class TransactionRef extends React.PureComponent {
     static propTypes = {
@@ -13,7 +13,7 @@ class TransactionRef extends React.PureComponent {
 
     render() {
         const text = this.props.text || this.props.txId;
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
 
         return (<Link to={routes.transactions.one(this.props.txId)} className={this.props.className}>{text}</Link>);

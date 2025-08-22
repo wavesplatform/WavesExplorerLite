@@ -7,10 +7,7 @@ export default {
     useCustomRequestConfig: true,
     dataServicesBaseUrl: 'https://api.testnet.wavesplatform.com/v0',
     nodes: [
-        {url: nodeUrl, maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode2.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode3.wavesnodes.com', maintainer: 'Waves', showAsLink: true},
-        {url: 'https://testnode4.wavesnodes.com', maintainer: 'Waves', showAsLink: true}
+        {url: nodeUrl, maintainer: 'Waves', showAsLink: true}
     ],
     faucet: {
         url: 'https://waves-faucet-testnet.wvservices.com/faucet',

@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $colors: (
     basic50: #f8f9fb,
     basic500: #9ba6b2,
@@ -35,25 +37,25 @@ $layout: (
 );
 
 $current_menu_item: (
-    left: -#{map-get($layout, padding-left)},
+    left: -#{map.get($layout, padding-left)},
     width: 2px,
     lg: (
-        left: -#{map-deep-get($layout, 'lg', 'padding-left')},
+
     ),
     md: (
-        left: -#{map-deep-get($layout, 'md', 'padding-left')},
+
     )
 );
 
 $scroll_button_size: 28px;
 $scroll_button_hover_size: 38px;
 $scroll_button: (
-    right: map_get($layout, 'padding-right') - $scroll_button_size / 2,
+    right: map.get($layout, 'padding-right') - calc($scroll_button_size / 2),
     lg: (
-        right: map-deep-get($layout, 'lg', 'padding-right') - $scroll_button_size / 2
+
     ),
     md: (
-        right: map-deep-get($layout, 'md', 'padding-right') - $scroll_button_size / 2
+
     )
 );
 

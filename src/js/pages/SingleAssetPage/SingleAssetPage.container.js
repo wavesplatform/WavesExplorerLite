@@ -10,16 +10,17 @@ import ScriptInfo from '../../components/ScriptInfo';
 import Timestamp from '../../components/Timestamp';
 import ServiceFactory from '../../services/ServiceFactory';
 import {RoutedBlockRef} from "../../components/BlockRef/BlockRef.view";
+import {withRouter} from "../../withRouter";
 
-export class SingleAssetPage extends React.Component {
+class SingleAssetPage extends React.Component {
     state = {
         loading: true,
         details: {}
     };
 
     componentDidUpdate(prevProps) {
-        const {networkId, assetId} = this.props.match.params;
-        const {networkId: prevNetworkId, assetId: prevAssetId} = prevProps.match.params;
+        const {networkId, assetId} = this.props.params;
+        const {networkId: prevNetworkId, assetId: prevAssetId} = prevProps.params;
 
         if (networkId !== prevNetworkId || assetId !== prevAssetId) {
             this.fetchData();
@@ -29,7 +30,7 @@ export class SingleAssetPage extends React.Component {
     fetchData = () => {
         this.setState({loading: true});
 
-        const {networkId, assetId} = this.props.match.params;
+        const {networkId, assetId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)
@@ -47,7 +48,7 @@ export class SingleAssetPage extends React.Component {
             <Loader fetchData={this.fetchData} errorTitle="Failed to load asset details">
                 <div className="content card">
                     <GoBack />
-                    <Headline title="Asset" subtitle={this.props.match.params.assetId} />
+                    <Headline title="Asset" subtitle={this.props.assetId} />
                     <Dictionary items={dictionaryItems} />
                 </div>
             </Loader>
@@ -109,3 +110,5 @@ export class SingleAssetPage extends React.Component {
         }];
     }
 }
+
+export const RoutedSingleAssetPage = withRouter(SingleAssetPage)

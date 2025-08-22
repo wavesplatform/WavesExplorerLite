@@ -1,14 +1,15 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
-@each $size in map-keys($breakpoints) {
+@each $size in map.keys(variables.$breakpoints) {
     .#{$size}-hide {
-        @include breakpoint($size) {
+        @include mixins.breakpoint($size) {
             display: none !important;
         }
     }
     .#{$size}-show {
-        @include breakpoint($size) {
+        @include mixins.breakpoint($size) {
             display: block !important;
         }
     }
@@ -42,12 +43,12 @@
 
     @for $i from 1 through 12 {
         .column-#{$i} {
-            width: 100% / 12 * $i;
+            width: calc(100% / 12 * $i);
         }
-        @each $size in map-keys($breakpoints) {
+        @each $size in map.keys(variables.$breakpoints) {
             .column-#{$size}-#{$i} {
-                @include breakpoint($size) {
-                    width: 100% / 12 * $i;
+                @include mixins.breakpoint($size) {
+                    width: calc(100% / 12 * $i);
                 }
             }
         }

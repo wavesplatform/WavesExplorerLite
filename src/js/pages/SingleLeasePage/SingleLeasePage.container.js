@@ -33,23 +33,21 @@ const lease_mock = {
 export class SingleLeasePage extends React.Component {
     state = {
         lease: {
-            id: this.props.match.params.leaseId
+            id: this.props.params.leaseId
         }
     };
 
     componentDidUpdate(prevProps) {
-        const {transactionId, networkId} = this.props.match.params;
-        const {transactionId: prevLeaseId, networkId: prevNetworkId} = prevProps.match.params;
+        const {transactionId, networkId} = this.props.params;
+        const {transactionId: prevLeaseId, networkId: prevNetworkId} = prevProps.params;
 
         if (transactionId !== prevLeaseId || networkId !== prevNetworkId) {
             this.fetchData();
         }
-
-        Tooltip.rebind();
     }
 
     fetchData = () => {
-        const {leaseId, networkId} = this.props.match.params;
+        const {leaseId, networkId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)

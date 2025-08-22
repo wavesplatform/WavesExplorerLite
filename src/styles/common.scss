@@ -1,9 +1,13 @@
-@import "variables";
+@use "sass:map";
+@use "sass:meta";
+@use "variables";
+@use "mixins";
+
 @import "reset.css";
-@import "grid.scss";
-@import "table.scss";
-@import "form.scss";
-@import "converters.scss";
+@include meta.load-css("grid.scss");
+@include meta.load-css("table.scss");
+@include meta.load-css("form.scss");
+@include meta.load-css("converters.scss");
 
 .basic50 {
     color: #f8f9fb
@@ -110,7 +114,7 @@
 // **** link ****
 a {
     font-weight: bold;
-    color: map-get($colors, submit400);
+    color: map.get(variables.$colors, submit400);
     text-decoration: underline;
     cursor: pointer;
 
@@ -119,12 +123,12 @@ a {
     }
 
     &.no-accent {
-        color: map-get($colors, black);
+        color: map.get(variables.$colors, black);
         font-weight: normal;
     }
 
     &.fade {
-        color: map-get($colors, basic500);
+        color: map.get(variables.$colors, basic500);
         font-weight: normal;
     }
 
@@ -144,20 +148,21 @@ a {
     display: inline-block;
     box-sizing: border-box;
     border-radius: 2px;
-    background-color: map-get($colors, submit400);
+    background-color: map.get(variables.$colors, submit400);
     background-repeat: no-repeat;
     background-position: center;
     vertical-align: middle;
-    @include font(body, white);
-    cursor: pointer;
-    transition: .3s;
-
+    @include mixins.font(body, white);
+    & {
+        cursor: pointer;
+        transition: .3s;
+    }
     &:hover:not(.disabled) {
         opacity: 0.7
     }
 
     &.disabled {
-        background-color: map-get($colors, accent50);
+        background-color: map.get(variables.$colors, accent50);
     }
 
     &.btn-copy {
@@ -206,7 +211,7 @@ a {
         min-width: 0;
         padding-left: 0;
         background: none;
-        color: map-get($colors, submit400);
+        color: map.get(variables.$colors, submit400);
     }
 
     &.btn-toggle {
@@ -220,36 +225,36 @@ a {
 .copied {
     display: inline-block;
     padding: 0 16px;
-    @include font(body, success400);
+    @include mixins.font(body, success400);
 }
 
 .badge {
     display: inline-block;
     box-sizing: border-box;
     border-radius: 2px;
-    background-color: map-get($colors, info400);
+    background-color: map.get(variables.$colors, info400);
     vertical-align: middle;
     padding: 4px 4px 4px 6px;
-    @include font(body, white);
+    @include mixins.font(body, white);
 
     &.asset-burn, &.lease-cancel, &.asset-transfer.out, &.mass-payment.out {
-        background-color: map-get($colors, error500);
+        background-color: map.get(variables.$colors, error500);
     }
     &.lease, &.asset-issue, &.asset-transfer.in, &.mass-payment.in {
-        background-color: map-get($colors, success400);
+        background-color: map.get(variables.$colors, success400);
     }
     &.exchange {
-        background-color: map-get($colors, mixUnicorn);
+        background-color: map.get(variables.$colors, mixUnicorn);
     }
     &.create-alias, &.asset-reissue, &.data {
-        background-color: map-get($colors, info400);
+        background-color: map.get(variables.$colors, info400);
     }
     &.dapp {
-        background-color: map-get($colors, deepViolet);
+        background-color: map.get(variables.$colors, deepViolet);
         white-space: nowrap;
 
         &-link {
-            border: 2px solid map-get($colors, deepViolet);
+            border: 2px solid map.get(variables.$colors, deepViolet);
             background: unset;
             box-sizing: border-box;
             padding: 3px 4px;
@@ -272,6 +277,6 @@ a {
 .loading {
     .loading-icon {
         margin: 0 auto;
-        @include loading();
+        @include mixins.loading();
     }
 }

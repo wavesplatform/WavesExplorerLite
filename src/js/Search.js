@@ -1,7 +1,7 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from './services/ServiceFactory';
+import {withRouter} from "./withRouter";
 
 const FADE_TIMEOUT = 2000;
 
@@ -19,7 +19,7 @@ class Search extends React.PureComponent {
     }
 
     go = (route) => {
-        this.props.history.push(route);
+        this.props.navigate(route);
     };
 
     handleKeyUp = (e) => {
@@ -29,7 +29,7 @@ class Search extends React.PureComponent {
                 isLoading: true
             });
 
-            const {networkId} = this.props.match.params;
+            const {networkId} = this.props.params;
 
             const searchService = ServiceFactory.forNetwork(networkId).searchService();
 

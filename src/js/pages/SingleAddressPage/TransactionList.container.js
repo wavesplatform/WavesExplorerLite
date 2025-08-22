@@ -1,10 +1,10 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {TransactionListView} from './TransactionList.view';
 import transactionMapper from './TransactionMapper';
+import {withRouter} from "../../withRouter";
 
 const TX_PAGE_SIZE = 100;
 
@@ -27,7 +27,7 @@ class TransactionListContainer extends React.Component {
     };
 
     fetchData = () => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         const currentUser = {
@@ -52,7 +52,7 @@ class TransactionListContainer extends React.Component {
 
 
     loadMore = (after) => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadTransactions(address, TX_PAGE_SIZE, after).then(transactions => {

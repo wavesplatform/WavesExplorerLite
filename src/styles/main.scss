@@ -1,17 +1,18 @@
-@import "variables";
-@import "mixins.scss";
-@import "common.scss";
-@import "page_navigation.scss";
-@import "general.scss";
-@import "search.scss";
-@import "blocks.scss";
-@import "nodes.scss";
-@import "address.scss";
-@import "fonts.scss";
-@import "buttons.scss";
-@import "faucet.scss";
-@import "state-update.scss";
-@import "new-version-dialog.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
+@use "common.scss";
+@use "page_navigation.scss";
+@use "general.scss";
+@use "search.scss";
+@use "blocks.scss";
+@use "nodes.scss";
+@use "address.scss";
+@use "fonts.scss";
+@use "buttons.scss";
+@use "faucet.scss";
+@use "state-update.scss";
+@use "new-version-dialog.scss";
 
 html {
     display: block;
@@ -21,11 +22,13 @@ body {
     position: relative;
     height: calc(100% - 36px);
     display: block;
-    background-color: map-get($colors, basic50);
-    @include responsive_styles($layout);
-    min-width: 360px;
-    padding-bottom: 36px;
-    @media screen and(min-width: 800px) {
+    //background-color: map.get(variables.$colors, basic50);
+    @include mixins.responsive_styles(variables.$layout);
+    & {
+        min-width: 360px;
+        padding-bottom: 36px;
+    }
+    @media screen and (min-width: 800px) {
         min-height: 560px;
     }
 }
@@ -55,24 +58,25 @@ body {
         position: fixed;
         top: 0;
         left: 0;
-        background-color: map-get($colors, black);
+        background-color: map.get(variables.$colors, black);
         opacity: 0.2;
     }
 }
 
 .mobile-menu {
-    @include responsive_styles($mobile_menu);
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translateX(-130%);
-    min-height: 100vh;
-    box-sizing: border-box;
-    background-color: map-get($colors, basic50);
-    box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.1);
-
+    @include mixins.responsive_styles(variables.$mobile_menu);
+    & {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-130%);
+        min-height: 100vh;
+        box-sizing: border-box;
+        background-color: map.get(variables.$colors, basic50);
+        box-shadow: 4px 0 14px 0 rgba(0, 0, 0, 0.1);
+    }
     > .header {
-        margin-bottom: map-get($layout, padding-top);
+        margin-bottom: map.get(variables.$layout, padding-top);
         height: 44px;
         margin-top: 36px;
 
@@ -99,16 +103,18 @@ body {
 }
 
 .wrapper.show + .mobile-menu {
-    @include responsive_styles($layout);
-    transform: translateX(0);
-    padding: 0 48px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 100vh;
+    @include mixins.responsive_styles(variables.$layout);
+    & {
+        transform: translateX(0);
+        padding: 0 48px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 100vh;
+    }
 }
 
 .header {
-    height: map-get($header, hight);
+    height: map.get(variables.$header, hight);
 
     @media screen and (max-width: 800px) {
         display: flex;
@@ -118,7 +124,7 @@ body {
 
     > .header-title {
         align-items: center;
-        width: map-get($header, title_width);
+        width: map.get(variables.$header, title_width);
 
         @media screen and (min-width: 1367px) {
             .logo {
@@ -144,7 +150,7 @@ body {
                 width: 24px;
                 height: 2px;
                 display: block;
-                background: map-get($colors, black);
+                background: map.get(variables.$colors, black);
                 border-radius: 2px;
                 position: absolute;
                 transition: transform .3s;
@@ -181,14 +187,14 @@ body {
                 left: 132px;
                 bottom: -8px;
                 position: relative;
-                @include font(headline1);
+                @include mixins.font(headline1);
             }
         }
     }
 }
 
 .container {
-    @include responsive_styles($layout, padding-top);
+    @include mixins.responsive_styles(variables.$layout, padding-top);
     @media screen and (min-width: 1367px) {
         .content {
             margin-left: 316px;
@@ -197,7 +203,7 @@ body {
 }
 
 .menu {
-    width: map-get($header, title_width);
+    width: map.get(variables.$header, title_width);
     height: calc(100% - 116px);
 
     @media screen and (min-width: 1367px) {
@@ -323,34 +329,37 @@ body {
                 display: inline-block;
                 transition: color .3s;
                 padding-left: 36px;
-                @include font(headline2, disabled500);
+                @include mixins.font(headline2, disabled500);
 
                 &:hover {
-                    color: map-get($colors, black);
+                    color: map.get(variables.$colors, black);
                 }
             }
 
             &.current {
                 a {
-                    color: map-get($colors, black);
+                    color: map.get(variables.$colors, black);
                 }
 
                 &::before {
-                    @include responsive_styles($current_menu_item);
-                    content: "";
-                    background-color: map-get($colors, submit400);
-                    position: absolute;
-                    top: 0;
-                    height: 58px;
+                    @include mixins.responsive_styles(variables.$current_menu_item);
+                    & {
+                        content: "";
+                        background-color: map.get(variables.$colors, submit400);
+                        position: absolute;
+                        top: 0;
+                        height: 58px;
+                    }
                 }
             }
         }
     }
 
     > .menu-footer {
-        @include font(body, basic500);
-        bottom: map-get($layout, padding-top);
-
+        @include mixins.font(body, basic500);
+        & {
+            bottom: map.get(variables.$layout, padding-top);
+        }
         > * {
             padding-bottom: 14px;
 
@@ -373,14 +382,14 @@ body {
         opacity: 1;
     }
 
-    @each $social_name, $url in $social {
+    @each $social_name, $url in variables.$social {
         &.#{$social_name} {
             background: url(#{$url}) no-repeat;
         }
     }
 }
 
-@each $social_name, $url in $social {
+@each $social_name, $url in variables.$social {
     .#{$social_name} {
         display: inline-block;
         width: 28px;
@@ -396,12 +405,12 @@ body {
 }
 
 .card {
-    background-color: map-get($colors, white);
+    background-color: map.get(variables.$colors, white);
     border-radius: 4px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
 
-    @include font(body);
-    @include responsive_styles($card);
+    @include mixins.font(body);
+    @include mixins.responsive_styles(variables.$card);
 }
 
 .card-multicolumn {
@@ -425,7 +434,7 @@ body {
 }
 
 .input-error {
-    color: map-get($colors, error500);
+    color: map.get(variables.$colors, error500);
     margin-top: 6px;
     font-size: 12px;
 }
@@ -441,7 +450,7 @@ body {
 }
 
 .modal-content {
-    font-family: map-get($font, family);
+    font-family: map.get(variables.$font, family);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -481,12 +490,12 @@ body {
             }
 
             &.blue {
-                background: map-get($colors, submit400);
+                background: map.get(variables.$colors, submit400);
                 color: white;
             }
 
             &.grey {
-                background: map-get($colors, iceBlue);
+                background: map.get(variables.$colors, iceBlue);
                 color: black;
             }
 
@@ -507,7 +516,7 @@ body {
                 right: 1px;
                 top: 1px;
                 border-radius: 4px;
-                background-color: map-get($colors, white);
+                background-color: map.get(variables.$colors, white);
             }
 
             &.has-copy-button {
@@ -529,14 +538,18 @@ body {
         }
 
         .title {
-            @include font(headline1);
-            font-weight: bold;
-            text-align: center;
+            @include mixins.font(headline1);
+            & {
+                font-weight: bold;
+                text-align: center;
+            }
         }
 
         .message {
-            @include font(headline3, basic500);
-            text-align: center;
+            @include mixins.font(headline3, basic500);
+            & {
+                text-align: center;
+            }
         }
 
         .browser-icon {
@@ -559,7 +572,7 @@ body {
     }
 
     .header {
-        background: map-get($colors, basic50);
+        background: map.get(variables.$colors, basic50);
         margin: 0 -36px;
         line-height: 1;
         padding: 24px 36px 20px 36px;
@@ -631,9 +644,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     transition: .3s;
-    background-color: map-get($colors, iceBlue);
+    background-color: map.get(variables.$colors, iceBlue);
     &:hover {
-        background-color: map-get($colors, paleBlue);
+        background-color: map.get(variables.$colors, paleBlue);
     }
 }
 
@@ -647,18 +660,18 @@ body {
     cursor: pointer;
     border-radius: 6px;
     transition: .3s;
-    background: map-get($colors, iceBlue);
+    background: map.get(variables.$colors, iceBlue);
     position: relative;
     padding: 6px 40px 6px 8px;
     min-width: 80px;
 
     &:hover {
-        background: map-get($colors, paleBlue);
+        background: map.get(variables.$colors, paleBlue);
     }
 
     &.expanded {
-        background: map-get($colors, white);
-        color: map-get($colors, basic500);
+        background: map.get(variables.$colors, white);
+        color: map.get(variables.$colors, basic500);
         border-radius: 6px 6px 0 0;
         &:hover {
             cursor: default;
@@ -686,7 +699,7 @@ body {
 .select-list-expanded {
     display: none;
     width: 100%;
-    background: map_get($colors, white);
+    background: map.get(variables.$colors, white);
     border-radius: 0 0 6px 6px;
     position: absolute;
     top: 100%;
@@ -699,15 +712,15 @@ body {
         padding-left: 8px;
         line-height: 28px;
         cursor: pointer;
-        border-bottom: 1px dotted map-get($colors, iceBlue);
+        border-bottom: 1px dotted map.get(variables.$colors, iceBlue);
         &:last-child {
             border-bottom: 0 none;
         }
         &:first-child {
-            border-top: 1px dotted map-get($colors, iceBlue);
+            border-top: 1px dotted map.get(variables.$colors, iceBlue);
         }
         &:hover {
-            background-color: map-get($colors, iceBlue);
+            background-color: map.get(variables.$colors, iceBlue);
         }
     }
 }
@@ -716,7 +729,7 @@ body {
     display: flex;
     align-items: center;
     width: 276px;
-    font-family: map-get($font, family);
+    font-family: map.get(variables.$font, family);
     font-size: 14px;
     height: 28px;
     overflow: visible;
@@ -734,17 +747,17 @@ body {
             cursor: pointer;
             border-radius: 6px;
             transition: .3s;
-            background: map-get($colors, iceBlue);
+            background: map.get(variables.$colors, iceBlue);
             position: relative;
             padding: 6px 40px 6px 8px;
 
             &:hover {
-                background: map-get($colors, paleBlue);
+                background: map.get(variables.$colors, paleBlue);
             }
 
             &.expanded {
-                background: map-get($colors, white);
-                color: map-get($colors, basic500);
+                background: map.get(variables.$colors, white);
+                color: map.get(variables.$colors, basic500);
                 border-radius: 6px 6px 0 0;
                 &:hover {
                     cursor: default;
@@ -772,7 +785,7 @@ body {
         .network-list-expanded {
             display: none;
             width: calc(100% - 23px);
-            background: map_get($colors, white);
+            background: map.get(variables.$colors, white);
             border-radius: 0 0 6px 6px;
             position: absolute;
             top: 100%;
@@ -785,15 +798,15 @@ body {
                 padding-left: 8px;
                 line-height: 28px;
                 cursor: pointer;
-                border-bottom: 1px dotted map-get($colors, iceBlue);
+                border-bottom: 1px dotted map.get(variables.$colors, iceBlue);
                 &:last-child {
                     border-bottom: 0 none;
                 }
                 &:first-child {
-                    border-top: 1px dotted map-get($colors, iceBlue);
+                    border-top: 1px dotted map.get(variables.$colors, iceBlue);
                 }
                 &:hover {
-                    background-color: map-get($colors, iceBlue);
+                    background-color: map.get(variables.$colors, iceBlue);
                 }
             }
         }
@@ -805,8 +818,8 @@ body {
 }
 
 .scroll-button {
-    width: $scroll_button_size;
-    height: $scroll_button_size;
+    width: variables.$scroll_button_size;
+    height: variables.$scroll_button_size;
     border-radius: 4px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
     position: fixed;
@@ -814,17 +827,18 @@ body {
     cursor: pointer;
     z-index: 99;
     transition: .3s;
-    @include responsive_styles($scroll_button);
-
+    @include mixins.responsive_styles(variables.$scroll_button);
+& {
     background: url("../images/upscroll-14.svg") no-repeat center center;
-    background-color: map-get($colors, white);
+    background-color: map.get(variables.$colors, white);
+}
 
     &:hover {
-        width: $scroll_button_hover_size;
-        height: $scroll_button_hover_size;
-        margin-right: -($scroll_button_hover_size - $scroll_button_size) / 2;
+        width: variables.$scroll_button_hover_size;
+        height: variables.$scroll_button_hover_size;
+        margin-right: calc(-1 * (variables.$scroll_button_hover_size - variables.$scroll_button_size) / 2);
         border-radius: 5.4px;
-        background-color: map-get($colors, basic50);
+        background-color: map.get(variables.$colors, basic50);
         box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.14);
     }
 }

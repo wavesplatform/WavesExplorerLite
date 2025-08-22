@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {GroupedAliasList} from './GroupedAliasList.view';
+import {withRouter} from "../../withRouter";
 
 class GroupedAliasListContainer extends React.Component {
     state = {
@@ -11,7 +11,7 @@ class GroupedAliasListContainer extends React.Component {
     };
 
     fetchData = () => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadAliases(address).then(aliases => this.setState({aliases}));

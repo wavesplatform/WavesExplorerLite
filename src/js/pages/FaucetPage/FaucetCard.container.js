@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import EventBuilder from '../../shared/analytics/EventBuilder';
 import ServiceFactory from '../../services/ServiceFactory';
 import {RequestForm} from './RequestForm.container';
+import {withRouter} from "../../withRouter";
 
 class FaucetCardContainer extends React.Component {
     static propTypes = {
@@ -21,7 +21,7 @@ class FaucetCardContainer extends React.Component {
         const event = new EventBuilder().faucet().events().request();
         ServiceFactory.global().analyticsService().sendEvent(event);
 
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)
@@ -47,7 +47,7 @@ class FaucetCardContainer extends React.Component {
     };
 
     validateAddress = (address) => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)

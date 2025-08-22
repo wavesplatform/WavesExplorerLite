@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter} from "../../withRouter";
 
 class GoBack extends React.PureComponent {
     state = {
@@ -7,13 +7,13 @@ class GoBack extends React.PureComponent {
     };
 
     componentDidMount() {
-        if (this.props.history.length === 1)
+        if (window.history.length === 1)
             this.setState({enabled: false});
     }
 
     handleClick = () => {
         if (this.state.enabled) {
-            this.props.history.goBack();
+            this.props.navigate(-1);
         }
     };
 

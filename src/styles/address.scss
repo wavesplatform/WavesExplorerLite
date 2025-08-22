@@ -1,24 +1,25 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 table.address-tr-list {
     th.timestamp, td.timestamp {
-        @include responsive_styles(map_get($address_tr_list_columns, 'timestamp'))
+        @include mixins.responsive_styles(map.get(variables.$address_tr_list_columns, 'timestamp'))
     }
 
     th.amount {
         min-width: 380px;
-        @include responsive_styles(map_get($address_tr_list_columns, 'amount'))
+        @include mixins.responsive_styles(map.get(variables.$address_tr_list_columns, 'amount'))
     }
 
     th.price {
-        @include responsive_styles(map_get($address_tr_list_columns, 'price'))
+        @include mixins.responsive_styles(map.get(variables.$address_tr_list_columns, 'price'))
     }
 }
 
 table.address-alias-list {
     th.letter {
-        @include responsive_styles(map_get($address_alias_list_columns, 'letter'))
+        @include mixins.responsive_styles(map.get(variables.$address_alias_list_columns, 'letter'))
     }
 
     .grid .line {

@@ -34,7 +34,7 @@ export class InfoService extends ApiClientService {
             return {
                 [CAPTIONS.VERSION]: version.version.split('-')[0],
                 [CAPTIONS.CURRENT_HEIGHT]: height,
-                [CAPTIONS.BASE_TARGET]: baseTarget.baseTarget
+                [CAPTIONS.BASE_TARGET]: baseTarget
             };
         }));
     };

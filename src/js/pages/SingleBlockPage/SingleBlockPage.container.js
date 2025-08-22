@@ -16,6 +16,7 @@ import Tooltip from '../../components/Tooltip';
 import {TransactionList} from './TransactionList.container';
 import Currency from "../../shared/Currency";
 import Money from "../../shared/Money";
+import {withRouter} from "../../withRouter";
 
 const typeToHeader = type => {
     let result = {
@@ -86,10 +87,10 @@ const MaybeMoney = ({value}) => {
     return <MoneyInfo value={value}/>;
 };
 
-export class SingleBlockPage extends React.Component {
+class SingleBlockPage extends React.Component {
     state = {
-        currentHeight: parseInt(this.props.match.params.height),
-        maxHeight: parseInt(this.props.match.params.height) + 1,
+        currentHeight: parseInt(this.props.params.height),
+        maxHeight: parseInt(this.props.params.height) + 1,
         block: {
             generator: ''
         },
@@ -100,8 +101,8 @@ export class SingleBlockPage extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        const {height: prevHeight, networkId: prevNetworkId} = prevProps.match.params;
-        const {height, networkId} = this.props.match.params;
+        const {height: prevHeight, networkId: prevNetworkId} = prevProps.params;
+        const {height, networkId} = this.props.params;
 
         if (height !== prevHeight || networkId !== prevNetworkId) {
             this.setState({currentHeight: parseInt(height)});
@@ -110,8 +111,6 @@ export class SingleBlockPage extends React.Component {
                     ServiceFactory.global().errorReportingService().captureException(error);
                 });
         }
-
-        Tooltip.rebind();
     }
 
     initialFetch = () => {
@@ -122,7 +121,7 @@ export class SingleBlockPage extends React.Component {
         this.setState({loading: true});
         let blockInfo;
         let dApps;
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         const blockPromise = ServiceFactory
             .forNetwork(networkId)
@@ -148,7 +147,7 @@ export class SingleBlockPage extends React.Component {
 
 
     showBlock = height => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
         this.props.history.push(routes.blocks.one(height));
     };
@@ -282,3 +281,5 @@ export class SingleBlockPage extends React.Component {
         return items;
     }
 }
+
+export const RoutedSingleBlockPage = withRouter(SingleBlockPage);

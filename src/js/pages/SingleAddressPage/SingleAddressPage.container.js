@@ -16,17 +16,18 @@ import {RoutedTabsContainer} from './Tabs.container';
 import {Tab} from './Tab.view';
 import {BalanceDetails} from './BalanceDetails.view';
 import {wavesAddress2eth} from "@waves/node-api-js";
+import {withRouter} from "../../withRouter";
 
 const INITIAL_STATE = {
     balance: {}
 };
 
-export class SingleAddressPage extends React.Component {
+class SingleAddressPage extends React.Component {
     state = Object.assign({}, INITIAL_STATE);
 
     componentDidUpdate(prevProps) {
-        const {networkId, address} = this.props.match.params;
-        const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
+        const {networkId, address} = this.props.params;
+        const {networkId: prevNetworkId, address: prevAddress} = prevProps.params;
 
         if (networkId !== prevNetworkId || address !== prevAddress) {
             this.setState(INITIAL_STATE);
@@ -35,7 +36,7 @@ export class SingleAddressPage extends React.Component {
     }
 
     fetchData = () => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadBalance(address)
@@ -43,16 +44,16 @@ export class SingleAddressPage extends React.Component {
     };
 
     render() {
-        const {networkId, address, tab} = this.props.match.params;
+        const {networkId, address, tab} = this.props.params;
         const basePath = routeBuilder(networkId).addresses.one(address);
 
-        const ethAddress = wavesAddress2eth(this.props.match.params.address)
+        const ethAddress = wavesAddress2eth(this.props.params.address)
         return (
             <Loader fetchData={this.fetchData} errorTitle="Failed to load address details">
                 <div className="content card">
                     <GoBack/>
                     <div className="address-title">
-                        <Headline title="Address" subtitle={this.props.match.params.address} size={HeadlineSize.Medium}/>
+                        <Headline title="Address" subtitle={this.props.params.address} size={HeadlineSize.Medium}/>
                         <Headline title="Ethereum Address" subtitle={ethAddress} size={HeadlineSize.Small}/>
                     </div>
                     <BalanceDetails balance={this.state.balance}/>
@@ -69,3 +70,5 @@ export class SingleAddressPage extends React.Component {
         );
     }
 }
+
+export const RoutedSingleAddressPage = withRouter(SingleAddressPage);

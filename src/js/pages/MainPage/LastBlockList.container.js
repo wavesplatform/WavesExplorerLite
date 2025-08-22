@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {LastBlockList} from './LastBlockList.view';
+import {withRouter} from "../../withRouter";
 
 const LAST_BLOCKS_COUNT = 20;
 
@@ -21,7 +21,7 @@ class LastBlockListContainer extends React.Component {
     };
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const factory = ServiceFactory.forNetwork(networkId);
         return factory.infoService().loadHeight()
             .then(height => {
@@ -43,10 +43,10 @@ class LastBlockListContainer extends React.Component {
     };
 
     render() {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load last blocks">
-                <LastBlockList blocks={this.state.blocks} networkId={networkId} />
+                <LastBlockList blocks={this.state.blocks} networkId={networkId}/>
             </Loader>
         );
     }

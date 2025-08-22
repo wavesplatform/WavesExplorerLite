@@ -1,11 +1,10 @@
 import React from 'react';
-import {hot} from 'react-hot-loader';
+import {BrowserRouter, Outlet, Route, Routes} from "react-router";
+
 import '../styles/main.scss';
-import {Route, Switch} from 'react-router';
-import {BrowserRouter as Router} from 'react-router-dom';
 import ScrollToTop from 'react-scroll-up';
 
-import {routeParamsBuilder, routeBuilder} from './shared/Routing';
+import {routeBuilder, routeParamsBuilder} from './shared/Routing';
 import ServiceFactory from './services/ServiceFactory';
 import {TOOLTIP_ID} from './shared/constants';
 import Tooltip from './components/Tooltip';
@@ -25,6 +24,7 @@ import SingleAssetPage from './pages/SingleAssetPage';
 import FaucetPage from './pages/FaucetPage'
 import UnsupportedPage from './pages/UnsupportedPage';
 import ConvertEthPage from './pages/ConvertEthPage';
+import {withRouter} from "./withRouter";
 
 const routeParams = routeParamsBuilder(ServiceFactory.global().configurationService().all());
 const routes = routeBuilder(routeParams.networkId);
@@ -32,23 +32,49 @@ const routes = routeBuilder(routeParams.networkId);
 ServiceFactory.global().errorReportingService().initialize();
 ServiceFactory.global().analyticsService().initialize();
 
-const withNetworkRouter = (RootComponent) => {
-    return class extends React.Component {
-        render() {
-            return (
-                <Router>
-                    <Switch>
-                        <Route path={routes.root} component={RootComponent} />
-                    </Switch>
-                </Router>
-            );
-        }
+class AppContainer extends React.Component {
+    state = {
+        mobileMenuVisible: null,
     };
-};
+
+    handleMobileMenuToggle = () => {
+        this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
+    };
+
+    render() {
+        const isVisible = this.state.mobileMenuVisible;
+        const isAnimated = isVisible != null;
+        let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
+
+        return (
+            <div>
+                <div className={wrapperClassName}>
+                    <Header onMenuToggle={this.handleMobileMenuToggle}>
+                        <Search/>
+                    </Header>
+                    <NavBar/>
+                    <div className="container grid">
+                        <Outlet/>
+                    </div>
+                    <div className="fading" onClick={this.handleMobileMenuToggle}></div>
+                </div>
+                <div className="mobile-menu">
+                    <Header onMenuToggle={this.handleMobileMenuToggle}/>
+                    <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle}/>
+                </div>
+                <Tooltip id={TOOLTIP_ID}/>
+                <ScrollToTop showUnder={100}>
+                    <div className="scroll-button"></div>
+                </ScrollToTop>
+            </div>
+        );
+    }
+}
+
+const RoutedAppContainer = withRouter(AppContainer);
 
 class App extends React.Component {
     state = {
-        mobileMenuVisible: null,
         isBrowserSupported: true
     };
 
@@ -64,56 +90,35 @@ class App extends React.Component {
             .captureComponentError(error, errorInfo);
     }
 
-    handleMobileMenuToggle = () => {
-        this.setState({mobileMenuVisible: !this.state.mobileMenuVisible});
-    };
-
     render() {
-        const isVisible = this.state.mobileMenuVisible;
-        const isAnimated = isVisible != null;
-        let wrapperClassName = 'wrapper' + (isVisible ? ' show' : '') + (isAnimated ? ' animated' : '');
-
         if (!this.state.isBrowserSupported) {
-            return <UnsupportedPage />;
+            return <UnsupportedPage/>;
         }
 
         return (
-            <React.Fragment>
-                <div className={wrapperClassName}>
-                    <Header onMenuToggle={this.handleMobileMenuToggle}>
-                        <Search />
-                    </Header>
-                    <div className="container grid">
-                        <NavBar />
-                        <Switch>
-                            <Route exact path={routes.blocks.one(routeParams.blockHeight)} component={SingleBlockPage} />
-                            <Route exact path={routes.blocks.list} component={BlocksPage} />
-                            <Route exact path={routes.transactions.one(routeParams.transactionId)} component={SingleTransactionPage} />
-                            <Route exact path={routes.leases.one(routeParams.leaseId)} component={SingleLeasePage} />
-                            <Route exact path={routes.addresses.one(routeParams.address)} component={SingleAddressPage} />
-                            <Route exact path={routes.addresses.one(routeParams.address, routeParams.tab)} component={SingleAddressPage} />
-                            <Route exact path={routes.aliases.one(routeParams.alias)} component={SingleAliasPage} />
-                            <Route exact path={routes.assets.one(routeParams.assetId)} component={SingleAssetPage} />
-                            <Route path={routes.nodes.list} component={NodesPage} />
-                            <Route path={routes.peers.list} component={PeersPage} />
-                            <Route exact path={routes.faucet} component={FaucetPage} />
-                            <Route exact path={routes.converters} component={ConvertEthPage} />
-                            <Route path={routes.root} component={MainPage} />
-                        </Switch>
-                    </div>
-                    <div className="fading" onClick={this.handleMobileMenuToggle}></div>
-                </div>
-                <div className="mobile-menu">
-                    <Header onMenuToggle={this.handleMobileMenuToggle} />
-                    <NavBar appearance="mobile" onAfterNavigate={this.handleMobileMenuToggle} />
-                </div>
-                <Tooltip id={TOOLTIP_ID}/>
-                <ScrollToTop showUnder={100}>
-                    <div className="scroll-button"></div>
-                </ScrollToTop>
-            </React.Fragment>
+            <BrowserRouter basename={__BASE_PATH__}>
+                <Routes>
+                    <Route path={routes.root} element={<RoutedAppContainer/>}>
+                        <Route index element={<MainPage/>}/>
+                        <Route path={routes.blocks.one(routeParams.blockHeight)} element={<SingleBlockPage/>}/>
+                        <Route path={routes.blocks.list} element={<BlocksPage/>}/>
+                        <Route path={routes.transactions.one(routeParams.transactionId)}
+                               element={<SingleTransactionPage/>}/>
+                        <Route path={routes.leases.one(routeParams.leaseId)} element={<SingleLeasePage/>}/>
+                        <Route path={routes.addresses.one(routeParams.address)} element={<SingleAddressPage/>}/>
+                        <Route path={routes.addresses.one(routeParams.address, routeParams.tab)}
+                               element={<SingleAddressPage/>}/>
+                        <Route path={routes.aliases.one(routeParams.alias)} element={<SingleAliasPage/>}/>
+                        <Route path={routes.assets.one(routeParams.assetId)} element={<SingleAssetPage/>}/>
+                        <Route path={routes.nodes.list} element={<NodesPage/>}/>
+                        <Route path={routes.peers.list} element={<PeersPage/>}/>
+                        <Route path={routes.faucet} element={<FaucetPage/>}/>
+                        <Route path={routes.converters} element={<ConvertEthPage/>}/>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
         );
     }
 }
 
-export default hot(module)(withNetworkRouter(App));
+export default App;

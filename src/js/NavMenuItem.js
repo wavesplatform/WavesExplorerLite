@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
+import {withRouter} from "./withRouter";
 
 class NavMenuItem extends React.PureComponent {
     static propTypes = {
@@ -19,7 +19,7 @@ class NavMenuItem extends React.PureComponent {
     };
 
     render() {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const visible = this.props.item.visible(networkId);
         if (!visible)
             return null;

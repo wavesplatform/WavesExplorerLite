@@ -15,7 +15,7 @@ config.package.data = JSON.parse(fs.readFileSync(config.package.source));
 
 function buildApp(vars, env, done) {
 
-    const cmd = `yarn run build:${env} ${Object.entries(vars).map(([k, v]) => `--env.${k}=${v}`).join(' ')}`;
+    const cmd = `yarn run build:${env} ${Object.entries(vars).map(([k, v]) => `--env ${k}=${v}`).join(' ')}`;
 
     exec(cmd, function (err, stdout, stderr) {
         console.log(stdout);
@@ -24,11 +24,8 @@ function buildApp(vars, env, done) {
     })
 }
 
-function clean() {
-    return del([
-        config.releaseDirectory + '/*',
-        config.releaseDirectory
-    ]);
+function clean(done) {
+    return del.deleteAsync(["dist"]);
 }
 
 function buildOfficialProd(done) {

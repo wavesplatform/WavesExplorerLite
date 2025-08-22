@@ -1,1 +1,1 @@
-export {SingleAddressPage as default} from './SingleAddressPage.container';
+export {RoutedSingleAddressPage as default} from './SingleAddressPage.container';

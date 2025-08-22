@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboard from 'react-copy-to-clipboard-ts';
 
 const CopyButton = ({text, onCopy, className}) => {
     return <CopyToClipboard text={text} onCopy={onCopy}>

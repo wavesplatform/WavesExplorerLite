@@ -8,15 +8,23 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const buildPath = path.join(__dirname, 'dist');
 const sourcesPath = path.join(__dirname, 'src');
 const scriptsPath = path.join(sourcesPath, 'js');
+const basePath = process.env.BASE_PATH || '/'
 
 var config = {
+    resolve: {
+        fallback: {
+            "crypto": require.resolve("crypto-browserify"),
+            "vm": require.resolve("vm-browserify"),
+            "stream": require.resolve("stream-browserify")
+        }
+    },
     entry: {
         main: path.join(scriptsPath, 'index.js')
     },
     output: {
         filename: '[name].[hash:16].js',
         path: buildPath,
-        publicPath: '/'
+        publicPath: basePath
     },
     module: {
         rules: [{
@@ -29,50 +37,38 @@ var config = {
                     // It enables caching results in ./node_modules/.cache/babel-loader/
                     // directory for faster rebuilds.
                     cacheDirectory: true,
-                    plugins: ['react-hot-loader/babel'],
+                    plugins: []
                 }
             }
         }, {
-            test: /\.html$/,
-            use: [{
-                loader: 'html-loader'
-            }]
-        }, {
-            test: /\.scss$/,
+            test: /\.s[ac]ss$/i,
             use: [
                 'style-loader',
-                {
-                    loader: 'css-loader',
-                    options: {
-                        sourceMap: true,
-                        modules: false
-                    }
-                },
+                'css-loader',
                 'sass-loader'
             ]
         },
             {
                 test: /\.(woff|woff2|ttf|otf)$/,
                 exclude: /node_modules/,
-                loader: 'file-loader',
-                options: {
-                    name: 'fonts/[name].[ext]',
-                }
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]', // fonts folder in dist
+                },
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: 'images/[name].[hash].[ext]'
-                    }
-                }]
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[name].[hash].[ext]',
+                }
             }]
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: path.join(sourcesPath, 'index.html'),
-            filename: './index.html'
+            filename: './index.html',
+            base: basePath
         }),
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(require('./package.json').version),
@@ -80,19 +76,21 @@ var config = {
         new LodashModuleReplacementPlugin({
             shorthands: true
         }),
-        new webpack.HashedModuleIdsPlugin(),
-        new CopyWebpackPlugin([{
-            from: path.join(sourcesPath, 'favicon.png'),
-            to: buildPath
-        }, {
-            from: 'manifest.json',
-            to: buildPath
-        },
-            // {
-            //     from: path.join(sourcesPath, 'config.js'),
-            //     to: buildPath
-            // }
-        ], {debug: true})
+        new webpack.ids.HashedModuleIdsPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: path.join(sourcesPath, 'favicon.png'),
+                to: buildPath
+            }, {
+                from: 'manifest.json',
+                to: buildPath
+            },
+                // {
+                //     from: path.join(sourcesPath, 'config.js'),
+                //     to: buildPath
+                // }
+            ]
+        })
     ],
     optimization: {
         splitChunks: {
@@ -147,7 +145,8 @@ module.exports = (env, argv) => {
         __GOOGLE_TRACKING_ID__: JSON.stringify(googleTrackingId),
         __AMPLITUDE_API_KEY__: JSON.stringify(amplitudeApiKey),
         __SENTRY_DSN__: JSON.stringify(sentryDsn),
-        __DECOMPILE_SCRIPT_URL__: JSON.stringify(decompileUrl)
+        __DECOMPILE_SCRIPT_URL__: JSON.stringify(decompileUrl),
+        __BASE_PATH__: JSON.stringify(basePath)
     }));
 
     return config;

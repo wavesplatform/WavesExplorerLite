@@ -1,8 +1,8 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import {OpenDappButtonView} from './OpenDappButton.view';
+import {withRouter} from "../../withRouter";
 
 class OpenDappButtonContainer extends React.Component {
     _isMounted = false;
@@ -20,8 +20,8 @@ class OpenDappButtonContainer extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const {networkId, address} = this.props.match.params;
-        const {networkId: prevNetworkId, address: prevAddress} = prevProps.match.params;
+        const {networkId, address} = this.props.params;
+        const {networkId: prevNetworkId, address: prevAddress} = prevProps.params;
 
         if (networkId !== prevNetworkId || address !== prevAddress) {
             this.setState({visible: false});
@@ -30,7 +30,7 @@ class OpenDappButtonContainer extends React.Component {
     }
 
     fetchData = () => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadScriptMeta(address).then(response => {
@@ -42,7 +42,7 @@ class OpenDappButtonContainer extends React.Component {
     };
 
     handleClick = () => {
-        const {address} = this.props.match.params;
+        const {address} = this.props.params;
 
         const url = `https://waves-dapp.com/${address}`;
         window.open(url, '_blank');

@@ -12,13 +12,13 @@ export class ConvertEthPage extends React.Component {
 
     convertW2EAddress = (value) => wavesAddress2eth(value)
     convertE2WAddress = (value) => {
-        const { networkId } = ServiceFactory.global().configurationService().get(this.props.match.params.networkId);
+        const { networkId } = ServiceFactory.global().configurationService().get(this.props.params.networkId);
         return ethAddress2waves(value, getNetworkByte(networkId));
     }
 
     convertW2EAsset = (value) => wavesAsset2Eth(value)
     convertE2WAsset = async (value) => {
-        const { networkId } = ServiceFactory.global().configurationService().get(this.props.match.params.networkId);
+        const { networkId } = ServiceFactory.global().configurationService().get(this.props.params.networkId);
         return await ServiceFactory.forNetwork(networkId).assetService().convertEth2Waves(value);
     }
 

@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 
 import { Pagination } from './Pagination.container';
 import { BlockList } from './BlockList.view';
+import {withRouter} from "../../withRouter";
 
 const BLOCKS_PER_PAGE = 20;
 
@@ -19,7 +20,7 @@ const derivePageBoundaries = (pageNumber, lastPage) => {
     };
 };
 
-export class BlocksPage extends React.Component {
+class BlocksPage extends React.Component {
     state = {
         height: 0,
         currentPage: 1,
@@ -42,18 +43,16 @@ export class BlocksPage extends React.Component {
     }
 
     initialFetch = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         return ServiceFactory.forNetwork(networkId).infoService().loadHeight().then(height => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
 
-            this._isMounted && this.setState({height, lastPage});
-
-            return this.loadCurrentPage(1);
+            this._isMounted && this.setState({height, lastPage}, () => {this.loadCurrentPage(1)});
         })
     };
 
     loadCurrentPage = (pageNumber) => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const from = Math.max(1, this.state.height - pageNumber * BLOCKS_PER_PAGE + 1);
         const to = Math.min(this.state.height, from + BLOCKS_PER_PAGE);
 
@@ -93,3 +92,5 @@ export class BlocksPage extends React.Component {
         );
     }
 }
+
+export const RoutedBlocksPage = withRouter(BlocksPage);

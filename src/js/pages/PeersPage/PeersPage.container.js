@@ -4,8 +4,9 @@ import EventBuilder from '../../shared/analytics/EventBuilder';
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {PeerList} from './PeerList.view';
+import {withRouter} from "../../withRouter";
 
-export class PeersPage extends React.Component {
+class PeersPage extends React.Component {
     state = {
         peers: []
     };
@@ -16,13 +17,13 @@ export class PeersPage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+        if (this.props.params.networkId !== prevProps.params.networkId) {
             this.fetchData();
         }
     }
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
 
         return ServiceFactory
             .forNetwork(networkId)
@@ -50,3 +51,5 @@ export class PeersPage extends React.Component {
         );
     }
 }
+
+export const RoutedPeersPage = withRouter(RoutedPeersPage);

@@ -1,5 +1,6 @@
-@import "variables";
-@import "mixins.scss";
+@use "sass:map";
+@use "variables";
+@use "mixins.scss";
 
 table {
     width: 100%;
@@ -7,17 +8,17 @@ table {
 
     &.table-hide {
         display: block;
-        border-bottom: 1px dashed map-get($colors, accent50);
+        border-bottom: 1px dashed map.get(variables.$colors, accent50);
         > thead, tbody {
             display: none;
         }
     }
 
     tr {
-        border-bottom: 1px dashed map-get($colors, accent50);
+        border-bottom: 1px dashed map.get(variables.$colors, accent50);
 
         &.spam {
-            background-color: map-get($colors, basic50);
+            background-color: map.get(variables.$colors, basic50);
 
             > td {
                 opacity: 0.3;
@@ -31,8 +32,8 @@ table {
     }
 
     > thead {
-        background-color: map-get($colors, basic50);
-        @include font(body, basic500);
+        background-color: map.get(variables.$colors, basic50);
+        @include mixins.font(body, basic500);
 
         tr {
             border: none;
@@ -46,9 +47,9 @@ table {
         }
     }
 
-    @each $size in map-keys($breakpoints) {
+    @each $size in map.keys(variables.$breakpoints) {
         &.table-#{$size}-transform {
-            @include breakpoint($size) {
+            @include mixins.breakpoint($size) {
                 > thead {
                     border: none;
                     clip: rect(0 0 0 0);
@@ -82,15 +83,15 @@ table {
                         top: 0;
 
                         //Todo: the same style as dictionary-pair-key
-                        @include responsive_styles($card_inner, padding-right, padding-left);
-                        @include responsive_styles($card_column);
+                        @include mixins.responsive_styles(variables.$card_inner, padding-right, padding-left);
+                        @include mixins.responsive_styles(variables.$card_column);
                         display: flex;
                         flex: 0 0 auto;
                         align-items: center;
                         height: 100%;
                         box-sizing: border-box;
-                        background-color: map-get($colors, basic50);
-                        @include font(body, basic500);
+                        background-color: map.get(variables.$colors, basic50);
+                        @include mixins.font(body, basic500);
                     }
                 }
             }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import {routeBuilder} from './shared/Routing';
 import NavMenu from './NavMenu';
@@ -9,6 +8,7 @@ import NetworkSwitch from './NetworkSwitch';
 
 import EventBuilder from './shared/analytics/EventBuilder';
 import ServiceFactory from './services/ServiceFactory';
+import {withRouter} from "./withRouter";
 
 const REGULAR_APPEARANCE = 'regular';
 
@@ -31,8 +31,7 @@ class NavBar extends React.Component {
 
         const defaultNetwork = ServiceFactory.global().configurationService().default();
         const route = routeBuilder(defaultNetwork.networkId !== networkId ? networkId : null);
-        // this.props.history.push(route.root);
-        window.location.assign(window.origin + route.root)
+        window.location.assign(window.origin + __BASE_PATH__ + route.root.replace(/^\/+/, ""))
     };
 
     applySettings = settings => {
@@ -45,7 +44,7 @@ class NavBar extends React.Component {
     };
 
     render() {
-        const networkId = this.props.match.params.networkId;
+        const networkId = this.props.params.networkId;
         const configurationService = ServiceFactory.global().configurationService();
 
         let className = 'menu grid-item-fixed';

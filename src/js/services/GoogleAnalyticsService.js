@@ -1,4 +1,4 @@
-import ga from 'react-ga';
+import ga from 'react-ga4';
 
 export class GoogleAnalyticsService {
     constructor(trackingId) {

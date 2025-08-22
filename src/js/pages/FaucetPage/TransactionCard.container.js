@@ -1,11 +1,11 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import Loader from '../../components/Loader';
 import Headline from '../../components/Headline';
 import ServiceFactory from '../../services/ServiceFactory';
 import transactionMapper from '../SingleAddressPage/TransactionMapper';
 import {TransactionList} from './TransactionList.view';
+import {withRouter} from "../../withRouter";
 
 class TransactionCardContainer extends React.Component {
     state = {
@@ -13,7 +13,7 @@ class TransactionCardContainer extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.networkId !== prevProps.match.params.networkId) {
+        if (this.props.params.networkId !== prevProps.params.networkId) {
             this.fetchData();
         }
     }
@@ -27,7 +27,7 @@ class TransactionCardContainer extends React.Component {
     };
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         const faucet = ServiceFactory
             .global()
             .configurationService()

@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {UnconfirmedTxList} from './UnconfirmedTxList.view';
+import {withRouter} from "../../withRouter";
 
 class UnconfirmedTxListContainer extends React.Component {
     state = {
@@ -21,7 +20,7 @@ class UnconfirmedTxListContainer extends React.Component {
     };
 
     fetchData = () => {
-        const {networkId} = this.props.match.params;
+        const {networkId} = this.props.params;
         return ServiceFactory.forNetwork(networkId).transactionService().loadUnconfirmed()
             .then(unconfirmed => this.setState({
                 size: unconfirmed.size,
@@ -43,7 +42,7 @@ class UnconfirmedTxListContainer extends React.Component {
     render() {
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load unconfirmed transactions">
-                <UnconfirmedTxList transactions={this.state.transactions} count={this.state.size} />
+                <UnconfirmedTxList transactions={this.state.transactions} count={this.state.size}/>
             </Loader>
         );
     }

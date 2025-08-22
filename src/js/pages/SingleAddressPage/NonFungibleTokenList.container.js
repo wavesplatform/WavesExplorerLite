@@ -1,9 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 
 import ServiceFactory from '../../services/ServiceFactory';
 import Loader from '../../components/Loader';
 import {NonFungibleTokenListView} from './NonFungibleTokenList.view';
+import {withRouter} from "../../withRouter";
 
 const TX_PAGE_SIZE = 100;
 
@@ -25,7 +25,7 @@ class NonFungibleTokenListContainer extends React.Component {
     }
 
     fetchData = () => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService
@@ -37,7 +37,7 @@ class NonFungibleTokenListContainer extends React.Component {
     };
 
     loadMore = (after) => {
-        const {address, networkId} = this.props.match.params;
+        const {address, networkId} = this.props.params;
         const addressService = ServiceFactory.forNetwork(networkId).addressService();
 
         return addressService.loadNftTokens(address, TX_PAGE_SIZE, after);
