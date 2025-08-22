@@ -19,7 +19,7 @@ class Search extends React.PureComponent {
     }
 
     go = (route) => {
-        this.props.history.push(route);
+        this.props.navigate(route);
     };
 
     handleKeyUp = (e) => {

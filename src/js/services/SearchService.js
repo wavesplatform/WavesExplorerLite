@@ -37,6 +37,18 @@ export class SearchService extends ApiClientService {
 
                 throw e;
             });
+        } else if (/^\d+$/.test(query)) {
+            return api.blocks.at(query).then(heightResponse => {
+                const event = this.createEvent(SearchResult.block);
+                this.analyticsService.sendEvent(event);
+
+                return routes.blocks.one(heightResponse.height);
+            }).catch(e => {
+                const event = this.createEvent(SearchResult.unknown);
+                this.analyticsService.sendEvent(event);
+
+                throw e;
+            });
         } else
 
             return api.addresses.validate(query).then(validateResponse => {
@@ -83,13 +95,6 @@ export class SearchService extends ApiClientService {
                         const lease = detail[0];
                         return routes.leases.one(lease.id);
                     })
-                }).catch(() => {
-                    return api.blocks.at(query).then(heightResponse => {
-                        const event = this.createEvent(SearchResult.block);
-                        this.analyticsService.sendEvent(event);
-
-                        return routes.blocks.one(heightResponse.height);
-                    });
                 }).catch(e => {
                     const event = this.createEvent(SearchResult.unknown);
                     this.analyticsService.sendEvent(event);
