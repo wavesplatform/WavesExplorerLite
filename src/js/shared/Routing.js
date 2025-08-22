@@ -19,7 +19,7 @@ export const routeParamsBuilder = (networks) => {
 };
 
 export const routeBuilder = (networkId) => {
-    const root = networkId ? `/${networkId}` : '';
+    const root = __BASE_PATH__.replace(/^\/+/, "") + (networkId ? `/${networkId}` : '');
     const blocks = `${root}/blocks`;
 
     return {

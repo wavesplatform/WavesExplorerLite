@@ -455,6 +455,7 @@ th.price, th.amount {
         max-height: 800px;
         max-width: 100%;
         white-space: pre-wrap;
+        font-family: Roboto Mono, monospace;
 
         &::after {
             display: block;

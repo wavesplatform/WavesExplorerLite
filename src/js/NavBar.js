@@ -56,7 +56,6 @@ class NavBar extends React.Component {
 
         return (
             <div className={className}>
-                <b>{networkId}</b>
                 <NetworkSwitch
                     current={configurationService.get(networkId)}
                     networks={configurationService.all()}
