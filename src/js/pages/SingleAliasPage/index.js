@@ -1,1 +1,1 @@
-export {SingleAliasPage as default} from './SingleAliasPage.container';
+export {RoutedSingleAliasPage as default} from './SingleAliasPage.container';

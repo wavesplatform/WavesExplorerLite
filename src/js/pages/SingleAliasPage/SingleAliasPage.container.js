@@ -5,8 +5,9 @@ import {routeBuilder} from '../../shared/Routing';
 import ServiceFactory from '../../services/ServiceFactory';
 
 import Loader from '../../components/Loader';
+import {withRouter} from "../../withRouter";
 
-export class SingleAliasPage extends React.Component {
+class SingleAliasPage extends React.Component {
     state = {
         address: null
     };
@@ -28,3 +29,5 @@ export class SingleAliasPage extends React.Component {
         );
     }
 }
+
+export const RoutedSingleAliasPage = withRouter(SingleAliasPage);

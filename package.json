@@ -54,7 +54,7 @@
         "@babel/preset-react": "^7.0.0",
         "@types/react": "^19.1.10",
         "@types/react-dom": "^19.1.7",
-        "@waves/ts-lib-crypto": "^1.4.4-beta.1",
+        "@waves/ts-lib-crypto": "^1.4.4",
         "babel-jest": "^30.0.5",
         "babel-loader": "^10.0.0",
         "copy-webpack-plugin": "13.0.1",
