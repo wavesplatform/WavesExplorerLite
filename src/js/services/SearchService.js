@@ -3,7 +3,7 @@ import {SearchResult} from '../shared/analytics/Definitions';
 import EventBuilder from '../shared/analytics/EventBuilder';
 import {ApiClientService} from './ApiClientService';
 import {ethAddress2waves} from "@waves/node-api-js";
-import {libs} from '@waves/signature-generator';
+import {base58Decode} from '@waves/ts-lib-crypto';
 
 
 export class SearchService extends ApiClientService {
@@ -25,7 +25,7 @@ export class SearchService extends ApiClientService {
         if (query.startsWith('0x') && query.length === 42) {
 
             return api.addresses.wallet().then(addresses => {
-                const netId = libs.base58.decode(addresses[0])[1];
+                const netId = base58Decode(addresses[0])[1];
                 const address = ethAddress2waves(query, netId);
                 const event = this.createEvent(SearchResult.address);
                 this.analyticsService.sendEvent(event);
