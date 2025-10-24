@@ -48,7 +48,7 @@ class SingleAssetPage extends React.Component {
             <Loader fetchData={this.fetchData} errorTitle="Failed to load asset details">
                 <div className="content card">
                     <GoBack />
-                    <Headline title="Asset" subtitle={this.props.assetId} />
+                    <Headline title="Asset" subtitle={this.props.params.assetId} />
                     <Dictionary items={dictionaryItems} />
                 </div>
             </Loader>

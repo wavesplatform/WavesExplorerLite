@@ -2,7 +2,7 @@ import Currency from '../shared/Currency';
 import Money from '../shared/Money';
 import OrderPrice from '../shared/OrderPrice';
 import DateTime from '../shared/DateTime';
-import { libs } from '@waves/signature-generator';
+import { base58Decode, bytesToString } from '@waves/ts-lib-crypto';
 import { convertEthTx } from '../shared/utils'
 
 const transformSingle = async (currencyService, spamDetectionService, assetService, tx) => {
@@ -158,10 +158,10 @@ const appendAssetData = async (currencyService, data, assetKey) => {
 const attachmentToString = (attachment) => {
     if (!attachment) return '';
     if (attachment.value) return attachment.value.toString();
-    const bytes = libs.base58.decode(attachment);
+    const bytes = base58Decode(attachment);
     let result = '';
     try {
-        result = libs.converters.byteArrayToString(bytes);
+        result = bytesToString(bytes);
     } catch (e) {
         // do nothing
     }

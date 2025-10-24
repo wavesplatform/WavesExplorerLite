@@ -12,11 +12,18 @@ import Loader from '../../components/Loader';
 import Enumerator from '../../components/Enumerator';
 import MoneyInfo from '../../components/MoneyInfo';
 import Timestamp from '../../components/Timestamp';
-import Tooltip from '../../components/Tooltip';
 import {TransactionList} from './TransactionList.container';
 import Currency from "../../shared/Currency";
 import Money from "../../shared/Money";
 import {withRouter} from "../../withRouter";
+import {useNavigate} from 'react-router';
+
+function withNavigation(Component) {
+    return function Wrapper(props) {
+        const navigate = useNavigate();
+        return <Component {...props} navigate={navigate}/>;
+    };
+}
 
 const typeToHeader = type => {
     let result = {
@@ -96,7 +103,7 @@ class SingleBlockPage extends React.Component {
         },
         rewardShares: {},
         groupedTransactions: {},
-        loading: false,
+        loading: true,
         dApps: {}
     };
 
@@ -105,7 +112,7 @@ class SingleBlockPage extends React.Component {
         const {height, networkId} = this.props.params;
 
         if (height !== prevHeight || networkId !== prevNetworkId) {
-            this.setState({currentHeight: parseInt(height)});
+            this.setState({currentHeight: parseInt(height), loading: true});
             this.fetchData(height)
                 .catch(error => {
                     ServiceFactory.global().errorReportingService().captureException(error);
@@ -118,7 +125,14 @@ class SingleBlockPage extends React.Component {
     };
 
     fetchData = height => {
-        this.setState({loading: true});
+        this.setState({
+            loading: true,
+            block: {
+                generator: ''
+            },
+            rewardShares: {},
+            groupedTransactions: {},
+        });
         let blockInfo;
         let dApps;
         const {networkId} = this.props.params;
@@ -131,7 +145,11 @@ class SingleBlockPage extends React.Component {
                 return this.setState(result)
             })
             .then(result => blockInfo = result)
-            .finally(() => this.setState({loading: false}));
+            .then(result => this.setState(prev => {
+                const {error, ...rest} = prev
+                return {rest, loading: false}
+            }))
+            .catch(error => {this.setState({error: 'Could not fetch block, please reload manually'})});
 
         if (networkId === 'mainnet' || networkId === undefined) {
             const dAppsPromise = ServiceFactory
@@ -141,7 +159,7 @@ class SingleBlockPage extends React.Component {
                 .then(result => dApps = result)
             return Promise.all([blockPromise, dAppsPromise]).then(() => {
                 this.setState({dApps, ...blockInfo})
-            }).finally(() => this.setState({loading: false}));
+            }).then(result => this.setState({loading: false}));
         } else return blockPromise.finally(() => this.setState({loading: false, ...blockInfo}));
     };
 
@@ -149,7 +167,8 @@ class SingleBlockPage extends React.Component {
     showBlock = height => {
         const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
-        this.props.history.push(routes.blocks.one(height));
+        this.setState({loading: true});
+        this.props.navigate(routes.blocks.one(height));
     };
 
     render() {
@@ -173,6 +192,9 @@ class SingleBlockPage extends React.Component {
     }
 
     stateToDictionaryItems() {
+        if (this.state.error) {
+            return {default: [{label: 'Error', value: this.state.error}]};
+        }
         const items = {
             default: [{
                 label: 'Height',
@@ -233,7 +255,7 @@ class SingleBlockPage extends React.Component {
                             <td>{entry[0]}</td>
                             <td><MaybeMoney value={Money.fromCoins(entry[1], Currency.WAVES)}/></td>
                         </tr>
-                        )}
+                    )}
                     </tbody>
                 </table>
             })
@@ -262,7 +284,9 @@ class SingleBlockPage extends React.Component {
                     </tr>
                     <tr>
                         <td>Desired Reward</td>
-                        <td><MaybeMoney value={Money.fromCoins(this.state.block.challengedHeader.desiredReward, Currency.WAVES)}/></td>
+                        <td><MaybeMoney
+                            value={Money.fromCoins(this.state.block.challengedHeader.desiredReward, Currency.WAVES)}/>
+                        </td>
                     </tr>
                     <tr>
                         <td>State Hash</td>
@@ -282,4 +306,4 @@ class SingleBlockPage extends React.Component {
     }
 }
 
-export const RoutedSingleBlockPage = withRouter(SingleBlockPage);
+export const RoutedSingleBlockPage = withNavigation(withRouter(SingleBlockPage));

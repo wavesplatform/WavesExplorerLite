@@ -52,4 +52,4 @@ class PeersPage extends React.Component {
     }
 }
 
-export const RoutedPeersPage = withRouter(RoutedPeersPage);
+export const RoutedPeersPage = withRouter(PeersPage);
