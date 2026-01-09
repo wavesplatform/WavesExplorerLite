@@ -9228,6 +9228,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router@npm:7.12.0":
+  version: 7.12.0
+  resolution: "react-router@npm:7.12.0"
+  dependencies:
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10c0/abde366f716cb3961a5a390c278375c0591bace5773e1b4420001f0a913b4dd53d490e7dea866acebcac2c0fa07378aa83702769d449449027406ed517a8ea00
+  languageName: node
+  linkType: hard
+
 "react-router@npm:7.8.1":
   version: 7.8.1
   resolution: "react-router@npm:7.8.1"
@@ -11138,7 +11154,7 @@ __metadata:
     react-google-recaptcha: "npm:^3.1.0"
     react-infinite-scroller: "npm:^1.2.6"
     react-modal: "npm:3.16.3"
-    react-router: "npm:7.8.1"
+    react-router: "npm:7.12.0"
     react-router-dom: "npm:7.8.1"
     react-scroll-up: "npm:^1.4.0"
     react-test-renderer: "npm:^19.1.1"
