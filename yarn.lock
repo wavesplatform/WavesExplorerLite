@@ -7808,6 +7808,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.23":
+  version: 4.17.23
+  resolution: "lodash@npm:4.17.23"
+  checksum: 10c0/1264a90469f5bb95d4739c43eb6277d15b6d9e186df4ac68c3620443160fc669e2f14c11e7d8b2ccf078b81d06147c01a8ccced9aab9f9f63d50dcf8cace6bf6
+  languageName: node
+  linkType: hard
+
 "loose-envify@npm:^1.0.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -11128,7 +11135,7 @@ __metadata:
     identity-obj-proxy: "npm:^3.0.0"
     jest: "npm:^30.0.5"
     json-bigint: "npm:^1.0.0"
-    lodash: "npm:^4.17.20"
+    lodash: "npm:^4.17.23"
     lodash-webpack-plugin: "npm:^0.11.5"
     prop-types: "npm:15.8.1"
     react: "npm:19.1.1"
