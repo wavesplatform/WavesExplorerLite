@@ -1,10 +1,12 @@
 import axios from 'axios';
+import {fetchFinalized} from '@waves/node-api-js/cjs/api-node/blocks';
 
 import {ApiClientService} from './ApiClientService';
 
 export const CAPTIONS = {
     VERSION: 'Version',
     CURRENT_HEIGHT: 'Current height',
+    FINALIZED_HEIGHT: 'Finalized height',
     BASE_TARGET: 'Base Target',
     BLOCK_DELAY: 'Avg Block delay'
 };
@@ -23,17 +25,27 @@ export class InfoService extends ApiClientService {
             .then(heightResponse => heightResponse.height);
     };
 
+    loadFinalizedHeight = () => {
+        return fetchFinalized(this.configuration().apiBaseUrl)
+            .then(finalizedHeader => finalizedHeader.height);
+    };
+
     loadInfo = () => {
         const api = this.getApi();
+        const finalizedHeightPromise = this.loadFinalizedHeight().catch(() => null);
 
         return axios.all([
             api.version(),
             this.loadHeight(),
+            finalizedHeightPromise,
             api.baseTarget()
-        ]).then(axios.spread((version, height, baseTarget) => {
+        ]).then(axios.spread((version, height, finalizedHeight, baseTarget) => {
+            const fallbackFinalizedHeight = Math.max(height - 100, 1);
+
             return {
                 [CAPTIONS.VERSION]: version.version.split('-')[0],
                 [CAPTIONS.CURRENT_HEIGHT]: height,
+                [CAPTIONS.FINALIZED_HEIGHT]: finalizedHeight ?? fallbackFinalizedHeight,
                 [CAPTIONS.BASE_TARGET]: baseTarget
             };
         }));

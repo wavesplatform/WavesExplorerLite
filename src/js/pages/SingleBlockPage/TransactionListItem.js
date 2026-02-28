@@ -66,6 +66,9 @@ export const createListItem = (transaction, dApps) => {
         case 18:
             return <EthereumTransactionListItem key={transaction.id} tx={transaction}/>;
 
+        case 19:
+            return <CommitToGenerationTransactionListItem key={transaction.id} tx={transaction}/>;
+
         default:
             return null;
     }
@@ -519,6 +522,33 @@ class EthereumTransactionListItem extends React.Component {
                 <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
                 <Subjects type={tx.type} sender={tx.sender}/>
                 {tx.payment ? <AmountAndFee amount={tx.payment} fee={tx.fee}/> : <JustFee fee={tx.fee}/>}
+            </tr>
+        );
+    }
+}
+
+class CommitToGenerationTransactionListItem extends React.Component {
+    static propTypes = {
+        tx: PropTypes.object.isRequired
+    };
+
+    render() {
+        const {tx} = this.props;
+        return (
+            <tr>
+                <IdAndTimestamp id={tx.id} timestamp={tx.timestamp} applicationStatus={tx.applicationStatus}/>
+                <td data-label="Sender / Endorser">
+                    <Line wrap={false}>
+                        <EndpointRef endpoint={tx.sender} appearance="regular"/>
+                    </Line>
+                    <Line wrap={false}>
+                        {tx.endorserPublicKey}
+                    </Line>
+                </td>
+                <JustFee fee={tx.fee}/>
+                <td data-label="Generation period start">
+                    <Line>{tx.generationPeriodStart}</Line>
+                </td>
             </tr>
         );
     }

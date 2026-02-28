@@ -44,6 +44,9 @@ const mapTransactionToPromise = (tx, currentUser) => {
         case 16:
             return mapScriptInvocation(tx, currentUser.address);
 
+        case 19:
+            return mapCommitToGeneration(tx, currentUser.address);
+
         default:
             return Object.assign({}, tx);
     }
@@ -111,6 +114,12 @@ const mapMassTransfer = (tx, currentUser) => {
 };
 
 const mapAlias = (tx, currentAddress) => {
+    return Object.assign(copyMandatoryAttributes(tx), {
+        direction: defaultDirection(tx, currentAddress)
+    });
+};
+
+const mapCommitToGeneration = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), {
         direction: defaultDirection(tx, currentAddress)
     });

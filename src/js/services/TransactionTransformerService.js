@@ -104,6 +104,9 @@ const transform = (currencyService, spamDetectionService, assetService, tx, shou
         case 18:
             return transformEthereumTransaction(currencyService, assetService, spamDetectionService, tx, shouldLoadDetails);
 
+        case 19:
+            return transformCommitToGeneration(currencyService, tx);
+
         default:
             return Promise.resolve(Object.assign({}, tx));
     }
@@ -369,6 +372,17 @@ const transformAlias = (currencyService, tx) => {
             alias: tx.alias
         })
     );
+};
+
+const transformCommitToGeneration = (currencyService, tx) => {
+    return currencyService.get(tx.feeAssetId).then(feeCurrency => {
+        return Object.assign(copyMandatoryAttributes(tx), {
+            fee: Money.fromCoins(tx.fee, feeCurrency),
+            generationPeriodStart: tx.generationPeriodStart,
+            endorserPublicKey: tx.endorserPublicKey,
+            commitmentSignature: tx.commitmentSignature
+        });
+    });
 };
 
 const transformLease = (currencyService, tx) => {

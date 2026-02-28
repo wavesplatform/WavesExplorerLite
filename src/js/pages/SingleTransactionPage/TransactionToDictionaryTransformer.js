@@ -79,6 +79,9 @@ const transactionToDictionary = (tx, networkId, dApps) => {
             const transaction = convertEthTx(tx)
             return transactionToDictionary(transaction, networkId)
 
+        case 19:
+            return commitToGenerationTransactionToItems(tx);
+
 
         default:
             return {
@@ -199,6 +202,26 @@ const updateAssetInfoTransactionToItems = tx => ({
         {label: 'Description', value: tx.description},
         buildFeeItem(tx),
         ...buildSenderAddressAndKeyItems(tx),
+    ]
+});
+
+const commitToGenerationTransactionToItems = tx => ({
+    default: [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Generation period start',
+            value: tx.generationPeriodStart
+        },
+        {
+            label: 'Endorser PublicKey',
+            value: tx.endorserPublicKey
+        },
+        {
+            label: 'Commitment Signature',
+            value: tx.commitmentSignature
+        },
+        buildCommitFeeItem(tx),
+        ...buildSenderAddressAndKeyItems(tx)
     ]
 });
 
@@ -586,5 +609,14 @@ const buildBytesItem = tx => ({
     label: 'Bytes',
     value: <RawJsonViewer json={tx.bytes}/>
 })
+
+const buildCommitFeeItem = tx => ({
+    label: 'Fee',
+    value: tx.fee && typeof tx.fee.formatAmount === 'function'
+        ? <MoneyInfo value={tx.fee}/>
+        : tx.fee != null
+            ? tx.fee.toString()
+            : ''
+});
 
 export default transactionToDictionary;

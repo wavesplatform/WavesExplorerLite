@@ -76,6 +76,12 @@ const typeToHeader = type => {
             result.price = 'Asset name';
             break;
 
+        case 19:
+            result.subjects = 'Sender / Endorser';
+            result.amount = 'Fee';
+            result.price = 'Generation period start';
+            break;
+
         // case 18:
         //     result.subjects = 'InvokeTx';
         //     result.amount = 'Fee';
