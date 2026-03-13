@@ -5,17 +5,24 @@ import BlockRef from '../../components/BlockRef';
 
 export class LastBlockListItem extends React.PureComponent {
     static propTypes = {
-        block: PropTypes.object.isRequired
+        block: PropTypes.object.isRequired,
+        finalizedHeight: PropTypes.number
+    };
+
+    static defaultProps = {
+        finalizedHeight: 1
     };
 
     render() {
         const block = this.props.block;
+        const isFinalized = this.props.finalizedHeight >= block.height;
         const emptyClassName = block.transactions > 0 ? '' : ' empty-block';
         const rowClassName = 'grid panel-row block-img-handler' + emptyClassName;
+        const blockImageClassName = `block-img grid-item-fixed${isFinalized ? ' finalized' : ''}`;
 
         return (
             <div className={rowClassName}>
-                <div className="block-img grid-item-fixed"></div>
+                <div className={blockImageClassName}></div>
                 <div>
                     <div className="line">Block <BlockRef height={block.height}/> contains <span className="bold">{block.transactions}</span> transactions</div>
                     <div className="line no-wrap">

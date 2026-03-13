@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { TOOLTIP_ID } from '../../shared/constants';
 import { CAPTIONS } from '../../services/InfoService';
 import Tooltip from '../../components/Tooltip';
+import BlockRef from '../../components/BlockRef';
 
 const Caption = ({caption}) => {
     if (caption !== CAPTIONS.BLOCK_DELAY)
@@ -19,13 +20,21 @@ export class NetworkInfo extends React.PureComponent {
         info: PropTypes.object.isRequired
     };
 
+    renderValue = (caption, value) => {
+        if ((caption === CAPTIONS.CURRENT_HEIGHT || caption === CAPTIONS.FINALIZED_HEIGHT) && Number.isFinite(value)) {
+            return <BlockRef height={value} className="no-accent"/>;
+        }
+
+        return value;
+    };
+
     render() {
         return (
             <div className="grid grid-wrap">
                 {Object.entries(this.props.info).map(entry => {
                     return (<div key={entry[0]} className="column-sm-6">
                         <div className="line"><Caption caption={entry[0]} /></div>
-                        <div className="line">{entry[1]}</div>
+                        <div className="line">{this.renderValue(entry[0], entry[1])}</div>
                     </div>);
                 })}
             </div>

@@ -536,7 +536,16 @@ const buildTransactionHeaderItems = tx => {
         buildTimestampItem(tx.timestamp),
         {
             label: 'Block',
-            value: <BlockRef height={tx.height}/>
+            value: <span className="nowrap">
+                <BlockRef height={tx.height}/>
+                {tx.isFinalizedBlock && <span
+                    className="finalized-lock"
+                    data-for={TOOLTIP_ID}
+                    data-tip="Block Finalized"
+                    data-tooltip-id={TOOLTIP_ID}
+                    data-tooltip-content="Block Finalized"
+                />}
+            </span>
         }, buildProofsItem(tx)];
 
     if (tx.isEthereum) res.pop()

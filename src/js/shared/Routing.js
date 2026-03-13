@@ -27,6 +27,9 @@ export const routeBuilder = (networkId) => {
         nodes: {
             list: `${root}/nodes`
         },
+        finalizationInfo: {
+            list: `${root}/finalization`
+        },
         peers: {
             list: `${root}/peers`
         },

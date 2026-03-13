@@ -121,7 +121,7 @@ const mapAlias = (tx, currentAddress) => {
 
 const mapCommitToGeneration = (tx, currentAddress) => {
     return Object.assign(copyMandatoryAttributes(tx), {
-        direction: defaultDirection(tx, currentAddress)
+        out: moneyToObject(tx.fee)
     });
 };
 

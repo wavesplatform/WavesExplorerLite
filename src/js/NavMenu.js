@@ -26,6 +26,11 @@ const buildItems = () => {
         visible: alwaysVisible,
         icon: 'icon-blocks'
     }, {
+        title: 'Finalization info',
+        route: networkId => routeBuilder(networkId).finalizationInfo.list,
+        visible: alwaysVisible,
+        icon: 'icon-shield'
+    }, {
         title: 'Peers',
         route: networkId => routeBuilder(networkId).peers.list,
         visible: alwaysVisible,

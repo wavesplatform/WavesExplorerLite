@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {routeBuilder} from '../../shared/Routing';
 import ServiceFactory from '../../services/ServiceFactory';
@@ -104,6 +105,7 @@ class SingleBlockPage extends React.Component {
     state = {
         currentHeight: parseInt(this.props.params.height),
         maxHeight: parseInt(this.props.params.height) + 1,
+        finalizedHeight: 1,
         block: {
             generator: ''
         },
@@ -133,6 +135,7 @@ class SingleBlockPage extends React.Component {
     fetchData = height => {
         this.setState({
             loading: true,
+            finalizedHeight: 1,
             block: {
                 generator: ''
             },
@@ -140,6 +143,7 @@ class SingleBlockPage extends React.Component {
             groupedTransactions: {},
         });
         let blockInfo;
+        let finalizedHeight = 1;
         let dApps;
         const {networkId} = this.props.params;
 
@@ -157,16 +161,27 @@ class SingleBlockPage extends React.Component {
             }))
             .catch(error => {this.setState({error: 'Could not fetch block, please reload manually'})});
 
+        const finalizationPromise = ServiceFactory
+            .forNetwork(networkId)
+            .finalizationService()
+            .loadHeaderInfo()
+            .then(info => {
+                finalizedHeight = Number.isFinite(info.lastFinalizedHeight) ? info.lastFinalizedHeight : 1;
+            })
+            .catch(() => {
+                finalizedHeight = 1;
+            });
+
         if (networkId === 'mainnet' || networkId === undefined) {
             const dAppsPromise = ServiceFactory
                 .forNetwork(networkId)
                 .addressService()
                 .loadDApps()
                 .then(result => dApps = result)
-            return Promise.all([blockPromise, dAppsPromise]).then(() => {
-                this.setState({dApps, ...blockInfo})
+            return Promise.all([blockPromise, dAppsPromise, finalizationPromise]).then(() => {
+                this.setState({dApps, finalizedHeight, ...blockInfo})
             }).then(result => this.setState({loading: false}));
-        } else return blockPromise.finally(() => this.setState({loading: false, ...blockInfo}));
+        } else return Promise.all([blockPromise, finalizationPromise]).finally(() => this.setState({loading: false, finalizedHeight, ...blockInfo}));
     };
 
 
@@ -201,6 +216,11 @@ class SingleBlockPage extends React.Component {
         if (this.state.error) {
             return {default: [{label: 'Error', value: this.state.error}]};
         }
+        const {networkId} = this.props.params;
+        const routes = routeBuilder(networkId);
+        const isFinalized = this.state.finalizedHeight >= this.state.currentHeight;
+        const finalizationUrl = `${routes.finalizationInfo.list}?height=${this.state.currentHeight}`;
+
         const items = {
             default: [{
                 label: 'Height',
@@ -222,6 +242,9 @@ class SingleBlockPage extends React.Component {
             }, {
                 label: 'Transactions',
                 value: this.state.block.transactionCount
+            }, {
+                label: 'Finalized',
+                value: isFinalized ? <Link to={finalizationUrl}>Yes</Link> : 'No'
             }, {
                 label: 'Parent block',
                 value: this.state.block.reference,

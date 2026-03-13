@@ -3,6 +3,7 @@ import Strings from '../shared/Strings';
 
 const CUSTOM_NETWORK_ID = 'custom';
 const CUSTOM_NETWORK_NAME = 'Custom';
+const DEFAULT_CUSTOM_GENERATION_PERIOD_LENGTH = 10;
 const copyAndFreeze = object => Object.freeze(Object.assign({}, object));
 
 export class ConfigurationService {
@@ -14,7 +15,8 @@ export class ConfigurationService {
                 "networkId": "custom",
                 "displayName": "Custom",
                 "apiBaseUrl": global.__CONFIG__.API_NODE_URL,
-                "nodes": [{"url": global.__CONFIG__.API_NODE_URL}]
+                "nodes": [{"url": global.__CONFIG__.API_NODE_URL}],
+                "generationPeriodLength": DEFAULT_CUSTOM_GENERATION_PERIOD_LENGTH
             } : null
 
         const saved = this.storageService.loadConfiguration();
@@ -26,6 +28,9 @@ export class ConfigurationService {
             if (saved.customNetwork) {
                 this.networks.push(saved.customNetwork);
                 this.customNetwork = saved.customNetwork;
+                if (!this.customNetwork.generationPeriodLength) {
+                    this.customNetwork.generationPeriodLength = DEFAULT_CUSTOM_GENERATION_PERIOD_LENGTH;
+                }
             }
         } else {
             this.selectedIndex = 0;
@@ -51,17 +56,19 @@ export class ConfigurationService {
 
     custom = () => this.customNetwork ? copyAndFreeze(this.customNetwork) : null;
 
-    update = ({apiBaseUrl}) => {
+    update = ({apiBaseUrl, generationPeriodLength}) => {
         if (!this.customNetwork) {
             this.customNetwork = {
                 networkId: CUSTOM_NETWORK_ID,
                 displayName: CUSTOM_NETWORK_NAME,
+                generationPeriodLength: DEFAULT_CUSTOM_GENERATION_PERIOD_LENGTH
             };
             this.networks.push(this.customNetwork);
         }
 
         this.customNetwork.apiBaseUrl = Strings.trimEnd(apiBaseUrl, '/');
         this.customNetwork.nodes = [{url: apiBaseUrl}];
+        this.customNetwork.generationPeriodLength = Number.parseInt(generationPeriodLength, 10) || DEFAULT_CUSTOM_GENERATION_PERIOD_LENGTH;
         this.save();
     };
 

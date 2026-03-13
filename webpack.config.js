@@ -28,6 +28,13 @@ var config = {
     },
     module: {
         rules: [{
+            test: /\.m?js$/,
+            include: /node_modules[\\/]@waves[\\/]ts-lib-crypto[\\/]dist[\\/]esm/,
+            resolve: {
+                // Allow extensionless imports inside ESM output of ts-lib-crypto (node-forge/*)
+                fullySpecified: false,
+            },
+        }, {
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
