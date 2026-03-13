@@ -220,6 +220,11 @@ const commitToGenerationTransactionToItems = tx => ({
             label: 'Commitment Signature',
             value: tx.commitmentSignature
         },
+        {
+            label: 'Deposit',
+            value: '100 WAVES'
+
+        },
         buildCommitFeeItem(tx),
         ...buildSenderAddressAndKeyItems(tx)
     ]

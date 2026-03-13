@@ -6,7 +6,6 @@ import {ERROR_TYPES} from '../../components/Error';
 import GoBack from '../../components/GoBack';
 import Headline from '../../components/Headline';
 import Dictionary from '../../components/Dictionary';
-import Tooltip from '../../components/Tooltip';
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import {MassPaymentDetails} from './MassPaymentDetails.view';
 import {RoutedRawTransactionContainer} from './RawTransaction.container';

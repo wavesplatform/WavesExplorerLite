@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 import ServiceFactory from './services/ServiceFactory';
-import { NewVersionDialog } from './components/NewVersionDialog';
 import {withRouter} from "./withRouter";
 
 const alwaysVisible = networkId => true;

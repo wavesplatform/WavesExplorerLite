@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard-ts';
-import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {isWebUri, isHttpsUri} from 'valid-url';
+import {Field, Form, Formik} from 'formik';
+import {isHttpsUri, isWebUri} from 'valid-url';
 import {nodeApi} from './shared/api/NodeApi';
 
 const valuesShape = PropTypes.shape({

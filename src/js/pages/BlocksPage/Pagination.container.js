@@ -13,7 +13,7 @@ const PageLimit = ({className, title, disabled, pageNumber, onPageChange}) => {
 const PageLink = (props) => {
     const visible = (typeof props.visible === 'undefined') ? true : props.visible;
     if (!visible)
-        return (null);
+        return null;
 
     const title = props.title || props.pageNumber.toString();
     const className = 'page' + (props.current ? ' current' : '');
