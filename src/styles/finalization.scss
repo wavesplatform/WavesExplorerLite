@@ -7,12 +7,17 @@ table.finalization-list {
 
     th.generator,
     td.generator {
-        width: 34%;
+        width: 28%;
+    }
+
+    th.balance,
+    td.balance {
+        width: 16%;
     }
 
     th.transaction,
     td.transaction {
-        width: 46%;
+        width: 36%;
     }
 
     th.conflict,

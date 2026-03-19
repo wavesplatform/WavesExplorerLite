@@ -4,9 +4,22 @@ import PropTypes from 'prop-types';
 import EndpointRef from '../../components/EndpointRef';
 import TransactionRef from '../../components/TransactionRef';
 import BlockRef from '../../components/BlockRef';
+import Money from '../../shared/Money';
+import Currency from '../../shared/Currency';
 
 export const FinalizationInfo = ({generators, queryHeight, rowClassByIndex}) => {
     const safeGenerators = Array.isArray(generators) ? generators : [];
+    const renderBalance = (balance) => {
+        if (balance === null || balance === undefined) {
+            return '-';
+        }
+
+        try {
+            return Money.fromCoins(balance, Currency.WAVES).toString();
+        } catch (e) {
+            return '-';
+        }
+    };
 
     return (
         <div>
@@ -18,6 +31,7 @@ export const FinalizationInfo = ({generators, queryHeight, rowClassByIndex}) => 
                 <tr>
                     <th className="index">Index</th>
                     <th className="generator">Generator</th>
+                    <th className="balance">Balance</th>
                     <th className="transaction">Transaction Id</th>
                     <th className="conflict">Conflict endorser height</th>
                 </tr>
@@ -32,6 +46,9 @@ export const FinalizationInfo = ({generators, queryHeight, rowClassByIndex}) => 
                             <div className="line no-wrap" title={item.address}>
                                 <EndpointRef endpoint={item.address} appearance="regular"/>
                             </div>
+                        </td>
+                        <td data-label="Balance" className="balance">
+                            <div className="line no-wrap">{renderBalance(item.balance)}</div>
                         </td>
                         <td data-label="Transaction Id" className="transaction">
                             <div className="line no-wrap" title={item.transactionId}>
@@ -56,6 +73,7 @@ FinalizationInfo.propTypes = {
     rowClassByIndex: PropTypes.object,
     generators: PropTypes.arrayOf(PropTypes.shape({
         address: PropTypes.string.isRequired,
+        balance: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
         transactionId: PropTypes.string.isRequired,
         conflictHeight: PropTypes.number
     })).isRequired
