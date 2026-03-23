@@ -243,9 +243,9 @@ class FinalizationInfoPage extends React.Component {
                     : '-'
             });
             votingInfoRows.push({
-                label: 'Finalized Height!',
+                label: 'Finalized Height',
                 value: votingDetails && Number.isFinite(votingDetails.finalizedHeight)
-                    ? votingDetails.finalizedHeight
+                    ? <BlockRef height={votingDetails.finalizedHeight} className="no-accent"/>
                     : '-'
             });
         } else {
