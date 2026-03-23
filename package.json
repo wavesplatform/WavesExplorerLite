@@ -56,7 +56,7 @@
         "@waves/ts-lib-crypto": "^1.5.1",
         "babel-jest": "^30.0.5",
         "babel-loader": "^10.0.0",
-        "copy-webpack-plugin": "13.0.1",
+        "copy-webpack-plugin": "14.0.0",
         "crypto-browserify": "^3.12.1",
         "css-loader": "^7.1.2",
         "del": "^8.0.0",
