@@ -7,15 +7,20 @@ import {withRouter} from "../../withRouter";
 
 class BlockRef extends React.PureComponent {
     static propTypes = {
-        height: PropTypes.number.isRequired
+        height: PropTypes.number.isRequired,
+        className: PropTypes.string
+    };
+
+    static defaultProps = {
+        className: undefined
     };
 
     render() {
-        const {height} = this.props;
+        const {height, className} = this.props;
         const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
 
-        return (<Link to={routes.blocks.one(height)}>{height}</Link>);
+        return (<Link to={routes.blocks.one(height)} className={className}>{height}</Link>);
     }
 }
 

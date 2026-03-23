@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {BASE64_FORMAT, DECOMPILED_FORMAT, ScriptInfoView} from './ScriptInfo.view';
-import ServiceFactory from '../../services/ServiceFactory';
 import {decompile} from "@waves/ride-js";
 import {withRouter} from "../../withRouter";
 

@@ -19,6 +19,7 @@ import {AnalyticsService} from './AnalyticsService';
 import {ErrorReportingService} from './ErrorReportingService';
 import {BrowserService} from './BrowserService';
 import {LeaseService} from './LeaseService';
+import {FinalizationService} from './FinalizationService';
 
 const database = new Database();
 
@@ -50,6 +51,7 @@ class NetworkDependentServices {
         this._transactionTransformerService = new TransactionTransformerService(this._currencyService,
             this._spamDetectionService, this._assetService);
         this._infoService = new InfoService(globalServices.configurationService(), networkId);
+        this._finalizationService = new FinalizationService(globalServices.configurationService(), networkId);
         this._aliasService = new AliasService(globalServices.configurationService(), networkId);
         this._leaseService =  new LeaseService(this._globalServices.configurationService(), this._networkId);
     }
@@ -77,6 +79,7 @@ class NetworkDependentServices {
         this._networkId);
 
     infoService = () => this._infoService;
+    finalizationService = () => this._finalizationService;
 
     faucetService = () => new FaucetService(this._transactionTransformerService,
         this._globalServices.configurationService(),

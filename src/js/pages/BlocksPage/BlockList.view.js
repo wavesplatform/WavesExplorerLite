@@ -5,7 +5,12 @@ import {BlockListItem} from './BlockListItem.view';
 
 export class BlockList extends React.Component {
     static propTypes = {
-        blocks: PropTypes.arrayOf(PropTypes.object).isRequired
+        blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
+        finalizedHeight: PropTypes.number
+    };
+
+    static defaultProps = {
+        finalizedHeight: 1
     };
 
     render() {
@@ -21,7 +26,7 @@ export class BlockList extends React.Component {
                 </thead>
                 <tbody>
                 {this.props.blocks.map((block, index) => {
-                    return (<BlockListItem key={index} block={block} />);
+                    return (<BlockListItem key={index} block={block} finalizedHeight={this.props.finalizedHeight}/>);
                 })}
                 </tbody>
             </table>

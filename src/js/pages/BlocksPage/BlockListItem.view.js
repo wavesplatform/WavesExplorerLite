@@ -6,17 +6,24 @@ import BlockRef from '../../components/BlockRef';
 
 export class BlockListItem extends React.Component {
     static propTypes = {
-        block: PropTypes.object.isRequired
+        block: PropTypes.object.isRequired,
+        finalizedHeight: PropTypes.number
+    };
+
+    static defaultProps = {
+        finalizedHeight: 1
     };
 
     render() {
         const {block} = this.props;
         const rowClassName = block.transactions > 0 ? '' : 'empty-block';
+        const isFinalized = this.props.finalizedHeight >= block.height;
+        const blockImageClassName = `block-img sm-hide${isFinalized ? ' finalized' : ''}`;
 
         return (
             <tr className={rowClassName}>
-                <td data-label="№ / Timestamp" className="block-img-handler nowrap">
-                    <div className="block-img sm-hide"></div>
+                <td data-label="No / Timestamp" className="block-img-handler nowrap">
+                    <div className={blockImageClassName}></div>
                     <div className="line no-wrap"><BlockRef height={block.height} /></div>
                     <div className="line no-break"><label>{block.timestamp.time}, {block.timestamp.date}</label></div>
                 </td>

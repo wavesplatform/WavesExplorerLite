@@ -9,11 +9,13 @@ export class LastBlockList extends React.PureComponent {
     static propTypes = {
         networkId: PropTypes.string,
         blocks: PropTypes.arrayOf(PropTypes.object).isRequired,
+        finalizedHeight: PropTypes.number,
         title: PropTypes.string
     };
 
     static defaultProps = {
-        title: 'Last blocks'
+        title: 'Last blocks',
+        finalizedHeight: 1
     };
 
     render() {
@@ -28,7 +30,13 @@ export class LastBlockList extends React.PureComponent {
                     </span>
                 </div>
                 {this.props.blocks.map((block) => {
-                    return (<LastBlockListItem key={block.height} block={block} />);
+                    return (
+                        <LastBlockListItem
+                            key={block.height}
+                            block={block}
+                            finalizedHeight={this.props.finalizedHeight}
+                        />
+                    );
                 })}
             </div>
         );

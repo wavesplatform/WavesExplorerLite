@@ -6,12 +6,13 @@ import DateTime from '../DateTime';
 import Strings from '../Strings';
 import {
     data,
+    fetchAddresses,
     fetchBalanceDetails,
     fetchScriptInfo,
     fetchScriptInfoMeta,
     fetchValidate
 } from "@waves/node-api-js/cjs/api-node/addresses";
-import {fetchByAddress} from "@waves/node-api-js/cjs/api-node/alias";
+import {fetchByAddress, fetchByAlias} from "@waves/node-api-js/cjs/api-node/alias";
 import {fetchNodeVersion} from "@waves/node-api-js/cjs/api-node/node";
 import {
     fetchInfo,
@@ -30,10 +31,8 @@ import {
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
-import {fetchByAlias} from "@waves/node-api-js/es/api-node/alias";
+import {fetchComittedGeneratorsAt} from "@waves/node-api-js/cjs/api-node/finalization";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
-import {fetchEthAssetDetails} from "@waves/node-api-js/cjs/api-node/eth";
-import {fetchAddresses} from "@waves/node-api-js/es/api-node/addresses";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
 const ASSETS_PER_PAGE = 100;
@@ -229,6 +228,9 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         },
         leasing: {
             info: (id) => fetchLeasingInfo(baseUrl, toArray(id))
+        },
+        finalizationInfo: {
+            at: (height) => fetchComittedGeneratorsAt(baseUrl, height)
         },
         peers: () => fetchConnected(baseUrl),
     }

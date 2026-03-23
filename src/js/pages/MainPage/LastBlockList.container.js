@@ -9,7 +9,8 @@ const LAST_BLOCKS_COUNT = 20;
 
 class LastBlockListContainer extends React.Component {
     state = {
-        blocks: []
+        blocks: [],
+        finalizedHeight: 1
     };
 
     componentWillUnmount() {
@@ -23,12 +24,19 @@ class LastBlockListContainer extends React.Component {
     fetchData = () => {
         const {networkId} = this.props.params;
         const factory = ServiceFactory.forNetwork(networkId);
-        return factory.infoService().loadHeight()
-            .then(height => {
+        return Promise.all([
+            factory.infoService().loadHeight(),
+            factory.finalizationService().loadHeaderInfo()
+        ]).then(([height, headerInfo]) => {
                 const to = height;
                 const from = Math.max(1, to - LAST_BLOCKS_COUNT);
-                return factory.blockService().loadSequence(from, to)
-            }).then(blocks => this.setState({blocks}));
+                return factory.blockService().loadSequence(from, to).then(blocks => ({blocks, headerInfo}));
+            }).then(({blocks, headerInfo}) => this.setState({
+                blocks,
+                finalizedHeight: headerInfo && Number.isFinite(headerInfo.lastFinalizedHeight)
+                    ? headerInfo.lastFinalizedHeight
+                    : Math.max(height - 100, 1)
+            }));
     };
 
     setRefreshInterval = () => {
@@ -46,7 +54,11 @@ class LastBlockListContainer extends React.Component {
         const {networkId} = this.props.params;
         return (
             <Loader fetchData={this.initialFetch} errorTitle="Failed to load last blocks">
-                <LastBlockList blocks={this.state.blocks} networkId={networkId}/>
+                <LastBlockList
+                    blocks={this.state.blocks}
+                    networkId={networkId}
+                    finalizedHeight={this.state.finalizedHeight}
+                />
             </Loader>
         );
     }

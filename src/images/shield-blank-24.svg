@@ -1,0 +1,15 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z"
+        fill="none"
+        stroke="#1F5AF6"
+        stroke-width="2"
+        stroke-linejoin="round"
+    />
+
+    <!-- Галочка: залитая, цвет как у обводки щита -->
+    <path
+        d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
+        fill="#1F5AF6"
+    />
+</svg>

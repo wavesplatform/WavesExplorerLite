@@ -79,6 +79,9 @@ const transactionToDictionary = (tx, networkId, dApps) => {
             const transaction = convertEthTx(tx)
             return transactionToDictionary(transaction, networkId)
 
+        case 19:
+            return commitToGenerationTransactionToItems(tx);
+
 
         default:
             return {
@@ -199,6 +202,31 @@ const updateAssetInfoTransactionToItems = tx => ({
         {label: 'Description', value: tx.description},
         buildFeeItem(tx),
         ...buildSenderAddressAndKeyItems(tx),
+    ]
+});
+
+const commitToGenerationTransactionToItems = tx => ({
+    default: [
+        ...buildTransactionHeaderItems(tx),
+        {
+            label: 'Generation period start',
+            value: tx.generationPeriodStart
+        },
+        {
+            label: 'Endorser PublicKey',
+            value: tx.endorserPublicKey
+        },
+        {
+            label: 'Commitment Signature',
+            value: tx.commitmentSignature
+        },
+        {
+            label: 'Deposit',
+            value: '100 WAVES'
+
+        },
+        buildCommitFeeItem(tx),
+        ...buildSenderAddressAndKeyItems(tx)
     ]
 });
 
@@ -513,7 +541,16 @@ const buildTransactionHeaderItems = tx => {
         buildTimestampItem(tx.timestamp),
         {
             label: 'Block',
-            value: <BlockRef height={tx.height}/>
+            value: <span className="nowrap">
+                <BlockRef height={tx.height}/>
+                {tx.isFinalizedBlock && <span
+                    className="finalized-lock"
+                    data-for={TOOLTIP_ID}
+                    data-tip="Block Finalized"
+                    data-tooltip-id={TOOLTIP_ID}
+                    data-tooltip-content="Block Finalized"
+                />}
+            </span>
         }, buildProofsItem(tx)];
 
     if (tx.isEthereum) res.pop()
@@ -586,5 +623,14 @@ const buildBytesItem = tx => ({
     label: 'Bytes',
     value: <RawJsonViewer json={tx.bytes}/>
 })
+
+const buildCommitFeeItem = tx => ({
+    label: 'Fee',
+    value: tx.fee && typeof tx.fee.formatAmount === 'function'
+        ? <MoneyInfo value={tx.fee}/>
+        : tx.fee != null
+            ? tx.fee.toString()
+            : ''
+});
 
 export default transactionToDictionary;

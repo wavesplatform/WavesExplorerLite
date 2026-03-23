@@ -6,7 +6,6 @@ import {ERROR_TYPES} from '../../components/Error';
 import GoBack from '../../components/GoBack';
 import Headline from '../../components/Headline';
 import Dictionary from '../../components/Dictionary';
-import Tooltip from '../../components/Tooltip';
 import transactionToDictionary from './TransactionToDictionaryTransformer';
 import {MassPaymentDetails} from './MassPaymentDetails.view';
 import {RoutedRawTransactionContainer} from './RawTransaction.container';
@@ -22,6 +21,7 @@ class SingleTransactionPage extends React.Component {
         tx: {
             id: this.props.params.transactionId
         },
+        finalizedHeight: 1,
         dApps: {}
     };
 
@@ -36,12 +36,25 @@ class SingleTransactionPage extends React.Component {
 
     fetchData = () => {
         const {transactionId, networkId} = this.props.params;
+        const finalizationService = ServiceFactory.forNetwork(networkId).finalizationService();
 
         const transactionPromise = ServiceFactory
             .forNetwork(networkId)
             .transactionService()
-            .loadTransaction(transactionId)
-            .then(tx => this.setState({tx}));
+            .loadTransaction(transactionId);
+
+        const finalizedHeightPromise = finalizationService
+            .loadHeaderInfo()
+            .then(info => (Number.isFinite(info.lastFinalizedHeight) ? info.lastFinalizedHeight : 1))
+            .catch(() => 1);
+
+        const composedTxPromise = Promise.all([transactionPromise, finalizedHeightPromise]).then(([tx, finalizedHeight]) => {
+            const txWithFinalization = {
+                ...tx,
+                isFinalizedBlock: Number.isFinite(tx.height) ? finalizedHeight >= tx.height : false
+            };
+            this.setState({tx: txWithFinalization, finalizedHeight});
+        });
 
         if (networkId === 'mainnet' || networkId === undefined) {
             const dAppsPromise = ServiceFactory
@@ -49,8 +62,8 @@ class SingleTransactionPage extends React.Component {
                 .addressService()
                 .loadDApps()
                 .then(dApps => this.setState({dApps}))
-            return Promise.all([transactionPromise, dAppsPromise])
-        } else return transactionPromise
+            return Promise.all([composedTxPromise, dAppsPromise])
+        } else return composedTxPromise
     };
 
     render() {

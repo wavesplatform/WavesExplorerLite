@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {routeBuilder} from './shared/Routing';
 import NavMenuItem from './NavMenuItem';
 import ServiceFactory from './services/ServiceFactory';
-import { NewVersionDialog } from './components/NewVersionDialog';
 import {withRouter} from "./withRouter";
 
 const alwaysVisible = networkId => true;
@@ -25,6 +24,11 @@ const buildItems = () => {
         route: networkId => routeBuilder(networkId).blocks.list,
         visible: alwaysVisible,
         icon: 'icon-blocks'
+    }, {
+        title: 'Finalization info',
+        route: networkId => routeBuilder(networkId).finalizationInfo.list,
+        visible: alwaysVisible,
+        icon: 'icon-shield'
     }, {
         title: 'Peers',
         route: networkId => routeBuilder(networkId).peers.list,

@@ -1,0 +1,93 @@
+table.finalization-list {
+    th.index,
+    td.index {
+        width: 70px;
+        max-width: 70px;
+    }
+
+    th.generator,
+    td.generator {
+        width: 28%;
+    }
+
+    th.balance,
+    td.balance {
+        width: 16%;
+    }
+
+    th.transaction,
+    td.transaction {
+        width: 36%;
+    }
+
+    th.conflict,
+    td.conflict {
+        width: 20%;
+    }
+
+    tbody {
+        tr.miner {
+            background-color: #fff8d8;
+        }
+
+        tr.endorsed {
+            background-color: #eaf8e6;
+        }
+
+        tr.conflict-endorser {
+            background-color: #fdeceb;
+        }
+    }
+}
+
+.finalization-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+
+    input {
+        width: 180px;
+        min-width: 140px;
+        margin-top: 2px;
+    }
+}
+
+.finalization-meta {
+    margin: 0 24px 8px;
+
+    .dictionary-pair-key,
+    .dictionary-pair-value {
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+
+.finalization-table-title {
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.finalization-legend {
+    margin: 12px 24px 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    .legend-item {
+        padding: 4px 8px;
+        border-radius: 2px;
+    }
+
+    .legend-item.miner {
+        background-color: #fff8d8;
+    }
+
+    .legend-item.endorsed {
+        background-color: #eaf8e6;
+    }
+
+    .legend-item.conflict-endorser {
+        background-color: #fdeceb;
+    }
+}

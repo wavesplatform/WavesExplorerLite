@@ -23,6 +23,7 @@ const derivePageBoundaries = (pageNumber, lastPage) => {
 class BlocksPage extends React.Component {
     state = {
         height: 0,
+        finalizedHeight: 1,
         currentPage: 1,
         lastPage: 10,
         blocks: [],
@@ -44,10 +45,18 @@ class BlocksPage extends React.Component {
 
     initialFetch = () => {
         const {networkId} = this.props.params;
-        return ServiceFactory.forNetwork(networkId).infoService().loadHeight().then(height => {
-            const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
+        const networkFactory = ServiceFactory.forNetwork(networkId);
 
-            this._isMounted && this.setState({height, lastPage}, () => {this.loadCurrentPage(1)});
+        return Promise.all([
+            networkFactory.infoService().loadHeight(),
+            networkFactory.finalizationService().loadHeaderInfo()
+        ]).then(([height, headerInfo]) => {
+            const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
+            const finalizedHeight = headerInfo && Number.isFinite(headerInfo.lastFinalizedHeight)
+                ? headerInfo.lastFinalizedHeight
+                : Math.max(height - 100, 1);
+
+            this._isMounted && this.setState({height, lastPage, finalizedHeight}, () => {this.loadCurrentPage(1)});
         })
     };
 
@@ -70,7 +79,7 @@ class BlocksPage extends React.Component {
     };
 
     render() {
-        const {currentPage, lastPage, blocks} = this.state;
+        const {currentPage, lastPage, blocks, finalizedHeight} = this.state;
         const boundaries = derivePageBoundaries(currentPage, lastPage);
         const pagination = <Pagination boundaries={boundaries} currentPage={currentPage} lastPage={lastPage}
                                        onPageChange={this.handlePageChange}/>;
@@ -82,7 +91,7 @@ class BlocksPage extends React.Component {
                             <span className="title large">Blocks</span>
                             {pagination}
                         </div>
-                        <BlockList blocks={blocks}/>
+                        <BlockList blocks={blocks} finalizedHeight={finalizedHeight}/>
                         <div className="headline">
                             {pagination}
                         </div>

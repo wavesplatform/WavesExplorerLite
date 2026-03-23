@@ -71,4 +71,12 @@
             color: map.get(variables.$colors, white);
         }
     }
+
+    .page-input {
+        width: 48px;
+        border: none;
+        outline: none;
+        text-align: center;
+        padding: 0 6px;
+    }
 }

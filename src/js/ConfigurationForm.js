@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CopyToClipboard from 'react-copy-to-clipboard-ts';
-import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {isWebUri, isHttpsUri} from 'valid-url';
+import {Field, Form, Formik} from 'formik';
+import {isHttpsUri, isWebUri} from 'valid-url';
 import {nodeApi} from './shared/api/NodeApi';
 
 const valuesShape = PropTypes.shape({
     apiBaseUrl: PropTypes.string,
-    spamListUrl: PropTypes.string
+    spamListUrl: PropTypes.string,
+    generationPeriodLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 });
 
 const InputComponent = ({
@@ -55,6 +56,13 @@ const validate = values => {
                 });
             });
     }).then(versionResponse => {
+        const generationPeriodLength = Number.parseInt(values.generationPeriodLength, 10);
+        if (!Number.isFinite(generationPeriodLength) || generationPeriodLength < 1) {
+            return Promise.resolve({
+                generationPeriodLength: 'Generation Period Length must be a positive integer'
+            });
+        }
+
         if (versionResponse === undefined || !versionResponse.version) {
             return Promise.resolve({
                 apiBaseUrl: `Node has failed to report it's version`
@@ -98,6 +106,11 @@ export default class ConfigurationForm extends React.Component {
                         <div className="row">
                             <label>Node address</label>
                             <Field name="apiBaseUrl" component={InputComponent} placeholder="Node absolute URL with port number" />
+                        </div>
+                        <div className="row">
+                            <label>Generation Period Length</label>
+                            <Field name="generationPeriodLength" component={InputComponent}
+                                   placeholder="Positive integer" />
                         </div>
 
                         <div className="row buttons-wrapper">

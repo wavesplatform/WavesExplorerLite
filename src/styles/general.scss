@@ -189,8 +189,22 @@
                 height: 40px;
                 float: left;
                 margin-right: 14px;
+                position: relative;
             }
         }
+    }
+
+    .block-img.finalized::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 40%;
+        height: 40%;
+        min-width: 10px;
+        min-height: 10px;
+        background: url('../images/shield-24.svg') no-repeat center center;
+        background-size: contain;
     }
 }
 
@@ -289,6 +303,16 @@
 
 .nowrap {
     white-space: nowrap;
+}
+
+.finalized-lock {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+    vertical-align: text-top;
+    background: url('../images/shield-24.svg') no-repeat center center;
+    background-size: contain;
 }
 
 .dictionary {

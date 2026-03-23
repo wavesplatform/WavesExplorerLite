@@ -8,6 +8,7 @@
 @use "blocks.scss";
 @use "nodes.scss";
 @use "address.scss";
+@use "finalization.scss";
 @use "fonts.scss";
 @use "buttons.scss";
 @use "faucet.scss";
@@ -292,6 +293,22 @@ body {
                      }
                     &.current a::after {
                         background-position: 0 -84px;
+                    }
+                }
+
+                &-shield {
+                    a {
+                        &::after {
+                            background-image: url(../images/shield-blank-24.svg);
+                            background-position: center;
+                            background-size: 18px 18px;
+                        }
+                        &:hover::after {
+                            background-image: url(../images/shield-24.svg);
+                        }
+                    }
+                    &.current a::after {
+                        background-image: url(../images/shield-24.svg);
                     }
                 }
 
@@ -836,7 +853,7 @@ body {
     &:hover {
         width: variables.$scroll_button_hover_size;
         height: variables.$scroll_button_hover_size;
-        margin-right: calc(-1 * (variables.$scroll_button_hover_size - variables.$scroll_button_size) / 2);
+        margin-right: calc(-1 * (#{variables.$scroll_button_hover_size} - #{variables.$scroll_button_size}) / 2);
         border-radius: 5.4px;
         background-color: map.get(variables.$colors, basic50);
         box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.14);
