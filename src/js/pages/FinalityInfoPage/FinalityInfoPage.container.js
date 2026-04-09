@@ -5,12 +5,12 @@ import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 import BlockRef from '../../components/BlockRef';
 import Dictionary from '../../components/Dictionary';
-import {FinalizationInfo} from './FinalizationInfo.view';
+import {FinalityInfo} from './FinalityInfo.view';
 import {withRouter} from '../../withRouter';
 
 const REFRESH_INTERVAL_MS = 15000;
 
-class FinalizationInfoPage extends React.Component {
+class FinalityInfoPage extends React.Component {
     requestId = 0;
 
     heightInputDebounce = null;
@@ -31,7 +31,7 @@ class FinalizationInfoPage extends React.Component {
             lastFinalizedHeight: null,
             currentPeriodStart: null,
             nextPeriodStart: null,
-            finalizationNotActivated: false
+            finalityNotActivated: false
         }
     };
 
@@ -73,17 +73,17 @@ class FinalizationInfoPage extends React.Component {
 
     fetchData = () => {
         const {networkId} = this.props.params;
-        const finalizationService = ServiceFactory
+        const finalityService = ServiceFactory
             .forNetwork(networkId)
-            .finalizationService();
+            .finalityService();
 
-        return finalizationService.loadHeaderInfo().then((headerInfo) => {
-            if (headerInfo.finalizationNotActivated) {
+        return finalityService.loadHeaderInfo().then((headerInfo) => {
+            if (headerInfo.finalityNotActivated) {
                 this.setState({headerInfo, heightInput: ''});
                 return;
             }
 
-            return finalizationService.loadGeneratorsAtCurrentHeight().then(({height}) => {
+            return finalityService.loadGeneratorsAtCurrentHeight().then(({height}) => {
                 const requestedHeight = this.getRequestedHeightFromQuery();
                 const selectedHeight = requestedHeight || height;
 
@@ -91,7 +91,7 @@ class FinalizationInfoPage extends React.Component {
                     && selectedHeight === headerInfo.currentHeight);
 
                 this.setState({headerInfo, heightInput: String(selectedHeight), nonCurrentRefreshDone}, () => {
-                    this.loadFinalizationAt(selectedHeight);
+                    this.loadFinalityAt(selectedHeight);
                 });
             });
         });
@@ -104,10 +104,10 @@ class FinalizationInfoPage extends React.Component {
 
         return ServiceFactory
             .forNetwork(networkId)
-            .finalizationService()
+            .finalityService()
             .loadHeaderInfo()
             .then((headerInfo) => {
-                if (headerInfo.finalizationNotActivated) {
+                if (headerInfo.finalityNotActivated) {
                     this.setState({headerInfo, nonCurrentRefreshDone: false});
                     return;
                 }
@@ -128,7 +128,7 @@ class FinalizationInfoPage extends React.Component {
                 }
 
                 this.setState({headerInfo, nonCurrentRefreshDone: true}, () => {
-                    this.loadFinalizationAt(this.state.height);
+                    this.loadFinalityAt(this.state.height);
                 });
             });
     };
@@ -151,13 +151,13 @@ class FinalizationInfoPage extends React.Component {
         }
     };
 
-    loadFinalizationAt = (height) => {
+    loadFinalityAt = (height) => {
         const {networkId} = this.props.params;
         const requestId = ++this.requestId;
 
         return ServiceFactory
             .forNetwork(networkId)
-            .finalizationService()
+            .finalityService()
             .loadFinalizationVotingInfoAt(height)
             .then(({generators, votingHeight, finalizedHeightAt, endorserIndexes, blockGenerator, votingDetails}) => {
                 if (requestId !== this.requestId) {
@@ -224,14 +224,14 @@ class FinalizationInfoPage extends React.Component {
             const nonCurrentRefreshDone = !(Number.isFinite(this.state.headerInfo.currentHeight)
                 && height === this.state.headerInfo.currentHeight);
             this.setState({nonCurrentRefreshDone}, () => {
-                this.loadFinalizationAt(height);
+                this.loadFinalityAt(height);
             });
         }, 500);
     };
 
     render() {
         const {headerInfo, height, votingHeight, finalizedHeightAt, rowClassByIndex, votingDetails} = this.state;
-        const shouldShowFinalizationUnavailable = headerInfo.finalizationNotActivated;
+        const shouldShowFinalityUnavailable = headerInfo.finalityNotActivated;
         const shouldShowVotingHeight = Number.isFinite(height) && Number.isFinite(headerInfo.currentHeight)
             && height === headerInfo.currentHeight;
         const votingInfoRows = [];
@@ -300,9 +300,9 @@ class FinalizationInfoPage extends React.Component {
 
         return (
             <div className="loaderWrapper">
-                <Loader fetchData={this.initialFetch} errorTitle="Failed to load finalization info">
-                    {shouldShowFinalizationUnavailable ? (
-                        <Error title="Block Finalization feature is not activated yet."/>
+                <Loader fetchData={this.initialFetch} errorTitle="Failed to load finality info">
+                    {shouldShowFinalityUnavailable ? (
+                        <Error title="Deterministic Finality feature is not activated yet."/>
                     ) : (
                         <div className="content card">
                             <div className="info-box">
@@ -344,7 +344,7 @@ class FinalizationInfoPage extends React.Component {
                                 </div>
                             </div>
                             <div className="headline finalization-controls">
-                                <span className="title medium">Finalization Voting Info At</span>
+                                <span className="title medium">Finality Voting Info At</span>
                                 <input
                                     id="finalization-height"
                                     type="text"
@@ -356,7 +356,7 @@ class FinalizationInfoPage extends React.Component {
                             <div className="finalization-meta">
                                 <Dictionary items={votingInfoItems}/>
                             </div>
-                            <FinalizationInfo
+                            <FinalityInfo
                                 generators={this.state.generators}
                                 queryHeight={height}
                                 rowClassByIndex={rowClassByIndex}
@@ -374,4 +374,4 @@ class FinalizationInfoPage extends React.Component {
     }
 }
 
-export const RoutedFinalizationInfoPage = withRouter(FinalizationInfoPage);
+export const RoutedFinalityInfoPage = withRouter(FinalityInfoPage);

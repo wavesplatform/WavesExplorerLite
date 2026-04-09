@@ -1,9 +1,9 @@
 import {ApiClientService} from './ApiClientService';
 import {
-    fetchCommitmentPeriodHeights,
+    fetchFinalityInfo,
     fetchFinalizedHeight,
     fetchFinalizedHeightAt
-} from '@waves/node-api-js/cjs/api-node/finalization';
+} from '@waves/node-api-js/cjs/api-node/finality';
 
 const PERIOD_LENGTH_BY_NETWORK_ID = Object.freeze({
     mainnet: 10000,
@@ -11,7 +11,7 @@ const PERIOD_LENGTH_BY_NETWORK_ID = Object.freeze({
     testnet: 3000
 });
 const HEADER_INFO_TTL_MS = 5000;
-const GLOBAL_HEADER_INFO_CACHE_KEY = '__WEL_FINALIZATION_HEADER_INFO__';
+const GLOBAL_HEADER_INFO_CACHE_KEY = '__WEL_FINALITY_HEADER_INFO__';
 
 const getGlobalHeaderInfoCache = () => {
     if (!globalThis[GLOBAL_HEADER_INFO_CACHE_KEY]) {
@@ -21,13 +21,13 @@ const getGlobalHeaderInfoCache = () => {
     return globalThis[GLOBAL_HEADER_INFO_CACHE_KEY];
 };
 
-export class FinalizationService extends ApiClientService {
+export class FinalityService extends ApiClientService {
     constructor(configurationService, networkId) {
         super(configurationService, networkId);
     }
 
     loadGeneratorsAt = (height) => {
-        return this.getApi().finalizationInfo.at(height)
+        return this.getApi().finalityInfo.at(height)
             .then(generators => ({
                 height,
                 generators: Array.isArray(generators) ? generators : []
@@ -82,16 +82,11 @@ export class FinalizationService extends ApiClientService {
             return cached.value;
         }
 
-        const commitmentPeriodLength = PERIOD_LENGTH_BY_NETWORK_ID[networkId] || 10000;
-        const configuredPeriodLength = Number.parseInt(configuration.generationPeriodLength, 10);
-        const periodLength = Number.isFinite(configuredPeriodLength) && configuredPeriodLength > 0
-            ? configuredPeriodLength
-            : commitmentPeriodLength;
         const {height: currentHeight} = await api.blocks.height();
 
         let commitmentPeriodResult;
         try {
-            const result = await fetchCommitmentPeriodHeights(baseUrl, periodLength);
+            const result = await fetchFinalityInfo(baseUrl);
             commitmentPeriodResult = {ok: true, result};
         } catch (e) {
             commitmentPeriodResult = {ok: false, result: null};
@@ -103,7 +98,7 @@ export class FinalizationService extends ApiClientService {
                 lastFinalizedHeight: Math.max(currentHeight - 100, 1),
                 currentPeriodStart: null,
                 nextPeriodStart: null,
-                finalizationNotActivated: true
+                finalityNotActivated: true
             };
 
             cache[networkId] = {
@@ -120,9 +115,9 @@ export class FinalizationService extends ApiClientService {
         const value = {
             currentHeight,
             lastFinalizedHeight: finalizedHeader ? finalizedHeader.height : Math.max(currentHeight - 100, 1),
-            currentPeriodStart: commitmentPeriod ? commitmentPeriod.currentPeriodStart : null,
-            nextPeriodStart: commitmentPeriod ? commitmentPeriod.nextPeriodStart : null,
-            finalizationNotActivated: false
+            currentPeriodStart: commitmentPeriod ? commitmentPeriod.currentGenerationPeriod?.start : null,
+            nextPeriodStart: commitmentPeriod ? commitmentPeriod.nextGenerationPeriod?.start : null,
+            finalityNotActivated: false
         };
 
         cache[networkId] = {

@@ -15,7 +15,7 @@ import MainPage from './pages/MainPage';
 import PeersPage from './pages/PeersPage';
 import NodesPage from './pages/NodesPage';
 import BlocksPage from './pages/BlocksPage';
-import FinalizationInfoPage from './pages/FinalizationInfoPage';
+import FinalityInfoPage from './pages/FinalityInfoPage';
 import SingleBlockPage from './pages/SingleBlockPage';
 import SingleTransactionPage from './pages/SingleTransactionPage';
 import SingleLeasePage from './pages/SingleLeasePage';
@@ -103,7 +103,7 @@ class App extends React.Component {
                         <Route index element={<MainPage/>}/>
                         <Route path={routes.blocks.one(routeParams.blockHeight)} element={<SingleBlockPage/>}/>
                         <Route path={routes.blocks.list} element={<BlocksPage/>}/>
-                        <Route path={routes.finalizationInfo.list} element={<FinalizationInfoPage/>}/>
+                        <Route path={routes.finalityInfo.list} element={<FinalityInfoPage/>}/>
                         <Route path={routes.transactions.one(routeParams.transactionId)}
                                element={<SingleTransactionPage/>}/>
                         <Route path={routes.leases.one(routeParams.leaseId)} element={<SingleLeasePage/>}/>
