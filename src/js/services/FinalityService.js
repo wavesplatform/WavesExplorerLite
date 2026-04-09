@@ -87,7 +87,6 @@ export class FinalityService extends ApiClientService {
         let commitmentPeriodResult;
         try {
             const result = await fetchFinalityInfo(baseUrl);
-            console.log(result);
             commitmentPeriodResult = {ok: true, result};
         } catch (e) {
             commitmentPeriodResult = {ok: false, result: null};
