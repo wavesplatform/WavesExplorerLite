@@ -26,7 +26,7 @@ class LastBlockListContainer extends React.Component {
         const factory = ServiceFactory.forNetwork(networkId);
         return Promise.all([
             factory.infoService().loadHeight(),
-            factory.finalizationService().loadHeaderInfo()
+            factory.finalityService().loadHeaderInfo()
         ]).then(([height, headerInfo]) => {
                 const to = height;
                 const from = Math.max(1, to - LAST_BLOCKS_COUNT);

@@ -7,7 +7,7 @@ import BlockRef from '../../components/BlockRef';
 import Money from '../../shared/Money';
 import Currency from '../../shared/Currency';
 
-export const FinalizationInfo = ({generators, queryHeight, rowClassByIndex}) => {
+export const FinalityInfo = ({generators, queryHeight, rowClassByIndex}) => {
     const safeGenerators = Array.isArray(generators) ? generators : [];
     const renderBalance = (balance) => {
         if (balance === null || balance === undefined) {
@@ -68,7 +68,7 @@ export const FinalizationInfo = ({generators, queryHeight, rowClassByIndex}) => 
     );
 };
 
-FinalizationInfo.propTypes = {
+FinalityInfo.propTypes = {
     queryHeight: PropTypes.number,
     rowClassByIndex: PropTypes.object,
     generators: PropTypes.arrayOf(PropTypes.shape({
@@ -79,7 +79,7 @@ FinalizationInfo.propTypes = {
     })).isRequired
 };
 
-FinalizationInfo.defaultProps = {
+FinalityInfo.defaultProps = {
     queryHeight: null,
     rowClassByIndex: {}
 };

@@ -31,7 +31,7 @@ import {
 } from "@waves/node-api-js/cjs/api-node/blocks";
 import {fetchConnected} from "@waves/node-api-js/cjs/api-node/peers";
 import {fetchLeasingInfo} from "@waves/node-api-js/cjs/api-node/leasing";
-import {fetchComittedGeneratorsAt} from "@waves/node-api-js/cjs/api-node/finalization";
+import {fetchCommittedGeneratorsAt} from "@waves/node-api-js/cjs/api-node/finality";
 import {fetchAssetsAddressLimit, fetchAssetsBalance, fetchDetails} from "@waves/node-api-js/cjs/api-node/assets";
 
 const TRANSACTIONS_BY_ADDRESS_LIMIT = 100;
@@ -229,8 +229,8 @@ export const nodeApi = (baseUrl, useCustomRequestConfig) => {
         leasing: {
             info: (id) => fetchLeasingInfo(baseUrl, toArray(id))
         },
-        finalizationInfo: {
-            at: (height) => fetchComittedGeneratorsAt(baseUrl, height)
+        finalityInfo: {
+            at: (height) => fetchCommittedGeneratorsAt(baseUrl, height)
         },
         peers: () => fetchConnected(baseUrl),
     }

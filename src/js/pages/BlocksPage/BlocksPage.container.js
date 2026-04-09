@@ -49,7 +49,7 @@ class BlocksPage extends React.Component {
 
         return Promise.all([
             networkFactory.infoService().loadHeight(),
-            networkFactory.finalizationService().loadHeaderInfo()
+            networkFactory.finalityService().loadHeaderInfo()
         ]).then(([height, headerInfo]) => {
             const lastPage = Math.ceil(height / BLOCKS_PER_PAGE);
             const finalizedHeight = headerInfo && Number.isFinite(headerInfo.lastFinalizedHeight)

@@ -36,24 +36,24 @@ class SingleTransactionPage extends React.Component {
 
     fetchData = () => {
         const {transactionId, networkId} = this.props.params;
-        const finalizationService = ServiceFactory.forNetwork(networkId).finalizationService();
+        const finalityService = ServiceFactory.forNetwork(networkId).finalityService();
 
         const transactionPromise = ServiceFactory
             .forNetwork(networkId)
             .transactionService()
             .loadTransaction(transactionId);
 
-        const finalizedHeightPromise = finalizationService
+        const finalizedHeightPromise = finalityService
             .loadHeaderInfo()
             .then(info => (Number.isFinite(info.lastFinalizedHeight) ? info.lastFinalizedHeight : 1))
             .catch(() => 1);
 
         const composedTxPromise = Promise.all([transactionPromise, finalizedHeightPromise]).then(([tx, finalizedHeight]) => {
-            const txWithFinalization = {
+            const txWithFinality = {
                 ...tx,
                 isFinalizedBlock: Number.isFinite(tx.height) ? finalizedHeight >= tx.height : false
             };
-            this.setState({tx: txWithFinalization, finalizedHeight});
+            this.setState({tx: txWithFinality, finalizedHeight});
         });
 
         if (networkId === 'mainnet' || networkId === undefined) {

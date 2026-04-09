@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {fetchFinalized} from '@waves/node-api-js/cjs/api-node/finalization';
+import {fetchFinalized} from '@waves/node-api-js/cjs/api-node/finality';
 
 import {ApiClientService} from './ApiClientService';
 

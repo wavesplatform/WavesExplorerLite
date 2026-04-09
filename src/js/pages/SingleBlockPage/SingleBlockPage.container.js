@@ -161,9 +161,9 @@ class SingleBlockPage extends React.Component {
             }))
             .catch(error => {this.setState({error: 'Could not fetch block, please reload manually'})});
 
-        const finalizationPromise = ServiceFactory
+        const finalityPromise = ServiceFactory
             .forNetwork(networkId)
-            .finalizationService()
+            .finalityService()
             .loadHeaderInfo()
             .then(info => {
                 finalizedHeight = Number.isFinite(info.lastFinalizedHeight) ? info.lastFinalizedHeight : 1;
@@ -178,10 +178,10 @@ class SingleBlockPage extends React.Component {
                 .addressService()
                 .loadDApps()
                 .then(result => dApps = result)
-            return Promise.all([blockPromise, dAppsPromise, finalizationPromise]).then(() => {
+            return Promise.all([blockPromise, dAppsPromise, finalityPromise]).then(() => {
                 this.setState({dApps, finalizedHeight, ...blockInfo})
             }).then(result => this.setState({loading: false}));
-        } else return Promise.all([blockPromise, finalizationPromise]).finally(() => this.setState({loading: false, finalizedHeight, ...blockInfo}));
+        } else return Promise.all([blockPromise, finalityPromise]).finally(() => this.setState({loading: false, finalizedHeight, ...blockInfo}));
     };
 
 
@@ -219,7 +219,7 @@ class SingleBlockPage extends React.Component {
         const {networkId} = this.props.params;
         const routes = routeBuilder(networkId);
         const isFinalized = this.state.finalizedHeight >= this.state.currentHeight;
-        const finalizationUrl = `${routes.finalizationInfo.list}?height=${this.state.currentHeight}`;
+        const finalityUrl = `${routes.finalityInfo.list}?height=${this.state.currentHeight}`;
 
         const items = {
             default: [{
@@ -244,7 +244,7 @@ class SingleBlockPage extends React.Component {
                 value: this.state.block.transactionCount
             }, {
                 label: 'Finalized',
-                value: isFinalized ? <Link to={finalizationUrl}>Yes</Link> : 'No'
+                value: isFinalized ? <Link to={finalityUrl}>Yes</Link> : 'No'
             }, {
                 label: 'Parent block',
                 value: this.state.block.reference,
