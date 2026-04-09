@@ -26,7 +26,7 @@ jobs:
                 gulp buildOfficialProd
                 rm -rf dist/report.html
                 cp ./dist/index.html ./dist/404.html
-            - uses: actions/upload-pages-artifact@v7
+            - uses: actions/upload-pages-artifact@v4
               with:
                   path: ./dist
     deploy:
