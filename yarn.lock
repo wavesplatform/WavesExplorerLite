@@ -6624,7 +6624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.3.0":
+"hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -9371,7 +9371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.7.2":
+"prop-types@npm:15.8.1, prop-types@npm:^15.5.8, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9534,18 +9534,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-async-script@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "react-async-script@npm:1.2.0"
-  dependencies:
-    hoist-non-react-statics: "npm:^3.3.0"
-    prop-types: "npm:^15.5.0"
-  peerDependencies:
-    react: ">=16.4.1"
-  checksum: 10c0/89450912110c380abc08258ce17d2fb18d31d6b7179a74f6bc504c0761a4ca271edb671e402fa8e5ea4250b5c17fa953af80a9f1c4ebb26c9e81caee8476c903
-  languageName: node
-  linkType: hard
-
 "react-copy-to-clipboard-ts@npm:^1.3.0":
   version: 1.3.1
   resolution: "react-copy-to-clipboard-ts@npm:1.3.1"
@@ -9582,15 +9570,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-google-recaptcha@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "react-google-recaptcha@npm:3.1.0"
+"react-google-recaptcha-v3@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "react-google-recaptcha-v3@npm:1.11.0"
   dependencies:
-    prop-types: "npm:^15.5.0"
-    react-async-script: "npm:^1.2.0"
+    hoist-non-react-statics: "npm:^3.3.2"
   peerDependencies:
-    react: ">=16.4.1"
-  checksum: 10c0/5ecaa6b88f238defd939012cb2671b4cbda59fe03f059158994b8c5215db482412e905eae6a67d23cef220d77cfe0430ab91ce7849d476515cda72f3a8a0a746
+    react: ^16.3 || ^17.0 || ^18.0 || ^19.0
+    react-dom: ^17.0 || ^18.0 || ^19.0
+  checksum: 10c0/8c14d4aae702cb4be150ec15794842947473c1fd8d9c65545fb17566beb6033982f418a4a2dea0b4e5b73c28cb3a7312f5ab2c32e45c6a4d4e115b2a6193a86b
   languageName: node
   linkType: hard
 
@@ -11548,7 +11536,7 @@ __metadata:
     react-copy-to-clipboard-ts: "npm:^1.3.0"
     react-dom: "npm:19.1.1"
     react-ga4: "npm:^2.1.0"
-    react-google-recaptcha: "npm:^3.1.0"
+    react-google-recaptcha-v3: "npm:^1.11.0"
     react-infinite-scroller: "npm:^1.2.6"
     react-modal: "npm:3.16.3"
     react-router: "npm:7.13.1"

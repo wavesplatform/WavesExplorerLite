@@ -8,8 +8,7 @@ import {withRouter} from "../../withRouter";
 
 class FaucetCardContainer extends React.Component {
     static propTypes = {
-        networkName: PropTypes.string.isRequired,
-        captchaKey: PropTypes.string.isRequired
+        networkName: PropTypes.string.isRequired
     };
 
     state = {
@@ -63,7 +62,6 @@ class FaucetCardContainer extends React.Component {
                     <RequestForm
                         networkName={this.props.networkName}
                         onSubmit={this.requestMoney}
-                        captchaKey={this.props.captchaKey}
                         validateAddress={this.validateAddress}
                         status={this.state.status}
                     />
