@@ -10,8 +10,8 @@ export default {
         {url: nodeUrl, maintainer: 'Waves', showAsLink: true}
     ],
     faucet: {
-        url: 'https://waves-faucet-testnet.wvservices.com/faucet',
-        captchaKey: '6Le5cskZAAAAAGR6u8UvY1-wn4Gg97lUef-hFfQC',
-        address: '3Myqjf1D44wR8Vko4Tr5CwSzRNo2Vg9S7u7'
+        url: 'https://faucet-testnet.wavesnodes.com/',
+        captchaKey: '6LcObcYsAAAAAGumjLIdyO8CeoFvk-8rvACGNEh5',
+        address: '3N96dLv45V3CPMmHUGUTCd97DbCsQQ5Lgro'
     }
 };

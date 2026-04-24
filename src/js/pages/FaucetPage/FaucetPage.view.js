@@ -1,4 +1,5 @@
 import React from 'react';
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
 
 import {RoutedFaucetCardContainer} from './FaucetCard.container';
 import {RoutedTransactionCardContainer} from './TransactionCard.container';
@@ -13,16 +14,18 @@ class FaucetPage extends React.Component {
             return null;
 
         return (
-            <div className="content card card-multicolumn">
-                <div className="content-side__left">
-                    <RoutedFaucetCardContainer networkName={displayName} captchaKey={faucet.captchaKey} />
+            <GoogleReCaptchaProvider reCaptchaKey={faucet.captchaKey}>
+                <div className="content card card-multicolumn">
+                    <div className="content-side__left">
+                        <RoutedFaucetCardContainer networkName={displayName} />
+                    </div>
+                    <div className="content-side__right">
+                        <RoutedTransactionCardContainer />
+                    </div>
                 </div>
-                <div className="content-side__right">
-                    <RoutedTransactionCardContainer />
-                </div>
-            </div>
+            </GoogleReCaptchaProvider>
         );
     }
 }
 
-export const RoutedFaucetPage = withRouter(RoutedFaucetPage);
+export const RoutedFaucetPage = withRouter(FaucetPage);
