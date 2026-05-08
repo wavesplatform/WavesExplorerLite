@@ -22,7 +22,7 @@
         "@waves/node-api-js": "1.4.0-snapshot.2",
         "@waves/ride-js": "2.3.0",
         "amplitude-js": "^8.21.9",
-        "axios": "^1.13.6",
+        "axios": "^1.15.2",
         "decimal.js": "10.6.0",
         "detect-browser": "^5.3.0",
         "dexie": "^4.2.0",
